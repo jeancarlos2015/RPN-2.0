@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2018-06-17 00:52:27.
+    * Generated on 2018-06-22 01:39:58.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -41,8 +41,6 @@ namespace PHPSTORM_META {
         'view.engine.resolver' => \Illuminate\View\Engines\EngineResolver::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'command.debugbar.clear' => \Barryvdh\Debugbar\Console\ClearCommand::class,
-        'dompdf' => \Dompdf\Dompdf::class,
-        'dompdf.wrapper' => \Barryvdh\DomPDF\PDF::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
         'settings' => \Oriceon\Settings\Repositories\DatabaseRepository::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
@@ -184,8 +182,6 @@ namespace PHPSTORM_META {
         'view.engine.resolver' => \Illuminate\View\Engines\EngineResolver::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'command.debugbar.clear' => \Barryvdh\Debugbar\Console\ClearCommand::class,
-        'dompdf' => \Dompdf\Dompdf::class,
-        'dompdf.wrapper' => \Barryvdh\DomPDF\PDF::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
         'settings' => \Oriceon\Settings\Repositories\DatabaseRepository::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
@@ -327,8 +323,6 @@ namespace PHPSTORM_META {
         'view.engine.resolver' => \Illuminate\View\Engines\EngineResolver::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'command.debugbar.clear' => \Barryvdh\Debugbar\Console\ClearCommand::class,
-        'dompdf' => \Dompdf\Dompdf::class,
-        'dompdf.wrapper' => \Barryvdh\DomPDF\PDF::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
         'settings' => \Oriceon\Settings\Repositories\DatabaseRepository::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
@@ -470,8 +464,6 @@ namespace PHPSTORM_META {
         'view.engine.resolver' => \Illuminate\View\Engines\EngineResolver::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'command.debugbar.clear' => \Barryvdh\Debugbar\Console\ClearCommand::class,
-        'dompdf' => \Dompdf\Dompdf::class,
-        'dompdf.wrapper' => \Barryvdh\DomPDF\PDF::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
         'settings' => \Oriceon\Settings\Repositories\DatabaseRepository::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
@@ -613,8 +605,6 @@ namespace PHPSTORM_META {
         'view.engine.resolver' => \Illuminate\View\Engines\EngineResolver::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'command.debugbar.clear' => \Barryvdh\Debugbar\Console\ClearCommand::class,
-        'dompdf' => \Dompdf\Dompdf::class,
-        'dompdf.wrapper' => \Barryvdh\DomPDF\PDF::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
         'settings' => \Oriceon\Settings\Repositories\DatabaseRepository::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
@@ -756,8 +746,6 @@ namespace PHPSTORM_META {
         'view.engine.resolver' => \Illuminate\View\Engines\EngineResolver::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'command.debugbar.clear' => \Barryvdh\Debugbar\Console\ClearCommand::class,
-        'dompdf' => \Dompdf\Dompdf::class,
-        'dompdf.wrapper' => \Barryvdh\DomPDF\PDF::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
         'settings' => \Oriceon\Settings\Repositories\DatabaseRepository::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
@@ -899,8 +887,6 @@ namespace PHPSTORM_META {
         'view.engine.resolver' => \Illuminate\View\Engines\EngineResolver::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'command.debugbar.clear' => \Barryvdh\Debugbar\Console\ClearCommand::class,
-        'dompdf' => \Dompdf\Dompdf::class,
-        'dompdf.wrapper' => \Barryvdh\DomPDF\PDF::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
         'settings' => \Oriceon\Settings\Repositories\DatabaseRepository::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
