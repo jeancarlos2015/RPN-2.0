@@ -1,0 +1,19 @@
+language: php
+php:
+  - '7.1'
+dist: trusty
+sudo: false
+services:
+    - mysql
+before_script:
+  - cp .env.travis .env
+  - mysql -e 'create database homestead;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+
+deploy:
+ provider: heroku
+ api-key:
+  secure: "HEROKU_KEY"
+ app: projetolaravel
