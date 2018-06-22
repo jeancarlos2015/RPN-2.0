@@ -4,16 +4,14 @@ php:
 dist: trusty
 sudo: false
 services:
-    - mysql
+    - sqlite
 before_script:
   - cp .env.travis .env
-  - mysql -e 'create database homestead;'
   - composer self-update
   - composer install --no-interaction
-  - php artisan key:generate
 
 deploy:
  provider: heroku
  api-key:
-  secure: "HEROKU_KEY"
- app: projetolaravel
+  secure: "API_KEY"
+ app: projetolaravel21

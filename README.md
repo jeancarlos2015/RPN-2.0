@@ -89,4 +89,10 @@
 <br>
 <code>Solução: Acessar o vagrant, entrar na pasta raiz do projeto e executar o seguinte comando: "php artisan migrate"</code>
 <br>
+
+<code>Error: Não possui um nome e email para fazer commit no git</code>
+<code>Solução: git config --global user.name teste@gmail.com
+               git config --global user.email teste@gmail.com
+</code>
+
 </p>
