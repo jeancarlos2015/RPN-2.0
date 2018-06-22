@@ -11,5 +11,5 @@ before_script:
 deploy:
  provider: heroku
  api-key:
-  secure: API_KEY
+  secure: $API_KEY
  app: projetolaravel21
