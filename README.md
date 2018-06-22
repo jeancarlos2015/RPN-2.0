@@ -96,7 +96,7 @@
 </code>
 <h3>Comandos Heroku</h3>
 <p>Comando para acessar a pasta raiz da aplicação no heroku</p>
-<code>$ heroku run bash --app <appName>
-~$ pwd
-~$ cd <path to images folder></code>
+<code>$ heroku run bash --app <appName><br>
+~$ pwd<br>
+~$ cd <path to images folder><br></code>
 </p>
