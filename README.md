@@ -94,5 +94,9 @@
 <code>Solução: git config --global user.name teste@gmail.com
                git config --global user.email teste@gmail.com
 </code>
-
+<h3>Comandos Heroku</h3>
+<p>Comando para acessar a pasta raiz da aplicação no heroku</p>
+<code>$ heroku run bash --app <appName>
+~$ pwd
+~$ cd <path to images folder></code>
 </p>
