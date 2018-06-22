@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-header">Clonar Repositório</div>
                     <div class="card-body card-block">
-                        <form action="{{route('clone_repository')}}" method="get" class="">
+                        <form action="#" method="get" class="">
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-addon">URL GIT</div>
