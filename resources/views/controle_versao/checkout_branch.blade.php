@@ -10,7 +10,7 @@
                 @endif
                 <div class="form-group">
                     <div class="form-group">
-                        <form action="{{route('git_checkout_branch')}}" method="get" class="">
+                        <form action="#" method="get" class="">
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="form-control-label" for="ar">Branch</label>
