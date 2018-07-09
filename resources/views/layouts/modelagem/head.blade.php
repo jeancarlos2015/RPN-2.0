@@ -13,10 +13,10 @@
     {{--<link href="{{ asset("css/normalize.css") }}" rel="stylesheet">--}}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
-    <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
+    {{--<link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">--}}
     {{--<link href="{{ asset("css/themify-icons.css") }}" rel="stylesheet">--}}
     {{--<link href="{{ asset("css/flag-icon.min.css") }}" rel="stylesheet">--}}
-    {{--<link href="{{ asset("css/cs-skin-elastic.css") }}" rel="stylesheet">--}}
+    <link href="{{ asset("css/cs-skin-elastic.css") }}" rel="stylesheet">
     <link href="{{ asset("scss/style.css") }}" rel="stylesheet">
 
     {{--<link href="{{ asset("css/docs.css") }}" rel="stylesheet">--}}
@@ -30,3 +30,4 @@
     {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--}}
     {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
     <link href="{{ asset("css/ordenacao_lista.css") }}" rel="stylesheet">
+    <link href="{{ asset("css/estilo.css") }}" rel="stylesheet">
