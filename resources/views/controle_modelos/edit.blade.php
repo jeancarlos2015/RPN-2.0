@@ -2,15 +2,10 @@
 
 
 @section('content')
+
+    @includeIf('componentes.dados_exibicao')
     <h3>Editar o Modelo</h3>
 
-    @if(!empty($organizacao))
-        <h2>Organização: <strong> {{$organizacao->nome}}</strong></h2>
-    @endif
-    <hr>
-    @if(!empty($projeto))
-        <h2>Projeto: <strong> {{$projeto->nome}}</strong></h2>
-    @endif
     {{--@if(!empty($dado))--}}
 
         {{--<form action="{!! route('controle_modelos.store') !!}" method="post">--}}

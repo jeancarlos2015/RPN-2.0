@@ -3,19 +3,7 @@
 
 @section('content')
     {!! csrf_field() !!}
-    @if(!empty($organizacao))
-        <span>Organização: <strong> {{$organizacao->nome}}</strong></span>
-    @endif
-    <hr>
-    @if(!empty($projeto))
-        <span>Projeto: <strong> {{$projeto->nome}}</strong></span>
-    @endif
-    <hr>
-    @if(!empty($modelo))
-        <span2>Modelo: <strong> {{$modelo->nome}}</strong></span2>
-        <hr>
-        <span2>Tipo: <strong> {{$modelo->tipo}}</strong></span2>
-    @endif
+    @includeIf('componentes.dados_exibicao')
     <hr>
     <h3>Nova Regra</h3>
     <form action="{!! route('controle_regras.store') !!}" method="post">

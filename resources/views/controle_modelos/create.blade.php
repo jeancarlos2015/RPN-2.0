@@ -3,9 +3,7 @@
 
 @section('content')
 
-    @if(!empty($organizacao))
-        <h2>Organização: <strong> {{$organizacao->nome}}</strong></h2>
-    @endif
+    @includeIf('componentes.dados_exibicao')
     <H4>Novo Modelo</H4>
 
     <form action="{!! route('controle_modelos.store') !!}" method="post">

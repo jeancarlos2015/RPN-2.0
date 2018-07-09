@@ -3,9 +3,7 @@
 
 @section('content')
 
-    @if(!empty($organizacao))
-        <h2>Organização: <strong> {{$organizacao->nome}}</strong></h2>
-    @endif
+    @includeIf('componentes.dados_exibicao')
     <H4>Novo Projeto</H4>
     <form action="{!! route('controle_projetos.store') !!}" method="post">
         @includeIf('controle_projetos.form',
