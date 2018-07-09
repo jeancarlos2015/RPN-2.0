@@ -54,18 +54,18 @@ class Modelo extends Model
 //Instancia todas as posições de memória que serão exibidas no título
     public static function dados_objeto(){
         $dado = array();
-        for($indice=0;$indice<7;$indice++){
+        for($indice=0;$indice<5;$indice++){
             $dado[$indice] = new Dado();
         }
         return $dado;
     }
-//Instancia somente os campos que serão exibidos no formulário
+//Instancia somente os campos que serão exibidos no formulário e preenche os títulos da listagem
     public static function dados(){
         $campos = self::campos();
         $atributos = self::atributos();
         $dados = self::dados_objeto();
         $titulos = self::titulos();
-        for ($indice = 0; $indice < 7; $indice++) {
+        for ($indice = 0; $indice < 5; $indice++) {
             if ($indice < 3) {
                 $dados[$indice]->campo = $campos[$indice];
                 $dados[$indice]->atributo = $atributos[$indice];
