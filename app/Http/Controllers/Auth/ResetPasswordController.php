@@ -11,7 +11,7 @@ class ResetPasswordController extends Controller
     use ResetsPasswords;
 
 
-    protected $redirectTo = 'admin/area';
+    protected $redirectTo = 'admin/controle_organizacoes';
 
 
     public function __construct()

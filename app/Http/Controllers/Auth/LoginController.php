@@ -11,7 +11,7 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    protected $redirectTo = 'admin/area';
+    protected $redirectTo = 'admin/controle_organizacoes';
 
 
     public function __construct()

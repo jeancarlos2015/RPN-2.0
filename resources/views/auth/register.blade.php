@@ -1,11 +1,11 @@
-@extends('layouts.mainlayout')
+@extends('layouts.basico.mainlayout')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card text-center ">
-                <div class="card-header dark-text-white">{{ trans('auth.Register') }}</div>
+                <div class="card-header dark-text-white">Tela de Cadastro</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">

@@ -1,4 +1,4 @@
-@extends('layouts.mainlayout')
+@extends('layouts.basico.mainlayout')
 
 @section('content')
 <div class="container">
@@ -47,7 +47,7 @@
 
                         <div class="form-group">
                                 <button type="submit" class="btn btn-dark btn-block">
-                                    {{ trans('auth.Login') }}
+                                    Entrar
                                 </button>
 
                         </div>

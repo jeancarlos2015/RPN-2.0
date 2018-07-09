@@ -1,0 +1,15 @@
+.ordena ul {
+    list-style: none !important;
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+}
+
+.ordena ul li{
+    float:left;
+    padding:1px 1px;
+    list-style-type:none;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    width: 30px;
+}

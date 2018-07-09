@@ -18,7 +18,7 @@ return array(
 
     /*
     |--------------------------------------------------------------------------
-    | Fluent helpers
+    | Fluent Helpers
     |--------------------------------------------------------------------------
     |
     | Set to true to generate commonly used Fluent methods
@@ -44,14 +44,14 @@ return array(
     |--------------------------------------------------------------------------
     |
     | Include helper files. By default not included, but can be toggled with the
-    | -- helpers (-H) option. Extra helper files can be included.
+    | -- Helpers (-H) option. Extra helper files can be included.
     |
     */
 
     'include_helpers' => false,
 
     'helper_files' => array(
-        base_path().'/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
+        base_path().'/vendor/laravel/framework/src/Illuminate/Support/Helpers.php',
     ),
 
     /*
@@ -59,8 +59,8 @@ return array(
     | Model locations to include
     |--------------------------------------------------------------------------
     |
-    | Define in which directories the ide-helper:models command should look
-    | for models.
+    | Define in which directories the ide-helper:Models command should look
+    | for Models.
     |
     */
 
@@ -102,7 +102,7 @@ return array(
     |--------------------------------------------------------------------------
     |
     | These interfaces will be replaced with the implementing class. Some interfaces
-    | are detected by the helpers, others can be listed below.
+    | are detected by the Helpers, others can be listed below.
     |
     */
 
@@ -129,7 +129,7 @@ return array(
     | our case it is 'json_array'. Doctrine types are listed here:
     | http://doctrine-dbal.readthedocs.org/en/latest/reference/types.html
     |
-    | So to support jsonb in your models when working with Postgres, just add the following entry to the array below:
+    | So to support jsonb in your Models when working with Postgres, just add the following entry to the array below:
     |
     | "postgresql" => array(
     |       "jsonb" => "json_array",
@@ -142,7 +142,7 @@ return array(
 
     /*
      |--------------------------------------------------------------------------
-     | Support for camel cased models
+     | Support for camel cased Models
      |--------------------------------------------------------------------------
      |
      | There are some Laravel packages (such as Eloquence) that allow for accessing

@@ -1,102 +1,60 @@
+<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-<h1>Programas Necessários e Úteis</h1>
-<ul>
-    <li><a href="https://laravel.com/docs/5.6/homestead">Homestead</a></li>
-    <li><a href="https://laravel.com/docs/5.6">Laravel 5.6</a></li>
-    <li><a href="https://www.virtualbox.org/">VirtualBox</a></li>
-    <li><a href="https://www.vagrantup.com/">Vagrant</a></li>
-    <li><a href="https://git-scm.com/">Git Bash</a></li>
-    <li><a href="https://notepad-plus-plus.org/download/v7.5.6.html">Notepad++</a></li>
-    <li><a href="https://www.jetbrains.com/phpstorm/">IDE PHPStorm</a></li>
-    <li><a href="https://nodejs.org/en/download/">Node.js</a></li>
-</ul>
-<h1>Configuração de Ambiente</h1>
-<p><strong>Gerar Chave Homestead</strong><br>
-    <code>ssh-keygen -t rsa -C "teste@teste.com.br"</code>
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-<p><strong>Instalar os Plugins do Vagrant para Adcionar automaticamente os Host's do Windows.</strong><br>
-    <code>vagrant plugin install vagrant-hostsupdater</code><br>
-    <code>vagrant plugin update vagrant-hostsupdater</code>
-</p>
+## About Laravel
 
-<p><strong>Dar Permissão da Pasta do Windows</strong><br>
-    <code>C:\Windows\System32\drivers\etc</code>
-</p>
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
 
-<p><strong>Iniciar Vagrant</strong><br>
-    <code>vagrant up</code>
-</p>
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-<p><strong>Depois que seu Vagrant Uma vez que o site foi adicionado, execute o comando do seu diretório
-    Homestead.</strong><br>
-    <code>vagrant reload --provision</code>
-</p>
+Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
 
-<h1>Instalação do Oracle no PHP 7.2 dentro do Homestead</h1>
-<p><code>vagrant ssh</code><br>
-    <code>sudo apt-get update</code><br>
-    <code>sudo apt-get install php7.2-dev build-essential php-pear libaio1 alien</code><br>
-    <code>sudo chmod -R 777 Code</code> <em>opcional</em><br>
-    <code>sudo alien Code/area-restrita/extras/oracle-instantclient-basic-10.2.0.4-1.x86_64.rpm</code><br>
-    <code>sudo alien Code/area-restrita/extras/oracle-instantclient-devel-10.2.0.4-1.x86_64.rpm</code><br>
-    <code>sudo dpkg -i oracle-instantclient-basic_10.2.0.4-2_amd64.deb</code><br>
-    <code>sudo dpkg -i oracle-instantclient-devel_10.2.0.4-2_amd64.deb</code><br>
-    <code>sudo pecl install oci8</code></p>
+## Learning Laravel
 
-<p>Adcionar extensão do Oracle <code>extension=oci8.so;</code> ao arquivo PHP.ini<br>
-    <code>sudo nano /etc/php/7.2/cli/php.ini</code><br>
-    <code>sudo nano /etc/php/7.2/fpm/php.ini</code><br>
-    <code>Ctrl+x</code> Para Salvar</p>
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
 
-<p>Agora temos que reiniciar o Homestead
-    <code>exit</code> Para Sair<br>
-    <code>vagrant reload --provision</code> para Reiniciar todas aplicações</p>
+If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
 
+## Laravel Sponsors
 
-<h1>Configurar Projeto</h1>
-<p></p>
+We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
 
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[British Software Development](https://www.britishsoftware.co)**
+- [Fragrantica](https://www.fragrantica.com)
+- [SOFTonSOFA](https://softonsofa.com/)
+- [User10](https://user10.com)
+- [Soumettre.fr](https://soumettre.fr/)
+- [CodeBrisk](https://codebrisk.com)
+- [1Forge](https://1forge.com)
+- [TECPRESSO](https://tecpresso.co.jp/)
+- [Runtime Converter](http://runtimeconverter.com/)
+- [WebL'Agence](https://weblagence.com/)
+- [Invoice Ninja](https://www.invoiceninja.com)
 
-<h1>Configuração da Ferramenta para Gerar PDF</h1>
-<p>Dentro da Pasta do Projeto executar os comandos abaixo:<br>
-    <code>sudo cp vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64 /usr/local/bin/</code><br>
-    <code>sudo cp vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64 /usr/local/bin/</code><br>
-    <code>sudo chmod +x /usr/local/bin/wkhtmltoimage-amd64</code><br>
-    <code>sudo chmod +x /usr/local/bin/wkhtmltopdf-amd64</code><br>
-</p>
+## Contributing
 
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-<h1>Instalar NPM(Node.js) no Windows</h1>
-<p>Dentro da Pasta do Projeto executar os comandos abaixo:<br>
-    <code>npm install --no-bin-links</code><br>
-    <code>npm rebuild node-sass --no-bin-links</code><br>
-    <code>npm i -g npm</code><br>
-    <code>npm run dev</code><br>
-    <code>npm run watch</code><br>
-</p>
+## Security Vulnerabilities
 
-<h1>Erros e Soluções do Projeto</h1>
-<p>
-<code>Erro: "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths" </code>
-<br>
-<code>Solução: "php artisan key:generate" </code>
-<br>
-<code>Descrição: O erro acontece quando a chave ultrapassa o tamanho de 32 caracteres</code>
-<br>
-<br>
-<code> Erro: "could not find driver (SQL: select * from "users" where "email" = user@user.com.br limit 1)"</code>
-<br>
-<code>Solução: Acessar o vagrant, entrar na pasta raiz do projeto e executar o seguinte comando: "php artisan migrate"</code>
-<br>
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-<code>Error: Não possui um nome e email para fazer commit no git</code>
-<code>Solução: git config --global user.name teste@gmail.com
-               git config --global user.email teste@gmail.com
-</code>
-<h3>Comandos Heroku</h3>
-<p>Comando para acessar a pasta raiz da aplicação no heroku</p>
-<code>$ heroku run bash --app <appName><br>
-~$ pwd<br>
-~$ cd <path to images folder><br></code>
-</p>
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
