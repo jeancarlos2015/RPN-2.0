@@ -26,4 +26,4 @@ deploy:
  provider: heroku
  api-key:
   secure: $API_KEY
- app: projetolarave21
+ app: projetolaravel21
