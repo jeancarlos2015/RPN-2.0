@@ -14,8 +14,9 @@ addons:
   #- sonar-scanner
 #before_script:
 script:
-  - cd database
+  - cd database/banco
   - touch database.sqlite
+  - cd ..
   - cd ..
   - cp .env.travis .env
   - composer self-update
