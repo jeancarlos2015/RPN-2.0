@@ -5,6 +5,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <a class="nav-link" href="{!! route('painel') !!}">
+                    <i class="fa fa-fw fa-list"></i>
+                    <span class="nav-link-text">Painel</span>
+                </a>
+            </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                 <a class="nav-link" href="{!! route('controle_organizacoes.index') !!}">
                     <i class="fa fa-fw fa-list"></i>
@@ -44,7 +51,7 @@
                     <span class="nav-link-text">Controles</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents">
-                   
+
                     <li>
                         <a href="navbar.blade.php"><i class="fa fa-fw fa-pencil"></i>Controle De Versionamento</a>
                     </li>
