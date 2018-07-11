@@ -111,9 +111,9 @@
                     @foreach($regras as $regra1)
                         <tr>
                             <td>{!! $regra1->id !!}</td>
-                            <td>{!! $regra1->tarefa1 !!}</td>
+                            <td>{!! $regra1->tarefa1->nome !!}</td>
                             <td>{!! $regra1->operador !!}</td>
-                            <td>{!! $regra1->tarefa2 !!}</td>
+                            <td>{!! $regra1->tarefa2->nome !!}</td>
                             <td>
 
                                 @if(!empty($rota_edicao))

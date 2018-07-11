@@ -85,7 +85,9 @@ class RegraController extends Controller
         $organizacao = $regra->organizacao;
         $projeto = $regra->projeto;
         $modelo = $regra->modelo;
-        $tarefas = Tarefa::where('modelo_id', $modelo->id)->get();
+        $tarefas = [];
+        array_push($tarefas, $regra->tarefa1);
+        array_push($tarefas, $regra->tarefa2);
         return view('controle_regras.edit', compact('dados', 'regra', 'organizacao', 'projeto', 'modelo', 'tarefas'));
     }
 

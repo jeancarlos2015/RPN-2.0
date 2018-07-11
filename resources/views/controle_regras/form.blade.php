@@ -21,20 +21,20 @@
     </div>
 @endfor
 
-@if(!empty($organizacao_id))
+@if(!empty($organizacao))
     <input type="hidden" name="organizacao_id" class="form-control"
-           value="{!! $organizacao_id !!}">
+           value="{!! $organizacao->id !!}">
 @endif
 
-@if(!empty($projeto_id))
+@if(!empty($projeto))
     <input type="hidden" name="projeto_id" class="form-control"
-           value="{!! $projeto_id !!}">
+           value="{!! $projeto->id !!}">
 @endif
 
-@if(!empty($modelo_id))
+@if(!empty($modelo))
     <input type="hidden" name="modelo_id" class="form-control"
-           value="{!! $modelo_id !!}">
+           value="{!! $modelo->id !!}">
 @endif
 
 
-<button type="submit" class="btn btn-primary form-control">{!! $acao !!}</button>
+<button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>

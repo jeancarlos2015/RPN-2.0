@@ -17,7 +17,13 @@
 
         @case ('regra')
         <a class="btn btn-dark form-control"
-           href="">Nova Regra</a>
+           href="{!! route('controle_regras_create',
+                [
+                'organizacao_id' => $organizacao->id,
+                     'projeto_id' => $projeto->id,
+                       'modelo_id' => $modelo->id
+                ]
+           ) !!}">Nova Regra</a>
         @break;
 
         @case ('tarefa')

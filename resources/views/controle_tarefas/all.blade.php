@@ -7,7 +7,7 @@
                     'titulos' => $titulos,
                     'tarefas' => $tarefas,
                     'rota_exclusao' => 'controle_tarefas.destroy',
-                    'rota_exibicao' => 'controle_tarefas.show',
+                    'rota_edicao' => 'controle_tarefas.edit',
                     'nome_botao' => 'Novo',
                     'titulo' =>'Tarefas'
     ])

@@ -70,8 +70,6 @@
                     'tarefas' => $tarefas,
                     'rota_edicao' => 'controle_tarefas.edit',
                     'rota_exclusao' => 'controle_tarefas.destroy',
-                    'rota_cricao' => 'controle_tarefas.create',
-                    'rota_exibicao' => 'controle_tarefas.show',
                     'nome_botao' => 'Novo',
                     'titulo' =>'Tarefas'
     ])
