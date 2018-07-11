@@ -61,7 +61,11 @@
                             <td>{!! $projeto1->id !!}</td>
                             <td>{!! $projeto1->nome !!}</td>
                             <td>{!! $projeto1->descricao !!}</td>
-                            <td>{!! $projeto1->organizacao->nome !!}</td>
+                            @if(!empty($projeto1->organizacao->nome))
+                                <td>{!! $projeto1->organizacao->nome !!}</td>
+                            @else
+                                <td>Foi Removido/Não Informado</td>
+                            @endif
                             <td>
                                 @if(!empty($rota_edicao))
                                     @include('componentes.link',['id' => $projeto1->id, 'rota' => $rota_edicao])

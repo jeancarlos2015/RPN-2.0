@@ -29,7 +29,10 @@
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Projetos'])
+    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+                    'titulo' => 'Projetos',
+                    'rota' => 'todos_projetos'
+    ])
     @if(!empty($organizacao))
         @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
     @endif

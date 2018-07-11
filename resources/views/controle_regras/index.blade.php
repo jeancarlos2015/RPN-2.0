@@ -31,7 +31,10 @@
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Regras'])
+    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+                    'titulo' => 'Regras',
+                    'rota' => 'todas_regras'
+    ])
     @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,

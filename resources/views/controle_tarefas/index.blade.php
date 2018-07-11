@@ -60,7 +60,10 @@
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Tarefas'])
+    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+                    'titulo' => 'Tarefas',
+                    'rota' => 'todas_tarefas'
+    ])
     @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,

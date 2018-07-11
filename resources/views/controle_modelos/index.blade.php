@@ -32,7 +32,10 @@
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Modelos'])
+    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+                    'titulo' => 'Modelos',
+                    'rota' => 'todos_modelos'
+    ])
 
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
