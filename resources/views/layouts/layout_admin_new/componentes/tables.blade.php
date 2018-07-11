@@ -139,7 +139,19 @@
                             <td>{!! $tarefa1->id !!}</td>
                             <td>{!! $tarefa1->nome !!}</td>
                             <td>{!! $tarefa1->descricao !!}</td>
-                            <td>Excluir | Visualizar | Editar</td>
+                            <td>
+
+                                @if(!empty($rota_edicao))
+                                    @include('componentes.link',['id' => $tarefa1->id, 'rota' => $rota_edicao])
+                                @endif
+                                @if(!empty($rota_exclusao))
+                                    @include('componentes.form_delete',['id' => $tarefa1->id, 'rota' => $rota_exclusao])
+                                @endif
+                                @if(!empty($rota_exibicao))
+                                    @include('componentes.link',['id' => $tarefa1->id, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                                @endif
+
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

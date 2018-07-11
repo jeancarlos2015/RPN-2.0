@@ -1,23 +1,34 @@
 @if(!empty($tipo))
     @switch($tipo)
         @case ('organizacao')
-        <a class="btn btn-warning form-control"
+        <a class="btn btn-dark form-control"
            href="{!! route('controle_organizacoes.create') !!}">Nova Organização</a>
         @break;
 
         @case ('modelo')
         <a class="btn btn-dark form-control"
-           href="">Novo Modelo</a>
+           href="{!! route('controle_modelos_create',[
+
+                        'organizacao_id' => $organizacao->id,
+                        'projeto_id' => $projeto->id
+
+                        ]) !!}">Novo Modelo</a>
         @break;
 
         @case ('regra')
-        <a class="btn btn-primary form-control"
+        <a class="btn btn-dark form-control"
            href="">Nova Regra</a>
         @break;
 
         @case ('tarefa')
-        <a class="btn btn-primary form-control"
-           href="">Nova Tarefa</a>
+        <a class="btn btn-dark form-control"
+           href="{!! route('controle_tarefas_create',
+           [
+                    'organizacao_id' => $organizacao->id,
+                     'projeto_id' => $projeto->id,
+                       'modelo_id' => $modelo->id
+           ]
+           ) !!}">Nova Tarefa</a>
         @break;
 
         @case ('projeto')

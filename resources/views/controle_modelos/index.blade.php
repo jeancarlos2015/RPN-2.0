@@ -36,7 +36,7 @@
                     'titulo' => 'Modelos',
                     'rota' => 'todos_modelos'
     ])
-
+    @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
                     'modelos' => $modelos,

@@ -23,4 +23,4 @@
            value="{!! $modelo_id !!}">
 @endif
 
-<button type="submit" class="btn btn-primary form-control">{!! $acao !!}</button>
+<button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>
