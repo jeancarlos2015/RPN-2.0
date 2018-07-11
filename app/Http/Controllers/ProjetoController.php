@@ -117,7 +117,6 @@ class ProjetoController extends Controller
     public function destroy($id)
     {
         $projeto = Projeto::findOrFail($id);
-        $organizacao = Organizacao::findOrFail($projeto->organizacao->id);
         try {
             $projeto->delete();
             if (!$projeto->exists) {
@@ -130,7 +129,7 @@ class ProjetoController extends Controller
             flash('Error!!!')->error();
         }
         return redirect()->route('controle_projetos_index', [
-            'organizacao_id' => $organizacao->id
+            'organizacao_id' => $projeto->organizacao->id
         ]);
     }
 }
