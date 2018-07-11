@@ -7,7 +7,6 @@ use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Models\Regra;
 use App\Http\Models\Tarefa;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrganizacaoController extends Controller
@@ -25,7 +24,8 @@ class OrganizacaoController extends Controller
         $organizacoes = Organizacao::all();
         $titulos = Organizacao::titulos();
         $campos = Organizacao::campos();
-        return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos'));
+        $tipo = 'organizacao';
+        return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos','tipo'));
     }
 
 
@@ -74,19 +74,19 @@ class OrganizacaoController extends Controller
     public function store(Request $request)
     {
         $organizacao = Organizacao::create($request->all());
-        if(isset($organizacao)){
+        if (isset($organizacao)) {
             flash('Organização criada com sucesso!!');
-        }else{
+        } else {
             flash('Organização não foi criada!!');
         }
 
-        return redirect()->route('controle_projetos_index',['organizacao_id' => $organizacao->id]);
+        return redirect()->route('controle_projetos_index', ['organizacao_id' => $organizacao->id]);
     }
 
 
     public function show($id)
     {
-        return redirect()->route('controle_projetos_index',['organizacao_id' => $id]);
+        return redirect()->route('controle_projetos_index', ['organizacao_id' => $id]);
     }
 
 
@@ -96,7 +96,7 @@ class OrganizacaoController extends Controller
         $dados = Organizacao::dados();
         $dados[0]->valor = $organizacao->nome;
         $dados[1]->valor = $organizacao->descricao;
-        return view('controle_organizacoes.edit', compact('dados','organizacao'));
+        return view('controle_organizacoes.edit', compact('dados', 'organizacao'));
     }
 
 
@@ -105,9 +105,9 @@ class OrganizacaoController extends Controller
         $organizacao = Organizacao::findOrFail($id);
         $organizacao->update($request->all());
 
-        if(isset($organizacao)){
+        if (isset($organizacao)) {
             flash('Organização Atualizada com sucesso!!');
-        }else{
+        } else {
             flash('Organização não foi Atualizada!!');
         }
 
@@ -128,7 +128,8 @@ class OrganizacaoController extends Controller
         return response()->redirectToRoute('controle_organizacoes.index');
     }
 
-    public function voltar(){
+    public function voltar()
+    {
         redirect()->back();
     }
 }

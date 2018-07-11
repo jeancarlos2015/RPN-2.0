@@ -18,8 +18,8 @@ class RegraController extends Controller
         $organizacao = Organizacao::findOrFail($organizacao_id);
         $projeto = Projeto::findOrFail($projeto_id);
         $modelo = Modelo::findOrFail($modelo_id);
-
-        return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo', 'regras'));
+        $tipo = 'regra';
+        return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo', 'regras','tipo'));
     }
 
 

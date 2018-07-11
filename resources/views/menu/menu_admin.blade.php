@@ -22,8 +22,8 @@
                             {{--Todos os Projetos</a></li>--}}
                     <li><i class="fa fa-puzzle-piece"></i><a href="{!! route('todos_modelos') !!}">
                             Todos os Modelos</a></li>
-                    {{--<li><i class="fa fa-puzzle-piece"></i><a href="{!! route('controle_organizacoes.index') !!}">--}}
-                            {{--Todas as Tarefas</a></li>--}}
+                    <li><i class="fa fa-puzzle-piece"></i><a href="{!! route('controle_versao.index') !!}">
+                            Teste Versionamento</a></li>
                     {{--<li><i class="fa fa-puzzle-piece"></i><a href="{!! route('controle_organizacoes.index') !!}">--}}
                             {{--Todas as Regras</a></li>--}}
                     {{--<li><i class="fa fa-puzzle-piece"></i><a href="#">Controle De Versionamento</a></li>--}}
@@ -31,7 +31,25 @@
                 </ul>
 
             </li>
+            <h3 class="menu-title">Versionamento</h3><!-- /.menu-title -->
+            <li class="menu-item-has-children dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="menu-icon fa fa-laptop"></i>Controles</a>
+                <ul class="sub-menu children dropdown-menu">
 
+                    <li><i class="fa fa-puzzle-piece"></i><a href="{!! route('controle_versao.index') !!}">
+                            Teste Git</a></li>
+
+                    <li><i class="fa fa-puzzle-piece"></i><a href="{!! route('pagina_inicializacao_repositorio') !!}">
+                            Inicializacação De Repositório</a></li>
+
+                    {{--<li><i class="fa fa-puzzle-piece"></i><a href="{!! route('controle_organizacoes.index') !!}">--}}
+                    {{--Todas as Regras</a></li>--}}
+                    {{--<li><i class="fa fa-puzzle-piece"></i><a href="#">Controle De Versionamento</a></li>--}}
+
+                </ul>
+
+            </li>
             <h3 class="menu-title">Configurações</h3><!-- /.menu-title -->
             <li class="menu-item-has-children dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

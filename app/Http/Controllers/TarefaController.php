@@ -18,7 +18,8 @@ class TarefaController extends Controller
         $organizacao = Organizacao::findOrFail($organizacao_id);
         $projeto = Projeto::findOrFail($projeto_id);
         $modelo = Modelo::findOrFail($modelo_id);
-        return view('controle_tarefas.index', compact('tarefas','titulos','organizacao','projeto','modelo'));
+        $tipo = 'tarefa';
+        return view('controle_tarefas.index', compact('tarefas','titulos','organizacao','projeto','modelo','tipo'));
     }
 
 

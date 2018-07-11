@@ -16,7 +16,7 @@
                     <li><a class="nav-link " href="{{ route('login') }}">{{ trans('auth.Login') }}</a></li>
                     <li><a class="nav-link" href="{{ route('register') }}">{{ trans('auth.Register') }}</a></li>
                 @else
-                    {{--teste teste teste teste--}}
+                    {{--layout_admin layout_admin layout_admin layout_admin--}}
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

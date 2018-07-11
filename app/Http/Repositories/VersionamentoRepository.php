@@ -8,21 +8,18 @@ class VersionamentoRepository
 {
     private $repositorio;
 
-    public function _construct(){
-        $this->path = "database";
-        $this->repositorio = new GitRepository(public_path($this->path));
+    public function get_path(){
+      return  database_path('banco');
     }
-
     public function git_init()
     {
         $branch = self::get_branch_current();
         $change = self::is_exchanges();
         try {
-            $this->repositorio = new GitRepository(public_path($this->path));
-            $this->repositorio = GitRepository::init(public_path($this->path));
+            $this->repositorio = new GitRepository(self::get_path());
+            $this->repositorio = GitRepository::init(self::get_path());
         } catch (\Exception $ex) {
         }
-
         $resultado['branch'] = $branch;
         $resultado['change'] = $change;
 
@@ -33,7 +30,7 @@ class VersionamentoRepository
     {
         $branch = null;
         try {
-            $this->repositorio = new GitRepository(public_path($this->path));
+            $this->repositorio = new GitRepository(self::get_path());
             $branch = $this->repositorio->getCurrentBranchName();
         } catch (GitException $ex) {
 
@@ -46,7 +43,7 @@ class VersionamentoRepository
     {
         $exchange = null;
         try {
-            $this->repositorio = new GitRepository(public_path($this->path));
+            $this->repositorio = new GitRepository(self::get_path());
             $exchange = $this->repositorio->hasChanges();
         } catch (GitException $ex) {
 
@@ -74,7 +71,7 @@ class VersionamentoRepository
         $change = null;
         try {
             self::inicialize_repository();
-            $this->repositorio->addFile(public_path($this->path) . '/.');
+            $this->repositorio->addFile(self::get_path() . '/.');
             $this->repositorio->commit($mensagem);
             $branch = $this->repositorio->getCurrentBranchName();
             $change = $this->repositorio->hasChanges();
@@ -90,9 +87,11 @@ class VersionamentoRepository
     private function inicialize_repository()
     {
         try {
-            $this->repositorio = new GitRepository(public_path($this->path));
+            $this->repositorio = new GitRepository(self::get_path());
+
         } catch (GitException $e) {
         }
+        return $this->repositorio;
     }
 
     public function git_create_branch($nome_branch)
@@ -121,10 +120,14 @@ class VersionamentoRepository
         $branch = null;
         $change = null;
         try {
-            self::inicialize_repository();
+            $this->repositorio = new GitRepository(self::get_path());
+
             $this->repositorio->checkout($nome_branch);
             $branch = $this->repositorio->getCurrentBranchName();
             $change = $this->repositorio->hasChanges();
+            if ($change){
+
+            }
         } catch (GitException $ex) {
 
         }
@@ -145,7 +148,7 @@ class VersionamentoRepository
         }
         try {
             $this->repositorio->merge($nome_branch);
-            $this->repositorio->addFile(public_path($this->path) . '/.');
+            $this->repositorio->addFile(self::get_path() . '/.');
             $this->repositorio->commit('commit');
         } catch (GitException $ex) {
 
@@ -174,6 +177,10 @@ class VersionamentoRepository
         return $resultado;
     }
 
+
+    public function git_push(){
+        $repositorio = self::inicialize_repository();
+    }
 
 
 }

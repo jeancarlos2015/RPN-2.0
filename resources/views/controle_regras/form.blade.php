@@ -14,7 +14,7 @@
             @else
                 <label>{!! $dados[$indice]->campo !!}</label>
                 <input name="{!! $dados[$indice]->atributo !!}" class="form-control"
-                       placeholder="{!! $dados[$indice]->campo !!}" value="{!! $dados[$indice]->valor !!}">
+                       placeholder="{!! $dados[$indice]->campo !!}" value="{!! $dados[$indice]->valor !!}" required>
             @endif
 
         @endif

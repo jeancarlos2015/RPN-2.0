@@ -17,10 +17,11 @@ class ModeloController extends Controller
         $organizacao = Organizacao::findOrFail($organizacao_id);
         $titulos = Modelo::titulos();
         $modelos = Modelo::where('projeto_id', $projeto_id)->get();
-        return view('controle_modelos.index', compact('modelos', 'projeto', 'organizacao', 'titulos'));
+        $tipo = 'modelo';
+        return view('controle_modelos.index', compact('modelos', 'projeto', 'organizacao', 'titulos','tipo'));
     }
 
-    public function index_todos_modelos()
+    public function todos_modelos()
     {
 
         $modelos = Modelo::all();

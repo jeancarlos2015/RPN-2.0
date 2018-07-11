@@ -4,17 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
+use App\Http\Repositories\VersionamentoRepository;
 use Illuminate\Http\Request;
 
 class ProjetoController extends Controller
 {
+
+
 
     public function index($organizacao_id)
     {
         $organizacao = Organizacao::findOrFail($organizacao_id);
         $projetos = Projeto::all()->where('organizacao_id', $organizacao_id);
         $titulos = Projeto::titulos();
-        return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos', 'organizacao_id'));
+        $tipo = 'projeto';
+        return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos','tipo'));
+    }
+
+    public function todos_projetos()
+    {
+        $projetos = Projeto::all();
+        $titulos = Projeto::titulos();
+        return view('controle_projetos.index', compact('projetos', 'titulos'));
     }
 
     /**
@@ -68,7 +79,7 @@ class ProjetoController extends Controller
         $organizacao = $projeto->organizacao;
         $dados[0]->valor = $projeto->nome;
         $dados[1]->valor = $projeto->descricao;
-        return view('controle_projetos.edit', compact('dados','projeto','organizacao'));
+        return view('controle_projetos.edit', compact('dados', 'projeto', 'organizacao'));
     }
 
     /**
@@ -99,9 +110,9 @@ class ProjetoController extends Controller
         $organizacao = Organizacao::findOrFail($projeto->organizacao->id);
         try {
             $projeto->delete();
-            if(!$projeto->exists){
+            if (!$projeto->exists) {
                 flash('Projeto Excluído Com Sucesso!!!');
-            }else{
+            } else {
                 flash('Projeto Não Foi Excluído!!!');
             }
 
