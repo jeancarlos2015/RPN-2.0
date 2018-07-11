@@ -12,48 +12,60 @@
                     <span class="nav-link-text">Painel</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                <a class="nav-link" href="{!! route('controle_organizacoes.index') !!}">
-                    <i class="fa fa-fw fa-list"></i>
-                    <span class="nav-link-text">Organizações</span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-                <a class="nav-link" href="{!! route('todos_projetos') !!}">
-                    <i class="fa fa-fw fa-list"></i>
-                    <span class="nav-link-text">Projetos</span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="{!! route('todos_modelos') !!}">
-                    <i class="fa fa-fw fa-list"></i>
-                    <span class="nav-link-text">Modelos</span>
-                </a>
-            </li>
+            {{--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">--}}
+                {{--<a class="nav-link" href="{!! route('controle_organizacoes.index') !!}">--}}
+                    {{--<i class="fa fa-fw fa-list"></i>--}}
+                    {{--<span class="nav-link-text">Organizações</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+            {{--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">--}}
+                {{--<a class="nav-link" href="{!! route('todos_projetos') !!}">--}}
+                    {{--<i class="fa fa-fw fa-list"></i>--}}
+                    {{--<span class="nav-link-text">Projetos</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+            {{--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">--}}
+                {{--<a class="nav-link" href="{!! route('todos_modelos') !!}">--}}
+                    {{--<i class="fa fa-fw fa-list"></i>--}}
+                    {{--<span class="nav-link-text">Modelos</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="{!! route('todas_regras') !!}">
-                    <i class="fa fa-fw fa-list"></i>
-                    <span class="nav-link-text">Regras</span>
-                </a>
-            </li>
+            {{--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">--}}
+                {{--<a class="nav-link" href="{!! route('todas_regras') !!}">--}}
+                    {{--<i class="fa fa-fw fa-list"></i>--}}
+                    {{--<span class="nav-link-text">Regras</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="{!! route('todas_tarefas') !!}">
-                    <i class="fa fa-fw fa-list"></i>
-                    <span class="nav-link-text">Tarefas</span>
-                </a>
-            </li>
+            {{--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">--}}
+                {{--<a class="nav-link" href="{!! route('todas_tarefas') !!}">--}}
+                    {{--<i class="fa fa-fw fa-list"></i>--}}
+                    {{--<span class="nav-link-text">Tarefas</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-building"></i>
-                    <span class="nav-link-text">Controles</span>
+                    <span class="nav-link-text">Versionamento</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents">
 
                     <li>
-                        <a href="{!! route('controle_versao_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Controle De Versionamento</a>
+                        <a href="{!! route('controle_versao_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Merge & Checkout</a>
+                    </li>
+
+                    <li>
+                        <a href="{!! route('controle_versao_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Create & Delete</a>
+                    </li>
+
+                    <li>
+                        <a href="{!! route('controle_versao_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Commit Branch</a>
+                    </li>
+
+                    <li>
+                        <a href="{!! route('controle_versao_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Pull & Push Repository</a>
                     </li>
                 </ul>
             </li>
@@ -78,6 +90,15 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                {{--<a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="{!! route('logout') !!}">--}}
+                {{--<i class="fa fa-fw fa-sign-out"></i>Logout</a>--}}
+
+                <a class="nav-link" >
+                    Branch: Teste <span class="sr-only"></span>
+                </a>
+            </li>
+
             <li class="nav-item">
                 {{--<a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="{!! route('logout') !!}">--}}
                 {{--<i class="fa fa-fw fa-sign-out"></i>Logout</a>--}}

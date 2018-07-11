@@ -35,6 +35,7 @@ class OrganizacaoController extends Controller
         $qt_modelos = Modelo::all()->count();
         $qt_tarefas = Tarefa::all()->count();
         $qt_regras = Regra::all()->count();
+        $tipo = 'painel';
         $titulos = [
             'Modelos',
             'Tarefas',
@@ -56,7 +57,8 @@ class OrganizacaoController extends Controller
             $qt_projetos,
             $qt_organizacoes
         ];
-        return view('painel.index',compact('titulos','quantidades','rotas'));
+
+        return view('painel.index',compact('titulos','quantidades','rotas','tipo'));
     }
 
 

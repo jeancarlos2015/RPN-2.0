@@ -53,7 +53,9 @@ class ProjetoController extends Controller
 
     public function store(Request $request)
     {
+
         $projeto = Projeto::create($request->all());
+
         $organizacao_id = $request->organizacao_id;
         if (isset($projeto)) {
             flash('Projeto criado com sucesso!!');
