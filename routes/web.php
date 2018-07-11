@@ -26,6 +26,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_regras', 'RegraController');
 
 
+
         Route::get('controle_projetos_index/{organizacao_id}', 'ProjetoController@index')->name('controle_projetos_index');
         Route::get('show_tarefas/{modelo_id}', 'ModeloController@show_tarefas')->name('show_tarefas');
         Route::get('show_regras/{modelo_id}', 'ModeloController@show_regras')->name('show_regras');
@@ -34,6 +35,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('todos_projetos', 'ProjetoController@todos_projetos')->name('todos_projetos');
         Route::get('todas_tarefas', 'TarefaController@todas_tarefas')->name('todas_tarefas');
         Route::get('todas_regras', 'RegraController@todas_regras')->name('todas_regras');
+        Route::get('controle_versao_projetos', 'VersionadorController@index')->name('controle_versao_projetos');
 
 
         Route::get('controle_projetos_create/{organizacao_id}', 'ProjetoController@create')->name('controle_projetos_create');

@@ -53,7 +53,7 @@
                 <ul class="sidenav-second-level collapse" id="collapseComponents">
 
                     <li>
-                        <a href="navbar.blade.php"><i class="fa fa-fw fa-pencil"></i>Controle De Versionamento</a>
+                        <a href="{!! route('controle_versao_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Controle De Versionamento</a>
                     </li>
                 </ul>
             </li>

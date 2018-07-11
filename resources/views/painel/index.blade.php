@@ -4,4 +4,5 @@
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Painel'])
     @includeIf('layouts.layout_admin_new.componentes.cards')
+
 @endsection

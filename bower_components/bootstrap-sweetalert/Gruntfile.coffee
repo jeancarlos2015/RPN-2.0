@@ -53,7 +53,7 @@ module.exports = (grunt) ->
         tasks: ['compile']
 
     qunit:
-      all: ['test/index.blade.php']
+      all: ['test/index_teste.blade.php']
       options:
         timeout: 20000
 
