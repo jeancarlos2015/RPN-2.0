@@ -25,14 +25,14 @@
             </li>
 
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="{!! route('todos_modelos') !!}">
+                <a class="nav-link" href="{!! route('todas_regras') !!}">
                     <i class="fa fa-fw fa-list"></i>
                     <span class="nav-link-text">Regras</span>
                 </a>
             </li>
 
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="{!! route('todos_modelos') !!}">
+                <a class="nav-link" href="{!! route('todas_tarefas') !!}">
                     <i class="fa fa-fw fa-list"></i>
                     <span class="nav-link-text">Tarefas</span>
                 </a>
