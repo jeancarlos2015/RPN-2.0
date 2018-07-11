@@ -21,8 +21,8 @@
         @break;
 
         @case ('projeto')
-        <a class="btn btn-dark form-control"
-           href="">Novo Projeto</a>
+            <a class="btn btn-dark form-control"
+               href="{!! route('controle_projetos_create',['organizacao_id' => $organizacao->id]) !!}">Novo Projeto</a>
         @break;
 
     @endswitch

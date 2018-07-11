@@ -6,19 +6,6 @@
         @endif
     </div>
 
-    @if(!empty($rota_cricao))
-        @if(!empty($projetos) &&
-            !empty($organizacao) &&
-            !empty($modelo) &&
-            !empty($tarefa) &&
-            !empty($regra))
-            <a class="btn btn-primary"
-               href="{!! route($rota_criacao,['organizacao_id' => $organizacao->id]) !!}">Novo</a>
-        @endif
-    @endif
-
-
-
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

@@ -25,18 +25,28 @@ class ProjetoController extends Controller
     {
         $projetos = Projeto::all();
         $titulos = Projeto::titulos();
-        return view('controle_projetos.index', compact('projetos', 'titulos'));
+        $tipo = 'projeto';
+        return view('controle_projetos.index', compact('projetos', 'titulos','tipo'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return bool
      */
+    private function exists($id){
+        $organizacao = (new Organizacao)->where('id', '=', $id)->first();
+        return $organizacao === null;
+    }
     public function create($organizacao_id)
     {
+
         $dados = Projeto::dados();
-        $organizacao = Organizacao::findOrFail($organizacao_id);
+        if(!$this->exists($organizacao_id)){
+            $organizacao = Organizacao::findOrFail($organizacao_id);
+        }else{
+            $organizacao = Organizacao::create(['nome' => 'novo', 'descricao' => 'novo']);
+        }
         return view('controle_projetos.create', compact('dados', 'organizacao'));
     }
 
