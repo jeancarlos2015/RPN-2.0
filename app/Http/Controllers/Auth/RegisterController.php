@@ -14,7 +14,7 @@ class RegisterController extends Controller
     use RegistersUsers;
 
 
-    protected $redirectTo = 'admin/controle_organizacoes';
+    protected $redirectTo = 'admin/painel';
 
 
     public function __construct()

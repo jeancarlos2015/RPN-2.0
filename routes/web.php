@@ -32,6 +32,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         Route::get('todos_modelos', 'ModeloController@todos_modelos')->name('todos_modelos');
         Route::get('todos_projetos', 'ProjetoController@todos_projetos')->name('todos_projetos');
+        Route::get('todas_tarefas', 'TarefaController@todas_tarefas')->name('todas_tarefas');
+        Route::get('todas_regras', 'RegraController@todas_regras')->name('todas_regras');
 
 
         Route::get('controle_projetos_create/{organizacao_id}', 'ProjetoController@create')->name('controle_projetos_create');
@@ -57,5 +59,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
 
         Route::get('pagina_inicializacao_repositorio', 'GitController@pagina_inicializacao_repositorio')->name('pagina_inicializacao_repositorio');
+
+        Route::get('painel', 'OrganizacaoController@painel')->name('painel');
 
     });

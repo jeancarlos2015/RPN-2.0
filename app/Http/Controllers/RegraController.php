@@ -22,6 +22,11 @@ class RegraController extends Controller
         return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo', 'regras','tipo'));
     }
 
+    public function todas_regras(){
+        $regras = Regra::all();
+        $titulos = Regra::titulos();
+        return view('controle_regras.all',compact('regras','titulos'));
+    }
 
     public function create($organizacao_id, $projeto_id, $modelo_id)
     {

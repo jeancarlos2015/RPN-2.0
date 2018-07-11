@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Modelo;
 use App\Http\Models\Operador;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
@@ -26,6 +27,36 @@ class OrganizacaoController extends Controller
         $campos = Organizacao::campos();
         $tipo = 'organizacao';
         return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos','tipo'));
+    }
+
+    public function painel(){
+        $qt_organizacoes = Organizacao::all()->count();
+        $qt_projetos = Projeto::all()->count();
+        $qt_modelos = Modelo::all()->count();
+        $qt_tarefas = Tarefa::all()->count();
+        $qt_regras = Regra::all()->count();
+        $titulos = [
+            'Modelos',
+            'Tarefas',
+            'Regras',
+            'Projetos',
+            'Organizações'
+            ];
+        $rotas = [
+            'todos_modelos',
+            'todas_tarefas',
+            'todas_regras',
+            'todos_projetos',
+            'controle_organizacoes.index'
+        ];
+        $quantidades = [
+            $qt_modelos,
+            $qt_tarefas,
+            $qt_regras,
+            $qt_projetos,
+            $qt_organizacoes
+        ];
+        return view('painel.index',compact('titulos','quantidades','rotas'));
     }
 
 

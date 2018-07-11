@@ -22,6 +22,11 @@ class TarefaController extends Controller
         return view('controle_tarefas.index', compact('tarefas','titulos','organizacao','projeto','modelo','tipo'));
     }
 
+    public function todas_tarefas(){
+        $tarefas = Tarefa::all();
+        $titulos = Tarefa::titulos();
+        return view('controle_tarefas.all',compact('tarefas','titulos'));
+    }
 
     public function create($organizacao_id, $projeto_id, $modelo_id)
     {
