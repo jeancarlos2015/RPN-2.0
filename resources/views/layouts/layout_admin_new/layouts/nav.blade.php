@@ -44,9 +44,7 @@
                     <span class="nav-link-text">Controles</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents">
-                    <li>
-                        <a href="navbar.blade.php"><i class="fa fa-fw fa-pencil"></i>Controle De Organizações</a>
-                    </li>
+                   
                     <li>
                         <a href="navbar.blade.php"><i class="fa fa-fw fa-pencil"></i>Controle De Versionamento</a>
                     </li>
