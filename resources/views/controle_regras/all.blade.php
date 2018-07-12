@@ -7,7 +7,6 @@
                     'titulos' => $titulos,
                     'tarefas' => $regras,
                     'rota_exclusao' => 'controle_tarefas.destroy',
-                    'rota_exibicao' => 'controle_tarefas.show',
                     'nome_botao' => 'Novo',
                     'titulo' =>'Regras'
     ])
