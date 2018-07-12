@@ -6,7 +6,8 @@
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
                     'tarefas' => $regras,
-                    'rota_exclusao' => 'controle_tarefas.destroy',
+                    'rota_edicao' => 'controle_regras.edit',
+                    'rota_exclusao' => 'controle_regras.destroy',
                     'nome_botao' => 'Novo',
                     'titulo' =>'Regras'
     ])
