@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Repositories;
+namespace App\Http\Repositorys;
 
 use Cz\Git\GitException;
 use Cz\Git\GitRepository;

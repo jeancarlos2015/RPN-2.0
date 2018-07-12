@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Http\Repositorys;
 
 use GitWrapper\GitWrapper;
 
-require_once ('../../../vendor/autoload.php');
+require_once('../../../vendor/autoload.php');
 
 class GitWrapperRepository
 {

@@ -8,6 +8,11 @@ use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Models\Regra;
 use App\Http\Models\Tarefa;
+use App\Http\Repositorys\ModeloRepository;
+use App\Http\Repositorys\OrganizacaoRepository;
+use App\Http\Repositorys\ProjetoRepository;
+use App\Http\Repositorys\RegraRepository;
+use App\Http\Repositorys\TarefaRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,8 +28,7 @@ class OrganizacaoController extends Controller
 
     public function index()
     {
-        $organizacoes = Organizacao::join('users','users.id','=','organizacoes.user_id')
-            ->get();
+        $organizacoes = OrganizacaoRepository::listar();
         $titulos = Organizacao::titulos();
         $campos = Organizacao::campos();
         $tipo = 'organizacao';
@@ -32,11 +36,11 @@ class OrganizacaoController extends Controller
     }
 
     public function painel(){
-        $qt_organizacoes = Organizacao::all()->count();
-        $qt_projetos = Projeto::all()->count();
-        $qt_modelos = Modelo::all()->count();
-        $qt_tarefas = Tarefa::all()->count();
-        $qt_regras = Regra::all()->count();
+        $qt_organizacoes = OrganizacaoRepository::count();
+        $qt_projetos = ProjetoRepository::count();
+        $qt_modelos = ModeloRepository::count();
+        $qt_tarefas = TarefaRepository::count();
+        $qt_regras = RegraRepository::count();
         $tipo = 'painel';
         $titulos = [
             'Modelos',

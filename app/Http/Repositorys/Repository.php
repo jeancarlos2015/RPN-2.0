@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Http\Repositorys;
 abstract class Repository
 {
     protected static $model;
