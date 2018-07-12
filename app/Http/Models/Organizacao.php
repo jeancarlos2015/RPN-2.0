@@ -2,6 +2,7 @@
 
 namespace App\Http\Models;
 
+use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
 class Organizacao extends Model
@@ -10,7 +11,8 @@ class Organizacao extends Model
     protected $table = 'organizacoes';
     protected $fillable = [
         'nome',
-        'descricao'
+        'descricao',
+        'user_id'
     ];
 
 

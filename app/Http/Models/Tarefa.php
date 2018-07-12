@@ -2,6 +2,7 @@
 
 namespace App\Http\Models;
 
+use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
 class Tarefa extends Model
@@ -13,7 +14,8 @@ class Tarefa extends Model
         'descricao',
         'organizacao_id',
         'projeto_id',
-        'modelo_id'
+        'modelo_id',
+        'user_id'
     ];
 
     public static function titulos()

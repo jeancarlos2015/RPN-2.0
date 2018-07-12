@@ -6,5 +6,5 @@
                     'titulo' => 'Versionamento',
                     'rota' => 'todas_tarefas'
     ])
-  
+
 @endsection

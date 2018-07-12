@@ -6,6 +6,7 @@ use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Repositories\VersionamentoRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjetoController extends Controller
 {
@@ -15,7 +16,7 @@ class ProjetoController extends Controller
     public function index($organizacao_id)
     {
         $organizacao = Organizacao::findOrFail($organizacao_id);
-        $projetos = Projeto::all()->where('organizacao_id', $organizacao_id);
+        $projetos = $organizacao->projetos;
         $titulos = Projeto::titulos();
         $tipo = 'projeto';
         return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos','tipo'));
@@ -54,6 +55,7 @@ class ProjetoController extends Controller
     public function store(Request $request)
     {
 
+        $request->request->add(['user_id' => Auth::user()->id]);
         $projeto = Projeto::create($request->all());
 
         $organizacao_id = $request->organizacao_id;

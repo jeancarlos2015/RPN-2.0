@@ -22,6 +22,7 @@ class CreateRegrasTable extends Migration
             $table->bigInteger('organizacao_id');
             $table->bigInteger('modelo_id');
             $table->bigInteger('regra_id');
+            $table->bigInteger('user_id');
             $table->string('nome');
             $table->timestamps();
         });

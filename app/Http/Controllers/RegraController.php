@@ -8,12 +8,18 @@ use App\Http\Models\Projeto;
 use App\Http\Models\Regra;
 use App\Http\Models\Tarefa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegraController extends Controller
 {
     public function index($organizacao_id, $projeto_id, $modelo_id)
     {
-        $regras = Regra::where('modelo_id', $modelo_id)->get();
+        $regras = Regra::join('users', 'users.id','=','regras.user_id')
+            ->where('regras.organizacao_id','=',$organizacao_id)
+            ->where('regras.projeto_id','=',$projeto_id)
+            ->where('regras.modelo_id','=',$modelo_id)
+            ->get();
+
         $titulos = Regra::titulos();
         $organizacao = Organizacao::findOrFail($organizacao_id);
         $projeto = Projeto::findOrFail($projeto_id);
@@ -45,7 +51,10 @@ class RegraController extends Controller
         $organizacao = Organizacao::findOrFail($request->organizacao_id);
         $modelo = Modelo::findOrFail($request->modelo_id);
         if (empty($request->regra_id)) {
-            $request->request->add(['regra_id' => 0]);
+            $request->request->add([
+                'regra_id' => 0,
+                'user_id' => Auth::user()->id
+            ]);
         }
         $regra = Regra::create($request->all());
         if (isset($regra)) {
@@ -125,11 +134,17 @@ class RegraController extends Controller
         } catch (\Exception $e) {
             flash('Error!!')->error();
         }
+        if (!empty($projeto) || !empty($organizacao) && !empty($modelo)){
+            $titulos = Regra::titulos();
+            $regras = Regra::join('users', 'users.id','=','regras.user_id')->get();
+                return view('controle_regras.all',compact('titulos','regras'));
+        }else{
+            return redirect()->route('controle_regras_index', [
+                'organizacao_id' => $organizacao->id,
+                'projeto_id' => $projeto->id,
+                'modelo_id' => $modelo->id
+            ]);
+        }
 
-        return redirect()->route('controle_regras_index', [
-            'organizacao_id' => $organizacao->id,
-            'projeto_id' => $projeto->id,
-            'modelo_id' => $modelo->id
-        ]);
     }
 }

@@ -20,6 +20,7 @@ class CreateTarefasTable extends Migration
             $table->bigInteger('modelo_id');
             $table->bigInteger('projeto_id');
             $table->bigInteger('organizacao_id');
+            $table->bigInteger('user_id');
             $table->timestamps();
         });
     }

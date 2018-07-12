@@ -689,16 +689,16 @@
         },
         {
             "name": "kris/laravel-form-builder",
-            "version": "1.15.0",
+            "version": "1.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kristijanhusak/laravel-form-builder.git",
-                "reference": "286e758056db11f824f1bcc717e99127757069be"
+                "reference": "5bb1766e90151b67e8c0a07a3492781ed801caf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kristijanhusak/laravel-form-builder/zipball/286e758056db11f824f1bcc717e99127757069be",
-                "reference": "286e758056db11f824f1bcc717e99127757069be",
+                "url": "https://api.github.com/repos/kristijanhusak/laravel-form-builder/zipball/5bb1766e90151b67e8c0a07a3492781ed801caf8",
+                "reference": "5bb1766e90151b67e8c0a07a3492781ed801caf8",
                 "shasum": ""
             },
             "require": {
@@ -747,7 +747,7 @@
                 }
             ],
             "description": "Laravel form builder - symfony like",
-            "time": "2018-07-04T10:03:42+00:00"
+            "time": "2018-07-11T10:44:40+00:00"
         },
         {
             "name": "laracasts/flash",

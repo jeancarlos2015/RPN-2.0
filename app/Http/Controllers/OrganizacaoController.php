@@ -9,6 +9,7 @@ use App\Http\Models\Projeto;
 use App\Http\Models\Regra;
 use App\Http\Models\Tarefa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrganizacaoController extends Controller
 {
@@ -22,7 +23,8 @@ class OrganizacaoController extends Controller
 
     public function index()
     {
-        $organizacoes = Organizacao::all();
+        $organizacoes = Organizacao::join('users','users.id','=','organizacoes.user_id')
+            ->get();
         $titulos = Organizacao::titulos();
         $campos = Organizacao::campos();
         $tipo = 'organizacao';
@@ -106,6 +108,7 @@ class OrganizacaoController extends Controller
 
     public function store(Request $request)
     {
+        $request->request->add(['user_id' => Auth::user()->id]);
         $organizacao = Organizacao::create($request->all());
         if (isset($organizacao)) {
             flash('Organização criada com sucesso!!');

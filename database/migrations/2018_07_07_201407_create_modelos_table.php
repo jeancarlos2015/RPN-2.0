@@ -15,12 +15,13 @@ class CreateModelosTable extends Migration
     {
         Schema::create('modelos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome');
+            $table->string('nome')->unique();
             $table->string('descricao');
             $table->string('tipo');
             $table->longText('xml_modelo');
             $table->bigInteger('projeto_id');
             $table->bigInteger('organizacao_id');
+            $table->bigInteger('user_id');
             $table->timestamps();
         });
     }

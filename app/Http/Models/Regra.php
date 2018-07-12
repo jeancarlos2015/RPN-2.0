@@ -2,6 +2,7 @@
 
 namespace App\Http\Models;
 
+use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
 class Regra extends Model
@@ -16,7 +17,8 @@ class Regra extends Model
         'projeto_id',
         'organizacao_id',
         'regra_id',
-        'nome'
+        'nome',
+        'user_id'
     ];
 
     public static function titulos()

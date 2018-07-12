@@ -2,6 +2,7 @@
 
 namespace App\Http\Models;
 
+use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
 class Modelo extends Model
@@ -14,7 +15,8 @@ class Modelo extends Model
         'tipo',
         'xml_modelo',
         'projeto_id',
-        'organizacao_id'
+        'organizacao_id',
+        'user_id'
     ];
 
 

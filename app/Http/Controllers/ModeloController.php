@@ -6,6 +6,7 @@ use App\Http\Models\Modelo;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ModeloController extends Controller
 {
@@ -16,7 +17,10 @@ class ModeloController extends Controller
         $projeto = Projeto::findOrFail($projeto_id);
         $organizacao = Organizacao::findOrFail($organizacao_id);
         $titulos = Modelo::titulos();
-        $modelos = Modelo::where('projeto_id', $projeto_id)->get();
+        $modelos = Modelo::join('users', 'users.id','=','modelos.user_id')
+            ->where('modelos.organizacao_id','=',$organizacao_id)
+            ->where('modelos.projeto_id','=',$projeto_id)
+            ->get();
         $tipo = 'modelo';
         return view('controle_modelos.index', compact('modelos', 'projeto', 'organizacao', 'titulos','tipo'));
     }
@@ -24,7 +28,7 @@ class ModeloController extends Controller
     public function todos_modelos()
     {
 
-        $modelos = Modelo::all();
+        $modelos = Modelo::join('users', 'users.id','=','modelos.user_id')->get();
         $titulos = Modelo::titulos();
         return view('controle_modelos.index_todos_modelos', compact('modelos', 'titulos'));
     }
@@ -59,6 +63,7 @@ class ModeloController extends Controller
     {
         $request->request->add([
             'xml_modelo' => 'nenhum',
+            'user_id' => Auth::user()->id
         ]);
         $modelo = Modelo::create($request->all());
         if (isset($modelo)) {

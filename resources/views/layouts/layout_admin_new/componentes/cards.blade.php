@@ -121,7 +121,7 @@
                                 <div class="card-body-icon">
                                     <i class="fa fa-fw fa-list"></i>
                                 </div>
-                                <div class="mr-5">{!! $quantidades[$index] !!} {!! $titulos[$index] !!}</div>
+                                <div class="mr-5">{!! $quantidades[$index] !!} -  {!! $titulos[$index] !!}</div>
                             </div>
                             <a class="card-footer text-white clearfix small z-1" href="{!! route($rotas[$index]) !!}">
                                 <span class="float-left">Visualizar</span>

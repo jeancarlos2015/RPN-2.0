@@ -3,31 +3,19 @@
 namespace App\Http\Models;
 
 use App\Http\Util\Configuracao;
+use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
 class Projeto extends Model
 {
-
-//    public function __construct(array $attributes = array())
-//    {
-//        parent::__construct($attributes);
-//        if(!empty($this->nome)){
-//            $database = $this->nome.".sqlite";
-//            Configuracao::create_database($database);
-//            Configuracao::create_migrations($database,$this->nome);
-//            config('DB_DATABASE',$database);
-//            config('DB_CONNECTION',$this->nome);
-//
-//        }
-//
-//    }
 
     protected $primaryKey = 'id';
     protected $table = 'projetos';
     protected $fillable = [
         'nome',
         'descricao',
-        'organizacao_id'
+        'organizacao_id',
+        'user_id'
     ];
 
 
