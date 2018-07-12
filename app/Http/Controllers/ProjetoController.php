@@ -15,7 +15,7 @@ class ProjetoController extends Controller
     public function index($codorganizacao)
     {
         $organizacao = Organizacao::findOrFail($codorganizacao);
-        $projetos = $organizacao->projetos;
+        $projetos = collect($organizacao->projetos);
         $titulos = Projeto::titulos();
         $tipo = 'projeto';
         return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos', 'tipo'));

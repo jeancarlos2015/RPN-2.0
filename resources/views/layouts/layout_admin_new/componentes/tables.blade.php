@@ -55,8 +55,10 @@
 
                 @if(!empty($projetos))
                     <tbody>
+
                     @foreach($projetos as $projeto1)
                         <tr>
+
                             <td>{!! $projeto1->codprojeto !!}</td>
                             <td>{!! $projeto1->nome !!}</td>
                             <td>{!! $projeto1->descricao !!}</td>

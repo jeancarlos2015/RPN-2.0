@@ -20,7 +20,7 @@ class ProjetoRepository extends Repository
     public static function listar()
     {
 
-        return collect((new Projeto)->join('users', 'users.codusuario', '=', 'projetos.codusuario')
+        return collect(Projeto::join('users', 'users.codusuario', '=', 'projetos.codusuario')
             ->where('users.codusuario','=',Auth::user()->codusuario)
             ->get());
 
