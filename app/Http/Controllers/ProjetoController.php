@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
+use App\Http\Repositorys\OrganizacaoRepository;
 use App\Http\Repositorys\ProjetoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,7 @@ class ProjetoController extends Controller
     public function index($codorganizacao)
     {
         $organizacao = Organizacao::findOrFail($codorganizacao);
-        $projetos = $organizacao->projetos;
+        $projetos = ProjetoRepository::listar_por_organizacao($codorganizacao);
         $titulos = Projeto::titulos();
         $tipo = 'projeto';
         return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos', 'tipo'));
