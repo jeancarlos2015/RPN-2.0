@@ -26,6 +26,14 @@ class ProjetoRepository extends Repository
 
     }
 
+    public static function listar_por_organizacao($codorganizacao)
+    {
+
+        return collect(Projeto::join('users', 'users.codusuario', '=', 'projetos.codusuario')
+            ->where('users.codusuario','=',Auth::user()->codusuario)
+            ->where('projetos.codorganizacao','=',$codorganizacao)
+            ->get());
+    }
     public static function count()
     {
         return collect(self::listar())->count();

@@ -99,7 +99,7 @@ class TarefaController extends Controller
 
     public function destroy($id)
     {
-        dd($id);
+//        dd($id);
         $tarefa = Tarefa::findOrFail($id);
 
         $projeto = $tarefa->projeto;
