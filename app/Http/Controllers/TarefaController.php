@@ -6,6 +6,7 @@ use App\Http\Models\Modelo;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Models\Tarefa;
+use App\Http\Repositorys\TarefaRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,25 +15,20 @@ class TarefaController extends Controller
 
     public function index($organizacao_id, $projeto_id, $modelo_id)
     {
-        $tarefas = Tarefa::join('users', 'users.id','=','tarefas.user_id')
-                ->where('tarefas.organizacao_id','=',$organizacao_id)
-                ->where('tarefas.projeto_id','=',$projeto_id)
-                ->where('tarefas.modelo_id','=',$modelo_id)
-                ->get();
-
+        $tarefas = TarefaRepository::listar_tarefas_por_modelo($organizacao_id, $projeto_id, $modelo_id);
         $titulos = Tarefa::titulos();
         $organizacao = Organizacao::findOrFail($organizacao_id);
         $projeto = Projeto::findOrFail($projeto_id);
         $modelo = Modelo::findOrFail($modelo_id);
         $tipo = 'tarefa';
-
-        return view('controle_tarefas.index', compact('tarefas','titulos','organizacao','projeto','modelo','tipo'));
+        return view('controle_tarefas.index', compact('tarefas', 'titulos', 'organizacao', 'projeto', 'modelo', 'tipo'));
     }
 
-    public function todas_tarefas(){
-        $tarefas = Tarefa::all();
+    public function todas_tarefas()
+    {
+        $tarefas = TarefaRepository::listar();
         $titulos = Tarefa::titulos();
-        return view('controle_tarefas.all',compact('tarefas','titulos'));
+        return view('controle_tarefas.all', compact('tarefas', 'titulos'));
     }
 
     public function create($organizacao_id, $projeto_id, $modelo_id)
@@ -41,7 +37,7 @@ class TarefaController extends Controller
         $organizacao = Organizacao::findOrFail($organizacao_id);
         $projeto = Projeto::findOrFail($projeto_id);
         $modelo = Modelo::findOrFail($modelo_id);
-        return view('controle_tarefas.create', compact('dados','organizacao','projeto','modelo'));
+        return view('controle_tarefas.create', compact('dados', 'organizacao', 'projeto', 'modelo'));
     }
 
 
@@ -54,9 +50,9 @@ class TarefaController extends Controller
             'user_id' => Auth::user()->id
         ]);
         $tarefa = Tarefa::create($request->all());
-        if(isset($tarefa)){
+        if (isset($tarefa)) {
             flash('Tarefa criada com sucesso!!');
-        }else{
+        } else {
             flash('Tarefa não foi criada!!');
         }
         return redirect()->route('controle_tarefas_index', [
@@ -80,7 +76,7 @@ class TarefaController extends Controller
         $dados = Tarefa::dados();
         $dados[0]->valor = $tarefa->nome;
         $dados[1]->valor = $tarefa->descricao;
-        return view('controle_tarefas.edit', compact('dados','tarefa'));
+        return view('controle_tarefas.edit', compact('dados', 'tarefa'));
     }
 
 
@@ -88,9 +84,9 @@ class TarefaController extends Controller
     {
         $tarefa = Tarefa::findOrFail($id);
         $tarefa->update($request->all());
-        if(isset($tarefa)){
+        if (isset($tarefa)) {
             flash('Tarefa atualizada com sucesso!!');
-        }else{
+        } else {
             flash('Tarefa não foi atualizada!!');
         }
         return redirect()->route('controle_tarefas_index', [
@@ -112,20 +108,20 @@ class TarefaController extends Controller
 
         try {
             $tarefa->delete();
-            if(!$tarefa->exists){
+            if (!$tarefa->exists) {
                 flash('Tarefa excluída com sucesso!!');
-            }else{
+            } else {
                 flash('Tarefa não foi excluída!!');
             }
         } catch (\Exception $e) {
         }
 
 
-        if (empty($projeto->id) || empty($organizacao->id) || empty($modelo->id)){
+        if (empty($projeto->id) || empty($organizacao->id) || empty($modelo->id)) {
             $titulos = Tarefa::titulos();
-            $regras = Tarefa::join('users', 'users.id','=','tarefas.user_id')->get();
-            return view('controle_tarefas.all',compact('titulos','tarefas'));
-        }else{
+            $regras = Tarefa::join('users', 'users.id', '=', 'tarefas.user_id')->get();
+            return view('controle_tarefas.all', compact('titulos', 'tarefas'));
+        } else {
             return redirect()->route('controle_tarefas_index', [
                 'organizacao_id' => $organizacao->id,
                 'projeto_id' => $projeto->id,

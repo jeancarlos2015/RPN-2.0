@@ -36,6 +36,7 @@ class Tarefa extends Model
         ];
     }
 
+
     public static function atributos()
     {
         return [
@@ -43,6 +44,13 @@ class Tarefa extends Model
             'descricao'
         ];
 
+    }
+
+    public static function validacao(){
+        return [
+            'nome' => 'required',
+            'descricao' => 'required'
+        ];
     }
 
     public static function dados_objeto(){

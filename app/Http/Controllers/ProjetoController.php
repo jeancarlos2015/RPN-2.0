@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Repositories\VersionamentoRepository;
+use App\Http\Repositorys\ProjetoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProjetoController extends Controller
 {
-
 
 
     public function index($organizacao_id)
@@ -19,15 +19,15 @@ class ProjetoController extends Controller
         $projetos = $organizacao->projetos;
         $titulos = Projeto::titulos();
         $tipo = 'projeto';
-        return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos','tipo'));
+        return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos', 'tipo'));
     }
 
     public function todos_projetos()
     {
-        $projetos = Projeto::all();
+        $projetos = ProjetoRepository::listar();
         $titulos = Projeto::titulos();
         $tipo = 'projeto';
-        return view('controle_projetos.index', compact('projetos', 'titulos','tipo'));
+        return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo'));
     }
 
     /**
@@ -35,17 +35,19 @@ class ProjetoController extends Controller
      *
      * @return bool
      */
-    private function exists($id){
+    private function exists($id)
+    {
         $organizacao = (new Organizacao)->where('id', '=', $id)->first();
         return $organizacao === null;
     }
+
     public function create($organizacao_id)
     {
 
         $dados = Projeto::dados();
-        if(!$this->exists($organizacao_id)){
+        if (!$this->exists($organizacao_id)) {
             $organizacao = Organizacao::findOrFail($organizacao_id);
-        }else{
+        } else {
             $organizacao = Organizacao::create(['nome' => 'novo', 'descricao' => 'novo']);
         }
         return view('controle_projetos.create', compact('dados', 'organizacao'));

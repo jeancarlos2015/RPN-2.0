@@ -28,10 +28,7 @@ class ModeloRepository extends Repository
 
     public static function count()
     {
-        return Cache::remember('listar_modelos', 2000, function () {
-            return collect((new Modelo)->join('users', 'users.id', '=', 'modelos.user_id')
-                ->get())->count();
-        });
+        return collect(self::listar())->count();
     }
 
     public static function atualizar(Request $request, $id)

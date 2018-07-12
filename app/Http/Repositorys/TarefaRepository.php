@@ -21,9 +21,18 @@ class TarefaRepository extends Repository
     {
 
         return collect((new Tarefa)->join('users', 'users.id', '=', 'tarefas.user_id')
-            ->where('users.id','=',Auth::user()->id)
+            ->where('users.id', '=', Auth::user()->id)
             ->get());
 
+    }
+
+    public static function listar_tarefas_por_modelo($organizacao_id, $projeto_id, $modelo_id)
+    {
+        return collect(Tarefa::join('users', 'users.id', '=', 'tarefas.user_id')
+            ->where('tarefas.organizacao_id', '=', $organizacao_id)
+            ->where('tarefas.projeto_id', '=', $projeto_id)
+            ->where('tarefas.modelo_id', '=', $modelo_id)
+            ->get());
     }
 
     public static function count()

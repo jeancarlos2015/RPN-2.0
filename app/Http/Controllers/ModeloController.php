@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Models\Modelo;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
+use App\Http\Repositorys\ModeloRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,18 +18,18 @@ class ModeloController extends Controller
         $projeto = Projeto::findOrFail($projeto_id);
         $organizacao = Organizacao::findOrFail($organizacao_id);
         $titulos = Modelo::titulos();
-        $modelos = Modelo::join('users', 'users.id','=','modelos.user_id')
-            ->where('modelos.organizacao_id','=',$organizacao_id)
-            ->where('modelos.projeto_id','=',$projeto_id)
+        $modelos = Modelo::join('users', 'users.id', '=', 'modelos.user_id')
+            ->where('modelos.organizacao_id', '=', $organizacao_id)
+            ->where('modelos.projeto_id', '=', $projeto_id)
             ->get();
         $tipo = 'modelo';
-        return view('controle_modelos.index', compact('modelos', 'projeto', 'organizacao', 'titulos','tipo'));
+        return view('controle_modelos.index', compact('modelos', 'projeto', 'organizacao', 'titulos', 'tipo'));
     }
 
     public function todos_modelos()
     {
 
-        $modelos = Modelo::join('users', 'users.id','=','modelos.user_id')->get();
+        $modelos = ModeloRepository::listar();
         $titulos = Modelo::titulos();
         return view('controle_modelos.index_todos_modelos', compact('modelos', 'titulos'));
     }

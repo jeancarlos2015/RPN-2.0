@@ -21,9 +21,19 @@ class RegraRepository extends Repository
     {
 
         return collect((new Regra)->join('users', 'users.id', '=', 'regras.user_id')
-            ->where('users.id','=',Auth::user()->id)
+            ->where('users.id', '=', Auth::user()->id)
             ->get());
-        
+
+    }
+
+    public static function listar_regras_por_modelo($organizacao_id, $projeto_id, $modelo_id)
+    {
+        return collect(Regra::join('users', 'users.id', '=', 'regras.user_id')
+            ->where('regras.organizacao_id', '=', $organizacao_id)
+            ->where('regras.projeto_id', '=', $projeto_id)
+            ->where('regras.modelo_id', '=', $modelo_id)
+            ->get());
+
     }
 
     public static function count()

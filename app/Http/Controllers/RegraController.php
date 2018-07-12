@@ -7,6 +7,7 @@ use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Models\Regra;
 use App\Http\Models\Tarefa;
+use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,24 +15,20 @@ class RegraController extends Controller
 {
     public function index($organizacao_id, $projeto_id, $modelo_id)
     {
-        $regras = Regra::join('users', 'users.id','=','regras.user_id')
-            ->where('regras.organizacao_id','=',$organizacao_id)
-            ->where('regras.projeto_id','=',$projeto_id)
-            ->where('regras.modelo_id','=',$modelo_id)
-            ->get();
-
+        $regras = RegraRepository::listar_regras_por_modelo($organizacao_id, $projeto_id, $modelo_id);
         $titulos = Regra::titulos();
         $organizacao = Organizacao::findOrFail($organizacao_id);
         $projeto = Projeto::findOrFail($projeto_id);
         $modelo = Modelo::findOrFail($modelo_id);
         $tipo = 'regra';
-        return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo', 'regras','tipo'));
+        return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo', 'regras', 'tipo'));
     }
 
-    public function todas_regras(){
-        $regras = Regra::all();
+    public function todas_regras()
+    {
+        $regras = RegraRepository::listar();
         $titulos = Regra::titulos();
-        return view('controle_regras.all',compact('regras','titulos'));
+        return view('controle_regras.all', compact('regras', 'titulos'));
     }
 
     public function create($organizacao_id, $projeto_id, $modelo_id)
@@ -134,11 +131,11 @@ class RegraController extends Controller
         } catch (\Exception $e) {
             flash('Error!!')->error();
         }
-        if (!empty($projeto) || !empty($organizacao) && !empty($modelo)){
+        if (!empty($projeto) || !empty($organizacao) && !empty($modelo)) {
             $titulos = Regra::titulos();
-            $regras = Regra::join('users', 'users.id','=','regras.user_id')->get();
-                return view('controle_regras.all',compact('titulos','regras'));
-        }else{
+            $regras = Regra::join('users', 'users.id', '=', 'regras.user_id')->get();
+            return view('controle_regras.all', compact('titulos', 'regras'));
+        } else {
             return redirect()->route('controle_regras_index', [
                 'organizacao_id' => $organizacao->id,
                 'projeto_id' => $projeto->id,
