@@ -12,12 +12,13 @@ class Regra extends Model
     protected $fillable = [
         'operador',
         'nome',
-        'codtarefa',
+        'codtarefa1',
+        'codtarefa2',
+        'codregra1',
 
         'codmodelo',
         'codprojeto',
         'codorganizacao',
-        'codregra1',
         'codusuario'
     ];
 
@@ -45,9 +46,9 @@ class Regra extends Model
     public static function atributos()
     {
         return [
-            'tarefa1_id',
+            'codtarefa1',
             'operador',
-            'tarefa2_id',
+            'codtarefa2',
             'nome'
         ];
 
@@ -83,6 +84,16 @@ class Regra extends Model
     {
         return $this->hasOne(Tarefa::class, 'codtarefa', 'codtarefa');
     }
+    public  function tarefa1()
+    {
+        return $this->belongsTo(Tarefa::class, 'codtarefa1', 'codtarefa');
+    }
+    public  function tarefa2()
+    {
+        return $this->belongsTo(Tarefa::class, 'codtarefa2', 'codtarefa');
+    }
+
+
 
     public  function modelo()
     {

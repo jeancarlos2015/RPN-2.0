@@ -18,7 +18,8 @@ class CreateRegrasTable extends Migration
             $table->string('operador');
             $table->string('nome');
 
-            $table->bigInteger('codtarefa');
+            $table->bigInteger('codtarefa1');
+            $table->bigInteger('codtarefa2');
             $table->bigInteger('codprojeto');
             $table->bigInteger('codorganizacao');
             $table->bigInteger('codmodelo');

@@ -47,9 +47,13 @@ class RegraController extends Controller
         $projeto = Projeto::findOrFail($request->codprojeto);
         $organizacao = Organizacao::findOrFail($request->codorganizacao);
         $modelo = Modelo::findOrFail($request->codmodelo);
-        if (empty($request->codregra)) {
+        if (empty($request->codregra1)){
             $request->request->add([
-                'codregra' => 0,
+                'codusuario' => Auth::user()->codusuario,
+                'codregra1' => 0
+            ]);
+        }else{
+            $request->request->add([
                 'codusuario' => Auth::user()->codusuario
             ]);
         }
