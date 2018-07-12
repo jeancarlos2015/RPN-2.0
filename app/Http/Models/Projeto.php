@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class Projeto extends Model
 {
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'codprojeto';
     protected $table = 'projetos';
     protected $fillable = [
         'nome',
         'descricao',
-        'organizacao_id',
-        'user_id'
+        'codorganizacao',
+        'codusuario'
     ];
 
 
@@ -76,12 +76,12 @@ class Projeto extends Model
 
     public function organizacao()
     {
-        return $this->hasOne(Organizacao::class, 'id', 'organizacao_id');
+        return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
 
     public  function modelos()
     {
-        return $this->belongsTo(Modelo::class,'id','modelo_id');
+        return $this->belongsTo(Modelo::class,'codprojeto','codprojeto');
     }
 
 

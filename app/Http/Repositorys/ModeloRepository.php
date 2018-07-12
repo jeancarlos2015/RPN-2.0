@@ -20,8 +20,8 @@ class ModeloRepository extends Repository
     public static function listar()
     {
 
-            return collect((new Modelo)->join('users', 'users.id', '=', 'modelos.user_id')
-                ->where('users.id','=',Auth::user()->id)
+            return collect((new Modelo)->join('users', 'users.codusuario', '=', 'modelos.codusuario')
+                ->where('users.codusuario','=',Auth::user()->codusuario)
                 ->get());
 
     }
@@ -31,9 +31,9 @@ class ModeloRepository extends Repository
         return collect(self::listar())->count();
     }
 
-    public static function atualizar(Request $request, $id)
+    public static function atualizar(Request $request, $codmodelo)
     {
-        $value = Modelo::findOrFail($id);
+        $value = Modelo::findOrFail($codmodelo);
         $value->update($request->all());
         self::limpar_cache();
         return $value;
@@ -51,11 +51,11 @@ class ModeloRepository extends Repository
         return $value;
     }
 
-    public static function excluir($id)
+    public static function excluir($codmodelo)
     {
         $value = null;
         try {
-            $doc = Modelo::findOrFail($id);
+            $doc = Modelo::findOrFail($codmodelo);
             $value = $doc->delete();
             self::limpar_cache();
         } catch (Exception $e) {

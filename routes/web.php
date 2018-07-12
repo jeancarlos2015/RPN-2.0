@@ -27,9 +27,9 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
 
 
-        Route::get('controle_projetos_index/{organizacao_id}', 'ProjetoController@index')->name('controle_projetos_index');
-        Route::get('show_tarefas/{modelo_id}', 'ModeloController@show_tarefas')->name('show_tarefas');
-        Route::get('show_regras/{modelo_id}', 'ModeloController@show_regras')->name('show_regras');
+        Route::get('controle_projetos_index/{codorganizacao}', 'ProjetoController@index')->name('controle_projetos_index');
+        Route::get('show_tarefas/{codmodelo}', 'ModeloController@show_tarefas')->name('show_tarefas');
+        Route::get('show_regras/{codmodelo}', 'ModeloController@show_regras')->name('show_regras');
 
         Route::get('todos_modelos', 'ModeloController@todos_modelos')->name('todos_modelos');
         Route::get('todos_projetos', 'ProjetoController@todos_projetos')->name('todos_projetos');
@@ -38,13 +38,13 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('controle_versao_projetos', 'VersionadorController@index')->name('controle_versao_projetos');
 
 
-        Route::get('controle_projetos_create/{organizacao_id}', 'ProjetoController@create')->name('controle_projetos_create');
-        Route::get('controle_modelos_create/{organizacao_id}/{projeto_id}', 'ModeloController@create')->name('controle_modelos_create');
-        Route::get('controle_modelos_index/{organizacao_id}/{projeto_id}', 'ModeloController@index')->name('controle_modelos_index');
-        Route::get('controle_tarefas_index/{organizacao_id}/{projeto_id}/{modelo_id}', 'TarefaController@index')->name('controle_tarefas_index');
-        Route::get('controle_tarefas_create/{organizacao_id}/{projeto_id}/{modelo_id}', 'TarefaController@create')->name('controle_tarefas_create');
-        Route::get('controle_regras_create/{organizacao_id}/{projeto_id}/{modelo_id}', 'RegraController@create')->name('controle_regras_create');
-        Route::get('controle_regras_index/{organizacao_id}/{projeto_id}/{modelo_id}', 'RegraController@index')->name('controle_regras_index');
+        Route::get('controle_projetos_create/{codorganizacao}', 'ProjetoController@create')->name('controle_projetos_create');
+        Route::get('controle_modelos_create/{codorganizacao}/{codprojeto}', 'ModeloController@create')->name('controle_modelos_create');
+        Route::get('controle_modelos_index/{codorganizacao}/{codprojeto}', 'ModeloController@index')->name('controle_modelos_index');
+        Route::get('controle_tarefas_index/{codorganizacao}/{codprojeto}/{codmodelo}', 'TarefaController@index')->name('controle_tarefas_index');
+        Route::get('controle_tarefas_create/{codorganizacao}/{codprojeto}/{codmodelo}', 'TarefaController@create')->name('controle_tarefas_create');
+        Route::get('controle_regras_create/{codorganizacao}/{codprojeto}/{codmodelo}', 'RegraController@create')->name('controle_regras_create');
+        Route::get('controle_regras_index/{codorganizacao}/{codprojeto}/{codmodelo}', 'RegraController@index')->name('controle_regras_index');
         Route::post('escolhe_modelo', 'ModeloController@escolhe_modelo')->name('escolhe_modelo');
 
 

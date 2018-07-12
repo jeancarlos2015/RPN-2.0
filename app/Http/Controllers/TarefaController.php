@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Auth;
 class TarefaController extends Controller
 {
 
-    public function index($organizacao_id, $projeto_id, $modelo_id)
+    public function index($codorganizacao, $codprojeto, $codmodelo)
     {
-        $tarefas = TarefaRepository::listar_tarefas_por_modelo($organizacao_id, $projeto_id, $modelo_id);
+        $tarefas = TarefaRepository::listar_tarefas_por_modelo($codorganizacao, $codprojeto, $codmodelo);
         $titulos = Tarefa::titulos();
-        $organizacao = Organizacao::findOrFail($organizacao_id);
-        $projeto = Projeto::findOrFail($projeto_id);
-        $modelo = Modelo::findOrFail($modelo_id);
+        $organizacao = Organizacao::findOrFail($codorganizacao);
+        $projeto = Projeto::findOrFail($codprojeto);
+        $modelo = Modelo::findOrFail($codmodelo);
         $tipo = 'tarefa';
         return view('controle_tarefas.index', compact('tarefas', 'titulos', 'organizacao', 'projeto', 'modelo', 'tipo'));
     }
@@ -31,23 +31,23 @@ class TarefaController extends Controller
         return view('controle_tarefas.all', compact('tarefas', 'titulos'));
     }
 
-    public function create($organizacao_id, $projeto_id, $modelo_id)
+    public function create($codorganizacao, $codprojeto, $codmodelo)
     {
         $dados = Projeto::dados();
-        $organizacao = Organizacao::findOrFail($organizacao_id);
-        $projeto = Projeto::findOrFail($projeto_id);
-        $modelo = Modelo::findOrFail($modelo_id);
+        $organizacao = Organizacao::findOrFail($codorganizacao);
+        $projeto = Projeto::findOrFail($codprojeto);
+        $modelo = Modelo::findOrFail($codmodelo);
         return view('controle_tarefas.create', compact('dados', 'organizacao', 'projeto', 'modelo'));
     }
 
 
     public function store(Request $request)
     {
-        $projeto = Projeto::findOrFail($request->projeto_id);
-        $organizacao = Organizacao::findOrFail($request->organizacao_id);
-        $modelo = Modelo::findOrFail($request->modelo_id);
+        $projeto = Projeto::findOrFail($request->codprojeto);
+        $organizacao = Organizacao::findOrFail($request->codorganizacao);
+        $modelo = Modelo::findOrFail($request->codmodelo);
         $request->request->add([
-            'user_id' => Auth::user()->id
+            'codusuario' => Auth::user()->codusuario
         ]);
         $tarefa = Tarefa::create($request->all());
         if (isset($tarefa)) {
@@ -56,23 +56,23 @@ class TarefaController extends Controller
             flash('Tarefa não foi criada!!');
         }
         return redirect()->route('controle_tarefas_index', [
-            'organizacao_id' => $organizacao->id,
-            'projeto_id' => $projeto->id,
-            'modelo_id' => $modelo->id
+            'codorganizacao' => $organizacao->codorganizacao,
+            'codprojeto' => $projeto->codprojeto,
+            'codmodelo' => $modelo->codmodelo
         ]);
     }
 
 
-    public function show($id)
+    public function show($codtarefa)
     {
-        $tarefa = Tarefa::findOrFail($id);
+        $tarefa = Tarefa::findOrFail($codtarefa);
         return view('controle_tarefas.show', compact('tarefa'));
     }
 
 
-    public function edit($id)
+    public function edit($codtarefa)
     {
-        $tarefa = Tarefa::findOrFail($id);
+        $tarefa = Tarefa::findOrFail($codtarefa);
         $dados = Tarefa::dados();
         $dados[0]->valor = $tarefa->nome;
         $dados[1]->valor = $tarefa->descricao;
@@ -80,9 +80,9 @@ class TarefaController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $codtarefa)
     {
-        $tarefa = Tarefa::findOrFail($id);
+        $tarefa = Tarefa::findOrFail($codtarefa);
         $tarefa->update($request->all());
         if (isset($tarefa)) {
             flash('Tarefa atualizada com sucesso!!');
@@ -90,9 +90,9 @@ class TarefaController extends Controller
             flash('Tarefa não foi atualizada!!');
         }
         return redirect()->route('controle_tarefas_index', [
-            'organizacao_id' => $tarefa->organizacao_id,
-            'projeto_id' => $tarefa->projeto_id,
-            'modelo_id' => $tarefa->modelo_id
+            'codorganizacao' => $tarefa->codorganizacao,
+            'codprojeto' => $tarefa->codprojeto,
+            'codmodelo' => $tarefa->codmodelo
         ]);
     }
 
@@ -117,15 +117,15 @@ class TarefaController extends Controller
         }
 
 
-        if (empty($projeto->id) || empty($organizacao->id) || empty($modelo->id)) {
+        if (empty($projeto->codprojeto) || empty($organizacao->codorganizacao) || empty($modelo->codmodelo)) {
             $titulos = Tarefa::titulos();
-            $regras = Tarefa::join('users', 'users.id', '=', 'tarefas.user_id')->get();
+            $regras = Tarefa::join('users', 'users.codusuario', '=', 'tarefas.codusuario')->get();
             return view('controle_tarefas.all', compact('titulos', 'tarefas'));
         } else {
             return redirect()->route('controle_tarefas_index', [
-                'organizacao_id' => $organizacao->id,
-                'projeto_id' => $projeto->id,
-                'modelo_id' => $modelo->id
+                'codorganizacao' => $organizacao->codorganizacao,
+                'codprojeto' => $projeto->codprojeto,
+                'codmodelo' => $modelo->codmodelo
             ]);
         }
     }

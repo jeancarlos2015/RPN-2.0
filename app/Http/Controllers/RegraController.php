@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Auth;
 
 class RegraController extends Controller
 {
-    public function index($organizacao_id, $projeto_id, $modelo_id)
+    public function index($codorganizacao, $codprojeto, $codmodelo)
     {
-        $regras = RegraRepository::listar_regras_por_modelo($organizacao_id, $projeto_id, $modelo_id);
+        $regras = RegraRepository::listar_regras_por_modelo($codorganizacao, $codprojeto, $codmodelo);
         $titulos = Regra::titulos();
-        $organizacao = Organizacao::findOrFail($organizacao_id);
-        $projeto = Projeto::findOrFail($projeto_id);
-        $modelo = Modelo::findOrFail($modelo_id);
+        $organizacao = Organizacao::findOrFail($codorganizacao);
+        $projeto = Projeto::findOrFail($codprojeto);
+        $modelo = Modelo::findOrFail($codmodelo);
         $tipo = 'regra';
         return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo', 'regras', 'tipo'));
     }
@@ -31,12 +31,12 @@ class RegraController extends Controller
         return view('controle_regras.all', compact('regras', 'titulos'));
     }
 
-    public function create($organizacao_id, $projeto_id, $modelo_id)
+    public function create($codorganizacao, $codprojeto, $codmodelo)
     {
         $dados = Regra::dados();
-        $organizacao = Organizacao::findOrFail($organizacao_id);
-        $projeto = Projeto::findOrFail($projeto_id);
-        $modelo = Modelo::findOrFail($modelo_id);
+        $organizacao = Organizacao::findOrFail($codorganizacao);
+        $projeto = Projeto::findOrFail($codprojeto);
+        $modelo = Modelo::findOrFail($codmodelo);
         $tarefas = Tarefa::all();
         return view('controle_regras.create', compact('dados', 'organizacao', 'projeto', 'modelo', 'tarefas'));
     }
@@ -44,13 +44,13 @@ class RegraController extends Controller
 
     public function store(Request $request)
     {
-        $projeto = Projeto::findOrFail($request->projeto_id);
-        $organizacao = Organizacao::findOrFail($request->organizacao_id);
-        $modelo = Modelo::findOrFail($request->modelo_id);
-        if (empty($request->regra_id)) {
+        $projeto = Projeto::findOrFail($request->codprojeto);
+        $organizacao = Organizacao::findOrFail($request->codorganizacao);
+        $modelo = Modelo::findOrFail($request->codmodelo);
+        if (empty($request->codregra)) {
             $request->request->add([
-                'regra_id' => 0,
-                'user_id' => Auth::user()->id
+                'codregra' => 0,
+                'codusuario' => Auth::user()->codusuario
             ]);
         }
         $regra = Regra::create($request->all());
@@ -60,9 +60,9 @@ class RegraController extends Controller
             flash('Regra Não Foi Criada com sucesso!!!');
         }
         return redirect()->route('controle_regras_index', [
-            'organizacao_id' => $organizacao->id,
-            'projeto_id' => $projeto->id,
-            'modelo_id' => $modelo->id
+            'codorganizacao' => $organizacao->codorganizacao,
+            'codprojeto' => $projeto->codprojeto,
+            'codmodelo' => $modelo->codmodelo
         ]);
     }
 
@@ -91,16 +91,15 @@ class RegraController extends Controller
         $organizacao = $regra->organizacao;
         $projeto = $regra->projeto;
         $modelo = $regra->modelo;
-        $tarefas = [];
-        array_push($tarefas, $regra->tarefa1);
-        array_push($tarefas, $regra->tarefa2);
+        $tarefas = $regra->tarefas;
+
         return view('controle_regras.edit', compact('dados', 'regra', 'organizacao', 'projeto', 'modelo', 'tarefas'));
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $codregra)
     {
-        $regra = Regra::findOrFail($id);
+        $regra = Regra::findOrFail($codregra);
         $regra->update($request->all());
         if (isset($tarefa)) {
             flash('Regra atualizada com sucesso!!');
@@ -108,16 +107,16 @@ class RegraController extends Controller
             flash('Regra não foi atualizada!!');
         }
         return redirect()->route('controle_regras_index', [
-            'organizacao_id' => $regra->organizacao_id,
-            'projeto_id' => $regra->projeto_id,
-            'modelo_id' => $regra->modelo_id
+            'codorganizacao' => $regra->codorganizacao,
+            'codprojeto' => $regra->codprojeto,
+            'codmodelo' => $regra->codmodelo
         ]);
     }
 
 
-    public function destroy($id)
+    public function destroy($codregra)
     {
-        $regra = Regra::findOrFail($id);
+        $regra = Regra::findOrFail($codregra);
         $projeto = $regra->projeto;
         $organizacao = $regra->organizacao;
         $modelo = $regra->modelo;
@@ -133,13 +132,13 @@ class RegraController extends Controller
         }
         if (!empty($projeto) || !empty($organizacao) && !empty($modelo)) {
             $titulos = Regra::titulos();
-            $regras = Regra::join('users', 'users.id', '=', 'regras.user_id')->get();
+            $regras = Regra::join('users', 'users.id', '=', 'regras.codusuario')->get();
             return view('controle_regras.all', compact('titulos', 'regras'));
         } else {
             return redirect()->route('controle_regras_index', [
-                'organizacao_id' => $organizacao->id,
-                'projeto_id' => $projeto->id,
-                'modelo_id' => $modelo->id
+                'codorganizacao' => $organizacao->codorganizacao,
+                'codprojeto' => $projeto->codprojeto,
+                'codmodelo' => $modelo->codmodelo
             ]);
         }
 

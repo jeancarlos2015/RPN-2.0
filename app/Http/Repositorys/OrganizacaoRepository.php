@@ -20,20 +20,20 @@ class OrganizacaoRepository extends Repository
     public static function listar()
     {
 
-            return collect((new Organizacao)->join('users', 'users.id', '=', 'organizacoes.user_id')
-                ->where('users.id','=',Auth::user()->id)
-                ->get());
+        return collect((new Organizacao)->join('users', 'users.codusuario', '=', 'organizacoes.codusuario')
+            ->where('users.codusuario', '=', Auth::user()->codusuario)
+            ->get());
 
     }
 
     public static function count()
     {
-       return collect(self::listar())->count();
+        return collect(self::listar())->count();
     }
 
-    public static function atualizar(Request $request, $id)
+    public static function atualizar(Request $request, $codorganizacao)
     {
-        $value = Organizacao::findOrFail($id);
+        $value = Organizacao::findOrFail($codorganizacao);
         $value->update($request->all());
         self::limpar_cache();
         return $value;
@@ -51,11 +51,18 @@ class OrganizacaoRepository extends Repository
         return $value;
     }
 
-    public static function excluir($id)
+    public static function findOrFail($codorganizacao)
+    {
+
+    }
+
+    public static function excluir($codorganizacao)
     {
         $value = null;
         try {
-            $doc = Organizacao::findOrFail($id);
+
+            $doc = Organizacao::findOrFail($codorganizacao);
+            dd($codorganizacao);
             $value = $doc->delete();
             self::limpar_cache();
         } catch (Exception $e) {

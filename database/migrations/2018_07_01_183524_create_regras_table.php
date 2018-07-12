@@ -14,16 +14,16 @@ class CreateRegrasTable extends Migration
     public function up()
     {
         Schema::create('regras', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('tarefa1_id');
-            $table->bigInteger('tarefa2_id');
+            $table->bigIncrements('codregra');
             $table->string('operador');
-            $table->bigInteger('projeto_id');
-            $table->bigInteger('organizacao_id');
-            $table->bigInteger('modelo_id');
-            $table->bigInteger('regra_id');
-            $table->bigInteger('user_id');
             $table->string('nome');
+
+            $table->bigInteger('codtarefa');
+            $table->bigInteger('codprojeto');
+            $table->bigInteger('codorganizacao');
+            $table->bigInteger('codmodelo');
+            $table->bigInteger('codregra1');
+            $table->bigInteger('codusuario');
             $table->timestamps();
         });
     }

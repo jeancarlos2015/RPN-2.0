@@ -28,14 +28,14 @@
                     'rota' => 'todas_tarefas'
     ])
 
-    <form action="{!! route('controle_tarefas.update',['id' => $tarefa->id]) !!}" method="post">
+    <form action="{!! route('controle_tarefas.update',['id' => $tarefa->codtarefa]) !!}" method="post">
     {{ method_field('PUT')}}
     @includeIf('controle_tarefas.form',
     [
     'acao' => 'Atualizar',
     'dados' => $dados,
     'MAX' => 2,
-    'id' => $tarefa->id
+    'codtarefa' => $tarefa->codtarefa
     ]
     )
     </form>

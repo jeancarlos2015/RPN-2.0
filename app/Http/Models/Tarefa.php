@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tarefa extends Model
 {
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'codtarefa';
     protected $table = 'tarefas';
     protected $fillable = [
         'nome',
         'descricao',
-        'organizacao_id',
-        'projeto_id',
-        'modelo_id',
-        'user_id'
+        'codorganizacao',
+        'codprojeto',
+        'codmodelo',
+        'codusuario'
     ];
 
     public static function titulos()
@@ -79,16 +79,16 @@ class Tarefa extends Model
 
     public  function modelo()
     {
-        return $this->hasOne(Modelo::class, 'id', 'modelo_id');
+        return $this->hasOne(Modelo::class, 'codmodelo', 'codmodelo');
     }
 
     public  function projeto()
     {
-        return $this->hasOne(Projeto::class, 'id', 'projeto_id');
+        return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
     }
 
     public  function organizacao()
     {
-        return $this->hasOne(Organizacao::class, 'id', 'organizacao_id');
+        return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
 }

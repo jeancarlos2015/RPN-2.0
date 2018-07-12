@@ -30,7 +30,7 @@
     'acao' => 'Salvar e Proseguir',
     'dados' => $dados,
     'MAX' => 2,
-    'id' => $organizacao->id
+    'codorganizacao' => $organizacao->codorganizacao
     ]
     )
 @endsection

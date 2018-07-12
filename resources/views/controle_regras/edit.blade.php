@@ -27,7 +27,7 @@
                     'titulo' => 'Regras',
                     'rota' => 'todas_regras'
     ])
-    <form action="{!! route('controle_regras.update',['id' => $regra->id]) !!}" method="post">
+    <form action="{!! route('controle_regras.update',['id' => $regra->codregra]) !!}" method="post">
         {{ method_field('PUT')}}
         @includeIf('controle_regras.form',
         [

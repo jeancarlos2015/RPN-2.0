@@ -20,8 +20,8 @@ class ProjetoRepository extends Repository
     public static function listar()
     {
 
-        return collect((new Projeto)->join('users', 'users.id', '=', 'projetos.user_id')
-            ->where('users.id','=',Auth::user()->id)
+        return collect((new Projeto)->join('users', 'users.codusuario', '=', 'projetos.codusuario')
+            ->where('users.codusuario','=',Auth::user()->codusuario)
             ->get());
 
     }
@@ -31,9 +31,9 @@ class ProjetoRepository extends Repository
         return collect(self::listar())->count();
     }
 
-    public static function atualizar(Request $request, $id)
+    public static function atualizar(Request $request, $codprojeto)
     {
-        $value = Projeto::findOrFail($id);
+        $value = Projeto::findOrFail($codprojeto);
         $value->update($request->all());
         self::limpar_cache();
         return $value;
@@ -51,11 +51,11 @@ class ProjetoRepository extends Repository
         return $value;
     }
 
-    public static function excluir($id)
+    public static function excluir($codprojeto)
     {
         $value = null;
         try {
-            $doc = Projeto::findOrFail($id);
+            $doc = Projeto::findOrFail($codprojeto);
             $value = $doc->delete();
             self::limpar_cache();
         } catch (Exception $e) {

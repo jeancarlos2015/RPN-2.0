@@ -71,12 +71,11 @@ class OrganizacaoController extends Controller
     public function create_nome(Request $request)
     {
 
-        $regras = Regra::all();
-        $operadores = Operador::all();
-        $tarefas = Tarefa::all();
+        $regras = RegraRepository::listar();
+        $tarefas = TarefaRepository::listar();
         $nova_regra = null;
         $projeto = null;
-        if (!empty($regras) && !empty($operadores) && !empty($tarefas)) {
+        if (!empty($regras)  && !empty($tarefas)) {
             $projeto = Projeto::create($request->all());
             $nova_regra = new Regra();
             return view('controle_organizacoes.create_regras', compact('projeto', 'regras', 'operadores', 'tarefas', 'nova_regra'));
@@ -84,20 +83,9 @@ class OrganizacaoController extends Controller
         return view('controle_organizacoes.create_nome', compact('projeto'));
     }
 
-    public function create_regras(Request $request, $id)
+    public function create_regras(Request $request)
     {
-        //dd($request,$id);
 
-        $nova_regra1 = new Regra();
-        $nova_regra1->id_projeto = $id;
-        $nova_regra1->id_tarefa1 = $request->tarefa1;
-        $nova_regra1->id_tarefa2 = $request->tarefa2;
-        $nova_regra1->id_operador = $request->operador;
-        $nova_regra = $nova_regra1->save();
-        $projeto = Projeto::findOrFail($id);
-        $regras = Regra::all();
-        $operadores = Operador::all();
-        $tarefas = Tarefa::all();
         return view('controle_organizacoes.create_regras', compact('projeto', 'regras', 'operadores', 'tarefas', 'nova_regra'));
 
     }
@@ -112,7 +100,7 @@ class OrganizacaoController extends Controller
 
     public function store(Request $request)
     {
-        $request->request->add(['user_id' => Auth::user()->id]);
+        $request->request->add(['codusuario' => Auth::user()->codusuario]);
         $organizacao = Organizacao::create($request->all());
         if (isset($organizacao)) {
             flash('Organização criada com sucesso!!');
@@ -120,13 +108,13 @@ class OrganizacaoController extends Controller
             flash('Organização não foi criada!!');
         }
 
-        return redirect()->route('controle_projetos_index', ['organizacao_id' => $organizacao->id]);
+        return redirect()->route('controle_projetos_index', ['codorganizacao' => $organizacao->codorganizacao]);
     }
 
 
-    public function show($id)
+    public function show($codorganizacao)
     {
-        return redirect()->route('controle_projetos_index', ['organizacao_id' => $id]);
+        return redirect()->route('controle_projetos_index', ['codorganizacao' => $codorganizacao]);
     }
 
 
@@ -140,11 +128,10 @@ class OrganizacaoController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $codorganizacao)
     {
-        $organizacao = Organizacao::findOrFail($id);
-        $organizacao->update($request->all());
 
+        $organizacao = OrganizacaoRepository::atualizar($request, $codorganizacao);
         if (isset($organizacao)) {
             flash('Organização Atualizada com sucesso!!');
         } else {
@@ -155,16 +142,10 @@ class OrganizacaoController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy($codorganizacao)
     {
-        $organizacao = Organizacao::findOrFail($id);
-        try {
-            $organizacao->delete();
-            flash('Organização foi excluída com sucesso!!');
-        } catch (\Exception $e) {
-            flash('Error!!!');
-        }
 
+        $organizacao = OrganizacaoRepository::excluir($codorganizacao);
         return response()->redirectToRoute('controle_organizacoes.index');
     }
 

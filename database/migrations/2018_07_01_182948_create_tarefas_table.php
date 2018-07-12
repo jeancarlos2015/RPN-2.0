@@ -14,13 +14,13 @@ class CreateTarefasTable extends Migration
     public function up()
     {
         Schema::create('tarefas', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('codtarefa');
             $table->string('nome');
             $table->string('descricao');
-            $table->bigInteger('modelo_id');
-            $table->bigInteger('projeto_id');
-            $table->bigInteger('organizacao_id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('codmodelo');
+            $table->bigInteger('codprojeto');
+            $table->bigInteger('codorganizacao');
+            $table->bigInteger('codusuario');
             $table->timestamps();
         });
     }

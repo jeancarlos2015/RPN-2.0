@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Modelo extends Model
 {
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'codmodelo';
     protected $table = 'modelos';
     protected $fillable = [
         'nome',
         'descricao',
         'tipo',
         'xml_modelo',
-        'projeto_id',
-        'organizacao_id',
-        'user_id'
+        'codprojeto',
+        'codorganizacao',
+        'codusuario'
     ];
 
 
@@ -46,8 +46,8 @@ class Modelo extends Model
             'nome',
             'descricao',
             'tipo',
-            'projeto_id',
-            'organizacao_id',
+            'codprojeto',
+            'codorganizacao',
             'xml_modelo'
 
         ];
@@ -81,21 +81,21 @@ class Modelo extends Model
 //Relacionamentos
     public  function projeto()
     {
-        return $this->hasOne(Projeto::class, 'id', 'projeto_id');
+        return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
     }
 
     public  function organizacao()
     {
-        return $this->hasOne(Organizacao::class, 'id', 'organizacao_id');
+        return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
 
     public  function regras()
     {
-        return $this->belongsTo(Regra::class,'modelo_id','id');
+        return $this->belongsTo(Regra::class,'codmodelo','codmodelo');
     }
 
     public function tarefas(){
-        return $this->belongsTo(Tarefa::class,'modelo_id','id');
+        return $this->belongsTo(Tarefa::class,'codmodelo','codmodelo');
     }
 
 }

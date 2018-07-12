@@ -7,18 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Regra extends Model
 {
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'codregra';
     protected $table = 'regras';
     protected $fillable = [
         'operador',
-        'tarefa1_id',
-        'tarefa2_id',
-        'modelo_id',
-        'projeto_id',
-        'organizacao_id',
-        'regra_id',
         'nome',
-        'user_id'
+        'codtarefa',
+
+        'codmodelo',
+        'codprojeto',
+        'codorganizacao',
+        'codregra1',
+        'codusuario'
     ];
 
     public static function titulos()
@@ -79,27 +79,23 @@ class Regra extends Model
         return $dados;
     }
 
-    public  function tarefa1()
+    public  function tarefas()
     {
-        return $this->hasOne(Tarefa::class, 'id', 'tarefa1_id');
+        return $this->hasOne(Tarefa::class, 'codtarefa', 'codtarefa');
     }
 
-    public  function tarefa2()
-    {
-        return $this->hasOne(Tarefa::class, 'id', 'tarefa2_id');
-    }
     public  function modelo()
     {
-        return $this->hasOne(Modelo::class, 'id', 'modelo_id');
+        return $this->hasOne(Modelo::class, 'codmodelo', 'codmodelo');
     }
 
     public  function projeto()
     {
-        return $this->hasOne(Projeto::class, 'id', 'projeto_id');
+        return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
     }
 
     public  function organizacao()
     {
-        return $this->hasOne(Organizacao::class, 'id', 'organizacao_id');
+        return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
 }

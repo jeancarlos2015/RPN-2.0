@@ -36,9 +36,9 @@
         'acao' => 'Criar Tarefa',
         'dados' => $dados,
         'MAX' => 2,
-        'projeto_id' => $projeto->id,
-        'modelo_id' => $modelo->id,
-        'organizacao_id' => $organizacao->id
+        'codprojeto' => $projeto->codprojeto,
+        'codmodelo' => $modelo->codmodelo,
+        'codorganizacao' => $organizacao->codorganizacao
         ]
         )
     </form>

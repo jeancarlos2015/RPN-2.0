@@ -12,15 +12,15 @@ use Illuminate\Support\Facades\Auth;
 class ModeloController extends Controller
 {
 
-    public function index($organizacao_id, $projeto_id)
+    public function index($codorganizacao, $codprojeto)
     {
 
-        $projeto = Projeto::findOrFail($projeto_id);
-        $organizacao = Organizacao::findOrFail($organizacao_id);
+        $projeto = Projeto::findOrFail($codprojeto);
+        $organizacao = Organizacao::findOrFail($codorganizacao);
         $titulos = Modelo::titulos();
-        $modelos = Modelo::join('users', 'users.id', '=', 'modelos.user_id')
-            ->where('modelos.organizacao_id', '=', $organizacao_id)
-            ->where('modelos.projeto_id', '=', $projeto_id)
+        $modelos = Modelo::join('users', 'users.codusuario', '=', 'modelos.codusuario')
+            ->where('modelos.codorganizacao', '=', $codorganizacao)
+            ->where('modelos.codprojeto', '=', $codprojeto)
             ->get();
         $tipo = 'modelo';
         return view('controle_modelos.index', compact('modelos', 'projeto', 'organizacao', 'titulos', 'tipo'));
@@ -44,17 +44,17 @@ class ModeloController extends Controller
         $dado['tipo'] = $request->tipo;
         $dado['nome'] = $request->nome;
         $dado['descricao'] = $request->descricao;
-        $dado['projeto_id'] = $request->projeto_id;
-        $dado['organizacao_id'] = $request->organizacao_id;
-        $projeto = Projeto::findOrFail($request->projeto_id);
-        $organizacao = Organizacao::findOrFail($request->organizacao_id);
+        $dado['codprojeto'] = $request->codprojeto;
+        $dado['codorganizacao'] = $request->codorganizacao;
+        $projeto = Projeto::findOrFail($request->codprojeto);
+        $organizacao = Organizacao::findOrFail($request->codorganizacao);
         return view('controle_modelos.create', compact('dado', 'projeto', 'organizacao'));
     }
 
-    public function create($organizacao_id, $projeto_id)
+    public function create($codorganizacao, $codprojeto)
     {
-        $projeto = Projeto::findOrFail($projeto_id);
-        $organizacao = Organizacao::findOrFail($organizacao_id);
+        $projeto = Projeto::findOrFail($codprojeto);
+        $organizacao = Organizacao::findOrFail($codorganizacao);
         $dados = Modelo::dados();
         return view('controle_modelos.create', compact('dados', 'organizacao', 'projeto'));
     }
@@ -64,8 +64,8 @@ class ModeloController extends Controller
     {
         $request->request->add([
             'xml_modelo' => 'nenhum',
-            'user_id' => Auth::user()->id
-        ]);
+            'codusuario' => Auth::user()->codusuario
+        ]); 
         $modelo = Modelo::create($request->all());
         if (isset($modelo)) {
             flash('Modelo criado com sucesso!!!');
@@ -73,9 +73,9 @@ class ModeloController extends Controller
         if ($modelo->tipo === 'declarativo') {
             return redirect()->route('controle_tarefas_index',
                 [
-                    'organizacao_id' => $modelo->organizacao_id,
-                    'projeto_id' => $modelo->projeto_id,
-                    'modelo_id' => $modelo->id
+                    'codorganizacao' => $modelo->codorganizacao,
+                    'codprojeto' => $modelo->codprojeto,
+                    'codmodelo' => $modelo->codmodelo
                 ]);
         } else {
             return view('controle_modelos.form_diagramatico', compact('modelo'));
@@ -88,9 +88,9 @@ class ModeloController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($codmodelo)
     {
-        $modelo = Modelo::findOrFail($id);
+        $modelo = Modelo::findOrFail($codmodelo);
         $projeto = $modelo->projeto;
         $organizacao = $modelo->organizacao;
         if ($modelo->tipo === 'declarativo') {
@@ -105,38 +105,35 @@ class ModeloController extends Controller
 
     }
 
-    public function show_tarefas($id)
+    public function show_tarefas($codmodelo)
     {
 
-        $modelo = Modelo::findOrFail($id);
-        if (empty($modelo->projeto->id) || empty($modelo->organizacao->id)) {
+        $modelo = Modelo::findOrFail($codmodelo);
+        if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
             flash('Não existem tarefas para serem exibidas!!!')->error();
-            return redirect()->route('controle_modelos.show', ['id' => $modelo->id]);
+            return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
         } else {
-            $projeto = $modelo->projeto;
-            $organizacao = $modelo->organizacao;
+
             return redirect()->route('controle_tarefas_index', [
-                'organizacao_id' => $organizacao->id,
-                'projeto_id' => $projeto->id,
-                'modelo_id' => $modelo->id
+                'codorganizacao' => $modelo->codorganizacao,
+                'codprojeto' => $modelo->codprojeto,
+                'codmodelo' => $modelo->codmodelo
             ]);
         }
 
     }
 
-    public function show_regras($id)
+    public function show_regras($codmodelo)
     {
-        $modelo = Modelo::findOrFail($id);
-        $projeto = $modelo->projeto;
-        $organizacao = $modelo->organizacao;
-        if (empty($modelo->projeto->id) || empty($modelo->organizacao->id)) {
+        $modelo = Modelo::findOrFail($codmodelo);
+        if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
             flash('Não existem regras para serem exibidas!!!')->error();
-            return redirect()->route('controle_modelos.show', ['id' => $modelo->id]);
+            return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
         } else {
             return redirect()->route('controle_regras_index', [
-                'organizacao_id' => $organizacao->id,
-                'projeto_id' => $projeto->id,
-                'modelo_id' => $modelo->id
+                'codorganizacao' => $modelo->codorganizacao,
+                'codprojeto' => $modelo->codprojeto,
+                'codmodelo' => $modelo->codmodelo
             ]);
         }
     }
@@ -147,9 +144,9 @@ class ModeloController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($codmodelo)
     {
-        $modelo = Modelo::findOrFail($id);
+        $modelo = Modelo::findOrFail($codmodelo);
         $dados = Modelo::dados();
         $projeto = $modelo->projeto;
         $organizacao = $modelo->organizacao;
@@ -170,17 +167,15 @@ class ModeloController extends Controller
     {
         $modelo = Modelo::findOrFail($id);
         $modelo->update($request->all());
-        $organizacao = $modelo->organizacao;
-        $projeto = $modelo->projeto;
         if (isset($modelo)) {
             flash('Modelo atualizado com sucesso!!');
         } else {
             flash('Modelo não foi atualizado!!');
         }
         return redirect()->route('controle_tarefas_index', [
-            'organizacao_id' => $organizacao->id,
-            'projeto_id' => $projeto->id,
-            'modelo_id' => $modelo->id
+            'codorganizacao' => $modelo->codorganizacao,
+            'codprojeto' => $modelo->codprojeto,
+            'codmodelo' => $modelo->codmodelo
         ]);
     }
 
@@ -191,32 +186,25 @@ class ModeloController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    private function delete($modelo)
+    private function delete($codmodelo)
     {
-        try {
-            $modelo->delete();
-            flash('Modelo Excluído Com Sucesso !!!');
-        } catch (\Exception $e) {
-            flash('Modelo Excluído Não Foi Excluído !!!');
-        }
+        $modelo = ModeloRepository::excluir($codmodelo);
         return $modelo;
     }
 
-    public function destroy($id)
+    public function destroy($codprojeto)
     {
-        $modelo = Modelo::findOrFail($id);
+        $modelo = Modelo::findOrFail($codprojeto);
 
         $this->delete($modelo);
-        if (empty($modelo->projeto->id) || empty($modelo->organizacao->id)) {
+        if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
 
             return redirect()->route('todos_modelos');
         } else {
-            $projeto_id = $modelo->projeto->id;
-            $organizacao_id = $modelo->organizacao->id;
             return redirect()->route('controle_modelos_index',
                 [
-                    'organizacao_id' => $organizacao_id,
-                    'projeto_id' => $projeto_id
+                    'codorganizacao' => $modelo->codorganizacao,
+                    'codprojeto' => $modelo->codprojeto
                 ]
             );
         }

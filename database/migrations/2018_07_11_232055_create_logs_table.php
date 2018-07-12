@@ -14,11 +14,10 @@ class CreateLogsTable extends Migration
     public function up()
     {
         Schema::create('logs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('codlog');
             $table->string('nome');
             $table->string('descricao');
-            $table->bigInteger('log_id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('codusuario');
             $table->timestamps();
         });
     }

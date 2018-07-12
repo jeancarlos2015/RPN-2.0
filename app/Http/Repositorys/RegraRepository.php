@@ -20,18 +20,18 @@ class RegraRepository extends Repository
     public static function listar()
     {
 
-        return collect((new Regra)->join('users', 'users.id', '=', 'regras.user_id')
-            ->where('users.id', '=', Auth::user()->id)
+        return collect((new Regra)->join('users', 'users.codusuario', '=', 'regras.codusuario')
+            ->where('users.codusuario', '=', Auth::user()->codusuario)
             ->get());
 
     }
 
-    public static function listar_regras_por_modelo($organizacao_id, $projeto_id, $modelo_id)
+    public static function listar_regras_por_modelo($codorganizacao, $codprojeto, $codmodelo)
     {
-        return collect(Regra::join('users', 'users.id', '=', 'regras.user_id')
-            ->where('regras.organizacao_id', '=', $organizacao_id)
-            ->where('regras.projeto_id', '=', $projeto_id)
-            ->where('regras.modelo_id', '=', $modelo_id)
+        return collect(Regra::join('users', 'users.codusuario', '=', 'regras.codusuario')
+            ->where('regras.codorganizacao', '=', $codorganizacao)
+            ->where('regras.codprojeto', '=', $codprojeto)
+            ->where('regras.codmodelo', '=', $codmodelo)
             ->get());
 
     }
@@ -41,9 +41,9 @@ class RegraRepository extends Repository
         return collect(self::listar())->count();
     }
 
-    public static function atualizar(Request $request, $id)
+    public static function atualizar(Request $request, $codregra)
     {
-        $value = Regra::findOrFail($id);
+        $value = Regra::findOrFail($codregra);
         $value->update($request->all());
         self::limpar_cache();
         return $value;
@@ -61,11 +61,11 @@ class RegraRepository extends Repository
         return $value;
     }
 
-    public static function excluir($id)
+    public static function excluir($codregra)
     {
         $value = null;
         try {
-            $doc = Regra::findOrFail($id);
+            $doc = Regra::findOrFail($codregra);
             $value = $doc->delete();
             self::limpar_cache();
         } catch (Exception $e) {

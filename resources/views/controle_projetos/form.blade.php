@@ -8,8 +8,8 @@
         @endif
     </div>
 @endfor
-@if(!empty($id))
-    <input type="hidden" name="organizacao_id" class="form-control"
-           value="{!! $id !!}">
+@if(!empty($codorganizacao))
+    <input type="hidden" name="codorganizacao" class="form-control"
+           value="{!! $codorganizacao !!}">
 @endif
 <button type="submit" class="btn btn-primary form-control">{!! $acao !!}</button>

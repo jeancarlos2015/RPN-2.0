@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
-use App\Http\Repositories\VersionamentoRepository;
 use App\Http\Repositorys\ProjetoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +12,9 @@ class ProjetoController extends Controller
 {
 
 
-    public function index($organizacao_id)
+    public function index($codorganizacao)
     {
-        $organizacao = Organizacao::findOrFail($organizacao_id);
+        $organizacao = Organizacao::findOrFail($codorganizacao);
         $projetos = $organizacao->projetos;
         $titulos = Projeto::titulos();
         $tipo = 'projeto';
@@ -35,18 +34,18 @@ class ProjetoController extends Controller
      *
      * @return bool
      */
-    private function exists($id)
+    private function exists($codorganizacao)
     {
-        $organizacao = (new Organizacao)->where('id', '=', $id)->first();
+        $organizacao = (new Organizacao)->where('codorganizacao', '=', $codorganizacao)->first();
         return $organizacao === null;
     }
 
-    public function create($organizacao_id)
+    public function create($codorganizacao)
     {
 
         $dados = Projeto::dados();
-        if (!$this->exists($organizacao_id)) {
-            $organizacao = Organizacao::findOrFail($organizacao_id);
+        if (!$this->exists($codorganizacao)) {
+            $organizacao = Organizacao::findOrFail($codorganizacao);
         } else {
             $organizacao = Organizacao::create(['nome' => 'novo', 'descricao' => 'novo']);
         }
@@ -57,16 +56,16 @@ class ProjetoController extends Controller
     public function store(Request $request)
     {
 
-        $request->request->add(['user_id' => Auth::user()->id]);
+        $request->request->add(['codusuario' => Auth::user()->codusuario]);
         $projeto = Projeto::create($request->all());
 
-        $organizacao_id = $request->organizacao_id;
+        $codorganizacao = $request->codorganizacao;
         if (isset($projeto)) {
             flash('Projeto criado com sucesso!!');
         } else {
             flash('Projeto não foi criado!!');
         }
-        return redirect()->route('controle_modelos_index', ['organizacao_id' => $organizacao_id, 'projeto_id' => $projeto->id]);
+        return redirect()->route('controle_modelos_index', ['codorganizacao' => $codorganizacao, 'codprojeto' => $projeto->codprojeto]);
     }
 
     /**
@@ -75,11 +74,10 @@ class ProjetoController extends Controller
      * @param  \App\Projeto $projeto
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($codprojeto)
     {
-        $projeto = Projeto::findOrFail($id);
-        $organizacao_id = $projeto->organizacao->id;
-        return redirect()->route('controle_modelos_index', ['organizacao_id' => $organizacao_id, 'projeto_id' => $projeto->id]);
+        $projeto = Projeto::findOrFail($codprojeto);
+        return redirect()->route('controle_modelos_index', ['codorganizacao' => $projeto->codorganizacao, 'codprojeto' => $codprojeto]);
     }
 
     /**
@@ -105,37 +103,19 @@ class ProjetoController extends Controller
      * @param  \App\Projeto $projeto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $codprojeto)
     {
-        $projeto = Projeto::findOrFail($id);
-        $projeto->update($request->all());
-        $organizacao_id = $projeto->organizacao->id;
-        if (isset($projeto)) {
-            flash('Projeto Atualizado com sucesso!!');
-        } else {
-            flash('Projeto não foi Atualizado!!');
-        }
-        return redirect()->route('controle_modelos_index', ['organizacao_id' => $organizacao_id, 'projeto_id' => $projeto->id]);
+        $projeto = ProjetoRepository::atualizar($request, $codprojeto);
+        return redirect()->route('controle_modelos_index', ['codorganizacao' => $projeto->codorganizacao, 'codprojeto' => $codprojeto]);
 
     }
 
 
-    public function destroy($id)
+    public function destroy($codprojeto)
     {
-        $projeto = Projeto::findOrFail($id);
-        try {
-            $projeto->delete();
-            if (!$projeto->exists) {
-                flash('Projeto Excluído Com Sucesso!!!');
-            } else {
-                flash('Projeto Não Foi Excluído!!!');
-            }
-
-        } catch (\Exception $e) {
-            flash('Error!!!')->error();
-        }
+        $projeto = ProjetoRepository::excluir($codprojeto);
         return redirect()->route('controle_projetos_index', [
-            'organizacao_id' => $projeto->organizacao->id
+            'codorganizacao' => $projeto->codorganizacao
         ]);
     }
 }

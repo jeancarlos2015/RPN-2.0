@@ -35,14 +35,14 @@
 @endif
 
 
-@if(!empty($organizacao_id))
-    <input type="hidden" name="organizacao_id" class="form-control"
-           value="{!! $organizacao_id !!}">
+@if(!empty($codorganizacao))
+    <input type="hidden" name="codorganizacao" class="form-control"
+           value="{!! $codorganizacao !!}">
 @endif
 
-@if(!empty($projeto_id))
-    <input type="hidden" name="projeto_id" class="form-control"
-           value="{!! $projeto_id !!}">
+@if(!empty($codprojeto))
+    <input type="hidden" name="codprojeto" class="form-control"
+           value="{!! $codprojeto !!}">
 @endif
 
 

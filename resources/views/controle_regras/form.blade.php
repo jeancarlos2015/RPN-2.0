@@ -7,7 +7,7 @@
 
                 <select name="{!! $dados[$indice]->atributo !!}" class="form-control">
                     @foreach($tarefas as $tarefa)
-                        <option value="{!! $tarefa->id !!}">{!! $tarefa->nome !!}</option>
+                        <option value="{!! $tarefa->codtarefa !!}">{!! $tarefa->nome !!}</option>
                     @endforeach
                 </select>
 
@@ -22,18 +22,18 @@
 @endfor
 
 @if(!empty($organizacao))
-    <input type="hidden" name="organizacao_id" class="form-control"
-           value="{!! $organizacao->id !!}">
+    <input type="hidden" name="codorganizacao" class="form-control"
+           value="{!! $organizacao->codorganizacao !!}">
 @endif
 
 @if(!empty($projeto))
-    <input type="hidden" name="projeto_id" class="form-control"
-           value="{!! $projeto->id !!}">
+    <input type="hidden" name="codprojeto" class="form-control"
+           value="{!! $projeto->codprojeto !!}">
 @endif
 
 @if(!empty($modelo))
-    <input type="hidden" name="modelo_id" class="form-control"
-           value="{!! $modelo->id !!}">
+    <input type="hidden" name="codmodelo" class="form-control"
+           value="{!! $modelo->codmodelo !!}">
 @endif
 
 

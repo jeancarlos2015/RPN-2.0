@@ -9,8 +9,8 @@
         <a class="btn btn-dark form-control"
            href="{!! route('controle_modelos_create',[
 
-                        'organizacao_id' => $organizacao->id,
-                        'projeto_id' => $projeto->id
+                        'organizacao_id' => $organizacao->codorganizacao,
+                        'projeto_id' => $projeto->codprojeto
 
                         ]) !!}">Novo Modelo</a>
         @break;
@@ -19,9 +19,9 @@
         <a class="btn btn-dark form-control"
            href="{!! route('controle_regras_create',
                 [
-                'organizacao_id' => $organizacao->id,
-                     'projeto_id' => $projeto->id,
-                       'modelo_id' => $modelo->id
+                'organizacao_id' => $organizacao->codorganizacao,
+                     'projeto_id' => $projeto->codprojeto,
+                       'modelo_id' => $modelo->codmodelo
                 ]
            ) !!}">Nova Regra</a>
 
@@ -33,9 +33,9 @@
             <a class="btn btn-dark form-control"
                href="{!! route('controle_regras_create',
                 [
-                'organizacao_id' => $organizacao->id,
-                     'projeto_id' => $projeto->id,
-                       'modelo_id' => $modelo->id
+                'organizacao_id' => $organizacao->codorganizacao,
+                     'projeto_id' => $projeto->codprojeto,
+                       'modelo_id' => $modelo->codmodelo
                 ]
            ) !!}">Nova Regra</a>
             <br>
@@ -45,16 +45,16 @@
         <a class="btn btn-dark form-control"
            href="{!! route('controle_tarefas_create',
            [
-                    'organizacao_id' => $organizacao->id,
-                     'projeto_id' => $projeto->id,
-                       'modelo_id' => $modelo->id
+                 'organizacao_id' => $organizacao->codorganizacao,
+                     'projeto_id' => $projeto->codprojeto,
+                       'modelo_id' => $modelo->codmodelo
            ]
            ) !!}">Nova Tarefa</a>
         @break;
 
         @case ('projeto')
         <a class="btn btn-dark form-control"
-           href="{!! route('controle_projetos_create',['organizacao_id' => $organizacao->id]) !!}">Novo Projeto</a>
+           href="{!! route('controle_projetos_create',['organizacao_id' => $organizacao->codorganizacao]) !!}">Novo Projeto</a>
         @break;
 
     @endswitch

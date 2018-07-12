@@ -20,18 +20,18 @@ class TarefaRepository extends Repository
     public static function listar()
     {
 
-        return collect((new Tarefa)->join('users', 'users.id', '=', 'tarefas.user_id')
-            ->where('users.id', '=', Auth::user()->id)
+        return collect((new Tarefa)->join('users', 'users.codusuario', '=', 'tarefas.codusuario')
+            ->where('users.codusuario', '=', Auth::user()->codusuario)
             ->get());
 
     }
 
-    public static function listar_tarefas_por_modelo($organizacao_id, $projeto_id, $modelo_id)
+    public static function listar_tarefas_por_modelo($codorganizacao, $codprojeto, $codmodelo)
     {
-        return collect(Tarefa::join('users', 'users.id', '=', 'tarefas.user_id')
-            ->where('tarefas.organizacao_id', '=', $organizacao_id)
-            ->where('tarefas.projeto_id', '=', $projeto_id)
-            ->where('tarefas.modelo_id', '=', $modelo_id)
+        return collect(Tarefa::join('users', 'users.codusuario', '=', 'tarefas.codusuario')
+            ->where('tarefas.codorganizacao', '=', $codorganizacao)
+            ->where('tarefas.codprojeto', '=', $codprojeto)
+            ->where('tarefas.codmodelo', '=', $codmodelo)
             ->get());
     }
 
@@ -40,9 +40,9 @@ class TarefaRepository extends Repository
         return collect(self::listar())->count();
     }
 
-    public static function atualizar(Request $request, $id)
+    public static function atualizar(Request $request, $codtarefa)
     {
-        $value = Tarefa::findOrFail($id);
+        $value = Tarefa::findOrFail($codtarefa);
         $value->update($request->all());
         self::limpar_cache();
         return $value;
@@ -60,11 +60,11 @@ class TarefaRepository extends Repository
         return $value;
     }
 
-    public static function excluir($id)
+    public static function excluir($codtarefa)
     {
         $value = null;
         try {
-            $doc = Tarefa::findOrFail($id);
+            $doc = Tarefa::findOrFail($codtarefa);
             $value = $doc->delete();
             self::limpar_cache();
         } catch (Exception $e) {

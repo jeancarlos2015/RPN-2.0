@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organizacao extends Model
 {
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'codorganizacao';
     protected $table = 'organizacoes';
     protected $fillable = [
         'nome',
         'descricao',
-        'user_id'
+        'codusuario'
     ];
 
 
@@ -70,6 +70,6 @@ class Organizacao extends Model
 
     public  function projetos()
     {
-        return $this->belongsTo(Projeto::class,'id','organizacao_id');
+        return $this->belongsTo(Projeto::class,'codorganizacao','codorganizacao');
     }
 }

@@ -14,14 +14,14 @@ class CreateModelosTable extends Migration
     public function up()
     {
         Schema::create('modelos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nome')->unique();
+            $table->increments('codmodelo');
+            $table->string('nome');
             $table->string('descricao');
             $table->string('tipo');
             $table->longText('xml_modelo');
-            $table->bigInteger('projeto_id');
-            $table->bigInteger('organizacao_id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('codprojeto');
+            $table->bigInteger('codorganizacao');
+            $table->bigInteger('codusuario');
             $table->timestamps();
         });
     }
