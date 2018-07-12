@@ -18,10 +18,10 @@ class TarefaRepository extends Repository
 
     public static function listar()
     {
-        return Cache::remember('listar_tarefas', 2000, function () {
-            return collect((new Tarefa)->join('users', 'users.id', '=', 'tarefas.user_id')
-                ->get());
-        });
+
+        return collect((new Tarefa)->join('users', 'users.id', '=', 'tarefas.user_id')
+            ->get());
+        
     }
 
     public static function count()

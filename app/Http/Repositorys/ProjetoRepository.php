@@ -18,16 +18,17 @@ class ProjetoRepository extends Repository
 
     public static function listar()
     {
-        return Cache::remember('listar_projetos', 2000, function () {
-            return collect((new Projeto)->join('users', 'users.id', '=', 'projetos.user_id')
-                ->get());
-        });
+
+        return collect((new Projeto)->join('users', 'users.id', '=', 'projetos.user_id')
+            ->get());
+
     }
 
     public static function count()
     {
         return collect(self::listar())->count();
     }
+
     public static function atualizar(Request $request, $id)
     {
         $value = Projeto::findOrFail($id);

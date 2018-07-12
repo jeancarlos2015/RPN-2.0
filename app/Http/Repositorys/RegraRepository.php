@@ -18,10 +18,10 @@ class RegraRepository extends Repository
 
     public static function listar()
     {
-        return Cache::remember('listar_regras', 2000, function () {
-            return collect((new Regra)->join('users', 'users.id', '=', 'regras.user_id')
-                ->get());
-        });
+
+        return collect((new Regra)->join('users', 'users.id', '=', 'regras.user_id')
+            ->get());
+        
     }
 
     public static function count()

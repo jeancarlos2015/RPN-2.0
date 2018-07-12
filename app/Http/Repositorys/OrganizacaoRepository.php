@@ -18,10 +18,10 @@ class OrganizacaoRepository extends Repository
 
     public static function listar()
     {
-        return Cache::remember('listar_organizacoes', 2000, function () {
+
             return collect((new Organizacao)->join('users', 'users.id', '=', 'organizacoes.user_id')
                 ->get());
-        });
+
     }
 
     public static function count()
