@@ -6,6 +6,7 @@ namespace App\Http\Repositorys;
 use App\Http\Models\Organizacao;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class OrganizacaoRepository extends Repository
@@ -20,6 +21,7 @@ class OrganizacaoRepository extends Repository
     {
 
             return collect((new Organizacao)->join('users', 'users.id', '=', 'organizacoes.user_id')
+                ->where('users.id','=',Auth::user()->id)
                 ->get());
 
     }

@@ -6,6 +6,7 @@ namespace App\Http\Repositorys;
 use App\Http\Models\Modelo;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class ModeloRepository extends Repository
@@ -18,10 +19,11 @@ class ModeloRepository extends Repository
 
     public static function listar()
     {
-        return Cache::remember('listar_modelos', 2000, function () {
+
             return collect((new Modelo)->join('users', 'users.id', '=', 'modelos.user_id')
+                ->where('users.id','=',Auth::user()->id)
                 ->get());
-        });
+
     }
 
     public static function count()

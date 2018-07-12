@@ -6,6 +6,7 @@ namespace App\Http\Repositorys;
 use App\Http\Models\Projeto;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class ProjetoRepository extends Repository
@@ -20,6 +21,7 @@ class ProjetoRepository extends Repository
     {
 
         return collect((new Projeto)->join('users', 'users.id', '=', 'projetos.user_id')
+            ->where('users.id','=',Auth::user()->id)
             ->get());
 
     }

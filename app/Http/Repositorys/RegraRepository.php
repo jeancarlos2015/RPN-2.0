@@ -6,6 +6,7 @@ namespace App\Http\Repositorys;
 use App\Http\Models\Regra;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class RegraRepository extends Repository
@@ -20,6 +21,7 @@ class RegraRepository extends Repository
     {
 
         return collect((new Regra)->join('users', 'users.id', '=', 'regras.user_id')
+            ->where('users.id','=',Auth::user()->id)
             ->get());
         
     }

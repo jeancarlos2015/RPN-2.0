@@ -6,6 +6,7 @@ namespace App\Http\Repositorys;
 use App\Http\Models\Tarefa;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class TarefaRepository extends Repository
@@ -20,8 +21,9 @@ class TarefaRepository extends Repository
     {
 
         return collect((new Tarefa)->join('users', 'users.id', '=', 'tarefas.user_id')
+            ->where('users.id','=',Auth::user()->id)
             ->get());
-        
+
     }
 
     public static function count()
