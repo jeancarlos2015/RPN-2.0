@@ -31,9 +31,10 @@ class RegraController extends Controller
     public function todas_regras()
     {
         $regras = RegraRepository::listar();
-//        dd($regras[8]);
         $titulos = Regra::titulos();
-        return view('controle_regras.all', compact('regras', 'titulos'));
+        $tarefas = null;
+        $tipo = 'regra';
+        return view('controle_regras.all', compact('regras', 'titulos','tarefas','tipo'));
     }
 
     public function create($codorganizacao, $codprojeto, $codmodelo)

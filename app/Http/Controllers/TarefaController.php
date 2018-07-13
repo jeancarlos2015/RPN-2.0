@@ -34,7 +34,8 @@ class TarefaController extends Controller
     {
         $tarefas = TarefaRepository::listar();
         $titulos = Tarefa::titulos();
-        return view('controle_tarefas.all', compact('tarefas', 'titulos'));
+        $tipo = 'tarefa';
+        return view('controle_tarefas.all', compact('tarefas', 'titulos','tipo'));
     }
 
     public function create($codorganizacao, $codprojeto, $codmodelo)

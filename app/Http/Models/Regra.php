@@ -5,6 +5,41 @@ namespace App\Http\Models;
 use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Http\Models\Regra
+ *
+ * @property int $codregra
+ * @property string $operador
+ * @property string $nome
+ * @property int $codtarefa1
+ * @property int $codtarefa2
+ * @property int $codprojeto
+ * @property int $codorganizacao
+ * @property int $codmodelo
+ * @property int $codregra1
+ * @property int $codusuario
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Http\Models\Modelo $modelo
+ * @property-read \App\Http\Models\Organizacao $organizacao
+ * @property-read \App\Http\Models\Projeto $projeto
+ * @property-read \App\Http\Models\Tarefa $tarefa1
+ * @property-read \App\Http\Models\Tarefa $tarefa2
+ * @property-read \App\Http\Models\Tarefa $tarefas
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereCodmodelo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereCodorganizacao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereCodprojeto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereCodregra($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereCodregra1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereCodtarefa1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereCodtarefa2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereCodusuario($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereNome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereOperador($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Regra whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Regra extends Model
 {
     protected $primaryKey = 'codregra';

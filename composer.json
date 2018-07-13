@@ -9,6 +9,7 @@
         "ext-pdo_sqlite": "*",
         "cpliakas/git-wrapper": "^2.0",
         "czproject/git-php": "^3.14",
+        "doctrine/dbal": "^2.7",
         "eloquent/enumeration": "^5.1",
         "fideloper/proxy": "^4.0",
         "garygreen/pretty-routes": "^1.0",
@@ -30,7 +31,6 @@
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
-        "doctrine/dbal": "^2.6",
         "nunomaduro/collision": "^2.0",
         "phpunit/phpunit": "^7.0"
     },

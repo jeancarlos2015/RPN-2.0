@@ -102,7 +102,7 @@ class OrganizacaoController extends Controller
     {
         $status = Validator::make($request->all(), [Organizacao::regras_validacao()]);
         if ($status->fails()){
-            
+
         }
         $request->request->add(['codusuario' => Auth::user()->codusuario]);
         $organizacao = Organizacao::create($request->all());
