@@ -4,7 +4,7 @@ namespace App\Http\Repositorys;
 use Cz\Git\GitException;
 use Cz\Git\GitRepository;
 
-class VersionamentoRepository
+class GitSistemaRepository
 {
     private $repositorio;
 
@@ -31,12 +31,11 @@ class VersionamentoRepository
         $branch = null;
         try {
             $this->repositorio = new GitRepository(self::get_path());
-            $branch = $this->repositorio->getCurrentBranchName();
+            return $this->repositorio->getCurrentBranchName();
         } catch (GitException $ex) {
-
+            return $branch;
         }
 
-        return $branch;
     }
 
     public function is_exchanges()

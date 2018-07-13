@@ -35,7 +35,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('todos_projetos', 'ProjetoController@todos_projetos')->name('todos_projetos');
         Route::get('todas_tarefas', 'TarefaController@todas_tarefas')->name('todas_tarefas');
         Route::get('todas_regras', 'RegraController@todas_regras')->name('todas_regras');
-        Route::get('controle_versao_projetos', 'VersionadorController@index')->name('controle_versao_projetos');
+        Route::get('controle_versao_projetos', 'GitController@index')->name('controle_versao_projetos');
 
 
         Route::get('controle_projetos_create/{codorganizacao}', 'ProjetoController@create')->name('controle_projetos_create');
@@ -51,11 +51,13 @@ Route::prefix('admin')->middleware(['auth'])->group(
         //Versionamento
 
         Route::get('init', 'GitController@init')->name('init');
-        Route::post('create_branch', 'GitController@create_branch')->name('create');
+        Route::get('index_init', 'GitController@index_init')->name('index_init');
+        Route::post('create', 'GitController@create_branch')->name('create');
         Route::post('commit', 'GitController@commit')->name('commit');
         Route::post('checkout', 'GitController@checkout')->name('checkout');
         Route::post('merge', 'GitController@merge')->name('merge');
         Route::post('delete', 'GitController@delete')->name('delete');
+
 
         Route::resource('controle_versao', 'GitController');
 

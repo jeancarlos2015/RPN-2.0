@@ -8,9 +8,5 @@
                     'rota' => 'todas_tarefas',
                     'branch_atual' => $branch_atual
     ])
-    @if(!empty($branch_atual))
-        Branch Atual: <span>{!! $branch_atual !!}</span>
-    @endif
-
-
+    <a class="btn btn-dark form-control" href="{!! route('init') !!}">Inicializar Repositório</a>
 @endsection
