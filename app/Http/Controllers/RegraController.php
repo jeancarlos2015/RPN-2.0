@@ -8,6 +8,7 @@ use App\Http\Models\Projeto;
 use App\Http\Models\Regra;
 use App\Http\Models\Tarefa;
 use App\Http\Repositorys\RegraRepository;
+use App\Http\Repositorys\TarefaRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -101,8 +102,7 @@ class RegraController extends Controller
         $organizacao = $regra->organizacao;
         $projeto = $regra->projeto;
         $modelo = $regra->modelo;
-        $tarefas = $regra->tarefas;
-
+        $tarefas = TarefaRepository::listar();
         return view('controle_regras.edit', compact('dados', 'regra', 'organizacao', 'projeto', 'modelo', 'tarefas'));
     }
 

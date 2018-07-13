@@ -4,7 +4,7 @@
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
       'titulo' => 'Paianel',
-      'sub_titulo' => 'Regras',
+      'sub_titulo' => 'Tarefas',
     ])
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,

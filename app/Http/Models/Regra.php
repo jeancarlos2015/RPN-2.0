@@ -115,10 +115,7 @@ class Regra extends Model
         return $dados;
     }
 
-    public  function tarefas()
-    {
-        return $this->hasOne(Tarefa::class, 'codtarefa', 'codtarefa');
-    }
+
     public  function tarefa1()
     {
         return $this->belongsTo(Tarefa::class, 'codtarefa1', 'codtarefa');
