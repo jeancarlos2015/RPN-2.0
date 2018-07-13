@@ -6,6 +6,7 @@ use App\Http\Models\Modelo;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Models\Tarefa;
+use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\TarefaRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -91,6 +92,7 @@ class TarefaController extends Controller
     {
         $tarefa = Tarefa::findOrFail($codtarefa);
         $tarefa->update($request->all());
+        LogRepository::criar("Tarefa Atualizada Com sucesso", "Rota De Atualização de organização");
         if (isset($tarefa)) {
             flash('Tarefa atualizada com sucesso!!');
         } else {
@@ -112,7 +114,7 @@ class TarefaController extends Controller
         $projeto = $tarefa->projeto;
         $organizacao = $tarefa->organizacao;
         $modelo = $tarefa->modelo;
-
+        LogRepository::criar("Tarefa Excluída Com sucesso", "Rota De Exclusão de tarefa");
         try {
             $tarefa->delete();
             if (!$tarefa->exists) {

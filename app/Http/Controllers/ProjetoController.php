@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
+use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\OrganizacaoRepository;
 use App\Http\Repositorys\ProjetoRepository;
 use Illuminate\Http\Request;
@@ -61,6 +62,7 @@ class ProjetoController extends Controller
         $projeto = Projeto::create($request->all());
 
         $codorganizacao = $request->codorganizacao;
+        LogRepository::criar("Projeto Salva Com sucesso", "Rota De Adição de projeto");
         if (isset($projeto)) {
             flash('Projeto criado com sucesso!!');
         } else {
@@ -107,6 +109,7 @@ class ProjetoController extends Controller
     public function update(Request $request, $codprojeto)
     {
         $projeto = ProjetoRepository::atualizar($request, $codprojeto);
+        LogRepository::criar("Projeto Atualizado Com sucesso", "Rota De Atualização de projeto");
         return redirect()->route('controle_modelos_index', ['codorganizacao' => $projeto->codorganizacao, 'codprojeto' => $codprojeto]);
 
     }

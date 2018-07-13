@@ -7,6 +7,7 @@ use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Models\Regra;
 use App\Http\Models\Tarefa;
+use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\RegraRepository;
 use App\Http\Repositorys\TarefaRepository;
 use Illuminate\Http\Request;
@@ -111,6 +112,7 @@ class RegraController extends Controller
     {
         $regra = Regra::findOrFail($codregra);
         $regra->update($request->all());
+        LogRepository::criar("Regra Atualizada Com sucesso", "Rota De Atualização de Regra");
         if (isset($tarefa)) {
             flash('Regra atualizada com sucesso!!');
         } else {
@@ -132,6 +134,7 @@ class RegraController extends Controller
         $modelo = $regra->modelo;
         try {
             $regra->delete();
+            LogRepository::criar("Regra Excluída Com sucesso", "Rota De Exclusão de Regra");
             if (!$regra->exists) {
                 flash('Regra excluída com sucesso!!');
             } else {

@@ -6,6 +6,7 @@ use App\Http\Models\Modelo;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Repositorys\ModeloRepository;
+use App\Http\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +33,8 @@ class ModeloController extends Controller
         $modelos = ModeloRepository::listar();
         $titulos = Modelo::titulos();
         $tipo = 'modelo';
-        return view('controle_modelos.index_todos_modelos', compact('modelos', 'titulos','tipo'));
+        $logs = Log::all();
+        return view('controle_modelos.index_todos_modelos', compact('modelos', 'titulos','tipo','logs'));
     }
 
     /**

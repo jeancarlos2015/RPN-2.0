@@ -62,7 +62,6 @@ class OrganizacaoRepository extends Repository
         try {
 
             $doc = Organizacao::findOrFail($codorganizacao);
-            dd($codorganizacao);
             $value = $doc->delete();
             self::limpar_cache();
         } catch (Exception $e) {

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Log;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Models\Regra;
+use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\ModeloRepository;
 use App\Http\Repositorys\OrganizacaoRepository;
 use App\Http\Repositorys\ProjetoRepository;
@@ -30,7 +32,8 @@ class OrganizacaoController extends Controller
         $titulos = Organizacao::titulos();
         $campos = Organizacao::campos();
         $tipo = 'organizacao';
-        return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos', 'tipo'));
+        $logs = Log::all();
+        return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos', 'tipo','logs'));
     }
 
     public function painel()
@@ -40,6 +43,7 @@ class OrganizacaoController extends Controller
         $qt_modelos = ModeloRepository::count();
         $qt_tarefas = TarefaRepository::count();
         $qt_regras = RegraRepository::count();
+        $logs = Log::all();
         $tipo = 'painel';
         $titulos = [
             'Modelos',
@@ -63,7 +67,7 @@ class OrganizacaoController extends Controller
             $qt_organizacoes
         ];
 
-        return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo'));
+        return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo','logs'));
     }
 
 
@@ -79,6 +83,7 @@ class OrganizacaoController extends Controller
             $nova_regra = new Regra();
             return view('controle_organizacoes.create_regras', compact('projeto', 'regras', 'operadores', 'tarefas', 'nova_regra'));
         }
+
         return view('controle_organizacoes.create_nome', compact('projeto'));
     }
 
@@ -106,7 +111,7 @@ class OrganizacaoController extends Controller
         }
         $request->request->add(['codusuario' => Auth::user()->codusuario]);
         $organizacao = Organizacao::create($request->all());
-
+        LogRepository::criar("Organização Criada Com sucesso", "Rota De Criação de organização");
         if (isset($organizacao)) {
             flash('Organização criada com sucesso!!');
         } else {
@@ -137,6 +142,7 @@ class OrganizacaoController extends Controller
     {
 
         $organizacao = OrganizacaoRepository::atualizar($request, $codorganizacao);
+        LogRepository::criar("Organização Atualizada Com sucesso", "Rota De Atualização de organização");
         if (isset($organizacao)) {
             flash('Organização Atualizada com sucesso!!');
         } else {
@@ -151,6 +157,7 @@ class OrganizacaoController extends Controller
     {
 
         $organizacao = OrganizacaoRepository::excluir($codorganizacao);
+        LogRepository::criar("Organização Excluída Com sucesso", "Rota De Exclusão de organização");
         return response()->redirectToRoute('controle_organizacoes.index');
     }
 

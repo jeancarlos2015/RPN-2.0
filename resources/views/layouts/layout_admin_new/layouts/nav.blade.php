@@ -65,13 +65,6 @@
         <ul class="navbar-nav ml-auto">
 
 
-            <li class="nav-item">
-                <a class="nav-link">
-                    Usuário: {{ Auth::user()->name }} <span class="sr-only"></span>
-                </a>
-            </li>
-
-
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
@@ -103,6 +96,14 @@
                 </a>
 
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link">
+                    Usuário: {{ Auth::user()->name }} <span class="sr-only"></span>
+                </a>
+            </li>
+
+
             {{--<li class="nav-item">--}}
             {{--<form class="form-inline my-2 my-lg-0 mr-lg-2">--}}
             {{--<div class="input-group">--}}
