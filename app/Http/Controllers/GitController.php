@@ -34,7 +34,8 @@ class GitController extends Controller
         $git->git_init();
         $branch_atual = $git->get_branch_current();
         $git->git_commit('inicializacao do repositorio');
-        return view('controle_versao.inicializacao_repositorio',compact('tipo','branch_atual'));
+        dd($branch_atual);
+        return view('controle_versao.index',compact('tipo','branch_atual'));
     }
 
     public function delete(Request $request)

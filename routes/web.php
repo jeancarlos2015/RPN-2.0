@@ -51,12 +51,13 @@ Route::prefix('admin')->middleware(['auth'])->group(
         //Versionamento
 
         Route::get('init', 'GitController@init')->name('init');
-        Route::get('index_init', 'GitController@index_init')->name('index_init');
         Route::post('create', 'GitController@create_branch')->name('create');
         Route::post('commit', 'GitController@commit')->name('commit');
         Route::post('checkout', 'GitController@checkout')->name('checkout');
         Route::post('merge', 'GitController@merge')->name('merge');
         Route::post('delete', 'GitController@delete')->name('delete');
+
+        Route::get('index_init', 'GitController@index_init')->name('index_init');
 
 
         Route::resource('controle_versao', 'GitController');
