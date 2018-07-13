@@ -15,7 +15,11 @@ class RegraController extends Controller
 {
     public function index($codorganizacao, $codprojeto, $codmodelo)
     {
-        $regras = RegraRepository::listar_regras_por_modelo($codorganizacao, $codprojeto, $codmodelo);
+        $dado['codorganizacao'] = $codorganizacao;
+        $dado['codprojeto'] = $codprojeto;
+        $dado['codmodelo'] = $codmodelo;
+
+        $regras = RegraRepository::listar_regras_por_modelo($dado);
         $titulos = Regra::titulos();
         $organizacao = Organizacao::findOrFail($codorganizacao);
         $projeto = Projeto::findOrFail($codprojeto);
@@ -27,6 +31,7 @@ class RegraController extends Controller
     public function todas_regras()
     {
         $regras = RegraRepository::listar();
+//        dd($regras[8]);
         $titulos = Regra::titulos();
         return view('controle_regras.all', compact('regras', 'titulos'));
     }

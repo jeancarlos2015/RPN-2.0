@@ -5,7 +5,6 @@
             <i class="fa fa-table"></i> {!! $titulo !!}
         @endif
     </div>
-
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -110,11 +109,16 @@
                 @if(!empty($regras))
                     <tbody>
                     @foreach($regras as $regra1)
+                        {{--{!! dd($regra1->tarefa2->nome) !!}--}}
                         <tr>
                             <td>{!! $regra1->codregra !!}</td>
                             <td>{!! $regra1->tarefa1->nome !!}</td>
                             <td>{!! $regra1->operador !!}</td>
-                            <td>{!! $regra1->tarefa2->nome !!}</td>
+                            @if(!empty($regra1->tarefa2->nome))
+                                <td>{!! $regra1->tarefa2->nome !!}</td>
+                            @else
+                                <td>Não Informado</td>
+                            @endif
                             <td>
 
                                 @if(!empty($rota_edicao))

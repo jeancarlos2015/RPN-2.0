@@ -15,6 +15,12 @@ class Organizacao extends Model
         'codusuario'
     ];
 
+    public static function regras_validacao(){
+        return [
+            'nome' => 'required|max:50',
+            'descricao' => 'required|max:255'
+        ];
+    }
 
     public static function titulos()
     {

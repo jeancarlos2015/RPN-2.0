@@ -26,8 +26,11 @@ class TarefaRepository extends Repository
 
     }
 
-    public static function listar_tarefas_por_modelo($codorganizacao, $codprojeto, $codmodelo)
+    public static function listar_tarefas_por_modelo($dado)
     {
+        $codorganizacao = $dado['codorganizacao'];
+        $codprojeto = $dado['codprojeto'];
+        $codmodelo = $dado['codmodelo'];
         return collect(Tarefa::join('users', 'users.codusuario', '=', 'tarefas.codusuario')
             ->where('tarefas.codorganizacao', '=', $codorganizacao)
             ->where('tarefas.codprojeto', '=', $codprojeto)

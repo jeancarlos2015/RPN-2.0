@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "047678b653ea71c61e36d46d70fa28bd",
+    "content-hash": "9137a33c0d970478562b4ee522e2f38f",
     "packages": [
         {
             "name": "cpliakas/git-wrapper",
