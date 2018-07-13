@@ -1,60 +1,51 @@
-@extends('layouts.modelagem.main_area_modelador2')
+{{--@extends('layouts.modelagem.main_area_modelador2')--}}
 
 
-@section('content')
+{{--@section('content')--}}
 
-    @includeIf('componentes.dados_exibicao')
-    <h3>Editar o Modelo</h3>
+    {{--@includeIf('componentes.dados_exibicao')--}}
 
-    {{--@if(!empty($dado))--}}
 
-        {{--<form action="{!! route('controle_modelos.store') !!}" method="post">--}}
-            {{--@if($dado['tipo']=='declarativo')--}}
-                {{--@includeIf('controle_modelos.form_declarativo',--}}
-                        {{--[--}}
-                        {{--'acao' => 'Criar Modelo',--}}
-                        {{--'organizacao_id' => $dado['organizacao_id'],--}}
-                        {{--'projeto_id' => $dado['projeto_id'],--}}
-                        {{--'MAX' => 2--}}
-                        {{--]--}}
-                        {{--)--}}
-            {{--@elseif($dado['tipo'] == 'diagramatico')--}}
-                {{--@includeIf('controle_modelos.form_diagramatico',--}}
-                        {{--[--}}
-                        {{--'acao' => 'Criar Modelo',--}}
-                        {{--'organizacao_id' => $dado['organizacao_id'],--}}
-                        {{--'projeto_id' => $dado['projeto_id'],--}}
-                        {{--'MAX' => 2--}}
-                        {{--]--}}
-                        {{--)--}}
-            {{--@endif--}}
-
-        {{--</form>--}}
-    {{--@else--}}
-        {{--<form action="{!! route('escolhe_modelo') !!}" method="post">--}}
-            {{--@includeIf('controle_modelos.form_escolha',--}}
+    {{--<H4>Atualização Modelo</H4>--}}
+    {{--<form action="{!! route('controle_modelos.update',['id' => $modelo->codmodelo]) !!}" method="post">--}}
+        {{--{{ method_field('PUT')}}--}}
+        {{--@includeIf('controle_modelos.form',--}}
                     {{--[--}}
-                    {{--'acao' => 'Criar Modelo',--}}
-                    {{--'organizacao_id' => $organizacao->id,--}}
-                    {{--'projeto_id' => $projeto->id,--}}
-                    {{--'MAX' => 2--}}
+                    {{--'acao' => 'Atualizar e Proseguir',--}}
+                    {{--'dados' => $dados,--}}
+                    {{--'MAX' => 2,--}}
+                    {{--'organizacao_id' => $organizacao->codorganizacao,--}}
+                    {{--'projeto_id' => $projeto->codprojeto--}}
                     {{--]--}}
                     {{--)--}}
-        {{--</form>--}}
-    {{--@endif--}}
 
-    <H4>Atualização Modelo</H4>
+    {{--</form>--}}
+{{--@endsection--}}
+
+
+@extends('layouts.layout_admin_new.layouts.main')
+
+@section('content')
+    {!! csrf_field() !!}
+    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+                    'titulo' => 'Paianel',
+                    'sub_titulo' => 'Edição do Modelo',
+                    'rota' => 'controle_organizacoes.index'
+    ])
+
     <form action="{!! route('controle_modelos.update',['id' => $modelo->codmodelo]) !!}" method="post">
-        {{ method_field('PUT')}}
-        @includeIf('controle_modelos.form',
-                    [
-                    'acao' => 'Atualizar e Proseguir',
-                    'dados' => $dados,
-                    'MAX' => 2,
-                    'organizacao_id' => $organizacao->codorganizacao,
-                    'projeto_id' => $projeto->codprojeto
-                    ]
-                    )
+    {{ method_field('PUT')}}
+    @includeIf('controle_modelos.form',
+    [
+    'acao' => 'Atualizar e Proseguir',
+    'dados' => $dados,
+    'MAX' => 2,
+    'organizacao_id' => $organizacao->codorganizacao,
+    'projeto_id' => $projeto->codprojeto
+    ]
+    )
 
     </form>
+
+
 @endsection

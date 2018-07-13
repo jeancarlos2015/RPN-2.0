@@ -1,13 +1,3 @@
-{{--@extends('layouts.modelagem.main_area_modelador2')--}}
-
-
-{{--@section('content')--}}
-
-{{--<h3>Nova Organização</h3>--}}
-
-
-{{--@endsection--}}
-
 @extends('layouts.layout_admin_new.layouts.main')
 
 @section('content')
