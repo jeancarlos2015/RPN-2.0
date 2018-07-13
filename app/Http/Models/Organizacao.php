@@ -5,6 +5,24 @@ namespace App\Http\Models;
 use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Http\Models\Organizacao
+ *
+ * @property int $codorganizacao
+ * @property string $nome
+ * @property string $descricao
+ * @property int $codusuario
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Http\Models\Projeto $projetos
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereCodorganizacao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereCodusuario($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereDescricao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereNome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Organizacao extends Model
 {
     protected $primaryKey = 'codorganizacao';
@@ -15,6 +33,12 @@ class Organizacao extends Model
         'codusuario'
     ];
 
+    public static function regras_validacao(){
+        return [
+            'nome' => 'required|max:50',
+            'descricao' => 'required|max:255'
+        ];
+    }
 
     public static function titulos()
     {

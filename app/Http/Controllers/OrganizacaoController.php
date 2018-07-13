@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Operador;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Models\Regra;
-use App\Http\Models\Tarefa;
 use App\Http\Repositorys\ModeloRepository;
 use App\Http\Repositorys\OrganizacaoRepository;
 use App\Http\Repositorys\ProjetoRepository;
@@ -14,6 +12,7 @@ use App\Http\Repositorys\RegraRepository;
 use App\Http\Repositorys\TarefaRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class OrganizacaoController extends Controller
 {
@@ -75,7 +74,7 @@ class OrganizacaoController extends Controller
         $tarefas = TarefaRepository::listar();
         $nova_regra = null;
         $projeto = null;
-        if (!empty($regras)  && !empty($tarefas)) {
+        if (!empty($regras) && !empty($tarefas)) {
             $projeto = Projeto::create($request->all());
             $nova_regra = new Regra();
             return view('controle_organizacoes.create_regras', compact('projeto', 'regras', 'operadores', 'tarefas', 'nova_regra'));
@@ -98,10 +97,16 @@ class OrganizacaoController extends Controller
     }
 
 
+
     public function store(Request $request)
     {
+        $status = Validator::make($request->all(), [Organizacao::regras_validacao()]);
+        if ($status->fails()){
+
+        }
         $request->request->add(['codusuario' => Auth::user()->codusuario]);
         $organizacao = Organizacao::create($request->all());
+
         if (isset($organizacao)) {
             flash('Organização criada com sucesso!!');
         } else {

@@ -17,10 +17,17 @@ class CreateTarefasTable extends Migration
             $table->bigIncrements('codtarefa');
             $table->string('nome');
             $table->string('descricao');
+
             $table->bigInteger('codmodelo');
             $table->bigInteger('codprojeto');
             $table->bigInteger('codorganizacao');
             $table->bigInteger('codusuario');
+
+
+            $table->foreign('codmodelo')->references('codmodelo')->on('modelos');
+            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+            $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
+            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });
     }

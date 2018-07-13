@@ -31,7 +31,8 @@ class ModeloController extends Controller
 
         $modelos = ModeloRepository::listar();
         $titulos = Modelo::titulos();
-        return view('controle_modelos.index_todos_modelos', compact('modelos', 'titulos'));
+        $tipo = 'modelo';
+        return view('controle_modelos.index_todos_modelos', compact('modelos', 'titulos','tipo'));
     }
 
     /**

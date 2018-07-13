@@ -6,6 +6,27 @@ use App\Http\Util\Configuracao;
 use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Http\Models\Projeto
+ *
+ * @property int $codprojeto
+ * @property string $nome
+ * @property string $descricao
+ * @property int $codorganizacao
+ * @property int $codusuario
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Http\Models\Modelo $modelos
+ * @property-read \App\Http\Models\Organizacao $organizacao
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCodorganizacao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCodprojeto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCodusuario($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereDescricao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereNome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Projeto extends Model
 {
 

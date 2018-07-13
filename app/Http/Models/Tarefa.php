@@ -5,6 +5,32 @@ namespace App\Http\Models;
 use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Http\Models\Tarefa
+ *
+ * @property int $codtarefa
+ * @property string $nome
+ * @property string $descricao
+ * @property int $codmodelo
+ * @property int $codprojeto
+ * @property int $codorganizacao
+ * @property int $codusuario
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Http\Models\Modelo $modelo
+ * @property-read \App\Http\Models\Organizacao $organizacao
+ * @property-read \App\Http\Models\Projeto $projeto
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereCodmodelo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereCodorganizacao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereCodprojeto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereCodtarefa($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereCodusuario($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereDescricao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereNome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Tarefa extends Model
 {
     protected $primaryKey = 'codtarefa';
@@ -48,8 +74,8 @@ class Tarefa extends Model
 
     public static function validacao(){
         return [
-            'nome' => 'required',
-            'descricao' => 'required'
+            'nome' => 'required|max:50',
+            'descricao' => 'required|max:255'
         ];
     }
 

@@ -14,8 +14,14 @@ class TarefaController extends Controller
 {
 
     public function index($codorganizacao, $codprojeto, $codmodelo)
+
     {
-        $tarefas = TarefaRepository::listar_tarefas_por_modelo($codorganizacao, $codprojeto, $codmodelo);
+        $dado['codorganizacao'] = $codorganizacao;
+        $dado['codprojeto'] = $codprojeto;
+        $dado['codmodelo'] = $codmodelo;
+
+        $tarefas = TarefaRepository::listar_tarefas_por_modelo($dado);
+
         $titulos = Tarefa::titulos();
         $organizacao = Organizacao::findOrFail($codorganizacao);
         $projeto = Projeto::findOrFail($codprojeto);
@@ -28,7 +34,8 @@ class TarefaController extends Controller
     {
         $tarefas = TarefaRepository::listar();
         $titulos = Tarefa::titulos();
-        return view('controle_tarefas.all', compact('tarefas', 'titulos'));
+        $tipo = 'tarefa';
+        return view('controle_tarefas.all', compact('tarefas', 'titulos','tipo'));
     }
 
     public function create($codorganizacao, $codprojeto, $codmodelo)

@@ -5,6 +5,35 @@ namespace App\Http\Models;
 use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Http\Models\Modelo
+ *
+ * @property int $codmodelo
+ * @property string $nome
+ * @property string $descricao
+ * @property string $tipo
+ * @property string $xml_modelo
+ * @property int $codprojeto
+ * @property int $codorganizacao
+ * @property int $codusuario
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Http\Models\Organizacao $organizacao
+ * @property-read \App\Http\Models\Projeto $projeto
+ * @property-read \App\Http\Models\Regra $regras
+ * @property-read \App\Http\Models\Tarefa $tarefas
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodmodelo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodorganizacao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodprojeto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodusuario($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereDescricao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereNome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereTipo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereXmlModelo($value)
+ * @mixin \Eloquent
+ */
 class Modelo extends Model
 {
     protected $primaryKey = 'codmodelo';

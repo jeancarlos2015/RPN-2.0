@@ -3,7 +3,7 @@
 
 {{--@section('content')--}}
 
-    {{--<h3>Nova Organização</h3>--}}
+{{--<h3>Nova Organização</h3>--}}
 
 
 {{--@endsection--}}
@@ -12,7 +12,11 @@
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Nova Organização'])
+    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+              'titulo' => 'Paianel',
+              'sub_titulo' => 'Nova Organização',
+    ])
+
     <form action="{!! route('controle_organizacoes.store') !!}" method="post">
         {{ method_field('POST')}}
         @includeIf('controle_organizacoes.form',['acao' => 'Salvar e Proseguir','dados' => $dados,'MAX' => 2])

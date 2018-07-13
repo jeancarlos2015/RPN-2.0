@@ -20,15 +20,17 @@ class RegraRepository extends Repository
     public static function listar()
     {
 
-        return collect((new Regra)->join('users', 'users.codusuario', '=', 'regras.codusuario')
-            ->where('users.codusuario', '=', Auth::user()->codusuario)
+        return collect(Regra::where('regras.codusuario', '=', Auth::user()->codusuario)
             ->get());
 
     }
 
-    public static function listar_regras_por_modelo($codorganizacao, $codprojeto, $codmodelo)
+    public static function listar_regras_por_modelo($dado)
     {
-        return collect(Regra::join('users', 'users.codusuario', '=', 'regras.codusuario')
+        $codorganizacao = $dado['codorganizacao'];
+        $codprojeto = $dado['codprojeto'];
+        $codmodelo = $dado['codmodelo'];
+        return collect(Regra::where('regras.codusuario', '=', Auth::user()->codusuario)
             ->where('regras.codorganizacao', '=', $codorganizacao)
             ->where('regras.codprojeto', '=', $codprojeto)
             ->where('regras.codmodelo', '=', $codmodelo)

@@ -30,7 +30,8 @@
 @section('content')
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
-                    'titulo' => 'Projetos',
+                      'titulo' => 'Paianel',
+                    'sub_titulo' => 'Projetos',
                     'rota' => 'todos_projetos'
     ])
     @if(!empty($organizacao))

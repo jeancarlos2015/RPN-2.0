@@ -3,7 +3,8 @@
 @section('content')
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
-                    'titulo' => 'Organizações',
+                    'titulo' => 'Paianel',
+                    'sub_titulo' => 'Organizacoes',
                     'rota' => 'controle_organizacoes.index'
     ])
 

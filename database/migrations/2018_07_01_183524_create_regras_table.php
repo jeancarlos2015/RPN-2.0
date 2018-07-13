@@ -18,13 +18,24 @@ class CreateRegrasTable extends Migration
             $table->string('operador');
             $table->string('nome');
 
+
             $table->bigInteger('codtarefa1');
             $table->bigInteger('codtarefa2');
             $table->bigInteger('codprojeto');
             $table->bigInteger('codorganizacao');
             $table->bigInteger('codmodelo');
-            $table->bigInteger('codregra1');
             $table->bigInteger('codusuario');
+            $table->bigInteger('codregra1');
+
+            $table->foreign('codtarefa1')->references('codtarefa')->on('tarefas');
+            $table->foreign('codtarefa2')->references('codtarefa')->on('tarefas');
+
+            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+            $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
+            $table->foreign('codmodelo')->references('codmodelo')->on('modelos');
+            $table->foreign('codusuario')->references('codusuario')->on('users');
+
+
             $table->timestamps();
         });
     }
