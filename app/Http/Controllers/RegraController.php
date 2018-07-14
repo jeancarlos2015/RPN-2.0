@@ -28,7 +28,7 @@ class RegraController extends Controller
         $modelo = Modelo::findOrFail($codmodelo);
         $tipo = 'regra';
         $log = LogRepository::log();
-        return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo','log','regras', 'tipo'));
+        return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo', 'log', 'regras', 'tipo'));
     }
 
     public function todas_regras()
@@ -39,7 +39,7 @@ class RegraController extends Controller
         $tarefas = null;
         $tipo = 'regra';
         $log = LogRepository::log(2);
-        return view('controle_regras.all', compact('regras', 'titulos','tarefas','tipo','log'));
+        return view('controle_regras.all', compact('regras', 'titulos', 'tarefas', 'tipo', 'log'));
     }
 
     public function create($codorganizacao, $codprojeto, $codmodelo)
@@ -52,33 +52,56 @@ class RegraController extends Controller
         return view('controle_regras.create', compact('dados', 'organizacao', 'projeto', 'modelo', 'tarefas'));
     }
 
+    private function adiciona_request(Request $request)
+    {
+        if (empty($request->codregra1)) {
+            $request->request->add([
+                'codusuario' => Auth::user()->codusuario,
+                'codregra1' => 0
+            ]);
+        } else {
+            $request->request->add([
+                'codusuario' => Auth::user()->codusuario
+            ]);
+        }
+    }
+
+    private function msg($regra)
+    {
+        if (isset($regra)) {
+            flash('Regra Criada com sucesso!!!');
+        } else {
+            flash('Regra Não Foi Criada com sucesso!!!');
+        }
+    }
+
+    private function valida(Request $request){
+        return $request->codtarefa1 !== $request->codtarefa2;
+    }
 
     public function store(Request $request)
     {
         $projeto = Projeto::findOrFail($request->codprojeto);
         $organizacao = Organizacao::findOrFail($request->codorganizacao);
         $modelo = Modelo::findOrFail($request->codmodelo);
-        if (empty($request->codregra1)){
-            $request->request->add([
-                'codusuario' => Auth::user()->codusuario,
-                'codregra1' => 0
-            ]);
-        }else{
-            $request->request->add([
-                'codusuario' => Auth::user()->codusuario
+        self::adiciona_request($request);
+        if ($this->valida($request)) {
+            $regra = Regra::create($request->all());
+            self::msg($regra);
+            return redirect()->route('controle_regras_index', [
+                'codorganizacao' => $organizacao->codorganizacao,
+                'codprojeto' => $projeto->codprojeto,
+                'codmodelo' => $modelo->codmodelo
             ]);
         }
-        $regra = Regra::create($request->all());
-        if (isset($regra)) {
-            flash('Regra Criada com sucesso!!!');
-        } else {
-            flash('Regra Não Foi Criada com sucesso!!!');
+        else{
+            flash('Regra não pode ser criada com duas tarefas iguais')->warning();
+            return redirect()->route('controle_regras_create', [
+                'codorganizacao' => $organizacao->codorganizacao,
+                'codprojeto' => $projeto->codprojeto,
+                'codmodelo' => $modelo->codmodelo
+            ]);
         }
-        return redirect()->route('controle_regras_index', [
-            'codorganizacao' => $organizacao->codorganizacao,
-            'codprojeto' => $projeto->codprojeto,
-            'codmodelo' => $modelo->codmodelo
-        ]);
     }
 
 

@@ -180,8 +180,29 @@ class GitSistemaRepository
     }
 
 
-    public function git_push(){
+    /**
+     * @param $dado
+     * @throws GitException
+     */
+    public function git_push($dado){
+        $url = $dado['url'];
+        $parametros = $dado['parametros'];
         $repositorio = self::inicialize_repository();
+        $repositorio->commit("push");
+        $repositorio->push($url,$parametros);
+    }
+
+    /**
+     * @param $dado
+     * @throws GitException
+     */
+    public function git_pull($dado){
+        $url = $dado['url'];
+        $parametros = $dado['parametros'];
+        $nome = $dado['nome'];
+        $repositorio = self::inicialize_repository();
+        $repositorio->commit("push");
+        $repositorio->pull($url,$parametros);
     }
 
 

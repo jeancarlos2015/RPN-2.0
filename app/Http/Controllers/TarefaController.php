@@ -28,7 +28,7 @@ class TarefaController extends Controller
         $projeto = Projeto::findOrFail($codprojeto);
         $modelo = Modelo::findOrFail($codmodelo);
         $tipo = 'tarefa';
-        $log = LogRepository::listar();
+        $log = LogRepository::log();
         return view('controle_tarefas.index', compact('tarefas', 'titulos', 'organizacao', 'projeto', 'modelo', 'tipo','log'));
     }
 
