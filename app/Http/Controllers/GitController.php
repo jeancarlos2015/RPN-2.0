@@ -6,6 +6,7 @@ use App\Http\Models\Projeto;
 
 use App\Http\Repositorys\GitRepository;
 use App\Http\Repositorys\GitSistemaRepository;
+use App\Http\Repositorys\LogRepository;
 use Illuminate\Http\Request;
 
 class GitController extends Controller
@@ -19,6 +20,7 @@ class GitController extends Controller
     {
         $git = new GitSistemaRepository();
         $branch_atual = $git->get_branch_current();
+        $logs = LogRepository::log();
         return view('controle_versao.index',compact('tipo','branch_atual'));
     }
 

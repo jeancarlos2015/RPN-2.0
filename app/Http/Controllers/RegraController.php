@@ -27,17 +27,18 @@ class RegraController extends Controller
         $projeto = Projeto::findOrFail($codprojeto);
         $modelo = Modelo::findOrFail($codmodelo);
         $tipo = 'regra';
-        $logs = LogRepository::listar();
+        $logs = LogRepository::log();
         return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo','logs','regras', 'tipo'));
     }
 
     public function todas_regras()
     {
         $regras = RegraRepository::listar();
+        dd($regras[0]->tarefa1);
         $titulos = Regra::titulos();
         $tarefas = null;
         $tipo = 'regra';
-        $logs = LogRepository::listar();
+        $logs = LogRepository::listar_tres_ultimos_logs(2);
         return view('controle_regras.all', compact('regras', 'titulos','tarefas','tipo','logs'));
     }
 

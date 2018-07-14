@@ -34,7 +34,7 @@ class ModeloController extends Controller
         $modelos = ModeloRepository::listar();
         $titulos = Modelo::titulos();
         $tipo = 'modelo';
-        $logs = LogRepository::listar();
+        $logs = LogRepository::log();
         return view('controle_modelos.index_todos_modelos', compact('modelos', 'titulos','tipo','logs'));
     }
 

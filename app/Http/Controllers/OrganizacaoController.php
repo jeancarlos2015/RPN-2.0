@@ -32,7 +32,7 @@ class OrganizacaoController extends Controller
         $titulos = Organizacao::titulos();
         $campos = Organizacao::campos();
         $tipo = 'organizacao';
-        $logs = LogRepository::listar();
+        $logs = LogRepository::log();
         return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos', 'tipo','logs'));
     }
 
@@ -43,7 +43,7 @@ class OrganizacaoController extends Controller
         $qt_modelos = ModeloRepository::count();
         $qt_tarefas = TarefaRepository::count();
         $qt_regras = RegraRepository::count();
-        $logs = LogRepository::listar();
+        $logs = LogRepository::log();
         $tipo = 'painel';
         $titulos = [
             'Modelos',
@@ -156,7 +156,7 @@ class OrganizacaoController extends Controller
     public function destroy($codorganizacao)
     {
 
-        $organizacao = OrganizacaoRepository::excluir($codorganizacao);
+        OrganizacaoRepository::excluir($codorganizacao);
         LogRepository::criar("Organização Excluída Com sucesso", "Rota De Exclusão de organização");
         return response()->redirectToRoute('controle_organizacoes.index');
     }

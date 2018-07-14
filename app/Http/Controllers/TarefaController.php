@@ -37,7 +37,8 @@ class TarefaController extends Controller
         $tarefas = TarefaRepository::listar();
         $titulos = Tarefa::titulos();
         $tipo = 'tarefa';
-        $logs = LogRepository::listar();
+        $logs = LogRepository::log();
+
         return view('controle_tarefas.all', compact('tarefas', 'titulos','tipo','logs'));
     }
 

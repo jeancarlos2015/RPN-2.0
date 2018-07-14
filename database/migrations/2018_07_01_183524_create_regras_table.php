@@ -27,8 +27,8 @@ class CreateRegrasTable extends Migration
             $table->bigInteger('codusuario');
             $table->bigInteger('codregra1');
 
-            $table->foreign('codtarefa1')->references('codtarefa')->on('tarefas');
-            $table->foreign('codtarefa2')->references('codtarefa')->on('tarefas');
+            $table->foreign('codtarefa1')->references('codtarefa')->onDelete('cascade');
+            $table->foreign('codtarefa2')->references('codtarefa')->on('cascade');
 
             $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
             $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
