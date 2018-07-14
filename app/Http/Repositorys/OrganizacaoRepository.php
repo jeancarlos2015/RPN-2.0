@@ -19,7 +19,6 @@ class OrganizacaoRepository extends Repository
 
     public static function listar()
     {
-
         return collect((new Organizacao)->join('users', 'users.codusuario', '=', 'organizacoes.codusuario')
             ->where('users.codusuario', '=', Auth::user()->codusuario)
             ->get());

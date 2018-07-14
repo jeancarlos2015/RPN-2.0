@@ -68,3 +68,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('painel', 'OrganizacaoController@painel')->name('painel');
 
     });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

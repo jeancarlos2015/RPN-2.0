@@ -5,6 +5,7 @@ namespace App\Http\Repositorys;
 
 use App\Http\Models\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LogRepository extends Repository
 {
@@ -42,9 +43,6 @@ class LogRepository extends Repository
     }
 
     public static function log(){
-        $log = self::listar()->sortByDesc('codlog')[1];
-        $logs = [];
-        array_push($logs, $log);
-        return $logs;
+        return self::listar()->sortByDesc('codlog')->first();
     }
 }
