@@ -32,7 +32,7 @@ class OrganizacaoController extends Controller
         $titulos = Organizacao::titulos();
         $campos = Organizacao::campos();
         $tipo = 'organizacao';
-        $logs = Log::all();
+        $logs = LogRepository::listar();
         return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos', 'tipo','logs'));
     }
 
@@ -43,7 +43,7 @@ class OrganizacaoController extends Controller
         $qt_modelos = ModeloRepository::count();
         $qt_tarefas = TarefaRepository::count();
         $qt_regras = RegraRepository::count();
-        $logs = Log::all();
+        $logs = LogRepository::listar();
         $tipo = 'painel';
         $titulos = [
             'Modelos',

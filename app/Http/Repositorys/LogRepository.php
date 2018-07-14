@@ -4,6 +4,7 @@ namespace App\Http\Repositorys;
 
 
 use App\Http\Models\Log;
+use Illuminate\Support\Facades\Auth;
 
 class LogRepository extends Repository
 {
@@ -24,4 +25,13 @@ class LogRepository extends Repository
         ]);
 
     }
+
+    public static function listar()
+    {
+
+        return collect((new Log())->where('logs.codusuario', '=', Auth::user()->codusuario)
+            ->get());
+
+    }
+
 }

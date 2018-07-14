@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Models\Log;
 use App\Http\Models\Organizacao;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,7 +42,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function organizacoes(){
-        return $this->belongsTo(Organizacao::class,'codusuario','codusuario');
+    public function organizacoes()
+    {
+        return $this->belongsTo(Organizacao::class, 'codusuario', 'codusuario');
+    }
+
+    public function logs(){
+        return $this->belongsTo(Log::class, 'codusuario', 'codusuario');
     }
 }

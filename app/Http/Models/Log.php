@@ -30,4 +30,6 @@ class Log extends Model
         'descricao',
         'codusuario'
     ];
+
+
 }

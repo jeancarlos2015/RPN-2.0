@@ -33,7 +33,8 @@ class Organizacao extends Model
         'codusuario'
     ];
 
-    public static function regras_validacao(){
+    public static function regras_validacao()
+    {
         return [
             'nome' => 'required|max:50',
             'descricao' => 'required|max:255'
@@ -68,15 +69,17 @@ class Organizacao extends Model
 
     }
 
-    public static function dados_objeto(){
+    public static function dados_objeto()
+    {
         $dado = array();
-        for($indice=0;$indice<4;$indice++){
+        for ($indice = 0; $indice < 4; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
     }
 
-    public static function dados(){
+    public static function dados()
+    {
         $campos = self::campos();
         $atributos = self::atributos();
         $dados = self::dados_objeto();
@@ -92,8 +95,8 @@ class Organizacao extends Model
         return $dados;
     }
 
-    public  function projetos()
+    public function projetos()
     {
-        return $this->belongsTo(Projeto::class,'codorganizacao','codorganizacao');
+        return $this->belongsTo(Projeto::class, 'codorganizacao', 'codorganizacao');
     }
 }

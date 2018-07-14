@@ -9,12 +9,13 @@ class GitSistemaRepository
     private $repositorio;
 
     public function get_path(){
-      return  database_path('banco');
+      return  database_path('banco/');
     }
     public function git_init()
     {
         $branch = self::get_branch_current();
         $change = self::is_exchanges();
+
         try {
             $this->repositorio = new GitRepository(self::get_path());
             $this->repositorio = GitRepository::init(self::get_path());
