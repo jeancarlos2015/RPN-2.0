@@ -19,7 +19,9 @@ class GitSistemaRepository
         try {
             $this->repositorio = new GitRepository(self::get_path());
             $this->repositorio = GitRepository::init(self::get_path());
+            LogRepository::criar('Repositório Inicializado!!!', 'Versionamento');
         } catch (\Exception $ex) {
+            LogRepository::criar($ex->getMessage(), 'Versionamento');
         }
         $resultado['branch'] = $branch;
         $resultado['change'] = $change;
