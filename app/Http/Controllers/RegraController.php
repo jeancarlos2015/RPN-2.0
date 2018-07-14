@@ -27,8 +27,8 @@ class RegraController extends Controller
         $projeto = Projeto::findOrFail($codprojeto);
         $modelo = Modelo::findOrFail($codmodelo);
         $tipo = 'regra';
-        $logs = LogRepository::log();
-        return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo','logs','regras', 'tipo'));
+        $log = LogRepository::log();
+        return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo','log','regras', 'tipo'));
     }
 
     public function todas_regras()
@@ -38,8 +38,8 @@ class RegraController extends Controller
         $titulos = Regra::titulos();
         $tarefas = null;
         $tipo = 'regra';
-        $logs = LogRepository::listar_tres_ultimos_logs(2);
-        return view('controle_regras.all', compact('regras', 'titulos','tarefas','tipo','logs'));
+        $log = LogRepository::log(2);
+        return view('controle_regras.all', compact('regras', 'titulos','tarefas','tipo','log'));
     }
 
     public function create($codorganizacao, $codprojeto, $codmodelo)

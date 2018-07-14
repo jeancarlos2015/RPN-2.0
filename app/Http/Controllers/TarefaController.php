@@ -28,8 +28,8 @@ class TarefaController extends Controller
         $projeto = Projeto::findOrFail($codprojeto);
         $modelo = Modelo::findOrFail($codmodelo);
         $tipo = 'tarefa';
-        $logs = LogRepository::listar();
-        return view('controle_tarefas.index', compact('tarefas', 'titulos', 'organizacao', 'projeto', 'modelo', 'tipo','logs'));
+        $log = LogRepository::listar();
+        return view('controle_tarefas.index', compact('tarefas', 'titulos', 'organizacao', 'projeto', 'modelo', 'tipo','log'));
     }
 
     public function todas_tarefas()
@@ -37,9 +37,9 @@ class TarefaController extends Controller
         $tarefas = TarefaRepository::listar();
         $titulos = Tarefa::titulos();
         $tipo = 'tarefa';
-        $logs = LogRepository::log();
+        $log = LogRepository::log();
 
-        return view('controle_tarefas.all', compact('tarefas', 'titulos','tipo','logs'));
+        return view('controle_tarefas.all', compact('tarefas', 'titulos','tipo','log'));
     }
 
     public function create($codorganizacao, $codprojeto, $codmodelo)

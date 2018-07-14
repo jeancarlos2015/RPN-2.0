@@ -71,25 +71,25 @@
                     <i class="fa fa-fw fa-bell"></i>
                     <span class="d-lg-none">Alerta
 
-              <span class="badge badge-pill badge-warning">
-                  @if(!empty($quantidade_logs))
-                      @if($quantidade_logs)
-                          {!! $quantidade_logs !!} Novas
-                      @endif
-                  @endif
-              </span>
+              {{--<span class="badge badge-pill badge-warning">--}}
+                  {{--@if(!empty($quantidade_logs))--}}
+                      {{--@if($quantidade_logs)--}}
+                          {{--{!! $quantidade_logs !!} Novas--}}
+                      {{--@endif--}}
+                  {{--@endif--}}
+              {{--</span>--}}
             </span>
                     <span class="indicator text-warning d-none d-lg-block">
               <i class="fa fa-fw fa-circle"></i>
             </span>
                     <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-                        @if(!empty($logs))
-                            @foreach($logs as $log)
+                        @if(!empty($log))
+
                                 @includeIf('layouts.layout_admin_new.componentes.alert',
                                     [
                                     'log' => $log
                                     ])
-                            @endforeach
+
                         @endif
                     </div>
 

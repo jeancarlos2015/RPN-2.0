@@ -20,7 +20,7 @@ class GitController extends Controller
     {
         $git = new GitSistemaRepository();
         $branch_atual = $git->get_branch_current();
-        $logs = LogRepository::log();
+        $log = LogRepository::log();
         return view('controle_versao.index',compact('tipo','branch_atual'));
     }
 

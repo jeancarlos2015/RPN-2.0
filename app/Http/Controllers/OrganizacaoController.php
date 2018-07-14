@@ -32,8 +32,8 @@ class OrganizacaoController extends Controller
         $titulos = Organizacao::titulos();
         $campos = Organizacao::campos();
         $tipo = 'organizacao';
-        $logs = LogRepository::log();
-        return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos', 'tipo','logs'));
+        $log = LogRepository::log();
+        return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos', 'tipo','log'));
     }
 
     public function painel()
@@ -43,7 +43,7 @@ class OrganizacaoController extends Controller
         $qt_modelos = ModeloRepository::count();
         $qt_tarefas = TarefaRepository::count();
         $qt_regras = RegraRepository::count();
-        $logs = LogRepository::log();
+        $log = LogRepository::log();
         $tipo = 'painel';
         $titulos = [
             'Modelos',
@@ -67,7 +67,7 @@ class OrganizacaoController extends Controller
             $qt_organizacoes
         ];
 
-        return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo','logs'));
+        return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo','log'));
     }
 
 

@@ -20,8 +20,8 @@ class ProjetoController extends Controller
         $projetos = ProjetoRepository::listar_por_organizacao($codorganizacao);
         $titulos = Projeto::titulos();
         $tipo = 'projeto';
-        $logs = LogRepository::log();
-        return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos', 'tipo','logs'));
+        $log = LogRepository::log();
+        return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos', 'tipo','log'));
     }
 
     public function todos_projetos()
@@ -29,8 +29,8 @@ class ProjetoController extends Controller
         $projetos = ProjetoRepository::listar();
         $titulos = Projeto::titulos();
         $tipo = 'projeto';
-        $logs = LogRepository::log();
-        return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo','logs'));
+        $log = LogRepository::log();
+        return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo','log'));
     }
 
     /**
