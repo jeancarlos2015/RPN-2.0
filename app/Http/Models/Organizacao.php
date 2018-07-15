@@ -102,12 +102,27 @@ class Organizacao extends Model
         return $this->belongsTo(Projeto::class, 'codorganizacao', 'codorganizacao');
     }
 
+    public function tarefas()
+    {
+        return $this->belongsTo(Tajrefa::class, 'codorganizacao', 'codorganizacao');
+    }
 
+    public function regras()
+    {
+        return $this->belongsTo(Regra::class, 'codorganizacao', 'codorganizacao');
+    }
+
+    public function modelos()
+    {
+        return $this->belongsTo(Modelo::class, 'codorganizacao', 'codorganizacao');
+    }
 
     protected static function boot() {
         parent::boot();
-        static::deleting(function($projeto) { // before delete() method call this
+        static::deleting(function($projeto, $modelo, $regra) { // before delete() method call this
             $projeto->projetos()->delete();
+            $modelo->modelos()->delete();
+            $regra->regras()->delete();
         });
     }
 }
