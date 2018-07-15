@@ -80,6 +80,7 @@ class Tarefa extends Model
         ];
     }
 
+    //Instancia todas as posições de memória que serão exibidas no título
     public static function dados_objeto(){
         $dado = array();
         for($indice=0;$indice<4;$indice++){
@@ -88,6 +89,7 @@ class Tarefa extends Model
         return $dado;
     }
 
+    //Instancia somente os campos que serão exibidos no formulário e preenche os títulos da listagem
     public static function dados(){
         $campos = self::campos();
         $atributos = self::atributos();

@@ -89,12 +89,12 @@ class TarefaController extends Controller
         $tarefa1 = Tarefa::create($value_tarefa1);
         $tarefa2 = Tarefa::create($value_tarefa2);
 
-        if (isset($tarefa)) {
-            flash('Tarefa criada com sucesso!!');
+        if (isset($tarefa1) && isset($tarefa1)) {
+            flash('Regra criada com sucesso!!');
         } else {
-            flash('Tarefa não foi criada!!');
+            flash('Regra não foi criada!!');
         }
-        return redirect()->route('controle_tarefas_index', [
+        return redirect()->route('controle_regras_index', [
             'codorganizacao' => $organizacao->codorganizacao,
             'codprojeto' => $projeto->codprojeto,
             'codmodelo' => $modelo->codmodelo

@@ -69,6 +69,7 @@ class Organizacao extends Model
 
     }
 
+//Instancia todas as posições de memória que serão exibidas no título
     public static function dados_objeto()
     {
         $dado = array();
@@ -78,6 +79,7 @@ class Organizacao extends Model
         return $dado;
     }
 
+//Instancia somente os campos que serão exibidos no formulário e preenche os títulos da listagem
     public static function dados()
     {
         $campos = self::campos();
