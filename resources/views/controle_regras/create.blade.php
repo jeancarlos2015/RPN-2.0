@@ -16,8 +16,7 @@
         'MAX' => 4,
         'codprojeto' => $projeto->codprojeto,
         'codmodelo' => $modelo->codmodelo,
-        'codorganizacao' => $organizacao->codorganizacao,
-        'tarefas' => $tarefas
+        'codorganizacao' => $organizacao->codorganizacao
         ]
         )
     </form>

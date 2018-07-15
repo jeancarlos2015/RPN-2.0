@@ -42,7 +42,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('controle_modelos_create/{codorganizacao}/{codprojeto}', 'ModeloController@create')->name('controle_modelos_create');
         Route::get('controle_modelos_index/{codorganizacao}/{codprojeto}', 'ModeloController@index')->name('controle_modelos_index');
         Route::get('controle_tarefas_index/{codorganizacao}/{codprojeto}/{codmodelo}', 'TarefaController@index')->name('controle_tarefas_index');
-        Route::get('controle_tarefas_create/{codorganizacao}/{codprojeto}/{codmodelo}', 'TarefaController@create')->name('controle_tarefas_create');
+        Route::get('controle_tarefas_create/{codorganizacao}/{codprojeto}/{codmodelo}/{codregra}', 'TarefaController@create')->name('controle_tarefas_create');
         Route::get('controle_regras_create/{codorganizacao}/{codprojeto}/{codmodelo}', 'RegraController@create')->name('controle_regras_create');
         Route::get('controle_regras_index/{codorganizacao}/{codprojeto}/{codmodelo}', 'RegraController@index')->name('controle_regras_index');
         Route::post('escolhe_modelo', 'ModeloController@escolhe_modelo')->name('escolhe_modelo');

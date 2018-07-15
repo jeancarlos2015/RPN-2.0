@@ -11,9 +11,9 @@
     <!-- Bootstrap core CSS-->
     <link href="{!! asset('vendor/bootstrap/css/bootstrap.min.css') !!}" rel="stylesheet">
     <link href="{!! asset('vendor/font-awesome/css/font-awesome.min.css') !!}" rel="stylesheet" type="text/css">
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template_basico-->
     <!-- Page level plugin CSS-->
     <link href="{!! asset('vendor/datatables/dataTables.bootstrap4.css') !!}" rel="stylesheet">
-    <!-- Custom styles for this template-->
+    <!-- Custom styles for this template_basico-->
     <link href="{!! asset('css/sb-admin.css') !!}" rel="stylesheet">
 </head>

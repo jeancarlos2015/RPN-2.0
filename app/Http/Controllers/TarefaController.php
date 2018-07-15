@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Models\Modelo;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
+use App\Http\Models\Regra;
 use App\Http\Models\Tarefa;
 use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\TarefaRepository;
@@ -42,13 +43,36 @@ class TarefaController extends Controller
         return view('controle_tarefas.all', compact('tarefas', 'titulos','tipo','log'));
     }
 
-    public function create($codorganizacao, $codprojeto, $codmodelo)
+    public function create($codorganizacao, $codprojeto, $codmodelo, $codregra)
     {
         $dados = Projeto::dados();
         $organizacao = Organizacao::findOrFail($codorganizacao);
         $projeto = Projeto::findOrFail($codprojeto);
         $modelo = Modelo::findOrFail($codmodelo);
-        return view('controle_tarefas.create', compact('dados', 'organizacao', 'projeto', 'modelo'));
+        $regra = Regra::findOrFail($codregra);
+        return view('controle_tarefas.form_tarefa', compact('dados', 'organizacao', 'projeto', 'modelo','regra'));
+    }
+    private function set_param_tarefa1(Request $request,Regra $regra){
+        return [
+            'nome' => $request->tarefa1_nome,
+            'descricao' => $request->tarefa1_descricao,
+            'codregra' => $regra->codregra,
+            'codmodelo' => $regra->codmodelo,
+            'codprojeto' => $regra->codprojeto,
+            'codorganizacao' => $regra->codorganizacao,
+            'codusuario' => $regra->codusuario
+        ];
+    }
+    private function set_param_tarefa2(Request $request,Regra $regra){
+        return [
+            'nome' => $request->tarefa2_nome,
+            'descricao' => $request->tarefa2_descricao,
+            'codregra' => $regra->codregra,
+            'codmodelo' => $regra->codmodelo,
+            'codprojeto' => $regra->codprojeto,
+            'codorganizacao' => $regra->codorganizacao,
+            'codusuario' => $regra->codusuario
+        ];
     }
 
 
@@ -57,10 +81,14 @@ class TarefaController extends Controller
         $projeto = Projeto::findOrFail($request->codprojeto);
         $organizacao = Organizacao::findOrFail($request->codorganizacao);
         $modelo = Modelo::findOrFail($request->codmodelo);
-        $request->request->add([
-            'codusuario' => Auth::user()->codusuario
-        ]);
-        $tarefa = Tarefa::create($request->all());
+        $regra = Regra::findOrFail($request->codregra);
+
+        $value_tarefa1 = self::set_param_tarefa1($request, $regra);
+        $value_tarefa2 = self::set_param_tarefa2($request, $regra);
+
+        $tarefa1 = Tarefa::create($value_tarefa1);
+        $tarefa2 = Tarefa::create($value_tarefa2);
+
         if (isset($tarefa)) {
             flash('Tarefa criada com sucesso!!');
         } else {

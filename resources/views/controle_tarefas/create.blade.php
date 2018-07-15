@@ -9,7 +9,7 @@
                     'rota' => 'todas_tarefas'
     ])
 
-    <form action="{!! route('controle_tarefas.store') !!}" method="post">
+    <form action="{!! route('controle_regras.store') !!}" method="post">
         @includeIf('controle_tarefas.form',
         [
         'acao' => 'Criar Tarefa',

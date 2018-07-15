@@ -11,7 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for this template_basico -->
 
 
     <link href="{{ asset('css/cor.css') }}" rel="stylesheet">

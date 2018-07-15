@@ -12,4 +12,4 @@
     <input type="hidden" name="codorganizacao" class="form-control"
            value="{!! $codorganizacao !!}">
 @endif
-<button type="submit" class="btn btn-primary form-control">{!! $acao !!}</button>
+<button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>

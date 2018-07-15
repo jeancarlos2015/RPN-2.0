@@ -41,7 +41,8 @@ class Tarefa extends Model
         'codorganizacao',
         'codprojeto',
         'codmodelo',
-        'codusuario'
+        'codusuario',
+        'codregra'
     ];
 
     public static function titulos()
@@ -58,7 +59,7 @@ class Tarefa extends Model
     {
         return [
             'Nome',
-            'Descrição'
+            'Descrição',
         ];
     }
 
@@ -116,5 +117,16 @@ class Tarefa extends Model
     public  function organizacao()
     {
         return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
+    }
+
+    public function regras(){
+        return $this->hasOne(Regra::class, 'codregra', 'codregra');
+    }
+
+    protected static function boot() {
+        parent::boot();
+        static::deleting(function($tarefa) { // before delete() method call this
+            $tarefa->regras()->delete();
+        });
     }
 }

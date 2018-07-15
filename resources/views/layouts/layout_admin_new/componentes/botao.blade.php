@@ -42,14 +42,14 @@
             <br>
             <br>
         @endif
-        <a class="btn btn-dark form-control"
-           href="{!! route('controle_tarefas_create',
-           [
-                 'organizacao_id' => $organizacao->codorganizacao,
-                     'projeto_id' => $projeto->codprojeto,
-                       'modelo_id' => $modelo->codmodelo
-           ]
-           ) !!}">Nova Tarefa</a>
+        {{--<a class="btn btn-dark form-control"--}}
+           {{--href="{!! route('controle_tarefas_create',--}}
+           {{--[--}}
+                 {{--'organizacao_id' => $organizacao->codorganizacao,--}}
+                     {{--'projeto_id' => $projeto->codprojeto,--}}
+                       {{--'modelo_id' => $modelo->codmodelo--}}
+           {{--]--}}
+           {{--) !!}">Nova Tarefa</a>--}}
         @break;
 
         @case ('projeto')

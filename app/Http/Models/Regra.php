@@ -45,12 +45,9 @@ class Regra extends Model
     protected $primaryKey = 'codregra';
     protected $table = 'regras';
     protected $fillable = [
-        'operador',
         'nome',
-        'codtarefa1',
-        'codtarefa2',
+        'operador',
         'codregra1',
-
         'codmodelo',
         'codprojeto',
         'codorganizacao',
@@ -116,13 +113,9 @@ class Regra extends Model
     }
 
 
-    public  function tarefa1()
+    public  function tarefas()
     {
-        return $this->belongsTo(Tarefa::class, 'codtarefa1', 'codtarefa');
-    }
-    public  function tarefa2()
-    {
-        return $this->belongsTo(Tarefa::class, 'codtarefa2', 'codtarefa');
+        return $this->hasMany(Tarefa::class, 'codregra', 'codregra');
     }
 
 

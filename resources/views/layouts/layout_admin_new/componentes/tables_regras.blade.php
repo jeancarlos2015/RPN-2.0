@@ -4,9 +4,9 @@
         {{--{!! dd($regra1->tarefa2->nome) !!}--}}
         <tr>
             <td>{!! $regra1->codregra !!}</td>
-            <td>{!! $regra1->tarefa1->nome !!}</td>
+            <td>{!! $regra1->tarefas[0]->nome !!}</td>
             <td>{!! $regra1->operador !!}</td>
-            <td>{!! $regra1->tarefa2->nome !!}</td>
+            <td>{!! $regra1->tarefas[1]->nome !!}</td>
 
             <td>
 

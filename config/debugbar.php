@@ -171,7 +171,7 @@ return [
      |
      | Usually, the debugbar is added just before </body>, by listening to the
      | Response after the App is done. If you disable this, you have to add them
-     | in your template yourself. See http://phpdebugbar.com/docs/rendering.html
+     | in your template_basico yourself. See http://phpdebugbar.com/docs/rendering.html
      |
      */
 

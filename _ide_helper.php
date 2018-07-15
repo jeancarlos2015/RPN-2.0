@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.6.27 on 2018-07-13 01:34:19.
+ * Generated for Laravel 5.6.27 on 2018-07-14 20:12:52.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -2065,7 +2065,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Compile the given Blade template contents.
+         * Compile the given Blade template_basico contents.
          *
          * @param string $value
          * @return string 

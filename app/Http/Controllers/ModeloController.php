@@ -75,7 +75,7 @@ class ModeloController extends Controller
             flash('Modelo criado com sucesso!!!');
         }
         if ($modelo->tipo === 'declarativo') {
-            return redirect()->route('controle_tarefas_index',
+            return redirect()->route('controle_regras_index',
                 [
                     'codorganizacao' => $modelo->codorganizacao,
                     'codprojeto' => $modelo->codprojeto,
@@ -117,7 +117,6 @@ class ModeloController extends Controller
             flash('Não existem tarefas para serem exibidas!!!')->error();
             return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
         } else {
-
             return redirect()->route('controle_tarefas_index', [
                 'codorganizacao' => $modelo->codorganizacao,
                 'codprojeto' => $modelo->codprojeto,

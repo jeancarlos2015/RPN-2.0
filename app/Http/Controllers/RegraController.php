@@ -28,13 +28,13 @@ class RegraController extends Controller
         $modelo = Modelo::findOrFail($codmodelo);
         $tipo = 'regra';
         $log = LogRepository::log();
+
         return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo', 'log', 'regras', 'tipo'));
     }
 
     public function todas_regras()
     {
         $regras = RegraRepository::listar();
-        dd($regras[0]->tarefa1);
         $titulos = Regra::titulos();
         $tarefas = null;
         $tipo = 'regra';
@@ -44,12 +44,10 @@ class RegraController extends Controller
 
     public function create($codorganizacao, $codprojeto, $codmodelo)
     {
-        $dados = Regra::dados();
         $organizacao = Organizacao::findOrFail($codorganizacao);
         $projeto = Projeto::findOrFail($codprojeto);
         $modelo = Modelo::findOrFail($codmodelo);
-        $tarefas = Tarefa::all();
-        return view('controle_regras.create', compact('dados', 'organizacao', 'projeto', 'modelo', 'tarefas'));
+        return view('controle_regras.form_regra', compact('organizacao', 'projeto', 'modelo'));
     }
 
     private function adiciona_request(Request $request)
@@ -75,42 +73,64 @@ class RegraController extends Controller
         }
     }
 
-    private function valida(Request $request){
+    private function valida(Request $request)
+    {
         return $request->codtarefa1 !== $request->codtarefa2;
     }
 
+//    public function store(Request $request)
+//    {
+//        $projeto = Projeto::findOrFail($request->codprojeto);
+//        $organizacao = Organizacao::findOrFail($request->codorganizacao);
+//        $modelo = Modelo::findOrFail($request->codmodelo);
+//        self::adiciona_request($request);
+//        if ($this->valida($request)) {
+//            $regra = Regra::create($request->all());
+//            self::msg($regra);
+//            return redirect()->route('controle_regras_index', [
+//                'codorganizacao' => $organizacao->codorganizacao,
+//                'codprojeto' => $projeto->codprojeto,
+//                'codmodelo' => $modelo->codmodelo
+//            ]);
+//        }
+//        else{
+//            flash('Regra não pode ser criada com duas tarefas iguais')->warning();
+//            return redirect()->route('controle_regras_create', [
+//                'codorganizacao' => $organizacao->codorganizacao,
+//                'codprojeto' => $projeto->codprojeto,
+//                'codmodelo' => $modelo->codmodelo
+//            ]);
+//        }
+//    }
     public function store(Request $request)
     {
+
         $projeto = Projeto::findOrFail($request->codprojeto);
         $organizacao = Organizacao::findOrFail($request->codorganizacao);
         $modelo = Modelo::findOrFail($request->codmodelo);
-        self::adiciona_request($request);
-        if ($this->valida($request)) {
-            $regra = Regra::create($request->all());
-            self::msg($regra);
-            return redirect()->route('controle_regras_index', [
-                'codorganizacao' => $organizacao->codorganizacao,
-                'codprojeto' => $projeto->codprojeto,
-                'codmodelo' => $modelo->codmodelo
-            ]);
-        }
-        else{
-            flash('Regra não pode ser criada com duas tarefas iguais')->warning();
-            return redirect()->route('controle_regras_create', [
-                'codorganizacao' => $organizacao->codorganizacao,
-                'codprojeto' => $projeto->codprojeto,
-                'codmodelo' => $modelo->codmodelo
-            ]);
-        }
+
+        $request->request->add([
+            'codusuario' => Auth::user()->codusuario,
+            'codregra1' => 0
+        ]);
+
+        $regra = Regra::create($request->all());
+
+        self::msg($regra);
+        return redirect()->route('controle_tarefas_create', [
+            'codorganizacao' => $organizacao->codorganizacao,
+            'codprojeto' => $projeto->codprojeto,
+            'codmodelo' => $modelo->codmodelo,
+            'codtarefa' => $regra->codregra
+        ]);
     }
 
-
-    public function show($id)
+    public
+    function show($id)
     {
         $tarefa = Tarefa::findOrFail($id);
         return view('controle_tarefas.show', compact('tarefa'));
     }
-
 
 
 //'Tarefa 1',
@@ -118,7 +138,8 @@ class RegraController extends Controller
 //'Tarefa 2',
 //'Nome da Regra'
 
-    public function edit($id)
+    public
+    function edit($id)
     {
         $regra = Regra::findOrFail($id);
         $dados = Regra::dados();
@@ -133,6 +154,19 @@ class RegraController extends Controller
         return view('controle_regras.edit', compact('dados', 'regra', 'organizacao', 'projeto', 'modelo', 'tarefas'));
     }
 
+
+    private function set_param_regra(Request $request,Regra $regra){
+        return [
+            'nome' => $request->tarefa2_nome,
+            'operador' => $request->tarefa2_descricao,
+            'codmodelo' => $regra->codmodelo,
+
+
+            'codprojeto' => $regra->codprojeto,
+            'codorganizacao' => $regra->codorganizacao,
+            'codusuario' => $regra->codusuario
+        ];
+    }
 
     public function update(Request $request, $codregra)
     {
@@ -152,7 +186,8 @@ class RegraController extends Controller
     }
 
 
-    public function destroy($codregra)
+    public
+    function destroy($codregra)
     {
         $regra = Regra::findOrFail($codregra);
         $projeto = $regra->projeto;
@@ -171,8 +206,9 @@ class RegraController extends Controller
         }
         if (!empty($projeto) || !empty($organizacao) && !empty($modelo)) {
             $titulos = Regra::titulos();
-            $regras = Regra::join('users', 'users.id', '=', 'regras.codusuario')->get();
-            return view('controle_regras.all', compact('titulos', 'regras'));
+            $regras = Regra::join('users', 'users.codusuario', '=', 'regras.codusuario')->get();
+            $tipo = 'regra';
+            return view('controle_regras.all', compact('titulos', 'regras', 'tipo'));
         } else {
             return redirect()->route('controle_regras_index', [
                 'codorganizacao' => $organizacao->codorganizacao,
