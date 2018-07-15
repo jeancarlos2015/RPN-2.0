@@ -29,7 +29,14 @@ class RegraController extends Controller
         $tipo = 'regra';
         $log = LogRepository::log();
 
-        return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo', 'log', 'regras', 'tipo'));
+//        return view('controle_regras.index', compact('titulos', 'organizacao', 'projeto', 'modelo', 'log', 'regras', 'tipo'));
+        return redirect()->route('controle_regras_create',
+            [
+                'codorganizacao' => $organizacao->codorganizacao,
+                'codprojeto' => $projeto->codprojeto,
+                'codmodelo' => $modelo->codmodelo
+
+            ]);
     }
 
     public function todas_regras()
@@ -39,6 +46,7 @@ class RegraController extends Controller
         $tarefas = null;
         $tipo = 'regra';
         $log = LogRepository::log(2);
+
         return view('controle_regras.all', compact('regras', 'titulos', 'tarefas', 'tipo', 'log'));
     }
 
@@ -47,7 +55,10 @@ class RegraController extends Controller
         $organizacao = Organizacao::findOrFail($codorganizacao);
         $projeto = Projeto::findOrFail($codprojeto);
         $modelo = Modelo::findOrFail($codmodelo);
-        return view('controle_regras.form_regra', compact('organizacao', 'projeto', 'modelo'));
+        $regras = RegraRepository::listar();
+        $titulos = Regra::titulos();
+        $tipo = 'regra';
+        return view('controle_regras.form_regra', compact('organizacao', 'projeto', 'modelo','titulos','regras','tipo'));
     }
 
     private function adiciona_request(Request $request)
@@ -73,9 +84,43 @@ class RegraController extends Controller
         }
     }
 
+    private function set_param_tarefa1(Request $request,Regra $regra){
+        return [
+            'nome' => $request->tarefa1_nome,
+            'descricao' => $request->tarefa1_descricao,
+            'codregra' => $regra->codregra,
+            'codmodelo' => $regra->codmodelo,
+            'codprojeto' => $regra->codprojeto,
+            'codorganizacao' => $regra->codorganizacao,
+            'codusuario' => $regra->codusuario
+        ];
+    }
+    private function set_param_regra(Request $request){
+        return [
+            'nome' => $request->nome,
+            'operador' => $request->operador,
+            'codmodelo' => $request->codmodelo,
+            'codprojeto' => $request->codprojeto,
+            'codorganizacao' => $request->codorganizacao,
+            'codusuario' => Auth::user()->codusuario,
+            'codregra1' => 0
+        ];
+    }
+
+    private function set_param_tarefa2(Request $request,Regra $regra){
+        return [
+            'nome' => $request->tarefa2_nome,
+            'descricao' => $request->tarefa2_descricao,
+            'codregra' => $regra->codregra,
+            'codmodelo' => $regra->codmodelo,
+            'codprojeto' => $regra->codprojeto,
+            'codorganizacao' => $regra->codorganizacao,
+            'codusuario' => $regra->codusuario
+        ];
+    }
+
     public function store(Request $request)
     {
-
         $projeto = Projeto::findOrFail($request->codprojeto);
         $organizacao = Organizacao::findOrFail($request->codorganizacao);
         $modelo = Modelo::findOrFail($request->codmodelo);
@@ -85,14 +130,19 @@ class RegraController extends Controller
             'codregra1' => 0
         ]);
 
-        $regra = Regra::create($request->all());
+        $regra = Regra::create(self::set_param_regra($request));
+        if (count($regra->tarefas)==0){
+            $tarefa1 = Tarefa::create(self::set_param_tarefa1($request, $regra));
+            $tarefa2 = Tarefa::create(self::set_param_tarefa2($request, $regra));
+            self::msg("Regra Criada com sucesso");
+        }else{
+            self::msg("Atingiu o limite máximo para essa regra");
+        }
 
-        self::msg($regra);
-        return redirect()->route('controle_tarefas_create', [
+        return redirect()->route('controle_regras_create', [
             'codorganizacao' => $organizacao->codorganizacao,
             'codprojeto' => $projeto->codprojeto,
-            'codmodelo' => $modelo->codmodelo,
-            'codtarefa' => $regra->codregra
+            'codmodelo' => $modelo->codmodelo
         ]);
     }
 
@@ -117,19 +167,6 @@ class RegraController extends Controller
         return view('controle_regras.edit', compact('dados', 'regra', 'organizacao', 'projeto', 'modelo', 'tarefas'));
     }
 
-
-    private function set_param_regra(Request $request,Regra $regra){
-        return [
-            'nome' => $request->tarefa2_nome,
-            'operador' => $request->tarefa2_descricao,
-            'codmodelo' => $regra->codmodelo,
-
-
-            'codprojeto' => $regra->codprojeto,
-            'codorganizacao' => $regra->codorganizacao,
-            'codusuario' => $regra->codusuario
-        ];
-    }
 
     public function update(Request $request, $codregra)
     {

@@ -19,25 +19,24 @@
                 </tfoot>
                 @switch($tipo)
                     @case('regra')
-                    @includeIf('layouts.layout_admin_new.componentes.tables_regras')
+                        @includeIf('layouts.layout_admin_new.componentes.tables_regras')
                     @break
 
                     @case('tarefa')
-                    @includeIf('layouts.layout_admin_new.componentes.tables_tarefas')
+                        @includeIf('layouts.layout_admin_new.componentes.tables_tarefas')
                     @break;
 
                     @case('modelo')
-                    @includeIf('layouts.layout_admin_new.componentes.tables_modelos')
+                        @includeIf('layouts.layout_admin_new.componentes.tables_modelos')
                     @break;
 
                     @case('projeto')
-                    @includeIf('layouts.layout_admin_new.componentes.tables_projetos')
+                        @includeIf('layouts.layout_admin_new.componentes.tables_projetos')
                     @break;
 
                     @case('organizacao')
-                    @includeIf('layouts.layout_admin_new.componentes.tables_organizacoes')
+                        @includeIf('layouts.layout_admin_new.componentes.tables_organizacoes')
                     @break;
-
 
                 @endswitch
             </table>

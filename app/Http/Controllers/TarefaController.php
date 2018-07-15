@@ -39,7 +39,6 @@ class TarefaController extends Controller
         $titulos = Tarefa::titulos();
         $tipo = 'tarefa';
         $log = LogRepository::log();
-
         return view('controle_tarefas.all', compact('tarefas', 'titulos','tipo','log'));
     }
 
@@ -52,28 +51,6 @@ class TarefaController extends Controller
         $regra = Regra::findOrFail($codregra);
         return view('controle_tarefas.form_tarefa', compact('dados', 'organizacao', 'projeto', 'modelo','regra'));
     }
-    private function set_param_tarefa1(Request $request,Regra $regra){
-        return [
-            'nome' => $request->tarefa1_nome,
-            'descricao' => $request->tarefa1_descricao,
-            'codregra' => $regra->codregra,
-            'codmodelo' => $regra->codmodelo,
-            'codprojeto' => $regra->codprojeto,
-            'codorganizacao' => $regra->codorganizacao,
-            'codusuario' => $regra->codusuario
-        ];
-    }
-    private function set_param_tarefa2(Request $request,Regra $regra){
-        return [
-            'nome' => $request->tarefa2_nome,
-            'descricao' => $request->tarefa2_descricao,
-            'codregra' => $regra->codregra,
-            'codmodelo' => $regra->codmodelo,
-            'codprojeto' => $regra->codprojeto,
-            'codorganizacao' => $regra->codorganizacao,
-            'codusuario' => $regra->codusuario
-        ];
-    }
 
 
     public function store(Request $request)
@@ -83,11 +60,6 @@ class TarefaController extends Controller
         $modelo = Modelo::findOrFail($request->codmodelo);
         $regra = Regra::findOrFail($request->codregra);
 
-        $value_tarefa1 = self::set_param_tarefa1($request, $regra);
-        $value_tarefa2 = self::set_param_tarefa2($request, $regra);
-
-        $tarefa1 = Tarefa::create($value_tarefa1);
-        $tarefa2 = Tarefa::create($value_tarefa2);
 
         if (isset($tarefa1) && isset($tarefa1)) {
             flash('Regra criada com sucesso!!');
