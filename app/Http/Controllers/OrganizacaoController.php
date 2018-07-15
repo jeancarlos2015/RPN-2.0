@@ -159,6 +159,7 @@ class OrganizacaoController extends Controller
     {
 
         OrganizacaoRepository::excluir($codorganizacao);
+
         LogRepository::criar("Organização Excluída Com sucesso", "Rota De Exclusão de organização");
         return response()->redirectToRoute('controle_organizacoes.index');
     }

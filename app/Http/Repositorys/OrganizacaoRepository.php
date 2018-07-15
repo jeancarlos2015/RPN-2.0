@@ -62,9 +62,10 @@ class OrganizacaoRepository extends Repository
 
             $doc = Organizacao::findOrFail($codorganizacao);
             $value = $doc->delete();
+            flash('Organização excluida com sucesso!!!');
             self::limpar_cache();
         } catch (Exception $e) {
-
+            flash('error')->error();
         }
         return $value;
     }
