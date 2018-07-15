@@ -54,6 +54,13 @@ class Regra extends Model
         'codusuario'
     ];
 
+    public static function validacao()
+    {
+        return [
+            'nome' => 'required|max:50',
+            'operador' => 'required|max:255'
+        ];
+    }
     public static function titulos()
     {
         return [

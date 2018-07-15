@@ -66,15 +66,26 @@ class ModeloController extends Controller
 
     public function store(Request $request)
     {
+        $codprojeto = $request->codprojeto;
+        $codorganizacao = $request->codorganizacao;
         $request->request->add([
             'xml_modelo' => 'nenhum',
             'codusuario' => Auth::user()->codusuario
         ]); 
-        $modelo = Modelo::create($request->all());
-        if (isset($modelo)) {
-            flash('Modelo criado com sucesso!!!');
+
+        $erros = \Validator::make($request->all(), Modelo::validacao());
+        if ($erros->fails()){
+            return redirect()->route('controle_modelos_create', [
+                'codorganizacao' => $codorganizacao,
+                'codprojeto' => $codprojeto
+            ])
+            ->withErrors($erros)
+            ->withInput();
         }
+
+        $modelo = Modelo::create($request->all());
         if ($modelo->tipo === 'declarativo') {
+            flash('Modelo criado com sucesso!!!');
             return redirect()->route('controle_regras_index',
                 [
                     'codorganizacao' => $modelo->codorganizacao,

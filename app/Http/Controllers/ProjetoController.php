@@ -59,11 +59,20 @@ class ProjetoController extends Controller
 
     public function store(Request $request)
     {
+        $codorganizacao = $request->codorganizacao;
+        $erros = \Validator::make($request->all(), Projeto::validacao());
+        if ($erros->fails()){
+            return redirect()->route('controle_projeto_create', [
+                'codorganizacao' => $codorganizacao,
+            ])
+                ->withErrors($erros)
+                ->withInput();
+        }
 
         $request->request->add(['codusuario' => Auth::user()->codusuario]);
         $projeto = Projeto::create($request->all());
 
-        $codorganizacao = $request->codorganizacao;
+
         LogRepository::criar("Projeto Salva Com sucesso", "Rota De Adição de projeto");
         if (isset($projeto)) {
             flash('Projeto criado com sucesso!!');

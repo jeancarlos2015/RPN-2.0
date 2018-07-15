@@ -121,9 +121,23 @@ class RegraController extends Controller
 
     public function store(Request $request)
     {
-        $projeto = Projeto::findOrFail($request->codprojeto);
-        $organizacao = Organizacao::findOrFail($request->codorganizacao);
-        $modelo = Modelo::findOrFail($request->codmodelo);
+        $codorganizacao = $request->codorganizacao;
+        $codprojeto = $request->codprojeto;
+        $codmodelo = $request->codmodelo;
+        $erros = \Validator::make($request->all(), Regra::validacao());
+        if ($erros->fails()){
+            return redirect()->route('controle_regras_create', [
+                'codorganizacao' => $codorganizacao,
+                'codprojeto' => $codprojeto,
+                'codmodelo' => $codmodelo
+            ])
+                ->withErrors($erros)
+                ->withInput();
+        }
+
+        $projeto = Projeto::findOrFail($codprojeto);
+        $organizacao = Organizacao::findOrFail($codorganizacao);
+        $modelo = Modelo::findOrFail($codmodelo);
 
         $request->request->add([
             'codusuario' => Auth::user()->codusuario,

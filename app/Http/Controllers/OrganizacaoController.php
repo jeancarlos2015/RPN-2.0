@@ -105,9 +105,11 @@ class OrganizacaoController extends Controller
 
     public function store(Request $request)
     {
-        $status = Validator::make($request->all(), [Organizacao::regras_validacao()]);
-        if ($status->fails()){
-
+        $erros = \Validator::make($request->all(), Organizacao::validacao());
+        if ($erros->fails()){
+            return redirect()->route('controle_organizacoes.create')
+                ->withErrors($erros)
+                ->withInput();
         }
         $request->request->add(['codusuario' => Auth::user()->codusuario]);
         $organizacao = Organizacao::create($request->all());

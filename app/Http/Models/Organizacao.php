@@ -33,7 +33,7 @@ class Organizacao extends Model
         'codusuario'
     ];
 
-    public static function regras_validacao()
+    public static function validacao()
     {
         return [
             'nome' => 'required|max:50',

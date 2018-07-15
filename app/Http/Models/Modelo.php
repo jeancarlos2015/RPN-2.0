@@ -123,6 +123,13 @@ class Modelo extends Model
         return $this->belongsTo(Regra::class, 'codmodelo', 'codmodelo');
     }
 
+    public static function validacao(){
+        return [
+            'nome' => 'required',
+            'descricao' => 'required',
+            'tipo' => 'required',
+        ];
+    }
     public function tarefas()
     {
         return $this->belongsTo(Tarefa::class, 'codmodelo', 'codmodelo');

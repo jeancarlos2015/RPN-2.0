@@ -38,7 +38,13 @@ class Projeto extends Model
         'codorganizacao',
         'codusuario'
     ];
-
+    public static function validacao()
+    {
+        return [
+            'nome' => 'required|max:50',
+            'descricao' => 'required|max:255'
+        ];
+    }
 
     public static function titulos()
     {
