@@ -27,9 +27,7 @@
                     'sub_titulo' => 'Projetos',
                     'rota' => 'todos_projetos'
     ])
-    {{--@if(!empty($organizacao))--}}
-        {{--@includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])--}}
-    {{--@endif--}}
+
     <form action="{!! route('controle_projetos.update',['id' => $projeto->codprojeto]) !!}" method="post">
         {{ method_field('PUT')}}
         @includeIf('controle_projetos.form',

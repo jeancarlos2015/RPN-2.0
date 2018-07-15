@@ -107,7 +107,12 @@ class Projeto extends Model
         return $this->belongsTo(Modelo::class,'codprojeto','codprojeto');
     }
 
-
+    protected static function boot() {
+        parent::boot();
+        static::deleting(function($modelo) { // before delete() method call this
+            $modelo->modelos()->delete();
+        });
+    }
 
 }
 

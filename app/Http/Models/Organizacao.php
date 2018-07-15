@@ -101,4 +101,13 @@ class Organizacao extends Model
     {
         return $this->belongsTo(Projeto::class, 'codorganizacao', 'codorganizacao');
     }
+
+
+
+    protected static function boot() {
+        parent::boot();
+        static::deleting(function($projeto) { // before delete() method call this
+            $projeto->projetos()->delete();
+        });
+    }
 }

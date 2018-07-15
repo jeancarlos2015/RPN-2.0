@@ -1,4 +1,3 @@
-
 @extends('layouts.layout_admin_new.layouts.main')
 
 @section('content')
