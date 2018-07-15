@@ -119,7 +119,8 @@ class ProjetoController extends Controller
 
     public function destroy($codprojeto)
     {
-        $projeto = ProjetoRepository::excluir($codprojeto);
+        $projeto = Projeto::findOrFail($codprojeto);
+        ProjetoRepository::excluir($codprojeto);
         return redirect()->route('controle_projetos_index', [
             'codorganizacao' => $projeto->codorganizacao
         ]);

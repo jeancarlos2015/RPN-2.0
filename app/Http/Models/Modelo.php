@@ -118,13 +118,26 @@ class Modelo extends Model
         return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
 
-    public  function regras()
+    public function regras()
     {
-        return $this->belongsTo(Regra::class,'codmodelo','codmodelo');
+        return $this->belongsTo(Regra::class, 'codmodelo', 'codmodelo');
     }
 
-    public function tarefas(){
-        return $this->belongsTo(Tarefa::class,'codmodelo','codmodelo');
+    public function tarefas()
+    {
+        return $this->belongsTo(Tarefa::class, 'codmodelo', 'codmodelo');
     }
 
+    protected static function boot() {
+        parent::boot();
+
+
+        static::deleting(function($tarefa) { // before delete() method call this
+            $tarefa->tarefas()->delete();
+        });
+
+        static::deleting(function($regra) { // before delete() method call this
+            $regra->regras()->delete();
+        });
+    }
 }

@@ -11,6 +11,10 @@
                     <a class="nav-link js-scroll-trigger" href="{{ route('/') }}">Início</a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{{ route('painel') }}">Sistema</a>
+                </li>
+
                 @guest
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="{{ route('login') }}">{{ trans('auth.Login') }}</a>
