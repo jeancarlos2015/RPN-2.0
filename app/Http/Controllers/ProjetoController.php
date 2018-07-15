@@ -33,7 +33,11 @@ class ProjetoController extends Controller
         return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo','log'));
     }
 
-
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return bool
+     */
     private function exists($codorganizacao)
     {
         $organizacao = (new Organizacao)->where('codorganizacao', '=', $codorganizacao)->first();
@@ -69,14 +73,24 @@ class ProjetoController extends Controller
         return redirect()->route('controle_modelos_index', ['codorganizacao' => $codorganizacao, 'codprojeto' => $projeto->codprojeto]);
     }
 
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Projeto $projeto
+     * @return \Illuminate\Http\Response
+     */
     public function show($codprojeto)
     {
         $projeto = Projeto::findOrFail($codprojeto);
         return redirect()->route('controle_modelos_index', ['codorganizacao' => $projeto->codorganizacao, 'codprojeto' => $codprojeto]);
     }
 
-
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Projeto $projeto
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
         $projeto = Projeto::findOrFail($id);
@@ -87,7 +101,13 @@ class ProjetoController extends Controller
         return view('controle_projetos.edit', compact('dados', 'projeto', 'organizacao'));
     }
 
-
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Projeto $projeto
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $codprojeto)
     {
         $projeto = ProjetoRepository::atualizar($request, $codprojeto);
