@@ -127,12 +127,4 @@ class Modelo extends Model
         return $this->belongsTo(Tarefa::class,'codmodelo','codmodelo');
     }
 
-    protected static function boot() {
-        parent::boot();
-        static::deleting(function($tarefas, $regras) { // before delete() method call this
-            $tarefas->tarefas()->delete();
-            $regras->regras()->delete();
-        });
-    }
-
 }

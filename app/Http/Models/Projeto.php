@@ -102,28 +102,12 @@ class Projeto extends Model
         return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
 
-    public function tarefas()
+    public  function modelos()
     {
-        return $this->belongsTo(Tarefa::class, 'codprojeto', 'codprojeto');
+        return $this->belongsTo(Modelo::class,'codprojeto','codprojeto');
     }
 
-    public function regras()
-    {
-        return $this->belongsTo(Regra::class, 'codprojeto', 'codprojeto');
-    }
 
-    public function modelos()
-    {
-        return $this->belongsTo(Modelo::class, 'codprojeto', 'codprojeto');
-    }
-
-    protected static function boot() {
-        parent::boot();
-        static::deleting(function($modelo, $regra) { // before delete() method call this
-            $modelo->modelos()->delete();
-            $regra->regras()->delete();
-        });
-    }
 
 }
 
