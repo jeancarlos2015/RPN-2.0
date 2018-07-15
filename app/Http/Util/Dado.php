@@ -8,5 +8,6 @@ class Dado
     public $valor;
     public $atributo;
     public $titulo;
+    public $rota;
 
 }

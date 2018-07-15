@@ -43,6 +43,7 @@ class OrganizacaoController extends Controller
         $qt_modelos = ModeloRepository::count();
         $qt_tarefas = TarefaRepository::count();
         $qt_regras = RegraRepository::count();
+        $qt_funcionalidades = 6;
         $log = LogRepository::log();
         $tipo = 'painel';
         $titulos = [
@@ -50,21 +51,24 @@ class OrganizacaoController extends Controller
             'Tarefas',
             'Regras',
             'Projetos',
-            'Organizações'
+            'Organizações',
+            'Versionamento'
         ];
         $rotas = [
             'todos_modelos',
             'todas_tarefas',
             'todas_regras',
             'todos_projetos',
-            'controle_organizacoes.index'
+            'controle_organizacoes.index',
+            'controle_versao.index'
         ];
         $quantidades = [
             $qt_modelos,
             $qt_tarefas,
             $qt_regras,
             $qt_projetos,
-            $qt_organizacoes
+            $qt_organizacoes,
+            $qt_funcionalidades
         ];
 
         return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo','log'));

@@ -15,6 +15,8 @@
                 </a>
             </li>
 
+
+
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
                    data-parent="#exampleAccordion">
@@ -22,14 +24,17 @@
                     <span class="nav-link-text">Versionamento</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents">
+                    <li>
+                        <a href="{!! route('controle_versao.index') !!}"><i class="fa fa-fw fa-pencil"></i>Painel</a>
+                    </li>
 
                     <li>
-                        <a href="{!! route('controle_versao_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Merge &
+                        <a href="{!! route('index_merge_checkout') !!}"><i class="fa fa-fw fa-pencil"></i>Merge &
                             Checkout</a>
                     </li>
 
                     <li>
-                        <a href="{!! route('controle_versao_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Create &
+                        <a href="{!! route('index_create_delete') !!}"><i class="fa fa-fw fa-pencil"></i>Create &
                             Delete</a>
                     </li>
 

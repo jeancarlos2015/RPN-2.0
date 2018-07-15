@@ -35,7 +35,13 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('todos_projetos', 'ProjetoController@todos_projetos')->name('todos_projetos');
         Route::get('todas_tarefas', 'TarefaController@todas_tarefas')->name('todas_tarefas');
         Route::get('todas_regras', 'RegraController@todas_regras')->name('todas_regras');
+
+
         Route::get('controle_versao_projetos', 'GitController@index')->name('controle_versao_projetos');
+        Route::get('index_merge_checkout', 'GitController@index_merge_checkout')->name('index_merge_checkout');
+        Route::get('index_create_delete', 'GitController@index_create_delete')->name('index_create_delete');
+        Route::get('index_commit_branch', 'GitController@index_commit_branch')->name('index_commit_branch');
+        Route::get('index_pull_push', 'GitController@index_pull_push')->name('index_pull_push');
 
 
         Route::get('controle_projetos_create/{codorganizacao}', 'ProjetoController@create')->name('controle_projetos_create');
