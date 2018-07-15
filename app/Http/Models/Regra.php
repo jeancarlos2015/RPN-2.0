@@ -58,6 +58,7 @@ class Regra extends Model
     {
         return [
             'ID',
+            'Nome da regra',
             'Tarefa 1',
             'Operador',
             'Tarefa 2',
@@ -86,6 +87,8 @@ class Regra extends Model
 
     }
 
+    //Instancia todas as posições de memória que serão exibidas no título
+
     public static function dados_objeto()
     {
         $dado = array();
@@ -95,6 +98,7 @@ class Regra extends Model
         return $dado;
     }
 
+    //Instancia somente os campos que serão exibidos no formulário e preenche os títulos da listagem
     public static function dados()
     {
         $campos = self::campos();

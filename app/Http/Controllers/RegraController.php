@@ -73,35 +73,6 @@ class RegraController extends Controller
         }
     }
 
-    private function valida(Request $request)
-    {
-        return $request->codtarefa1 !== $request->codtarefa2;
-    }
-
-//    public function store(Request $request)
-//    {
-//        $projeto = Projeto::findOrFail($request->codprojeto);
-//        $organizacao = Organizacao::findOrFail($request->codorganizacao);
-//        $modelo = Modelo::findOrFail($request->codmodelo);
-//        self::adiciona_request($request);
-//        if ($this->valida($request)) {
-//            $regra = Regra::create($request->all());
-//            self::msg($regra);
-//            return redirect()->route('controle_regras_index', [
-//                'codorganizacao' => $organizacao->codorganizacao,
-//                'codprojeto' => $projeto->codprojeto,
-//                'codmodelo' => $modelo->codmodelo
-//            ]);
-//        }
-//        else{
-//            flash('Regra não pode ser criada com duas tarefas iguais')->warning();
-//            return redirect()->route('controle_regras_create', [
-//                'codorganizacao' => $organizacao->codorganizacao,
-//                'codprojeto' => $projeto->codprojeto,
-//                'codmodelo' => $modelo->codmodelo
-//            ]);
-//        }
-//    }
     public function store(Request $request)
     {
 
@@ -125,27 +96,19 @@ class RegraController extends Controller
         ]);
     }
 
-    public
-    function show($id)
+    public  function show($id)
     {
         $tarefa = Tarefa::findOrFail($id);
         return view('controle_tarefas.show', compact('tarefa'));
     }
 
-
-//'Tarefa 1',
-//'Operador',
-//'Tarefa 2',
-//'Nome da Regra'
-
-    public
-    function edit($id)
+    public  function edit($id)
     {
         $regra = Regra::findOrFail($id);
         $dados = Regra::dados();
-        $dados[0]->valor = $regra->tarefa1->id;
+        $dados[0]->valor = $regra->tarefas[0]->codtarefa;
         $dados[1]->valor = $regra->operador;
-        $dados[2]->valor = $regra->tarefa2->id;
+        $dados[2]->valor = $regra->tarefas[1]->codtarefa;
         $dados[3]->valor = $regra->nome;
         $organizacao = $regra->organizacao;
         $projeto = $regra->projeto;
@@ -186,8 +149,7 @@ class RegraController extends Controller
     }
 
 
-    public
-    function destroy($codregra)
+    public  function destroy($codregra)
     {
         $regra = Regra::findOrFail($codregra);
         $projeto = $regra->projeto;
