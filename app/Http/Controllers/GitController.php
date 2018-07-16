@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositorys\GitRepository;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
+use App\Http\Util\GitComando;
+use Cz\Git\GitException;
+use Cz\Git\GitRepository;
+use GitWrapper\GitWrapper;
 use Illuminate\Http\Request;
-
 class GitController extends Controller
 {
     private function funcionalidades()
@@ -143,14 +145,16 @@ class GitController extends Controller
 
     private function checkout(Request $request)
     {
-        $git = new GitSistemaRepository();
-        if ($git->is_exchanges()) {
-            $git->git_commit('checkout');
-        }
-        $git->git_checkout_branch($request->branch);
-        if ($git->is_exchanges()) {
-            $git->git_commit('checkout');
-        }
+
+
+//            $git_comando = new GitComando('/home/vagrant/code/projeto21/database/banco');
+//            $git_comando->checkout($request->branch);
+//                $git = new GitRepository('/home/vagrant/code/projeto21/database/banco');
+//                $git->execute('checkout '.$request->branch);
+//                $git->execute('reset --hard');
+        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git checkout '.$request->branch);
+//        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git reset --hard');
+
         return redirect()->route('index_merge_checkout');
     }
 
@@ -160,6 +164,17 @@ class GitController extends Controller
         $git->git_commit($request->mensagem);
         $branch_atual = $git->get_branch_current();
         return redirect()->route('index_commit_branch');
+    }
+
+    public function reset_files(){
+        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git checkout -f');
+        return redirect()->route('index_reset_files');
+    }
+
+    public function index_reset_files(){
+        $git = new GitSistemaRepository();
+        $branch_atual = $git->get_branch_current();
+        return view('controle_versao.teste',compact('branch_atual'));
     }
 
 }
