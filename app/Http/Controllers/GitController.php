@@ -144,12 +144,13 @@ class GitController extends Controller
 
     private function checkout(Request $request)
     {
-        $git = new GitSistemaRepository();
-//        if ($git->is_exchanges()) {
-//            $git->git_commit('checkout');
-//        }
+
 //        $git->git_checkout_branch($request->branch);
         try {
+            $git = new GitSistemaRepository();
+            if ($git->is_exchanges()) {
+                $git->git_commit('checkout');
+            }
             $git_comando = new GitComando($git->get_path());
             $git_comando->checkout($request->branch);
         } catch (GitException $e) {
