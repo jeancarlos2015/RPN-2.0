@@ -132,6 +132,7 @@ class GitController extends Controller
         return redirect()->route('index_merge_checkout');
     }
 
+
     public function merge_checkout(Request $request)
     {
         if ($request->tipo==='merge'){

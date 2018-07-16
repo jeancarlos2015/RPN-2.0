@@ -59,6 +59,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::post('create', 'GitController@create')->name('create');
         Route::post('commit', 'GitController@commit')->name('commit');
         Route::post('merge_checkout', 'GitController@merge_checkout')->name('merge_checkout');
+        Route::post('delete', 'GitController@delete')->name('delete');
 
         Route::get('index_init', 'GitController@index_init')->name('index_init');
         Route::get('index_painel', 'GitController@index')->name('index_painel');
