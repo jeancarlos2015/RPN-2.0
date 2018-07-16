@@ -2,6 +2,7 @@
 
 namespace App\Http\Util;
 
+use Cz\Git\GitException;
 use Cz\Git\GitRepository;
 
 class GitComando extends GitRepository
@@ -9,13 +10,18 @@ class GitComando extends GitRepository
     public function checkout($name)
     {
         return parent::checkout($name)
+
             ->run('git checkout -f')
             ->end();
         
     }
 
     public function reset(){
-        return parent::run("cd ");
+        try {
+            return $this->run('git reset --hard');
+        } catch (GitException $e) {
+            dd($e->getMessage());
+        }
     }
 
 }
