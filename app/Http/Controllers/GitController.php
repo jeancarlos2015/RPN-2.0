@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositorys\GitRepository;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
+use App\Http\Util\GitComando;
+use Cz\Git\GitException;
 use Illuminate\Http\Request;
 
 class GitController extends Controller
@@ -144,11 +145,15 @@ class GitController extends Controller
     private function checkout(Request $request)
     {
         $git = new GitSistemaRepository();
-        if ($git->is_exchanges()) {
-            $git->git_commit('checkout');
+//        if ($git->is_exchanges()) {
+//            $git->git_commit('checkout');
+//        }
+//        $git->git_checkout_branch($request->branch);
+        try {
+            $git_comando = new GitComando($git->get_path());
+            $git_comando->checkout($request->branch);
+        } catch (GitException $e) {
         }
-        $git->git_checkout_branch($request->branch);
-
         return redirect()->route('index_merge_checkout');
     }
 
@@ -161,7 +166,7 @@ class GitController extends Controller
     }
 
     public function reset_files(){
-        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git stash');
+        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git checkout -f');
         return redirect()->route('index_reset_files');
     }
 
