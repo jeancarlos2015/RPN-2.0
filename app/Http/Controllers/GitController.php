@@ -148,9 +148,7 @@ class GitController extends Controller
             $git->git_commit('checkout');
         }
         $git->git_checkout_branch($request->branch);
-        if ($git->is_exchanges()) {
-            $git->git_commit('checkout');
-        }
+
         return redirect()->route('index_merge_checkout');
     }
 
@@ -160,6 +158,15 @@ class GitController extends Controller
         $git->git_commit($request->mensagem);
         $branch_atual = $git->get_branch_current();
         return redirect()->route('index_commit_branch');
+    }
+
+    public function reset_files(){
+        dd(shell_exec('pwd'));
+
+    }
+
+    public function index_reset_files(){
+        return view('controle_versao.teste');
     }
 
 }

@@ -51,6 +51,10 @@
                         <a href="{!! route('index_init') !!}"><i class="fa fa-fw fa-pencil"></i>Initialization
                             Repository</a>
                     </li>
+
+                    <li>
+                        <a href="{!! route('index_reset_files') !!}"><i class="fa fa-fw fa-pencil"></i>Reset Files</a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
