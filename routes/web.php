@@ -16,6 +16,10 @@ Route::get('/', function () {
     return view('inicio');
 })->name('/');
 
+Route::get('/logout', function () {
+    return view('inicio');
+})->name('logout');
+
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
 
