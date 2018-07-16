@@ -166,7 +166,9 @@ class GitController extends Controller
     }
 
     public function index_reset_files(){
-        return view('controle_versao.teste');
+        $git = new GitSistemaRepository();
+        $branch_atual = $git->get_branch_current();
+        return view('controle_versao.teste',compact('branch_atual'));
     }
 
 }
