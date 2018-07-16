@@ -6,8 +6,9 @@ use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
 use App\Http\Util\GitComando;
 use Cz\Git\GitException;
+use Cz\Git\GitRepository;
+use GitWrapper\GitWrapper;
 use Illuminate\Http\Request;
-
 class GitController extends Controller
 {
     private function funcionalidades()
@@ -145,17 +146,15 @@ class GitController extends Controller
     private function checkout(Request $request)
     {
 
-//        $git->git_checkout_branch($request->branch);
-        try {
-            $git = new GitSistemaRepository();
-//            if ($git->is_exchanges()) {
-//                $git->git_commit('checkout');
-//            }
-            $git_comando = new GitComando($git->get_path());
-            $git_comando->checkout($request->branch);
-            dd($git_comando->reset());
-        } catch (GitException $e) {
-        }
+
+//            $git_comando = new GitComando('/home/vagrant/code/projeto21/database/banco');
+//            $git_comando->checkout($request->branch);
+//                $git = new GitRepository('/home/vagrant/code/projeto21/database/banco');
+//                $git->execute('checkout '.$request->branch);
+//                $git->execute('reset --hard');
+        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git checkout '.$request->branch);
+//        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git reset --hard');
+
         return redirect()->route('index_merge_checkout');
     }
 

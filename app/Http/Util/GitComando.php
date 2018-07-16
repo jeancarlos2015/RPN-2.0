@@ -10,10 +10,8 @@ class GitComando extends GitRepository
     public function checkout($name)
     {
         return parent::checkout($name)
-
-            ->run('git checkout -f')
+            ->run('git checkout '.$name)
             ->end();
-        
     }
 
     public function reset(){
