@@ -161,8 +161,8 @@ class GitController extends Controller
     }
 
     public function reset_files(){
-        dd(shell_exec('pwd'));
-
+        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git stash');
+        return redirect()->route('index_reset_files');
     }
 
     public function index_reset_files(){
