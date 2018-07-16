@@ -1,7 +1,7 @@
 @extends('layouts.layout_admin_new.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
+
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                       'titulo' => 'Paianel',
                     'sub_titulo' => 'Versionamento',
@@ -9,7 +9,8 @@
                     'branch_atual' => $branch_atual
     ])
 
-    <form action="{!! route('create') !!}" class="form-group">
+    <form action="{!! route('create') !!}" class="form-group" method="post">
+        {!! csrf_field() !!}
         <div class="row">
             <div class="col-4"><label>Branch</label></div>
             <div class="col-4"><input type="text" class="form-control" name="branch" required></div>
@@ -18,7 +19,8 @@
     </form>
 
     @if(!empty($branchs))
-        <form action="{!! route('delete') !!}" class="form-group">
+        <form action="{!! route('delete') !!}" class="form-group" method="post">
+            {!! csrf_field() !!}
             <div class="row">
                 <div class="col-4"><label>Branch</label></div>
                 <div class="col-4">

@@ -25,7 +25,7 @@
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents">
                     <li>
-                        <a href="{!! route('controle_versao.index') !!}"><i class="fa fa-fw fa-pencil"></i>Painel</a>
+                        <a href="{!! route('index_painel') !!}"><i class="fa fa-fw fa-pencil"></i>Painel</a>
                     </li>
 
                     <li>
@@ -39,12 +39,12 @@
                     </li>
 
                     <li>
-                        <a href="{!! route('controle_versao_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Commit
+                        <a href="{!! route('index_commit_branch') !!}"><i class="fa fa-fw fa-pencil"></i>Commit
                             Branch</a>
                     </li>
 
                     <li>
-                        <a href="{!! route('controle_versao_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Pull &
+                        <a href="{!! route('index_pull_push') !!}"><i class="fa fa-fw fa-pencil"></i>Pull &
                             Push Repository</a>
                     </li>
                     <li>

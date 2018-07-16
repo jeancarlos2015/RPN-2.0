@@ -52,7 +52,7 @@ class OrganizacaoController extends Controller
             'Regras',
             'Projetos',
             'Organizações',
-            'Versionamento'
+            'Controle De Versionamento'
         ];
         $rotas = [
             'todos_modelos',

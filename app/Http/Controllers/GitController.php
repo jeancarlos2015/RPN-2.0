@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Projeto;
-
 use App\Http\Repositorys\GitRepository;
 use App\Http\Repositorys\GitSistemaRepository;
-use App\Http\Repositorys\LogRepository;
 use App\Http\Util\Dado;
 use Illuminate\Http\Request;
 
 class GitController extends Controller
 {
-    private function funcionalidades(){
+    private function funcionalidades()
+    {
         return [
             'Merge & checkout',
             'Create & Delete',
@@ -22,7 +20,8 @@ class GitController extends Controller
         ];
     }
 
-    private function rotas(){
+    private function rotas()
+    {
         return [
             'index_merge_checkout',
             'index_create_delete',
@@ -32,32 +31,45 @@ class GitController extends Controller
         ];
     }
 
-    public function index_merge_checkout(){
+    public function index_merge_checkout()
+    {
         $git = new GitSistemaRepository();
         $branch_atual = $git->get_branch_current();
         $branchs = $git->get_branchs();
-        return view('controle_versao.merge_checkout',compact('branch_atual','branchs'));
+        return view('controle_versao.merge_checkout', compact('branch_atual', 'branchs'));
     }
 
-    public function index_create_delete(){
+    public function index_create_delete()
+    {
         $git = new GitSistemaRepository();
         $branch_atual = $git->get_branch_current();
         $branchs = $git->get_branchs();
-        return view('controle_versao.create_delete',compact('branch_atual','branchs'));
-    }
-    public function index_commit_branch(){
-        $git = new GitSistemaRepository();
-        $branch_atual = $git->get_branch_current();
-        $branchs = $git->get_branchs();
-        return view('controle_versao.commit',compact('branch_atual','branchs'));
+        return view('controle_versao.create_delete', compact('branch_atual', 'branchs'));
     }
 
-    public function index_pull_push(){
+    public function index_commit_branch()
+    {
         $git = new GitSistemaRepository();
         $branch_atual = $git->get_branch_current();
         $branchs = $git->get_branchs();
-        return view('controle_versao.pull_push',compact('branch_atual','branchs'));
+        return view('controle_versao.commit', compact('branch_atual', 'branchs'));
     }
+
+    public function index_pull_push()
+    {
+        $git = new GitSistemaRepository();
+        $branch_atual = $git->get_branch_current();
+        $branchs = $git->get_branchs();
+        return view('controle_versao.pull_push', compact('branch_atual', 'branchs'));
+    }
+
+    public function index_init()
+    {
+        $git = new GitSistemaRepository();
+        $branch_atual = $git->get_branch_current();
+        return view('controle_versao.init', compact('tipo', 'branch_atual'));
+    }
+
     public function index()
     {
         $git = new GitSistemaRepository();
@@ -65,19 +77,14 @@ class GitController extends Controller
         $funcionalidades = [];
         $rotas = self::rotas();
         $dados = self::funcionalidades();
-        for ($indice = 0; $indice<5;$indice++){
+        for ($indice = 0; $indice < 5; $indice++) {
             $funcionalidades[$indice] = new Dado();
             $funcionalidades[$indice]->titulo = $dados[$indice];
             $funcionalidades[$indice]->rota = $rotas[$indice];
         }
-        return view('controle_versao.index',compact('branch_atual','funcionalidades'));
+        return view('controle_versao.index', compact('branch_atual', 'funcionalidades'));
     }
 
-    public function index_init(){
-        $git = new GitSistemaRepository();
-        $branch_atual = $git->get_branch_current();
-        return view('controle_versao.init',compact('tipo','branch_atual'));
-    }
 
     public function init()
     {
@@ -86,28 +93,72 @@ class GitController extends Controller
         $branch_atual = $git->get_branch_current();
         $git->git_commit('inicializacao do repositorio');
 
-        return view('controle_versao.index',compact('tipo','branch_atual'));
+        return view('controle_versao.index', compact('tipo', 'branch_atual'));
     }
 
     public function delete(Request $request)
     {
+        $git = new GitSistemaRepository();
+        $git->git_remove_branch($request->branch);
+        return redirect()->route('index_create_delete');
+    }
+
+    public function create(Request $request)
+    {
+        $git = new GitSistemaRepository();
+        $git->git_create_branch($request->branch);
+        return redirect()->route('index_create_delete');
+    }
+
+    public function push(Request $request)
+    {
 
     }
 
-    public function merge(Request $request)
+    public function pull(Request $request)
     {
-        //
     }
-    public function checkout(Request $request)
+
+    private function merge(Request $request)
     {
-        //
+        $git = new GitSistemaRepository();
+        if ($git->is_exchanges()) {
+            $git->git_commit('merge');
+        }
+        $git->git_merge_branch($request->branch);
+        if ($git->is_exchanges()) {
+            $git->git_commit('merge');
+        }
+        return redirect()->route('index_merge_checkout');
     }
+
+    public function merge_checkout(Request $request)
+    {
+        if ($request->tipo==='merge'){
+            return $this->merge($request);
+        }
+        return $this->checkout($request);
+    }
+
+    private function checkout(Request $request)
+    {
+        $git = new GitSistemaRepository();
+        if ($git->is_exchanges()) {
+            $git->git_commit('checkout');
+        }
+        $git->git_checkout_branch($request->branch);
+        if ($git->is_exchanges()) {
+            $git->git_commit('checkout');
+        }
+        return redirect()->route('index_merge_checkout');
+    }
+
     public function commit(Request $request)
     {
         $git = new GitSistemaRepository();
         $git->git_commit($request->mensagem);
         $branch_atual = $git->get_branch_current();
-
+        return redirect()->route('index_commit_branch');
     }
 
 }

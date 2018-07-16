@@ -1,7 +1,7 @@
 @extends('layouts.layout_admin_new.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
+
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                       'titulo' => 'Paianel',
                     'sub_titulo' => 'Versionamento',
@@ -10,12 +10,12 @@
     ])
 
     @if(!empty($branchs))
-        <form action="{!! route('delete') !!}">
-
+        <form action="{!! route('merge_checkout') !!}" method="post">
+            {!! csrf_field() !!}
             <label>Branch</label>
             <select name="branch" class="form-control">
                 @foreach($branchs as $branch)
-                    <option value="{!! $branch !!}"></option>
+                    <option value="{!! $branch !!}">{!! $branch !!}</option>
                 @endforeach
             </select>
 

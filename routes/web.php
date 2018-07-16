@@ -37,11 +37,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('todas_regras', 'RegraController@todas_regras')->name('todas_regras');
 
 
-        Route::get('controle_versao_projetos', 'GitController@index')->name('controle_versao_projetos');
-        Route::get('index_merge_checkout', 'GitController@index_merge_checkout')->name('index_merge_checkout');
-        Route::get('index_create_delete', 'GitController@index_create_delete')->name('index_create_delete');
-        Route::get('index_commit_branch', 'GitController@index_commit_branch')->name('index_commit_branch');
-        Route::get('index_pull_push', 'GitController@index_pull_push')->name('index_pull_push');
 
 
         Route::get('controle_projetos_create/{codorganizacao}', 'ProjetoController@create')->name('controle_projetos_create');
@@ -55,18 +50,21 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
 
         //Versionamento
-
+        Route::resource('controle_versao', 'GitController');
         Route::get('init', 'GitController@init')->name('init');
-        Route::post('create', 'GitController@create_branch')->name('create');
+        Route::post('create', 'GitController@create')->name('create');
         Route::post('commit', 'GitController@commit')->name('commit');
-        Route::post('checkout', 'GitController@checkout')->name('checkout');
-        Route::post('merge', 'GitController@merge')->name('merge');
-        Route::post('delete', 'GitController@delete')->name('delete');
+        Route::post('merge_checkout', 'GitController@merge_checkout')->name('merge_checkout');
 
         Route::get('index_init', 'GitController@index_init')->name('index_init');
+        Route::get('index_painel', 'GitController@index')->name('index_painel');
+        Route::get('index_merge_checkout', 'GitController@index_merge_checkout')->name('index_merge_checkout');
+        Route::get('index_create_delete', 'GitController@index_create_delete')->name('index_create_delete');
+        Route::get('index_commit_branch', 'GitController@index_commit_branch')->name('index_commit_branch');
+        Route::get('index_pull_push', 'GitController@index_pull_push')->name('index_pull_push');
 
 
-        Route::resource('controle_versao', 'GitController');
+
 
 
         Route::get('pagina_inicializacao_repositorio', 'GitController@pagina_inicializacao_repositorio')->name('pagina_inicializacao_repositorio');
