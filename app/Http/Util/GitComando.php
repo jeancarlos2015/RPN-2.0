@@ -4,22 +4,19 @@ namespace App\Http\Util;
 
 use Cz\Git\GitException;
 use Cz\Git\GitRepository;
+use GrahamCampbell\GitHub\GitHubManager;
 
-class GitComando extends GitRepository
+class GitComando
 {
-    public function checkout($name)
+    protected $github;
+    public function __construct(GitHubManager $github)
     {
-        return parent::checkout($name)
-            ->run('git checkout '.$name)
-            ->end();
+        $this->github = $github;
     }
 
-    public function reset(){
-        try {
-            return $this->run('git reset --hard');
-        } catch (GitException $e) {
-            dd($e->getMessage());
-        }
+    public function projetos()
+    {
+        $this->github->issues()->show('jeancarlos2015', 'projetos', 2);
     }
 
 }

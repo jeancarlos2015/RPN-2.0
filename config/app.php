@@ -162,6 +162,8 @@ return [
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
         Bootstrapper\BootstrapperL5ServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Diegoalvarezb\Versioner\VersionerProvider::class,
+        GrahamCampbell\GitHub\GitHubServiceProvider::class,
     ],
 
     /*
@@ -212,11 +214,13 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
 
+
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
 
 
         'Table' => Bootstrapper\Facades\Table::class,
         'Button' => Bootstrapper\Facades\Button::class,
+        'GitHub' => GrahamCampbell\GitHub\Facades\GitHub::class,
     ],
 
 ];

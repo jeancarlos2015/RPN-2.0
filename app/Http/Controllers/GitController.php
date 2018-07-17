@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
-use App\Http\Util\GitComando;
-use Cz\Git\GitException;
-use Cz\Git\GitRepository;
-use GitWrapper\GitWrapper;
+use Github\Api\Repo;
+use Github\Api\Repository\Contents;
+use Github\Client;
+use Github\HttpClient\Plugin\GithubExceptionThrower;
+use GrahamCampbell\GitHub\Facades\GitHub;
+use GrahamCampbell\GitHub\GitHubManager;
+use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
+use PHPStan\Type\Type;
+
 class GitController extends Controller
 {
     private function funcionalidades()
@@ -137,7 +142,7 @@ class GitController extends Controller
 
     public function merge_checkout(Request $request)
     {
-        if ($request->tipo==='merge'){
+        if ($request->tipo === 'merge') {
             return $this->merge($request);
         }
         return $this->checkout($request);
@@ -152,7 +157,7 @@ class GitController extends Controller
 //                $git = new GitRepository('/home/vagrant/code/projeto21/database/banco');
 //                $git->execute('checkout '.$request->branch);
 //                $git->execute('reset --hard');
-        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git checkout '.$request->branch);
+        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git checkout ' . $request->branch);
 //        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git reset --hard');
 
         return redirect()->route('index_merge_checkout');
@@ -166,15 +171,47 @@ class GitController extends Controller
         return redirect()->route('index_commit_branch');
     }
 
-    public function reset_files(){
-        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git checkout -f');
+    //token github
+//'b67159b091d9ec2f5953de0361fc47d37efa0591'
+    public function reset_files(Request $request)
+    {
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN,Client::AUTH_HTTP_PASSWORD);
+        $repo = $client->repository();
+//        dd($repo->show('jeancarlos2015', 'teste2015'));
+//        $user = $client->user();
+        $contents = new Contents($client);
+        $client->repo()->branches('jeancarlos2015', 'teste2015', 'master');
+        $client->getHttpClient()->post('/repos/jeancarlos2015/teste2015/git/refs',[],[
+            
+                "ref"=>"refs/heads/teste",
+                "sha" => "master"
+
+        ]);
+//        $contents->archive('jeancarlos2015', 'teste2015', '.sqlite');
+//        $contents->configure();
+//        $contents->create('jeancarlos2015', 'teste2015', 'database.sqlite','conteudo' , 'teste');
+//        $treeSHA = 'master';
+//        $commitData = ['message' => 'Upgrading documentation', 'tree' => $treeSHA, 'parents' => [$parentCommitSHA]];
+//        $commit = $client->api('gitData')->commits()->create('KnpLabs', 'php-github-api', $commitData);
+
+//        $committer = array('name' => 'jeancarlos2015', 'email' => 'jeancarlospenas25@gmail.com');
+//
+//        $oldFile = $client->repo()->contents()->show('jeancarlos2015', 'teste2015', 'banco', '/home/vagrant/code/projeto21/database/banco/database.sqlite');
+//
+//        $fileInfo = $client->repo()->contents()->update('jeancarlos2015', 'teste2015', '/home/vagrant/code/projeto21/database/banco', '/home/vagrant/code/projeto21/database/banco/database.sqlite', 'teste', $oldFile['sha'], 'master', $committer);
         return redirect()->route('index_reset_files');
     }
 
-    public function index_reset_files(){
+    public function index_reset_files()
+    {
         $git = new GitSistemaRepository();
         $branch_atual = $git->get_branch_current();
-        return view('controle_versao.teste',compact('branch_atual'));
+        return view('controle_versao.teste', compact('branch_atual'));
     }
+
+    /**
+     *
+     */
 
 }
