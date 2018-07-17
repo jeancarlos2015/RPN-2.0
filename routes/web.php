@@ -60,7 +60,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::post('commit', 'GitController@commit')->name('commit');
         Route::post('merge_checkout', 'GitController@merge_checkout')->name('merge_checkout');
         Route::post('delete', 'GitController@delete')->name('delete');
-        Route::post('reset_files', 'GitController@reset_files')->name('reset_files');
         Route::get('index_reset_files', 'GitController@index_reset_files')->name('index_reset_files');
 
         Route::get('index_init', 'GitController@index_init')->name('index_init');

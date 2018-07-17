@@ -1,7 +1,12 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: jean
- * Date: 15/07/2018
- * Time: 19:25
- */
+@extends('layouts.layout_admin_new.layouts.main')
+
+@section('content')
+    {!! csrf_field() !!}
+    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+                      'titulo' => 'Paianel',
+                    'sub_titulo' => 'Versionamento',
+                    'rota' => 'todas_tarefas',
+                    'branch_atual' => $branch_atual
+    ])
+    <h3>Pagina em implementação</h3>
+@endsection
