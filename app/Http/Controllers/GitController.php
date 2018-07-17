@@ -4,15 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
-use Github\Api\Repo;
 use Github\Api\Repository\Contents;
 use Github\Client;
-use Github\HttpClient\Plugin\GithubExceptionThrower;
-use GrahamCampbell\GitHub\Facades\GitHub;
-use GrahamCampbell\GitHub\GitHubManager;
-use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
-use PHPStan\Type\Type;
 
 class GitController extends Controller
 {
@@ -173,33 +167,66 @@ class GitController extends Controller
 
     //token github
 //'b67159b091d9ec2f5953de0361fc47d37efa0591'
+
+public function sobe_arquivo_repositorio(Request $request){
+    $client = new Client();
+    $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+    $repo = $client->repository();
+//        dd($repo->show('jeancarlos2015', 'teste2015'));
+//        $user = $client->user();
+    $contents = new Contents($client);
+    $client->repo()->branches('jeancarlos2015', 'teste2015', 'master');
+//        dd($request->file('foo'));
+    $file_name = $request->file('foo')->getRealPath();
+
+    $handle = fopen($file_name, "r");
+    $conteudo = fread($handle, filesize($file_name));
+    fclose($handle);
+    $formato = $request->file('foo')->guessExtension();
+    $path = $request->file('foo')->path();
+    $nome = $request->nome.".".$formato;
+    $contents->archive('jeancarlos2015', 'teste2015', $formato);
+    $contents->create('jeancarlos2015', 'teste2015',$nome ,$conteudo , 'teste');
+    return redirect()->route('index_reset_files');
+}
+
+public function sobe_database_sqlite(){
+    $client = new Client();
+    $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+    $contents = new Contents($client);
+    $client->repo()->branches('jeancarlos2015', 'teste2015', 'master');
+    $file_name = database_path('banco/database.sqlite');
+    $handle = fopen($file_name, "r");
+    $conteudo = fread($handle, filesize($file_name));
+    fclose($handle);
+    $formato = "sqlite";
+    $path = database_path('banco');
+    $nome = "database.sqlite";
+    $contents->archive('jeancarlos2015', 'teste2015', $formato);
+    $contents->create('jeancarlos2015', 'teste2015',$nome ,$conteudo , 'teste');
+    return redirect()->route('index_reset_files');
+}
     public function reset_files(Request $request)
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN,Client::AUTH_HTTP_PASSWORD);
-        $repo = $client->repository();
-//        dd($repo->show('jeancarlos2015', 'teste2015'));
-//        $user = $client->user();
-        $contents = new Contents($client);
-        $client->repo()->branches('jeancarlos2015', 'teste2015', 'master');
-        $client->getHttpClient()->post('/repos/jeancarlos2015/teste2015/git/refs',[],[
-            
-                "ref"=>"refs/heads/teste",
-                "sha" => "master"
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $http_Client = $client->getHttpClient();
+        $base_url = "https://api.github.com";
+        $rota = "repos/jeancarlos2015/teste2015/branches";
+        $url_branchs = $base_url."/".$rota;
 
-        ]);
-//        $contents->archive('jeancarlos2015', 'teste2015', '.sqlite');
-//        $contents->configure();
-//        $contents->create('jeancarlos2015', 'teste2015', 'database.sqlite','conteudo' , 'teste');
-//        $treeSHA = 'master';
-//        $commitData = ['message' => 'Upgrading documentation', 'tree' => $treeSHA, 'parents' => [$parentCommitSHA]];
-//        $commit = $client->api('gitData')->commits()->create('KnpLabs', 'php-github-api', $commitData);
 
-//        $committer = array('name' => 'jeancarlos2015', 'email' => 'jeancarlospenas25@gmail.com');
-//
-//        $oldFile = $client->repo()->contents()->show('jeancarlos2015', 'teste2015', 'banco', '/home/vagrant/code/projeto21/database/banco/database.sqlite');
-//
-//        $fileInfo = $client->repo()->contents()->update('jeancarlos2015', 'teste2015', '/home/vagrant/code/projeto21/database/banco', '/home/vagrant/code/projeto21/database/banco/database.sqlite', 'teste', $oldFile['sha'], 'master', $committer);
+//        https://api.github.com/repos/<AUTHOR>/<REPO>/git/refs
+
+
+        $url_post = $base_url."/repos/jeancarlos2015/teste2015/git/refs";
+//        dd($client->repository()->branches('jeancarlos2015', 'teste2015'));
+//        dd($url_post);
+
+
+        $authorization = $client->authorization();
+        $authorizations = $client->authorizations();
+        dd($authorizations->all());
         return redirect()->route('index_reset_files');
     }
 
