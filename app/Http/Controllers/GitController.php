@@ -166,15 +166,4 @@ class GitController extends Controller
         return redirect()->route('index_commit_branch');
     }
 
-    public function reset_files(){
-        shell_exec('cd /home/vagrant/code/projeto21/database/banco && git checkout -f');
-        return redirect()->route('index_reset_files');
-    }
-
-    public function index_reset_files(){
-        $git = new GitSistemaRepository();
-        $branch_atual = $git->get_branch_current();
-        return view('controle_versao.teste',compact('branch_atual'));
-    }
-
 }
