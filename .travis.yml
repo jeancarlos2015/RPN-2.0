@@ -15,7 +15,8 @@ addons:
 #before_script:
 script:
   - cd database/banco
-  - touch database.sqlite
+  - rm database.db
+  - touch database.db
   - cd ..
   - cd ..
   - cp .env.travis .env
