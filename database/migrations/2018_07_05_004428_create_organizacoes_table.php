@@ -13,12 +13,12 @@ class CreateOrganizacoesTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizacoes', function (Blueprint $table) {
+        Schema::connection('banco')->create('organizacoes', function (Blueprint $table) {
             $table->bigIncrements('codorganizacao');
             $table->string('nome');
             $table->string('descricao');
             $table->bigInteger('codusuario');
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+//            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });
     }

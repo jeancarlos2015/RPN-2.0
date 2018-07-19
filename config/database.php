@@ -76,7 +76,12 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
-        ]
+        ],
+        'banco' => [
+            'driver' => 'sqlite',
+            'database' => env('DB_ANOTHER_DATABASE', database_path('banco/database.db')),
+            'prefix' => '',
+        ],
 
     ],
 

@@ -29,8 +29,7 @@ class LogRepository extends Repository
 
     public static function listar()
     {
-        return collect((new Log())->where('logs.codusuario', '=', Auth::user()->codusuario)
-            ->get());
+        return Log::all()->where('codusuario', Auth::user()->codusuario);
     }
 
     public static function listar_tres_ultimos_logs($qt_logs){

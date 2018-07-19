@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ModeloRepository extends Repository
 {
@@ -20,10 +21,16 @@ class ModeloRepository extends Repository
     public static function listar()
     {
 
-            return collect((new Modelo)->join('users', 'users.codusuario', '=', 'modelos.codusuario')
-                ->where('users.codusuario','=',Auth::user()->codusuario)
-                ->get());
+        return Modelo::all()->where('codusuario', Auth::user()->codusuario);
 
+    }
+
+    public static function listar_modelo_por_projeto_organizacao($codorganizacao, $codprojeto)
+    {
+        return Modelo::all()
+            ->where('codusuario', '=', Auth::user()->codusuario)
+            ->where('codorganizacao', '=', $codorganizacao)
+            ->where('codprojeto', '=', $codprojeto);
     }
 
     public static function count()

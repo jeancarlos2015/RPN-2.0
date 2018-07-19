@@ -29,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Projeto extends Model
 {
-
+    protected $connection = "banco";
     protected $primaryKey = 'codprojeto';
     protected $table = 'projetos';
     protected $fillable = [

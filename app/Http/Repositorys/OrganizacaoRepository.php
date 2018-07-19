@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class OrganizacaoRepository extends Repository
 {
@@ -19,11 +20,11 @@ class OrganizacaoRepository extends Repository
 
     public static function listar()
     {
-        return collect((new Organizacao)->join('users', 'users.codusuario', '=', 'organizacoes.codusuario')
-            ->where('users.codusuario', '=', Auth::user()->codusuario)
-            ->get());
-
+        return Organizacao::all()
+            ->where('codusuario', '=', Auth::user()->codusuario);
     }
+
+
 
     public static function count()
     {

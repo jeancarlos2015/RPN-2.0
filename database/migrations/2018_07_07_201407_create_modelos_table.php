@@ -13,8 +13,8 @@ class CreateModelosTable extends Migration
      */
     public function up()
     {
-        Schema::create('modelos', function (Blueprint $table) {
-            $table->bigIncrements('codmodelo');
+        Schema::connection('banco')->create('modelos', function (Blueprint $table) {
+            $table->bigIncrements('codmodelo')->unsigned();
             $table->string('nome');
             $table->string('descricao');
             $table->string('tipo');
@@ -24,9 +24,9 @@ class CreateModelosTable extends Migration
             $table->bigInteger('codorganizacao');
             $table->bigInteger('codusuario');
 
-            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-            $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+//            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+//            $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
+//            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });
     }

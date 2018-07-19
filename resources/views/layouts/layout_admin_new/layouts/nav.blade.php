@@ -52,23 +52,23 @@
                             Repository</a>
                     </li>
 
-                    <li>
-                        <a href="{!! route('index_reset_files') !!}"><i class="fa fa-fw fa-pencil"></i>Reset Files</a>
-                    </li>
+                    {{--<li>--}}
+                        {{--<a href="{!! route('index_reset_files') !!}"><i class="fa fa-fw fa-pencil"></i>Reset Files</a>--}}
+                    {{--</li>--}}
                 </ul>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages"
-                   data-parent="#exampleAccordion">
-                    <i class="fa fa-fw fa-file"></i>
-                    <span class="nav-link-text">Usuários</span>
-                </a>
-                <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-                    <li>
-                        <a href="#">Não Informado</a>
-                    </li>
-                </ul>
-            </li>
+            {{--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">--}}
+                {{--<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages"--}}
+                   {{--data-parent="#exampleAccordion">--}}
+                    {{--<i class="fa fa-fw fa-file"></i>--}}
+                    {{--<span class="nav-link-text">Usuários</span>--}}
+                {{--</a>--}}
+                {{--<ul class="sidenav-second-level collapse" id="collapseExamplePages">--}}
+                    {{--<li>--}}
+                        {{--<a href="#">Não Informado</a>--}}
+                    {{--</li>--}}
+                {{--</ul>--}}
+            {{--</li>--}}
 
         </ul>
         <ul class="navbar-nav ml-auto">

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLogsTable extends Migration
+class CreateUsuarioGithubsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
-            $table->increments('codlog');
-            $table->string('nome');
-            $table->string('descricao');
+        Schema::create('usuarios_github', function (Blueprint $table) {
+            $table->bigIncrements('codusuariogithub');
+            $table->string('usuario_github')->unique();
+            $table->string('email_github');
+            $table->string('token_github');
+            $table->string('senha_github');
             $table->bigInteger('codusuario');
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('usuario_githubs');
     }
 }

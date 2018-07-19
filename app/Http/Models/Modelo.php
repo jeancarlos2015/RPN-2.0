@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Modelo extends Model
 {
+    protected $connection = 'banco';
     protected $primaryKey = 'codmodelo';
     protected $table = 'modelos';
     protected $fillable = [

@@ -20,10 +20,7 @@ class ModeloController extends Controller
         $projeto = Projeto::findOrFail($codprojeto);
         $organizacao = Organizacao::findOrFail($codorganizacao);
         $titulos = Modelo::titulos();
-        $modelos = Modelo::join('users', 'users.codusuario', '=', 'modelos.codusuario')
-            ->where('modelos.codorganizacao', '=', $codorganizacao)
-            ->where('modelos.codprojeto', '=', $codprojeto)
-            ->get();
+        $modelos = ModeloRepository::listar_modelo_por_projeto_organizacao($codorganizacao, $codprojeto);
         $tipo = 'modelo';
         return view('controle_modelos.index', compact('modelos', 'projeto', 'organizacao', 'titulos', 'tipo'));
     }
@@ -84,6 +81,7 @@ class ModeloController extends Controller
         }
 
         $modelo = Modelo::create($request->all());
+
         if ($modelo->tipo === 'declarativo') {
             flash('Modelo criado com sucesso!!!');
             return redirect()->route('controle_regras_index',

@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ProjetoRepository extends Repository
 {
@@ -20,19 +21,17 @@ class ProjetoRepository extends Repository
     public static function listar()
     {
 
-        return collect(Projeto::join('users', 'users.codusuario', '=', 'projetos.codusuario')
-            ->where('users.codusuario','=',Auth::user()->codusuario)
-            ->get());
+        return Projeto::all()
+            ->where('codusuario','=',Auth::user()->codusuario);
 
     }
 
     public static function listar_por_organizacao($codorganizacao)
     {
+        return Projeto::all()
+            ->where('codusuario','=',Auth::user()->codusuario)
+            ->where('codorganizacao','=',$codorganizacao);
 
-        return collect(Projeto::join('users', 'users.codusuario', '=', 'projetos.codusuario')
-            ->where('users.codusuario','=',Auth::user()->codusuario)
-            ->where('projetos.codorganizacao','=',$codorganizacao)
-            ->get());
     }
     public static function count()
     {

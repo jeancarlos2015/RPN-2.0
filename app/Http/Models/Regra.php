@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Regra extends Model
 {
+    protected $connection = "banco";
     protected $primaryKey = 'codregra';
     protected $table = 'regras';
     protected $fillable = [
@@ -128,7 +129,6 @@ class Regra extends Model
     {
         return $this->hasMany(Tarefa::class, 'codregra', 'codregra');
     }
-
 
 
     public  function modelo()

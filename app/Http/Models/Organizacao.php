@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Organizacao extends Model
 {
+    protected $connection = 'banco';
     protected $primaryKey = 'codorganizacao';
     protected $table = 'organizacoes';
     protected $fillable = [

@@ -9,5 +9,6 @@ class Dado
     public $atributo;
     public $titulo;
     public $rota;
-
+    public $banco;
+    public $modelos;
 }

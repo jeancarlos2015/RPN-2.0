@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class TarefaRepository extends Repository
 {
@@ -20,9 +21,8 @@ class TarefaRepository extends Repository
     public static function listar()
     {
 
-        return collect((new Tarefa)->join('users', 'users.codusuario', '=', 'tarefas.codusuario')
-            ->where('users.codusuario', '=', Auth::user()->codusuario)
-            ->get());
+        return Tarefa::all()
+            ->where('codusuario','=',Auth::user()->codusuario);
 
     }
 
@@ -31,11 +31,11 @@ class TarefaRepository extends Repository
         $codorganizacao = $dado['codorganizacao'];
         $codprojeto = $dado['codprojeto'];
         $codmodelo = $dado['codmodelo'];
-        return collect(Tarefa::join('users', 'users.codusuario', '=', 'tarefas.codusuario')
-            ->where('tarefas.codorganizacao', '=', $codorganizacao)
-            ->where('tarefas.codprojeto', '=', $codprojeto)
-            ->where('tarefas.codmodelo', '=', $codmodelo)
-            ->get());
+        return Tarefa::all()
+            ->where('codmodelo','=',$codmodelo)
+            ->where('codprojeto','=',$codprojeto)
+            ->where('codorganizacao','=',$codorganizacao)
+            ->where('codusuario','=',Auth::user()->codusuario);
     }
 
     public static function count()
