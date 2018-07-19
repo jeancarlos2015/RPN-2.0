@@ -66,6 +66,14 @@ class GitController extends Controller
 
     public function index()
     {
+        $funcionalidades = [];
+        $rotas = self::rotas();
+        $dados = self::funcionalidades();
+        for ($indice = 0; $indice < 5; $indice++) {
+            $funcionalidades[$indice] = new Dado();
+            $funcionalidades[$indice]->titulo = $dados[$indice];
+            $funcionalidades[$indice]->rota = $rotas[$indice];
+        }
         $branch_atual = 'Em construção';
 
         return view('controle_versao.index', compact('branch_atual', 'funcionalidades'));
