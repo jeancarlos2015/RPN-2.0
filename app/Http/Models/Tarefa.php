@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Tarefa extends Model
 {
+    protected $connection = "banco";
     protected $primaryKey = 'codtarefa';
     protected $table = 'tarefas';
     protected $fillable = [
@@ -122,6 +123,7 @@ class Tarefa extends Model
     }
 
     public function regras(){
+
         return $this->hasOne(Regra::class, 'codregra', 'codregra');
     }
 

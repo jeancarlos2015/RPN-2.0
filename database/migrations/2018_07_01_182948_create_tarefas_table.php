@@ -13,7 +13,7 @@ class CreateTarefasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tarefas', function (Blueprint $table) {
+        Schema::connection('banco')->create('tarefas', function (Blueprint $table) {
             $table->bigIncrements('codtarefa');
             $table->string('nome');
             $table->string('descricao');
@@ -24,11 +24,11 @@ class CreateTarefasTable extends Migration
             $table->bigInteger('codusuario');
             $table->bigInteger('codregra');
 
-            $table->foreign('codmodelo')->references('codmodelo')->on('modelos');
-            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-            $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
-            $table->foreign('codusuario')->references('codusuario')->on('users');
-            $table->foreign('codregra')->references('codregra')->on('regras');
+//            $table->foreign('codmodelo')->references('codmodelo')->on('modelos');
+//            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+//            $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
+//            $table->foreign('codusuario')->references('codusuario')->on('users');
+//            $table->foreign('codregra')->references('codregra')->on('regras');
             $table->timestamps();
         });
     }

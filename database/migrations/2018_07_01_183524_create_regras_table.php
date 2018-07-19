@@ -13,8 +13,8 @@ class CreateRegrasTable extends Migration
      */
     public function up()
     {
-        Schema::create('regras', function (Blueprint $table) {
-            $table->bigIncrements('codregra');
+        Schema::connection('banco')->create('regras', function (Blueprint $table) {
+            $table->bigIncrements('codregra')->unsigned();
             $table->string('operador');
             $table->string('nome');
 
@@ -26,10 +26,10 @@ class CreateRegrasTable extends Migration
             $table->bigInteger('codusuario');
             $table->bigInteger('codregra1');
 
-            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-            $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
-            $table->foreign('codmodelo')->references('codmodelo')->on('modelos');
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+//            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+//            $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
+//            $table->foreign('codmodelo')->references('codmodelo')->on('modelos');
+//            $table->foreign('codusuario')->references('codusuario')->on('users');
 
 
             $table->timestamps();

@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class RegraRepository extends Repository
 {
@@ -20,8 +21,7 @@ class RegraRepository extends Repository
     public static function listar()
     {
 
-        return collect(Regra::where('regras.codusuario', '=', Auth::user()->codusuario)
-            ->get());
+        return Regra::all()->where('codusuario', Auth::user()->codusuario);
 
     }
 
@@ -30,11 +30,12 @@ class RegraRepository extends Repository
         $codorganizacao = $dado['codorganizacao'];
         $codprojeto = $dado['codprojeto'];
         $codmodelo = $dado['codmodelo'];
-        return collect(Regra::where('regras.codusuario', '=', Auth::user()->codusuario)
-            ->where('regras.codorganizacao', '=', $codorganizacao)
-            ->where('regras.codprojeto', '=', $codprojeto)
-            ->where('regras.codmodelo', '=', $codmodelo)
-            ->get());
+        return Regra::all()
+            ->where('codusuario','=',Auth::user()->codusuario)
+            ->where('codmodelo','=',$codmodelo)
+            ->where('codprojeto','=',$codprojeto)
+            ->where('codorganizacao','=',$codorganizacao);
+
 
     }
 
