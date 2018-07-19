@@ -35,7 +35,7 @@ return [
 
         'sqlite' => [
             'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', database_path('banco/database.sqlite')),
+            'database' => env('DB_TESTE_DATABASE', database_path('banco/database.sqlite')),
             'prefix' => '',
         ],
 
