@@ -33,11 +33,6 @@ return [
 
     'connections' => [
 
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'database' => env('DB_TESTE_DATABASE', database_path('banco/database.sqlite')),
-            'prefix' => '',
-        ],
 
         'mysql' => [
             'driver' => 'mysql',
