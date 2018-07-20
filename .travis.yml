@@ -17,11 +17,8 @@ addons:
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
 script:
-  - cd database/banco
-  - rm database.db
-  - touch database.db
-  - cd ..
-  - cd ..
+  - rm database/banco/database.db
+  - touch database/banco/database.db
   - cp .env.travis .env
   - composer self-update
   - composer install --no-interaction
