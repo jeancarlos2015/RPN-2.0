@@ -20,6 +20,7 @@
         @endif
     </div>
     <!-- /.container-fluid-->
+
     <!-- /.content-wrapper-->
    @includeIf('layouts.layout_admin_new.layouts.footer')
     <!-- Bootstrap core JavaScript-->

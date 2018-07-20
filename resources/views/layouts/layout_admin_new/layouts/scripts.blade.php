@@ -15,8 +15,4 @@
 <!-- Custom scripts for this page-->
 <script src="{!! asset('js/sb-admin-datatables.min.js') !!}"></script>
 <script src="{!! asset('js/sb-admin-charts.min.js') !!}"></script>
-<script>
-$(document).ready(function(){
-$("#successMessage").delay(5000).slideUp(30);
-});
-</script>
+<script src="{!! asset('js/sleep/sleep.js') !!}"></script>
