@@ -31,6 +31,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+
     protected $primaryKey = 'codusuario';
     protected $table = 'users';
     protected $fillable = [
