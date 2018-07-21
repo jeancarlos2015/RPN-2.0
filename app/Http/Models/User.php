@@ -4,6 +4,7 @@ namespace App;
 
 use App\Http\Models\Log;
 use App\Http\Models\Organizacao;
+use App\Http\Util\Dado;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -49,5 +50,60 @@ class User extends Authenticatable
 
     public function logs(){
         return $this->belongsTo(Log::class, 'codusuario', 'codusuario');
+    }
+
+    public static function titulos(){
+        return [
+            'Nome',
+            'Email',
+            'Senha',
+            'Tipo',
+            'Ações'
+        ];
+    }
+
+    public static function campos()
+    {
+        return [
+            'nome',
+            'email',
+            'password',
+            'type'
+        ];
+    }
+
+    public static function atributos()
+    {
+        return [
+            'nome',
+            'email',
+            'password',
+            'type'
+        ];
+
+    }
+//Instancia todas as posições de memória que serão exibidas no título
+    public static function dados_objeto(){
+        $dado = array();
+        for($indice=0;$indice<4;$indice++){
+            $dado[$indice] = new Dado();
+        }
+        return $dado;
+    }
+//Instancia somente os campos que serão exibidos no formulário e preenche os títulos da listagem
+    public static function dados(){
+        $campos = self::campos();
+        $atributos = self::atributos();
+        $dados = self::dados_objeto();
+        $titulos = self::titulos();
+        for ($indice = 0; $indice < 5; $indice++) {
+            if ($indice < 4) {
+                $dados[$indice]->campo = $campos[$indice];
+                $dados[$indice]->atributo = $atributos[$indice];
+            }
+            $dados[$indice]->titulo = $titulos[$indice];
+
+        }
+        return $dados;
     }
 }

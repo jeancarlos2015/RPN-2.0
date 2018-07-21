@@ -28,6 +28,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_projetos', 'ProjetoController');
         Route::resource('controle_modelos', 'ModeloController');
         Route::resource('controle_regras', 'RegraController');
+        Route::resource('controle_usuarios', 'UserController');
 
 
 
