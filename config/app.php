@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://projetolaravel21.herokuapp.com'),
+    'url' => env('APP_URL', 'localhost'),
 
     /*
     |--------------------------------------------------------------------------
