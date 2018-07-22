@@ -142,7 +142,7 @@
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents4"
                data-parent="#exampleAccordion">
                 <i class="fa fa-fw fa-cogs"></i>
-                <span class="nav-link-text">Checkout</span>
+                <span class="nav-link-text">Merge & Checkout</span>
             </a>
             <ul class="sidenav-second-level collapse" id="collapseComponents4">
                 <li>
@@ -158,40 +158,14 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary form-control">Checkout</button>
                         </div>
-
-                    </form>
-                </li>
-
-            </ul>
-        </li>
-
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents5"
-               data-parent="#exampleAccordion">
-                <i class="fa fa-fw fa-cogs"></i>
-                <span class="nav-link-text">Merge</span>
-            </a>
-            <ul class="sidenav-second-level collapse" id="collapseComponents5">
-                <li>
-                    <form class="form-group">
-                        @csrf
-                        <div class="form-group">
-                            <select name="branch" class="form-control">
-                                <option>branch 1</option>
-                                <option>branch 2</option>
-                                <option>branch 3</option>
-                            </select>
-                        </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary form-control">Merge</button>
                         </div>
-
                     </form>
                 </li>
 
             </ul>
         </li>
-
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents6"
                data-parent="#exampleAccordion">
