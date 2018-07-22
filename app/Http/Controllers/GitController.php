@@ -94,9 +94,6 @@ class GitController extends Controller
                 'repositorio_atual' => $repositorio['name']
            ];
             $user_github->update($data);
-            $user_github_data = UsuarioGithub::findOrFail($github_data->codusuariogithub);
-            dd(Auth::user()->github->branch_atual,Auth::user()->github->repositorio_atual);
-           
             return redirect()->route('controle_versao.show',['nome_repositorio' => $request->nome]);
         }
         catch (\Exception $ex){
