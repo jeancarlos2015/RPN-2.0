@@ -29,7 +29,13 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_modelos', 'ModeloController');
         Route::resource('controle_regras', 'RegraController');
         Route::resource('controle_usuarios', 'UserController');
+
+
         
+        Route::resource('controle_github', 'UsuarioGithubController');
+        
+        Route::get('create_github/{codusuario}', 'UsuarioGithubController@create')->name('create_github');
+
     
         Route::get('controle_projetos_index/{codorganizacao}', 'ProjetoController@index')->name('controle_projetos_index');
         Route::get('show_tarefas/{codmodelo}', 'ModeloController@show_tarefas')->name('show_tarefas');
