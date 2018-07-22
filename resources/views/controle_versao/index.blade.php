@@ -5,7 +5,7 @@
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                       'titulo' => 'Paianel',
                     'sub_titulo' => 'Versionamento',
-                    'rota' => 'todas_tarefas',
+                    'rota' => 'painel',
                     'branch_atual' => $branch_atual
     ])
 

@@ -5,7 +5,7 @@
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                       'titulo' => 'Paianel',
                     'sub_titulo' => 'Configuracao Do Versionamento',
-                    'rota' => 'todas_tarefas',
+                    'rota' => 'painel',
                     'branch_atual' => $branch_atual
     ])
     <form action="{!! route('controle_github.store') !!}" method="post" class="form-group">

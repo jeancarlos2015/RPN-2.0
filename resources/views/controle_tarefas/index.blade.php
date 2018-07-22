@@ -6,7 +6,7 @@
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                       'titulo' => 'Paianel',
                     'sub_titulo' => 'Tarefas',
-                    'rota' => 'todas_tarefas'
+                    'rota' => 'painel'
     ])
     @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
     @includeIf('layouts.layout_admin_new.componentes.tables',[

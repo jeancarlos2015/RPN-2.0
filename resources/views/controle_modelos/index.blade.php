@@ -5,7 +5,7 @@
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                     'titulo' => 'Modelos',
-                    'rota' => 'todos_modelos'
+                    'rota' => 'painel'
     ])
     @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
     @includeIf('layouts.layout_admin_new.componentes.tables',[
