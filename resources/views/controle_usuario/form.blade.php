@@ -1,5 +1,4 @@
 @if(!empty($usuario))
-    {!! csrf_field() !!}
     @csrf
     <div class="form-group">
         <label>Nome</label>
