@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\Http\Models\UsuarioGithub;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,7 +39,7 @@ class UsuarioGithubController extends Controller
         $erros = \Validator::make($request->all(), UsuarioGithub::validacao());
         $usuario_github = null;
         if ($erros->fails()) {
-            return redirect()->route('create_github', ['codusuario' =>Auth::user()->codusuario])
+            return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario])
                 ->withErrors($erros)
                 ->withInput();
         }
@@ -98,7 +97,7 @@ class UsuarioGithubController extends Controller
      */
     public function destroy($codusuario)
     {
-     
+
 
     }
 }
