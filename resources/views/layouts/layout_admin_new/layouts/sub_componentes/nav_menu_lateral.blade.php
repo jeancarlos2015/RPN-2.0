@@ -62,11 +62,10 @@
 
             <li>
                 <a href="{!! route('index_pull_push') !!}"><i class="fa fa-fw fa-pencil"></i>Pull &
-                    Push Repository</a>
+                    Push </a>
             </li>
             <li>
-                <a href="{!! route('index_init') !!}"><i class="fa fa-fw fa-pencil"></i>Initialization
-                    Repository</a>
+                <a href="{!! route('index_init') !!}"><i class="fa fa-fw fa-pencil"></i>Criação de Repositório</a>
             </li>
         </ul>
     </li>

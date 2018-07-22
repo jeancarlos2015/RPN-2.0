@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\UsuarioGithub;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
 use Github\Api\Repository\Contents;
 use Github\Client;
 use Http\Client\Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GitController extends Controller
 {
@@ -84,7 +86,17 @@ class GitController extends Controller
     {
         $branch_atual = 'Em construção';
         try{
-            GitSistemaRepository::create_repository($request->nome);
+           $repositorio =  GitSistemaRepository::create_repository($request->nome);
+           $github_data = Auth::user()->github;
+           $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
+           $data = [
+               'branch_atual' => $repositorio['default_branch'],
+                'repositorio_atual' => $repositorio['name']
+           ];
+            $user_github->update($data);
+            $user_github_data = UsuarioGithub::findOrFail($github_data->codusuariogithub);
+            dd(Auth::user()->github->branch_atual,Auth::user()->github->repositorio_atual);
+           
             return redirect()->route('controle_versao.show',['nome_repositorio' => $request->nome]);
         }
         catch (\Exception $ex){

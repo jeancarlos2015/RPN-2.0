@@ -4,8 +4,6 @@ namespace App\Http\Repositorys;
 
 use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
-use Cz\Git\GitException;
-use Cz\Git\GitRepository;
 use Github\Api\Repository\Contents;
 use Github\Client;
 use Illuminate\Support\Facades\Auth;
@@ -248,7 +246,12 @@ class GitSistemaRepository
         $client = new Client();
         $github = Auth::user()->github;
         $client->authenticate($github->usuario_github, $github->senha_github);
-        return $client->repo()->create($nome_repositorio);
+        try{
+            return $client->repo()->create($nome_repositorio);
+        }catch (\Exception $ex){
+            $client->repo()->remove($github->usuario_github, $nome_repositorio);
+            return $client->repo()->create($nome_repositorio);
+        }
     }
 
     public static function get_repositorio($username, $repository)

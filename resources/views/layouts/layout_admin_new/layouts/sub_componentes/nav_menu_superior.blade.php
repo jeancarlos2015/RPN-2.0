@@ -1,7 +1,23 @@
 <ul class="navbar-nav ml-auto">
-
-
+    <li class="nav-item">
+        <a class="nav-link">
+            Usuário: {{ Auth::user()->name }} <span class="sr-only"></span>
+        </a>
+    </li>
+    @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
+        <li class="nav-item">
+            <a class="nav-link">
+                Branch Atual: {{ Auth::user()->github->branch_atual }} <span class="sr-only"></span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link">
+                Repositório Atual: {{ Auth::user()->github->repositorio_atual }} <span class="sr-only"></span>
+            </a>
+        </li>
+    @endif
     <li class="nav-item dropdown">
+
         <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-bell"></i>
@@ -26,11 +42,7 @@
 
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link">
-            Usuário: {{ Auth::user()->name }} <span class="sr-only"></span>
-        </a>
-    </li>
+
     <li class="nav-item">
 
         <a class="nav-link" href="{{ route('logout') }}"

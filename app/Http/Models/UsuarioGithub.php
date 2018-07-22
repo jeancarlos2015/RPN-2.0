@@ -15,6 +15,8 @@ class UsuarioGithub extends Model
         'codusuario',
         'email_github',
         'token_github',
+        'branch_atual',
+        'repositorio_atual',
         'senha_github'
     ];
 
