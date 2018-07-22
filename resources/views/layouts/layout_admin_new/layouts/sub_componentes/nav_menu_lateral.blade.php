@@ -119,7 +119,7 @@
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3"
                data-parent="#exampleAccordion">
                 <i class="fa fa-fw fa-cogs"></i>
-                <span class="nav-link-text">Commit</span>
+                <span class="nav-link-text">Commit & Push</span>
             </a>
             <ul class="sidenav-second-level collapse" id="collapseComponents3">
                 <li>
@@ -129,7 +129,7 @@
                             <textarea type="text" name="commit" class="form-control" placeholder="Commit Message"></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-secondary">Commit</button>
+                            <button type="submit" class="btn btn-secondary form-control">Commit & Push</button>
                         </div>
 
                     </form>
@@ -156,7 +156,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-secondary">Checkout</button>
+                            <button type="submit" class="btn btn-secondary form-control">Checkout</button>
                         </div>
 
                     </form>
@@ -183,9 +183,28 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-secondary">Merge</button>
+                            <button type="submit" class="btn btn-secondary form-control">Merge</button>
                         </div>
 
+                    </form>
+                </li>
+
+            </ul>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents6"
+               data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-cogs"></i>
+                <span class="nav-link-text">Pull</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseComponents6">
+                <li>
+                    <form class="form-group">
+                        @csrf
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-secondary form-control">Pull</button>
+                        </div>
                     </form>
                 </li>
 
