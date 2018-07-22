@@ -1,209 +1,268 @@
 <?php
 namespace App\Http\Repositorys;
 
+use App\Http\Util\Dado;
 use Cz\Git\GitException;
 use Cz\Git\GitRepository;
+use Github\Api\Repository\Contents;
+use Github\Client;
 
 class GitSistemaRepository
 {
-    private $repositorio;
-
-    public function get_path(){
-      return  database_path('banco/');
-    }
-    public function git_init()
+    private function upload_file_github(\Request $request)
     {
-        $branch = self::get_branch_current();
-        $change = self::is_exchanges();
+        //recebe o caminho do arquivo
+        $file_name = $request->file('foo')->getRealPath();
+        //ler o arquivo
+        $conteudo = $this->ler_arquivo($file_name);
 
-        try {
-            $this->repositorio = new GitRepository(self::get_path());
-            $this->repositorio = GitRepository::init(self::get_path());
-            LogRepository::criar('Repositório Inicializado!!!', 'Versionamento');
-        } catch (\Exception $ex) {
-            LogRepository::criar($ex->getMessage(), 'Versionamento');
-        }
-        $resultado['branch'] = $branch;
-        $resultado['change'] = $change;
+        //configura os parametros para upload
+        $formato = $request->file('foo')->guessExtension();
+        $path = $request->file('foo')->path();
+        $nome = $request->nome . "." . $formato;
 
-        return $resultado;
+        //faz o upload do arquivo
+        $this->upload_github_create($nome, $conteudo, $formato);
     }
 
-    public function get_branch_current()
+    private function ler_arquivo($path)
     {
-        $branch = null;
-        try {
-            $this->repositorio = new GitRepository(self::get_path());
-            return $this->repositorio->getCurrentBranchName();
-        } catch (GitException $ex) {
-            return $branch;
-        }
-
+        $handle = fopen($path, "r");
+        $conteudo = fread($handle, filesize($path));
+        fclose($handle);
+        return $conteudo;
     }
 
-    public function is_exchanges()
+    private function escrer_arquivo($path, $conteudo)
     {
-        $exchange = null;
-        try {
-            $this->repositorio = new GitRepository(self::get_path());
-            $exchange = $this->repositorio->hasChanges();
-        } catch (GitException $ex) {
-
-        }
-
-        return $exchange;
+        file_put_contents($path, $conteudo);
     }
 
-    public function get_branchs()
+    private function upload_github_create($nome, $conteudo, $formato, $branch)
     {
-        $branchs = null;
-        try {
-            self::inicialize_repository();
-            $branchs = $this->repositorio->getBranches();
-        } catch (GitException $ex) {
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $contents = new Contents($client);
+
+        if (!$contents->exists('jeancarlos2015', 'teste2015', $nome, $branch)) {
+            $contents->archive('jeancarlos2015', 'teste2015', $formato, $branch);
+
+            $contents->create(
+                'jeancarlos2015',
+                'teste2015',
+                $nome,
+                $conteudo,
+                'teste',
+                $branch);
 
         }
-
-        return $branchs;
     }
 
-    public function git_commit($mensagem)
+    private function upload_github_update($nome, $conteudo, $formato, $branch)
     {
-        $branch = null;
-        $change = null;
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $contents = new Contents($client);
+        $commiter = array('name' => 'jeancarlos2015', 'email' => 'jeancarlospenas25@gmail.com');
+        $oldfile = $client->repo()->contents()->show('jeancarlos2015', 'teste2015', $nome, $branch);
+        $contents->archive('jeancarlos2015', 'teste2015', $formato, $branch);
+        $contents->update(
+            'jeancarlos2015',
+            'teste2015',
+            $nome,
+            $conteudo,
+            'atualizacao',
+            $oldfile['sha'],
+            $branch,
+            $commiter);
+
+
+    }
+
+    private function upload_github_database_not_exists()
+    {
+        $conteudo = $this->ler_arquivo(database_path('banco/database.sqlite'));
+        $this->upload_github_create("database3232.sqlite", $conteudo, 'sqlite', 'teste');
+    }
+
+    private function upload_github_database()
+    {
+        $conteudo = $this->ler_arquivo(database_path('banco/database.sqlite'));
+        $this->upload_github_update("database.sqlite", $conteudo, 'sqlite', 'teste');
+    }
+
+
+    private function create_branch($branch, $repositorio, $usuario_git)
+    {
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $http_Client = $client->getHttpClient();
+        $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs';
+        $header = [
+            [
+                'Authorization' => 'Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA=='
+            ]
+        ];
+
+        $body = array("ref" => "refs/heads/" . $branch, "sha" => "a84deace201e8f873741cf82b5f999b482b1c91c");
+
         try {
-            self::inicialize_repository();
-            $this->repositorio->addFile(self::get_path() . '/.');
-            $this->repositorio->commit($mensagem);
-            $branch = $this->repositorio->getCurrentBranchName();
-            $change = $this->repositorio->hasChanges();
-        } catch (\Exception $ex) {
+            $http_Client->post($url, $header, $body);
+            flash('Branch ' . $branch . ' criada com sucesso!!!');
+        } catch (Exception $e) {
+
+            flash($e->getMessage());
         }
-        $resultado['branch'] = $branch;
-        $resultado['change'] = $change;
-
-        return $resultado;
     }
 
-
-    private function inicialize_repository()
+    private function delete_branch_teste()
     {
-        try {
-            $this->repositorio = new GitRepository(self::get_path());
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $http_Client = $client->getHttpClient();
+        $base_url = "https://api.github.com";
 
-        } catch (GitException $e) {
+        $url = 'https://api.github.com/repos/jeancarlos2015/teste2015/git/refs/heads/teste';
+        $header = [
+            [
+                'Authorization' => 'Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA=='
+            ]
+
+        ];
+
+        $body = '
+        {
+            
+                "ref" : "refs/heads/teste1",
+                "sha" : "a84deace201e8f873741cf82b5f999b482b1c91c"
         }
-        return $this->repositorio;
+
+        ';
+
+        dd($http_Client->delete($url, $header)->getStatusCode());
+
     }
 
-    public function git_create_branch($nome_branch)
+    private function update_branch_teste()
     {
-        $branchs = null;
-        $branch = null;
-        $change = null;
-        try {
-            self::inicialize_repository();
-            $branchs = $this->repositorio->getBranches();
-            $this->repositorio->createBranch($nome_branch, TRUE);
-            $branch = $this->repositorio->getCurrentBranchName();
-            $change = $this->repositorio->hasChanges();
-        } catch (GitException $ex) {
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $branchs = $client->repo()->branches('jeancarlos2015', 'teste2015');
+//        dd($branchs);
+        $http_Client = $client->getHttpClient();
 
+        $url = 'https://api.github.com/repos/jeancarlos2015/teste2015/git/refs/:ref';
+        $header = [
+            [
+                'Authorization' => 'Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA=='
+            ]
+
+        ];
+
+        $body = '
+        {
+                "ref" : "refs/heads/teste"
+                "sha" : "a84deace201e8f873741cf82b5f999b482b1c91c",
+                "force" : true
         }
-        $resultado['branchs'] = $branchs;
-        $resultado['branch'] = $branch;
-        $resultado['change'] = $change;
 
-        return $resultado;
+        ';
+
+        dd($client->repository()->merge('jeancarlos2015', 'teste2015', 'master', 'teste'));
     }
 
-    public function git_checkout_branch($nome_branch)
+    private function merge_branch_teste($base, $branch, $mensagem)
     {
-        $branch = null;
-        $change = null;
-        try {
-            $this->repositorio = new GitRepository(self::get_path());
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $client->repo()->merge(
+            'jeancarlos2015',
+            'teste2015',
+            $base,
+            $branch,
+            $mensagem);
+    }
 
-            $this->repositorio->checkout($nome_branch);
-            $branch = $this->repositorio->getCurrentBranchName();
-            $change = $this->repositorio->hasChanges();
-            if ($change){
-
+    private function map_files_local($path)
+    {
+        $Iterator = new \DirectoryIterator($path);
+        $i = 0;
+        for ($Iterator; $Iterator->valid(); $Iterator->next()) {
+            if ($Iterator->isFile() && !$Iterator->isDot()) {
+                $Files[++$i] = $Iterator->getFilename();
             }
-        } catch (GitException $ex) {
-
         }
-        $resultado['branch'] = $branch;
-        $resultado['change'] = $change;
-
-        return $resultado;
+        return $Files;
     }
 
-    public function git_merge_branch($nome_branch)
+    private function teste_sob_arquivo_serializado()
     {
-        $branch = self::get_branch_current();
-        $change = self::is_exchanges();
-        $branchs = self::get_branchs();
-        self::inicialize_repository();
-        if (empty($branchs)) {
-            $branchs = ['nenhum'];
-        }
-        try {
-            $this->repositorio->merge($nome_branch);
-            $this->repositorio->addFile(self::get_path() . '/.');
-            $this->repositorio->commit('commit');
-        } catch (GitException $ex) {
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $dado = new Dado();
+        $dado->modelos = $this->ler_arquivo(database_path('banco/modelos/diagram.bpmn'));
+        $dado->banco = $this->ler_arquivo(database_path('banco/database.sqlite'));
+        $serializado = serialize($dado);
+        $this->upload_github_create("database.dat", $serializado, '.dat', 'teste');
 
-        }
-        $resultado['branchs'] = $branchs;
-        $resultado['branch'] = $branch;
-        $resultado['change'] = $change;
-
-        return $resultado;
     }
 
-    public function git_remove_branch($nome_branch)
+    private function get_files_github()
     {
-        $branch = self::get_branch_current();
-        $change = self::is_exchanges();
-        try {
-            self::inicialize_repository();
-            $this->repositorio->removeBranch($nome_branch);
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
 
-        } catch (GitException $ex) {
-
-        }
-        $resultado['branch'] = $branch;
-        $resultado['change'] = $change;
-
-        return $resultado;
+        dd($client->repo()->contents()->archive('jeancarlos2015', 'teste2015', '.sqlite'));
     }
 
+    private function get_file_http()
+    {
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $conteudo = $client->repo()->contents()->download('jeancarlos2015', 'teste2015', 'database.sqlite');
 
-    /**
-     * @param $dado
-     * @throws GitException
-     */
-    public function git_push($dado){
-        $url = $dado['url'];
-        $parametros = $dado['parametros'];
-        $repositorio = self::inicialize_repository();
-        $repositorio->commit("push");
-        $repositorio->push($url,$parametros);
     }
 
-    /**
-     * @param $dado
-     * @throws GitException
-     */
-    public function git_pull($dado){
-        $url = $dado['url'];
-        $parametros = $dado['parametros'];
-        $nome = $dado['nome'];
-        $repositorio = self::inicialize_repository();
-        $repositorio->commit("push");
-        $repositorio->pull($url,$parametros);
+    public function pull_banco()
+    {
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $conteudo = $client->repo()->contents()->download('jeancarlos2015', 'teste2015', 'database.sqlite', 'master');
+        $this->escrer_arquivo(database_path('banco/database.sqlite'), $conteudo);
     }
+
+    public static function create_repository($nome_repositorio){
+
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        return $client->repo()->create($nome_repositorio);
+    }
+    public static function get_repositorio($username, $repository){
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        return $client->repo()->show($username, $repository);
+    }
+    
+    public function delete_repository($repositorio, $usuario_git){
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $client->repo()->remove($usuario_git, $repositorio);
+    }
+
+    public static function titulos_repositorio(){
+        return [
+            'nome',
+            'Ações'
+        ];
+    }
+
+    public function client_autenticate()
+    {
+        $client = new Client();
+        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        return $client;
+    }
+
 
 
 }

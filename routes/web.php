@@ -55,11 +55,14 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         //Versionamento
         Route::resource('controle_versao', 'GitController');
-        Route::get('init', 'GitController@init')->name('init');
+        Route::post('init', 'GitController@init')->name('init');
         Route::post('create', 'GitController@create')->name('create');
         Route::post('commit', 'GitController@commit')->name('commit');
         Route::post('merge_checkout', 'GitController@merge_checkout')->name('merge_checkout');
         Route::post('delete', 'GitController@delete')->name('delete');
+        Route::post('delete_repository', 'GitController@delete_repository')->name('delete_repository');
+        Route::post('update_repository', 'GitController@update_repository')->name('update_repository');
+
         Route::get('index_reset_files', 'GitController@index_reset_files')->name('index_reset_files');
 
         Route::get('index_init', 'GitController@index_init')->name('index_init');
