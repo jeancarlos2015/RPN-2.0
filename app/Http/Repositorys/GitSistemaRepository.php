@@ -234,6 +234,7 @@ class GitSistemaRepository
     public static function create_repository($nome_repositorio){
 
         $client = new Client();
+        dd(Client::AUTH_HTTP_PASSWORD,Client::AUTH_HTTP_TOKEN);
         $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
         return $client->repo()->create($nome_repositorio);
     }
