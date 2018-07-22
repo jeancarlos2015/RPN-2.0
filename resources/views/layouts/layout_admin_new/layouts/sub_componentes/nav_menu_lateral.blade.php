@@ -45,25 +45,7 @@
                 <a href="{!! route('index_painel') !!}"><i class="fa fa-fw fa-pencil"></i>Painel</a>
             </li>
 
-            <li>
-                <a href="{!! route('index_merge_checkout') !!}"><i class="fa fa-fw fa-pencil"></i>Merge &
-                    Checkout</a>
-            </li>
 
-            <li>
-                <a href="{!! route('index_create_delete') !!}"><i class="fa fa-fw fa-pencil"></i>Create &
-                    Delete</a>
-            </li>
-
-            <li>
-                <a href="{!! route('index_commit_branch') !!}"><i class="fa fa-fw fa-pencil"></i>Commit
-                    Branch</a>
-            </li>
-
-            <li>
-                <a href="{!! route('index_pull_push') !!}"><i class="fa fa-fw fa-pencil"></i>Pull &
-                    Push </a>
-            </li>
             <li>
                 <a href="{!! route('index_init') !!}"><i class="fa fa-fw fa-pencil"></i>Criação de Repositório</a>
             </li>
@@ -126,7 +108,8 @@
                     <form class="form-group">
                         @csrf
                         <div class="form-group">
-                            <textarea type="text" name="commit" class="form-control" placeholder="Commit Message"></textarea>
+                            <textarea type="text" name="commit" class="form-control"
+                                      placeholder="Commit Message"></textarea>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary form-control">Commit & Push</button>
@@ -166,6 +149,7 @@
 
             </ul>
         </li>
+
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents6"
                data-parent="#exampleAccordion">
@@ -178,6 +162,55 @@
                         @csrf
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary form-control">Pull</button>
+                        </div>
+                    </form>
+                </li>
+
+            </ul>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents7"
+               data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-cogs"></i>
+                <span class="nav-link-text">Create Branch</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseComponents7">
+                <li>
+                    <form class="form-group">
+                        @csrf
+                        <div class="form-control">
+                            <input type="text" name="branch" placeholder="Branch">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-secondary form-control">Create</button>
+                        </div>
+                    </form>
+                </li>
+
+            </ul>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents8"
+               data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-cogs"></i>
+                <span class="nav-link-text">Delete Branch</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseComponents8">
+                <li>
+                    <form class="form-group">
+                        @csrf
+                        <div class="form-group">
+                            <select name="branch" class="form-control">
+                                <option>branch 1</option>
+                                <option>branch 2</option>
+                                <option>branch 3</option>
+                            </select>
+                        </div>
+                      
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-secondary form-control">Delete Branch</button>
                         </div>
                     </form>
                 </li>
