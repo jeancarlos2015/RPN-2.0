@@ -126,7 +126,7 @@
                     <form class="form-group">
                         @csrf
                         <div class="form-group">
-                            <input type="text" name="commit" class="form-control" placeholder="Commit Message">
+                            <textarea type="text" name="commit" class="form-control" placeholder="Commit Message"></textarea>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary">Commit</button>
