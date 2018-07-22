@@ -50,15 +50,16 @@
 
 
 @endif
-@if(Auth::user()->type==='padrao')
-     <input type="hidden" name="type" value="padrao">
-@else
+@if(Auth::user()->type==='administrador')
     <div class="form-group">
         <input type="radio" name="type" value="administrador" checked> Administrador
     </div>
     <div class="form-group">
         <input type="radio" name="type" value="padrao">Padrão
     </div>
+
+@else
+    <input type="hidden" name="type" value="padrao">
 @endif
 
 <button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>
