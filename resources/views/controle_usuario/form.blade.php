@@ -27,22 +27,22 @@
     @csrf
     <div class="form-group">
         <label>Nome</label>
-        <input name="name" class="form-control" placeholder="Nome" value="maria" required>
+        <input name="name" class="form-control" placeholder="Nome" value="teste" required>
     </div>
 
     <div class="form-group">
         <label>Email</label>
-        <input name="email" type="email" class="form-control" placeholder="Email" value="maria@gmail.com" required>
+        <input name="email" type="email" class="form-control" placeholder="Email" value="teste@gmail.com" required>
     </div>
 
     <div class="form-group">
         <label>Senha</label>
-        <input name="password" type="password" class="form-control" placeholder="Senha" value="jotajota" required>
+        <input name="password" type="password" class="form-control" placeholder="Senha" value="senhasenha" required>
     </div>
 
     <div class="form-group">
         <label>Confirmar Senha</label>
-        <input name="password_confirm" type="password" class="form-control" placeholder="Repita Senha" value="jotajota"
+        <input name="password_confirm" type="password" class="form-control" placeholder="Repita Senha" value="senhasenha"
                required>
     </div>
 
