@@ -36,7 +36,7 @@ class User extends Authenticatable
     protected $primaryKey = 'codusuario';
     protected $table = 'users';
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'type'
     ];
 
     protected $hidden = [
@@ -46,9 +46,10 @@ class User extends Authenticatable
     public static function validacao()
     {
         return [
-            'nome' => 'required|max:50',
+            'name' => 'required|max:50',
             'email' => 'required|max:50',
-            'password' => 'required|max:50'
+            'password' => 'required|max:50',
+            'type' => 'required'
         ];
     }
     
@@ -65,8 +66,8 @@ class User extends Authenticatable
         return [
             'Nome',
             'Email',
-            'Senha',
             'Tipo',
+            'Senha',
             'Ações'
         ];
     }
@@ -94,7 +95,7 @@ class User extends Authenticatable
 //Instancia todas as posições de memória que serão exibidas no título
     public static function dados_objeto(){
         $dado = array();
-        for($indice=0;$indice<4;$indice++){
+        for($indice=0;$indice<5;$indice++){
             $dado[$indice] = new Dado();
         }
         return $dado;

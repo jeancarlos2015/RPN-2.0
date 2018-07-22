@@ -45,6 +45,7 @@
 
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirmar Senha" required>
                         </div>
+                        <input id="type" type="hidden" name="type" value="padrao">
 
                         <div class="form-group">
                                 <button type="submit" class="btn btn-dark btn-block">

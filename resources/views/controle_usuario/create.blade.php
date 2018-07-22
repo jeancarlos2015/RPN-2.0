@@ -10,12 +10,6 @@
     ])
 
     <form action="{!! route('controle_usuarios.store') !!}" method="post">
-        @includeIf('controle_usuario.form',
-        [
-        'acao' => 'Criar Usuário',
-        'dados' => $dados,
-        'MAX' => 2
-        ]
-        )
+        @includeIf('controle_usuario.form',['acao' => 'Criar Usuário'])
     </form>
 @endsection

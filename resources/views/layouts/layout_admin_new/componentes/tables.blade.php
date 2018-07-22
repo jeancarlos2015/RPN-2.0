@@ -37,7 +37,7 @@
                     @case('organizacao')
                     @includeIf('layouts.layout_admin_new.componentes.tables_organizacoes')
                     @break;
-                    @case('usuarios')
+                    @case('usuario')
                     @includeIf('layouts.layout_admin_new.componentes.tables_usuarios')
                     @break;
                 @endswitch

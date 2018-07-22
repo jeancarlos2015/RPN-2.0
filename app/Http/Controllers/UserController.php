@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositorys\LogRepository;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -19,85 +20,101 @@ class UserController extends Controller
         $usuarios = User::all();
         $tipo = 'usuario';
         $titulos = User::titulos();
+        
         return view('controle_usuario.index',compact('usuarios','tipo','titulos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function create()
     {
-        //
+        $dados = User::dados();
+        return view('controle_usuario.create', compact('dados'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    private function create_user(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'type' => $data['type'],
+            'password' => \Hash::make($data['password']),
+        ]);
+    }
+
+    private function update_user(User $user, array $data)
+    {
+        return $user->update(
+            [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'type' => $data['type'],
+                'password' => \Hash::make($data['password']),
+            ]
+        );
+    }
     public function store(Request $request)
     {
-        $erros = \Validator::make($request->all(), Organizacao::validacao());
+        if ($request->password!==$request->password_confirm){
+            flash('Senha não confere');
+            return redirect()->route('controle_usuarios.create');
+        }
+        $erros = \Validator::make($request->all(), User::validacao());
         if ($erros->fails()){
-            return redirect()->route('controle_organizacoes.create')
+            return redirect()->route('controle_usuarios.create')
                 ->withErrors($erros)
                 ->withInput();
         }
-        $request->request->add(['codusuario' => Auth::user()->codusuario]);
-        $organizacao = Organizacao::create($request->all());
-        LogRepository::criar("Organização Criada Com sucesso", "Rota De Criação de organização");
-        if (isset($organizacao)) {
-            flash('Organização criada com sucesso!!');
+        $user = $this->create_user($request->all());
+        LogRepository::criar("Usuário Criado Com sucesso", "Rota De Criação de usuário");
+        if (isset($user)) {
+            flash('Usuário criado com sucesso!!');
         } else {
-            flash('Organização não foi criada!!');
+            flash('Usuário não foi criado!!');
         }
+        return redirect()->route('controle_usuarios.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit($id)
     {
-        //
+        $usuario = User::findOrFail($id);
+        $dados = User::dados();
+        $dados[0]->valor = $usuario->name;
+        $dados[1]->valor = $usuario->email;
+        $dados[2]->valor = $usuario->password;
+        return view('controle_usuario.edit', compact('dados', 'usuario'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user_novo = $this->update_user($user, $request->all());
+        LogRepository::criar("Usuário Atualizado Com sucesso", "Rota De Atualização de Usuário");
+        if (isset($user_novo)) {
+            flash('Usuário Atualizado com sucesso!!');
+        } else {
+            flash('Usuário não foi Atualizada!!');
+        }
+
+        return redirect()->route('controle_usuarios.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        try {
+            $user->delete();
+            LogRepository::criar("Usuário Excluído Com sucesso", "Rota De Exclusão de Usuário");
+        } catch (\Exception $e) {
+            flash('Error de exclusão')->error();
+        }
+        return redirect()->route('controle_usuarios.index');
     }
 }

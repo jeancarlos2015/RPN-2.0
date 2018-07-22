@@ -29,9 +29,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_modelos', 'ModeloController');
         Route::resource('controle_regras', 'RegraController');
         Route::resource('controle_usuarios', 'UserController');
-
-
-
+        
+    
         Route::get('controle_projetos_index/{codorganizacao}', 'ProjetoController@index')->name('controle_projetos_index');
         Route::get('show_tarefas/{codmodelo}', 'ModeloController@show_tarefas')->name('show_tarefas');
         Route::get('show_regras/{codmodelo}', 'ModeloController@show_regras')->name('show_regras');

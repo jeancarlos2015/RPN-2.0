@@ -1,26 +1,59 @@
-{!! csrf_field() !!}
-@for($indice=0;$indice<$MAX;$indice++)
+@if(!empty($usuario))
+    {!! csrf_field() !!}
+    @csrf
     <div class="form-group">
-        @if(($dados[$indice]->campo!=="Ações"))
-            <label>{!! $dados[$indice]->campo !!}</label>
-            <input name="{!! $dados[$indice]->atributo !!}" class="form-control" placeholder="{!! $dados[$indice]->campo !!}" value="{!! $dados[$indice]->valor !!}" required>
-        @endif
+        <label>Nome</label>
+        <input name="name" class="form-control" placeholder="Nome" value="{!! $usuario->name !!}" required>
     </div>
-@endfor
 
-@if(!empty($codorganizacao))
-    <input type="hidden" name="codorganizacao" class="form-control"
-           value="{!! $codorganizacao !!}">
+    <div class="form-group">
+        <label>Email</label>
+        <input name="email" type="email" class="form-control" placeholder="Email" value="{!! $usuario->email !!}" required>
+    </div>
+
+    <div class="form-group">
+        <label>Senha</label>
+        <input name="password" type="password" class="form-control" placeholder="Senha" required>
+    </div>
+
+    <div class="form-group">
+        <label>Confirmar Senha</label>
+        <input name="password_confirm" type="password" class="form-control" placeholder="Repita Senha"
+               required>
+    </div>
+@else
+    {!! csrf_field() !!}
+    @csrf
+    <div class="form-group">
+        <label>Nome</label>
+        <input name="name" class="form-control" placeholder="Nome" value="maria" required>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input name="email" type="email" class="form-control" placeholder="Email" value="maria@gmail.com" required>
+    </div>
+
+    <div class="form-group">
+        <label>Senha</label>
+        <input name="password" type="password" class="form-control" placeholder="Senha" value="jotajota" required>
+    </div>
+
+    <div class="form-group">
+        <label>Confirmar Senha</label>
+        <input name="password_confirm" type="password" class="form-control" placeholder="Repita Senha" value="jotajota"
+               required>
+    </div>
+
+
+
+
 @endif
-
-@if(!empty($codprojeto))
-    <input type="hidden" name="codprojeto" class="form-control"
-           value="{!! $codprojeto !!}">
-@endif
-
-@if(!empty($codmodelo))
-    <input type="hidden" name="codmodelo" class="form-control"
-           value="{!! $codmodelo !!}">
-@endif
-
+<div class="form-group">
+    <input type="radio" name="type" value="administrador" checked> Administrador
+</div>
+<div class="form-group">
+    <input type="radio" name="type" value="padrao">Padrão
+</div>
 <button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>
+

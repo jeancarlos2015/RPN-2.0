@@ -1,12 +1,16 @@
-
 @if(!empty($usuarios))
     <tbody>
-    
+
     @foreach($usuarios as $usuario)
         <tr>
             <td>{!! $usuario->name !!}</td>
             <td>{!! $usuario->email !!}</td>
-            <td>{!! $usuario->type !!}</td>
+            @if(!empty($usuario->type))
+                <td>{!! $usuario->type !!}</td>
+            @else
+                <td>padrao</td>
+            @endif
+
             <td>{!! $usuario->password !!}</td>
             <td>
                 @if(!empty($rota_edicao))

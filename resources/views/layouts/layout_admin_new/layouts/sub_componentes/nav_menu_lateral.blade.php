@@ -70,7 +70,7 @@
             </li>
         </ul>
     </li>
-    @if(Auth::user()->email === 'jeancarlospenas25@gmail.com')
+    @if(Auth::user()->type === 'administrador')
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2"
                data-parent="#exampleAccordion">

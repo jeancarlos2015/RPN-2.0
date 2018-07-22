@@ -11,11 +11,11 @@
 
     <form action="{!! route('controle_usuarios.update',['id' => $usuario->codusuario]) !!}" method="post">
     {{ method_field('PUT')}}
-    @includeIf('controle_usuarios.form',
+    @includeIf('controle_usuario.form',
     [
     'acao' => 'Atualizar',
+    'usuario' => $usuario,
     'dados' => $dados,
-    'MAX' => 2,
     'codusuario' => $usuario->codusuario
     ]
     )
