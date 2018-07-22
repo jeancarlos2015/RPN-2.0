@@ -82,7 +82,9 @@
                     <a href="{!! route('controle_usuarios.index') !!}"><i class="fa fa-fw fa-pencil"></i>Controle de
                         Usuário</a>
                 </li>
-
+                <li>
+                    <a href="{!! route('create_github',['codusuario' => Auth::user()->codusuario]) !!}"><i class="fa fa-fw fa-pencil"></i>Github</a>
+                </li>
             </ul>
         </li>
     @else
