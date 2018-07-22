@@ -93,6 +93,10 @@ class UserController extends Controller
    
     public function update(Request $request, $id)
     {
+        if ($request->password!==$request->password_confirm){
+            flash('Senha não confirmada!!')->error();
+            return redirect()->route('controle_usuarios.edit',['id' => $id]);
+        }
         $user = User::findOrFail($id);
         $user_novo = $this->update_user($user, $request->all());
         LogRepository::criar("Usuário Atualizado Com sucesso", "Rota De Atualização de Usuário");
@@ -101,8 +105,12 @@ class UserController extends Controller
         } else {
             flash('Usuário não foi Atualizada!!');
         }
+        if (\Auth::user()->type === 'administrador'){
+            return redirect()->route('controle_usuarios.index');
+        }else{
+            return redirect()->route('controle_usuarios.edit',['id' => $user->codusuario]);
+        }
 
-        return redirect()->route('controle_usuarios.index');
     }
 
    

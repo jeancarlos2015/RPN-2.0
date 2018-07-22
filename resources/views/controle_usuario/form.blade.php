@@ -8,7 +8,8 @@
 
     <div class="form-group">
         <label>Email</label>
-        <input name="email" type="email" class="form-control" placeholder="Email" value="{!! $usuario->email !!}" required>
+        <input name="email" type="email" class="form-control" placeholder="Email" value="{!! $usuario->email !!}"
+               required>
     </div>
 
     <div class="form-group">
@@ -49,11 +50,16 @@
 
 
 @endif
-<div class="form-group">
-    <input type="radio" name="type" value="administrador" checked> Administrador
-</div>
-<div class="form-group">
-    <input type="radio" name="type" value="padrao">Padrão
-</div>
+@if(Auth::user()->type==='padrao')
+     <input type="hidden" name="type" value="padrao">
+@else
+    <div class="form-group">
+        <input type="radio" name="type" value="administrador" checked> Administrador
+    </div>
+    <div class="form-group">
+        <input type="radio" name="type" value="padrao">Padrão
+    </div>
+@endif
+
 <button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>
 
