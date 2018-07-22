@@ -8,7 +8,7 @@
                     'rota' => 'todas_tarefas',
                     'branch_atual' => $branch_atual
     ])
-    <form action="{!! route('controle_github.store') !!}" method="post">
+    <form action="{!! route('controle_github.store') !!}" method="post" class="form-group">
         {!! csrf_field() !!}
         <div class="form-group">
             <label>Usuário Github</label>
@@ -17,7 +17,7 @@
 
         <div class="form-group">
             <label>Email Github</label>
-            <input type="text" class="form-control" name="email_github" required>
+            <input type="email" class="form-control" name="email_github" required>
         </div>
 
         <div class="form-group">
@@ -30,10 +30,9 @@
             <input type="password" class="form-control" name="senha_github" required>
         </div>
 
-        <input type="hidden" class="form-control" name="codusuario" value="{!! $codusuario !!}">
+        <input type="hidden" class="form-control" name="codusuario" value="{!! Auth::user()->codusuario !!}">
 
-        <input type="submit" class="btn btn-dark form-control" value="Salvar">
+        <input type="submit" class="btn btn-dark form-control" value="Salvar e Atualizar">
 
     </form>
-    
 @endsection
