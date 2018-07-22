@@ -113,37 +113,50 @@
 
         </li>
     @endif
-    
+
     @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
-        <li>
-            <form class="form-group">
-                @csrf
-                <div class="form-group">
-                    <input type="text" name="commit" class="form-control" placeholder="Commit Message">
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Commit" class="btn-block">
-                </div>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3"
+               data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-cogs"></i>
+                <span class="nav-link-text">Operações</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseComponents3">
+                <li>
+                    <form class="form-group">
+                        @csrf
+                        <div class="form-group">
+                            <input type="text" name="commit" class="form-control" placeholder="Commit Message">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Commit" class="btn-block">
+                        </div>
 
-            </form>
+                    </form>
+                </li>
+
+                <li>
+                    <form class="form-group">
+                        @csrf
+                        <div class="form-group">
+                            <select name="branch" class="form-control">
+                                <option>branch 1</option>
+                                <option>branch 2</option>
+                                <option>branch 3</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Checkout" class="btn-block">
+                        </div>
+
+                    </form>
+                </li>
+
+            </ul>
+
+
         </li>
 
-        <li>
-            <form  class="form-group">
-                @csrf
-                <div class="form-group">
-                    <select name="branch" class="form-control">
-                        <option>branch 1</option>
-                        <option>branch 2</option>
-                        <option>branch 3</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Checkout" class="btn-block">
-                </div>
-
-            </form>
-        </li>
 
     @endif
 </ul>
