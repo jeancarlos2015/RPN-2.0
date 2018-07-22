@@ -4,6 +4,7 @@ namespace App;
 
 use App\Http\Models\Log;
 use App\Http\Models\Organizacao;
+use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -56,6 +57,11 @@ class User extends Authenticatable
     public function organizacoes()
     {
         return $this->belongsTo(Organizacao::class, 'codusuario', 'codusuario');
+    }
+
+    public function github()
+    {
+        return $this->hasOne(UsuarioGithub::class, 'codusuario', 'codusuario');
     }
 
     public function logs(){

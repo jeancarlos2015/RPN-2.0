@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Models\UsuarioGithub;
+use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsuarioGithubController extends Controller
 {
@@ -24,11 +27,11 @@ class UsuarioGithubController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($codusuario)
+    public function create()
     {
         $dados = UsuarioGithub::dados();
         $branch_atual = 'Em Construção';
-        return view('controle_versao.configuracao', compact('dados', 'codusuario', 'branch_atual'));
+        return view('controle_github.configuracao', compact('dados', 'branch_atual'));
     }
 
 
@@ -37,18 +40,19 @@ class UsuarioGithubController extends Controller
         $erros = \Validator::make($request->all(), UsuarioGithub::validacao());
         $usuario_github = null;
         if ($erros->fails()) {
-            return redirect()->route('create_github',['codusuario' => $request->codusuario])
+            return redirect()->route('create_github', ['codusuario' =>Auth::user()->codusuario])
                 ->withErrors($erros)
                 ->withInput();
         }
-        try{
+        try {
+            GitSistemaRepository::delete_all_github();
             $usuario_github = UsuarioGithub::create($request->all());
             LogRepository::criar("Dados Salvo Com sucesso", "Rota De Configuração Github");
             flash('Configuração salva com sucesso!!');
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             flash('O registro já existe!!!')->error();
         }
-        return redirect()->route('create_github',['codusuario' => $request->codusuario]);
+        return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
 
     }
 
@@ -92,8 +96,9 @@ class UsuarioGithubController extends Controller
      * @param  \App\UsuarioGithub $usuarioGithub
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UsuarioGithub $usuarioGithub)
+    public function destroy($codusuario)
     {
-        //
+     
+
     }
 }

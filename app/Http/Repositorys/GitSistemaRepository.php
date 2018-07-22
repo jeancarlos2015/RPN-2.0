@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Http\Repositorys;
 
+use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
 use Cz\Git\GitException;
 use Cz\Git\GitRepository;
 use Github\Api\Repository\Contents;
 use Github\Client;
+use Illuminate\Support\Facades\Auth;
 
 class GitSistemaRepository
 {
@@ -41,7 +44,8 @@ class GitSistemaRepository
     private function upload_github_create($nome, $conteudo, $formato, $branch)
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         $contents = new Contents($client);
 
         if (!$contents->exists('jeancarlos2015', 'teste2015', $nome, $branch)) {
@@ -61,7 +65,8 @@ class GitSistemaRepository
     private function upload_github_update($nome, $conteudo, $formato, $branch)
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         $contents = new Contents($client);
         $commiter = array('name' => 'jeancarlos2015', 'email' => 'jeancarlospenas25@gmail.com');
         $oldfile = $client->repo()->contents()->show('jeancarlos2015', 'teste2015', $nome, $branch);
@@ -95,7 +100,8 @@ class GitSistemaRepository
     private function create_branch($branch, $repositorio, $usuario_git)
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         $http_Client = $client->getHttpClient();
         $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs';
         $header = [
@@ -118,7 +124,8 @@ class GitSistemaRepository
     private function delete_branch_teste()
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         $http_Client = $client->getHttpClient();
         $base_url = "https://api.github.com";
 
@@ -146,7 +153,8 @@ class GitSistemaRepository
     private function update_branch_teste()
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         $branchs = $client->repo()->branches('jeancarlos2015', 'teste2015');
 //        dd($branchs);
         $http_Client = $client->getHttpClient();
@@ -174,7 +182,8 @@ class GitSistemaRepository
     private function merge_branch_teste($base, $branch, $mensagem)
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         $client->repo()->merge(
             'jeancarlos2015',
             'teste2015',
@@ -198,7 +207,8 @@ class GitSistemaRepository
     private function teste_sob_arquivo_serializado()
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         $dado = new Dado();
         $dado->modelos = $this->ler_arquivo(database_path('banco/modelos/diagram.bpmn'));
         $dado->banco = $this->ler_arquivo(database_path('banco/database.sqlite'));
@@ -210,7 +220,8 @@ class GitSistemaRepository
     private function get_files_github()
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
 
         dd($client->repo()->contents()->archive('jeancarlos2015', 'teste2015', '.sqlite'));
     }
@@ -218,7 +229,8 @@ class GitSistemaRepository
     private function get_file_http()
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         $conteudo = $client->repo()->contents()->download('jeancarlos2015', 'teste2015', 'database.sqlite');
 
     }
@@ -231,25 +243,32 @@ class GitSistemaRepository
         $this->escrer_arquivo(database_path('banco/database.sqlite'), $conteudo);
     }
 
-    public static function create_repository($nome_repositorio){
-
+    public static function create_repository($nome_repositorio)
+    {
         $client = new Client();
-        $client->authenticate('b67159b091d9ec2f5953de0361fc47d37efa0591', 'asnaeb123pet');
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         return $client->repo()->create($nome_repositorio);
     }
-    public static function get_repositorio($username, $repository){
+
+    public static function get_repositorio($username, $repository)
+    {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         return $client->repo()->show($username, $repository);
     }
-    
-    public function delete_repository($repositorio, $usuario_git){
+
+    public function delete_repository($repositorio, $usuario_git)
+    {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         $client->repo()->remove($usuario_git, $repositorio);
     }
 
-    public static function titulos_repositorio(){
+    public static function titulos_repositorio()
+    {
         return [
             'nome',
             'Ações'
@@ -259,10 +278,20 @@ class GitSistemaRepository
     public function client_autenticate()
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
         return $client;
     }
 
+    public static function listar_githubs()
+    {
+        return UsuarioGithub::all()->where('codusuario', \Auth::user()->codusuario);
+    }
 
-
+    public static function delete_all_github()
+    {
+        foreach (UsuarioGithub::all() as $github) {
+            $github->delete();
+        }
+    }
 }

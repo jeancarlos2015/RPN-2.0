@@ -41,7 +41,7 @@ return [
     'connections' => [
 
         'main' => [
-            'token'      => 'b67159b091d9ec2f5953de0361fc47d37efa0591',
+            'token'      => '',
             'method'     => 'token',
             // 'backoff'    => false,
             // 'cache'      => false,
@@ -50,8 +50,8 @@ return [
         ],
 
         'app' => [
-            'clientId'     => 'Iv1.15cda13554ec6081',
-            'clientSecret' => '67707047d25e2cc921c74c81841234b794a4a3ad',
+            'clientId'     => '',
+            'clientSecret' => '',
             'method'       => 'application',
             // 'backoff'      => false,
             // 'cache'        => false,
@@ -69,8 +69,8 @@ return [
         ],
 
         'other' => [
-            'username'   => 'jeancarlospenas25@gmail.com',
-            'password'   => 'asnaeb123pet',
+            'username'   => '',
+            'password'   => '',
             'method'     => 'password',
             // 'backoff'    => false,
             // 'cache'      => false,
