@@ -5,18 +5,18 @@
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                       'titulo' => 'Paianel',
-                    'sub_titulo' => 'Tarefas',
-                    'rota' => 'todas_tarefas'
+                    'sub_titulo' => 'Usuários',
+                    'rota' => 'painel'
     ])
 
-    <form action="{!! route('controle_tarefas.update',['id' => $tarefa->codtarefa]) !!}" method="post">
+    <form action="{!! route('controle_usuarios.update',['id' => $usuario->codusuario]) !!}" method="post">
     {{ method_field('PUT')}}
-    @includeIf('controle_tarefas.form',
+    @includeIf('controle_usuarios.form',
     [
     'acao' => 'Atualizar',
     'dados' => $dados,
     'MAX' => 2,
-    'codtarefa' => $tarefa->codtarefa
+    'codusuario' => $usuario->codusuario
     ]
     )
     </form>

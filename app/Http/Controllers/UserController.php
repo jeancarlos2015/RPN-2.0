@@ -40,7 +40,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $erros = \Validator::make($request->all(), Organizacao::validacao());
+        if ($erros->fails()){
+            return redirect()->route('controle_organizacoes.create')
+                ->withErrors($erros)
+                ->withInput();
+        }
+        $request->request->add(['codusuario' => Auth::user()->codusuario]);
+        $organizacao = Organizacao::create($request->all());
+        LogRepository::criar("Organização Criada Com sucesso", "Rota De Criação de organização");
+        if (isset($organizacao)) {
+            flash('Organização criada com sucesso!!');
+        } else {
+            flash('Organização não foi criada!!');
+        }
     }
 
     /**

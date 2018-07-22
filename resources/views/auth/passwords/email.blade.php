@@ -16,8 +16,9 @@
 
                     <form method="POST" action="{{ route('password.email') }}" role="form">
                         @csrf
-
+                         
                         <div class="form-group">
+
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))

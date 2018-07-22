@@ -5,19 +5,16 @@
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                       'titulo' => 'Paianel',
-                    'sub_titulo' => 'Tarefas',
-                    'rota' => 'todas_tarefas'
+                    'sub_titulo' => 'Usuários',
+                    'rota' => 'painel'
     ])
 
-    <form action="{!! route('controle_regras.store') !!}" method="post">
-        @includeIf('controle_tarefas.form',
+    <form action="{!! route('controle_usuarios.store') !!}" method="post">
+        @includeIf('controle_usuario.form',
         [
-        'acao' => 'Criar Tarefa',
+        'acao' => 'Criar Usuário',
         'dados' => $dados,
-        'MAX' => 2,
-        'codprojeto' => $projeto->codprojeto,
-        'codmodelo' => $modelo->codmodelo,
-        'codorganizacao' => $organizacao->codorganizacao
+        'MAX' => 2
         ]
         )
     </form>

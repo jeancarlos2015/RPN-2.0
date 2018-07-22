@@ -43,6 +43,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function validacao()
+    {
+        return [
+            'nome' => 'required|max:50',
+            'email' => 'required|max:50',
+            'password' => 'required|max:50'
+        ];
+    }
+    
     public function organizacoes()
     {
         return $this->belongsTo(Organizacao::class, 'codusuario', 'codusuario');

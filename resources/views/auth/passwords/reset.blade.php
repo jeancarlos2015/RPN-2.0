@@ -12,7 +12,9 @@
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
-
+                        <div class="form-group">
+                            <label>Email</label>
+                        </div>
                         <div class="form-group">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $email ?? old('email') }}" required autofocus>
 
@@ -22,7 +24,9 @@
                                     </span>
                                 @endif
                         </div>
-
+                        <div class="form-group">
+                            <label>Senha</label>
+                        </div>
                         <div class="form-group">
 
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
@@ -33,17 +37,17 @@
                                     </span>
                                 @endif
                         </div>
-
+                        <div class="form-group">
+                            <label>Confirmar Senha</label>
+                        </div>
                         <div class="form-group">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-dark btn-block">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-dark form-control">
+                                Resetar Senha
+                            </button>
                         </div>
                     </form>
                 </div>
