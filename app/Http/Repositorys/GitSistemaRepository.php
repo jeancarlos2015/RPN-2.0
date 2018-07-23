@@ -127,7 +127,6 @@ class GitSistemaRepository
         $repositorio = $github->repositorio_atual;
         $usuario_git = $github->usuario_github;
         $client->authenticate($github->usuario_github, $github->senha_github);
-        dd($client->me()->);
         $http_Client = $client->getHttpClient();
         $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs';
         $header = [
