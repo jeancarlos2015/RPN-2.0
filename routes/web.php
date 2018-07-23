@@ -64,6 +64,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::post('init', 'GitController@init')->name('init');
         Route::post('create', 'GitController@create')->name('create');
         Route::post('commit', 'GitController@commit')->name('commit');
+        Route::post('pull', 'GitController@pull')->name('pull');
+        
         Route::post('merge_checkout', 'GitController@merge_checkout')->name('merge_checkout');
         Route::post('delete', 'GitController@delete')->name('delete');
         Route::post('delete_repository', 'GitController@delete_repository')->name('delete_repository');

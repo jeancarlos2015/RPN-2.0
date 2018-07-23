@@ -34,7 +34,7 @@ class GitSistemaRepository
         return $conteudo;
     }
 
-    private function escrer_arquivo($path, $conteudo)
+    private static function escrer_arquivo($path, $conteudo)
     {
         file_put_contents($path, $conteudo);
     }
@@ -54,11 +54,11 @@ class GitSistemaRepository
         $github = Auth::user()->github;
         $client->authenticate($github->usuario_github, $github->senha_github);
         $contents = new Contents($client);
-        
+
         if (!$contents->exists($user_name, $repositorio, $nome, $branch)) {
-            try{
+            try {
                 $contents->archive('jeancarlos2015', 'teste', '.db', 'master');
-            }catch (\Exception $ex){
+            } catch (\Exception $ex) {
                 dd($ex->getMessage());
             }
 
@@ -72,7 +72,7 @@ class GitSistemaRepository
                 $branch);
 
         } else {
-            
+
             self::upload_github_update($dado);
         }
     }
@@ -120,16 +120,19 @@ class GitSistemaRepository
     }
 
 
-    private function create_branch($branch, $repositorio, $usuario_git)
+    public static function create_branch($branch)
     {
         $client = new Client();
         $github = Auth::user()->github;
+        $repositorio = $github->repositorio_atual;
+        $usuario_git = $github->usuario_github;
         $client->authenticate($github->usuario_github, $github->senha_github);
+        dd($client->me()->);
         $http_Client = $client->getHttpClient();
         $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs';
         $header = [
             [
-                'Authorization' => 'Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA=='
+//                'Authorization' => 'Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA=='
             ]
         ];
 
@@ -138,7 +141,7 @@ class GitSistemaRepository
         try {
             $http_Client->post($url, $header, $body);
             flash('Branch ' . $branch . ' criada com sucesso!!!');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
             flash($e->getMessage());
         }
@@ -258,12 +261,13 @@ class GitSistemaRepository
 
     }
 
-    public function pull_banco()
+    public static function pull_auxiliar($arquivo, $path)
     {
         $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
-        $conteudo = $client->repo()->contents()->download('jeancarlos2015', 'teste2015', 'database.sqlite', 'master');
-        $this->escrer_arquivo(database_path('banco/database.sqlite'), $conteudo);
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
+        $conteudo = $client->repo()->contents()->download($github->usuario_github, $github->repositorio_atual, $arquivo, $github->branch_atual);
+        self::escrer_arquivo($path . "/" . $arquivo, $conteudo);
     }
 
     public static function create_repository($nome_repositorio)
@@ -364,7 +368,7 @@ class GitSistemaRepository
         $github = Auth::user()->github;
         $dados['nome'] = $dado->banco[$indice];
         $dados['conteudo'] = $dado->conteudo_banco[$indice];
-        $dados['formato'] = ".".explode('.', $dado->banco[$indice])[1];;
+        $dados['formato'] = "." . explode('.', $dado->banco[$indice])[1];;
         $dados['branch'] = $github->branch_atual;
         $dados['mensagem'] = $dado->mensagem;
         $dados['repositorio'] = $github->repositorio_atual;
@@ -380,7 +384,7 @@ class GitSistemaRepository
         $github = Auth::user()->github;
         $dados['nome'] = $dado->modelo[$indice];
         $dados['conteudo'] = $dado->conteudo_modelo[$indice];
-        $dados['formato'] = ".".explode('.', $dado->modelo[$indice])[1];;
+        $dados['formato'] = "." . explode('.', $dado->modelo[$indice])[1];;
         $dados['branch'] = $github->branch_atual;
         $dados['mensagem'] = $dado->mensagem;
         $dados['repositorio'] = $github->repositorio_atual;
@@ -393,11 +397,11 @@ class GitSistemaRepository
     {
         $dado = self::carrega_dados();
         $dado->mensagem = $mensagem;
-        $dados = self::extrai_dados_banco($dado,1);
-      
+        $dados = self::extrai_dados_banco($dado, 1);
+
         //upload do banco
         self::upload_github_create($dados);
-        
+
         //upload dos modelos
         for ($indice = 1; $indice <= count($dado->modelo); $indice++) {
             $dados1 = self::extrai_dados_modelos($dado, $indice);
@@ -405,4 +409,24 @@ class GitSistemaRepository
         }
         return $dado;
     }
+
+    public static function pull()
+    {
+        //obtem o caminho do banco
+        $path_banco = database_path('banco');
+        //obtem o caminho dos modelos
+        $path_modelo = database_path('banco/modelos');
+        //obtem o nome do banco
+        $file_banco = self::map_files_local($path_banco);
+        //obtem o nome dos modelos
+        $file_modelos = self::map_files_local($path_modelo);
+        //baixa o banco e sobrescreve-o
+        self::pull_auxiliar($file_banco[1], $path_banco);
+        //baixa os modelos e os sobrescreve
+        for ($indice = 1; $indice <= count($file_modelos); $indice++) {
+            self::pull_auxiliar($file_modelos[$indice], $path_modelo);
+        }
+    }
+
+    
 }

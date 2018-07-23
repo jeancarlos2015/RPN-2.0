@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Models\UsuarioGithub;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
-use Github\Api\Repository\Contents;
 use Github\Client;
-use Http\Client\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,7 +61,7 @@ class GitController extends Controller
     public function index_init()
     {
         $branch_atual = 'Em construção';
-        return view('controle_versao.init', compact('tipo', 'branch_atual','titulos'));
+        return view('controle_versao.init', compact('tipo', 'branch_atual', 'titulos'));
     }
 
     public function index()
@@ -85,31 +83,36 @@ class GitController extends Controller
     public function init(Request $request)
     {
         $branch_atual = 'Em construção';
-        try{
-           $repositorio =  GitSistemaRepository::create_repository($request->nome);
-           $github_data = Auth::user()->github;
-           $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
-           $data = [
-               'branch_atual' => $repositorio['default_branch'],
+        try {
+            $repositorio = GitSistemaRepository::create_repository($request->nome);
+            $github_data = Auth::user()->github;
+            $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
+            $data = [
+                'branch_atual' => $repositorio['default_branch'],
                 'repositorio_atual' => $repositorio['name']
-           ];
+            ];
             $user_github->update($data);
-            return redirect()->route('controle_versao.show',['nome_repositorio' => $request->nome]);
-        }
-        catch (\Exception $ex){
+            return redirect()->route('controle_versao.show', ['nome_repositorio' => $request->nome]);
+        } catch (\Exception $ex) {
             flash($ex->getMessage())->error();
             return redirect()->route('index_init');
         }
 
     }
-    public function show($nome_repositorio){
+
+    public function show($nome_repositorio)
+    {
         $repositorio = GitSistemaRepository::get_repositorio('jeancarlos2015', $nome_repositorio);
-        return view('controle_versao.show', compact('tipo', 'branch_atual','repositorio'));
+        return view('controle_versao.show', compact('tipo', 'branch_atual', 'repositorio'));
     }
-    public function delete_repository(Request $request){
-       dd($request);
+
+    public function delete_repository(Request $request)
+    {
+        dd($request);
     }
-    public function edit_repository(Request $request){
+
+    public function edit_repository(Request $request)
+    {
         dd($request);
     }
 
@@ -121,7 +124,9 @@ class GitController extends Controller
 
     public function create(Request $request)
     {
-        return redirect()->route('index_create_delete');
+        GitSistemaRepository::create_branch($request->branch);
+    
+        return redirect()->route('painel');
     }
 
     public function push(Request $request)
@@ -131,6 +136,14 @@ class GitController extends Controller
 
     public function pull(Request $request)
     {
+        try {
+            GitSistemaRepository::pull();
+            flash('Operação Feita com sucesso!!!');
+        } catch (\Exception $ex) {
+           flash('Error ao atualizar')->error();
+        }
+
+        return redirect()->route('painel');
     }
 
     private function merge(Request $request)
@@ -148,30 +161,26 @@ class GitController extends Controller
 
     private function checkout(Request $request)
     {
-
-
+        $data = [
+            'branch_atual' => $request->branch
+        ];
+        $github = Auth::user()->github;
+        dd($request, $github);
         return redirect()->route('index_merge_checkout');
     }
 
     public function commit(Request $request)
     {
-    
+        try {
             GitSistemaRepository::commit($request->commit);
-//            flash('Operação feita com sucesso !!!');
-
+            flash('Operação feita com sucesso !!!');
+        } catch (\Exception $ex) {
+            flash('Erro ao subir as mudanças !!!')->error();
+        }
         return redirect()->route('painel');
     }
 
-    //token github
-//'b67159b091d9ec2f5953de0361fc47d37efa0591'
 
-
-
-
-
-
-
-    
     public function reset_files(Request $request)
     {
         $client = new Client();
@@ -179,7 +188,6 @@ class GitController extends Controller
 
         return redirect()->route('index_reset_files');
     }
-
 
 
     public function index_reset_files()
