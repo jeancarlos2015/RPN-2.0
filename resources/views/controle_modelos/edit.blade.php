@@ -6,7 +6,7 @@
     {{--@includeIf('componentes.dados_exibicao')--}}
 
 
-    {{--<H4>Atualização Modelo</H4>--}}
+    {{--<H4>Atualização Modelos</H4>--}}
     {{--<form action="{!! route('controle_modelos.update',['id' => $modelo->codmodelo]) !!}" method="post">--}}
         {{--{{ method_field('PUT')}}--}}
         {{--@includeIf('controle_modelos.form',--}}

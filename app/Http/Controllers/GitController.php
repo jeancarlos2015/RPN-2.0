@@ -155,9 +155,11 @@ class GitController extends Controller
 
     public function commit(Request $request)
     {
+    
+            GitSistemaRepository::commit($request->commit);
+//            flash('Operação feita com sucesso !!!');
 
-         GitSistemaRepository::commit($request->commit);
-        return redirect()->route('index_commit_branch');
+        return redirect()->route('painel');
     }
 
     //token github
