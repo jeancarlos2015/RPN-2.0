@@ -10,5 +10,8 @@ class Dado
     public $titulo;
     public $rota;
     public $banco;
-    public $modelos;
+    public $modelo;
+    public $conteudo_modelo;
+    public $conteudo_banco;
+    public $mensagem;
 }

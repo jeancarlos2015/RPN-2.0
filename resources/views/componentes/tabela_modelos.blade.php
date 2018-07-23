@@ -57,7 +57,7 @@
                         </li>
                         <li>
                             @if(!empty($rota_exibicao_modelo))
-                                @include('componentes.link',['id' => $dado->id, 'rota' => $rota_exibicao_modelo,'nomebotao' => 'Visualizar Modelo'])
+                                @include('componentes.link',['id' => $dado->id, 'rota' => $rota_exibicao_modelo,'nomebotao' => 'Modelos'])
                             @endif
                         </li>
                     </ul>

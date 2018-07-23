@@ -26,7 +26,7 @@ class GitSistemaRepository
         $this->upload_github_create($nome, $conteudo, $formato);
     }
 
-    private function ler_arquivo($path)
+    private static function ler_arquivo($path)
     {
         $handle = fopen($path, "r");
         $conteudo = fread($handle, filesize($path));
@@ -39,42 +39,67 @@ class GitSistemaRepository
         file_put_contents($path, $conteudo);
     }
 
-    private function upload_github_create($nome, $conteudo, $formato, $branch)
+    private static function upload_github_create($dado)
     {
+        $nome = $dado['nome'];
+        $conteudo = $dado['conteudo'];
+        $formato = $dado['formato'];
+        $branch = $dado['branch'];
+        $mensagem = $dado['mensagem'];
+        $repositorio = $dado['repositorio'];
+        $user_name = $dado['usuario'];
+        $email = $dado['email'];
+
         $client = new Client();
         $github = Auth::user()->github;
         $client->authenticate($github->usuario_github, $github->senha_github);
         $contents = new Contents($client);
+        
+        if (!$contents->exists($user_name, $repositorio, $nome, $branch)) {
+            try{
+                $contents->archive('jeancarlos2015', 'teste', '.db', 'master');
+            }catch (\Exception $ex){
+                dd($ex->getMessage());
+            }
 
-        if (!$contents->exists('jeancarlos2015', 'teste2015', $nome, $branch)) {
-            $contents->archive('jeancarlos2015', 'teste2015', $formato, $branch);
 
             $contents->create(
-                'jeancarlos2015',
-                'teste2015',
+                $user_name,
+                $repositorio,
                 $nome,
                 $conteudo,
-                'teste',
+                $mensagem,
                 $branch);
 
+        } else {
+            
+            self::upload_github_update($dado);
         }
     }
 
-    private function upload_github_update($nome, $conteudo, $formato, $branch)
+    private static function upload_github_update($dado)
     {
+        $nome = $dado['nome'];
+        $conteudo = $dado['conteudo'];
+        $formato = $dado['formato'];
+        $branch = $dado['branch'];
+        $mensagem = $dado['mensagem'];
+        $repositorio = $dado['repositorio'];
+        $user_name = $dado['usuario'];
+        $email = $dado['email'];
         $client = new Client();
         $github = Auth::user()->github;
         $client->authenticate($github->usuario_github, $github->senha_github);
         $contents = new Contents($client);
-        $commiter = array('name' => 'jeancarlos2015', 'email' => 'jeancarlospenas25@gmail.com');
-        $oldfile = $client->repo()->contents()->show('jeancarlos2015', 'teste2015', $nome, $branch);
-        $contents->archive('jeancarlos2015', 'teste2015', $formato, $branch);
+        $commiter = array('name' => $user_name, 'email' => $email);
+        $oldfile = $client->repo()->contents()->show($user_name, $repositorio, $nome, $branch);
+        $contents->archive($user_name, $repositorio, $formato, $branch);
         $contents->update(
-            'jeancarlos2015',
-            'teste2015',
+            $user_name,
+            $repositorio,
             $nome,
             $conteudo,
-            'atualizacao',
+            $mensagem,
             $oldfile['sha'],
             $branch,
             $commiter);
@@ -85,13 +110,13 @@ class GitSistemaRepository
     private function upload_github_database_not_exists()
     {
         $conteudo = $this->ler_arquivo(database_path('banco/database.sqlite'));
-        $this->upload_github_create("database3232.sqlite", $conteudo, 'sqlite', 'teste');
+        $this->upload_github_create(null);
     }
 
     private function upload_github_database()
     {
         $conteudo = $this->ler_arquivo(database_path('banco/database.sqlite'));
-        $this->upload_github_update("database.sqlite", $conteudo, 'sqlite', 'teste');
+        $this->upload_github_create(null);
     }
 
 
@@ -190,7 +215,7 @@ class GitSistemaRepository
             $mensagem);
     }
 
-    private function map_files_local($path)
+    private static function map_files_local($path)
     {
         $Iterator = new \DirectoryIterator($path);
         $i = 0;
@@ -246,9 +271,9 @@ class GitSistemaRepository
         $client = new Client();
         $github = Auth::user()->github;
         $client->authenticate($github->usuario_github, $github->senha_github);
-        try{
+        try {
             return $client->repo()->create($nome_repositorio);
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             $client->repo()->remove($github->usuario_github, $nome_repositorio);
             return $client->repo()->create($nome_repositorio);
         }
@@ -296,5 +321,88 @@ class GitSistemaRepository
         foreach (UsuarioGithub::all() as $github) {
             $github->delete();
         }
+    }
+
+    private static function carrega_dados()
+    {
+        $files_bpmn = self::map_files_local(database_path('banco/modelos'));
+        $dado = new Dado();
+        for ($indice = 1; $indice <= count($files_bpmn); $indice++) {
+            $dado->modelo[$indice] = [];
+            $dado->conteudo_modelo[$indice] = [];
+            $dado->modelo[$indice] = $files_bpmn[$indice];
+            $dado->conteudo_modelo[$indice] = self::ler_arquivo(database_path('banco/modelos/') . "/" . $files_bpmn[$indice]);
+        }
+        $files__db = self::map_files_local(database_path('banco'));
+        for ($indice = 1; $indice <= count($files__db); $indice++) {
+            $dado->banco[$indice] = [];
+            $dado->conteudo_banco[$indice] = [];
+            $dado->banco[$indice] = $files__db[$indice];
+            $dado->conteudo_banco[$indice] = self::ler_arquivo(database_path('banco') . "/" . $files__db[$indice]);
+
+        }
+
+        return $dado;
+    }
+
+//$nome = $dado['nome'];
+//$conteudo =  $dado['conteudo'];
+//$formato = $dado['formato'];
+//$branch = $dado['branch'];
+
+//$table->bigIncrements('codusuariogithub');
+//$table->string('usuario_github')->unique();
+//$table->string('email_github');
+//$table->string('token_github');
+//$table->string('repositorio_atual')->nullable();
+//$table->string('branch_atual')->nullable();
+//$table->string('senha_github');
+//$table->bigInteger('codusuario');
+
+    private static function extrai_dados_banco(Dado $dado, $indice)
+    {
+        $github = Auth::user()->github;
+        $dados['nome'] = $dado->banco[$indice];
+        $dados['conteudo'] = $dado->conteudo_banco[$indice];
+        $dados['formato'] = ".".explode('.', $dado->banco[$indice])[1];;
+        $dados['branch'] = $github->branch_atual;
+        $dados['mensagem'] = $dado->mensagem;
+        $dados['repositorio'] = $github->repositorio_atual;
+        $dados['usuario'] = $github->usuario_github;
+        $dados['email'] = $github->email_github;
+
+        return $dados;
+    }
+
+
+    private static function extrai_dados_modelos(Dado $dado, $indice)
+    {
+        $github = Auth::user()->github;
+        $dados['nome'] = $dado->modelo[$indice];
+        $dados['conteudo'] = $dado->conteudo_modelo[$indice];
+        $dados['formato'] = ".".explode('.', $dado->modelo[$indice])[1];;
+        $dados['branch'] = $github->branch_atual;
+        $dados['mensagem'] = $dado->mensagem;
+        $dados['repositorio'] = $github->repositorio_atual;
+        $dados['usuario'] = $github->usuario_github;
+        $dados['email'] = $github->email_github;
+        return $dados;
+    }
+
+    public static function commit($mensagem)
+    {
+        $dado = self::carrega_dados();
+        $dado->mensagem = $mensagem;
+        $dados = self::extrai_dados_banco($dado,1);
+      
+        //upload do banco
+        self::upload_github_create($dados);
+        
+        //upload dos modelos
+        for ($indice = 1; $indice <= count($dado->modelo); $indice++) {
+            $dados1 = self::extrai_dados_modelos($dado, $indice);
+            self::upload_github_create($dados1);
+        }
+        return $dado;
     }
 }

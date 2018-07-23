@@ -121,7 +121,6 @@ class GitController extends Controller
 
     public function create(Request $request)
     {
-
         return redirect()->route('index_create_delete');
     }
 
@@ -156,8 +155,11 @@ class GitController extends Controller
 
     public function commit(Request $request)
     {
+    
+            GitSistemaRepository::commit($request->commit);
+//            flash('Operação feita com sucesso !!!');
 
-        return redirect()->route('index_commit_branch');
+        return redirect()->route('painel');
     }
 
     //token github

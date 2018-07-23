@@ -83,7 +83,7 @@ class ModeloController extends Controller
         $modelo = Modelo::create($request->all());
 
         if ($modelo->tipo === 'declarativo') {
-            flash('Modelo criado com sucesso!!!');
+            flash('Modelos criado com sucesso!!!');
             return redirect()->route('controle_regras_index',
                 [
                     'codorganizacao' => $modelo->codorganizacao,
@@ -180,9 +180,9 @@ class ModeloController extends Controller
         $modelo = Modelo::findOrFail($id);
         $modelo->update($request->all());
         if (isset($modelo)) {
-            flash('Modelo atualizado com sucesso!!');
+            flash('Modelos atualizado com sucesso!!');
         } else {
-            flash('Modelo não foi atualizado!!');
+            flash('Modelos não foi atualizado!!');
         }
         return redirect()->route('controle_tarefas_index', [
             'codorganizacao' => $modelo->codorganizacao,

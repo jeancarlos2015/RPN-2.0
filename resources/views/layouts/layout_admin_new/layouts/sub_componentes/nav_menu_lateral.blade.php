@@ -105,7 +105,7 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapseComponents3">
                 <li>
-                    <form class="form-group">
+                    <form class="form-group" action="{!! route('commit') !!}" method="post">
                         @csrf
                         <div class="form-group">
                             <textarea type="text" name="commit" class="form-control"
