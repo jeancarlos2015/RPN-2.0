@@ -121,7 +121,6 @@ class GitController extends Controller
 
     public function create(Request $request)
     {
-
         return redirect()->route('index_create_delete');
     }
 
@@ -157,6 +156,7 @@ class GitController extends Controller
     public function commit(Request $request)
     {
 
+         GitSistemaRepository::commit($request->commit);
         return redirect()->route('index_commit_branch');
     }
 
