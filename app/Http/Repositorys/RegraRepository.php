@@ -77,4 +77,11 @@ class RegraRepository extends Repository
         return $value;
     }
 
+    public static function excluir_todos(){
+        $regras = Regra::all();
+        foreach ($regras as $regra){
+            $regra->delete();
+        }
+    }
+
 }

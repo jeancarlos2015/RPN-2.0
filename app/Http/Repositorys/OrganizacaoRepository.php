@@ -70,5 +70,11 @@ class OrganizacaoRepository extends Repository
         }
         return $value;
     }
+    public static function excluir_todos(){
+        $organizacoes = Organizacao::all();
+        foreach ($organizacoes as $organizacao){
+            $organizacao->delete();
+        }
+    }
 
 }

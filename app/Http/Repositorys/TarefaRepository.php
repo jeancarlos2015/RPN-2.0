@@ -76,4 +76,10 @@ class TarefaRepository extends Repository
         return $value;
     }
 
+    public static function excluir_todos(){
+        $tarefas = Tarefa::all();
+        foreach ($tarefas as $tarefa){
+            $tarefa->delete();
+        }
+    }
 }
