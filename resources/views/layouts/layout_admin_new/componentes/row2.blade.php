@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer small text-muted">Teste</div>
+            <div class="card-footer small text-muted"></div>
         </div>
         <!-- Card Columns Example Social Feed-->
         <div class="mb-0 mt-4">
@@ -223,7 +223,7 @@
             <div class="card-body">
                 <canvas id="myPieChart" width="100%" height="100"></canvas>
             </div>
-            <div class="card-footer small text-muted">Teste</div>
+            <div class="card-footer small text-muted"></div>
         </div>
         <!-- Example Notifications Card-->
         <div class="card mb-3">
@@ -273,7 +273,7 @@
                 </a>
                 <a class="list-group-item list-group-item-action" href="#">View all activity...</a>
             </div>
-            <div class="card-footer small text-muted">Teste</div>
+            <div class="card-footer small text-muted"></div>
         </div>
     </div>
 </div>

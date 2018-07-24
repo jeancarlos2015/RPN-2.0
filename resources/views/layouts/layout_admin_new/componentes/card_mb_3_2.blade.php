@@ -485,5 +485,5 @@
             </table>
         </div>
     </div>
-    <div class="card-footer small text-muted">Teste</div>
+    <div class="card-footer small text-muted"></div>
 </div>
