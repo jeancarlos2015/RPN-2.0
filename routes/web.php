@@ -64,6 +64,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::post('init', 'GitController@init')->name('init');
         Route::post('create', 'GitController@create')->name('create');
         Route::post('commit', 'GitController@commit')->name('commit');
+        Route::post('pull', 'GitController@pull')->name('pull');
+        
         Route::post('merge_checkout', 'GitController@merge_checkout')->name('merge_checkout');
         Route::post('delete', 'GitController@delete')->name('delete');
         Route::post('delete_repository', 'GitController@delete_repository')->name('delete_repository');
@@ -77,6 +79,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('index_create_delete', 'GitController@index_create_delete')->name('index_create_delete');
         Route::get('index_commit_branch', 'GitController@index_commit_branch')->name('index_commit_branch');
         Route::get('index_pull_push', 'GitController@index_pull_push')->name('index_pull_push');
+        Route::get('selecionar_repositorio/{repositorio_atual}/{default_branch}', 'GitController@selecionar_repositorio')->name('selecionar_repositorio');
 
 
 

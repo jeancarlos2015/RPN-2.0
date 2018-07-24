@@ -18,10 +18,11 @@
             <input type="submit" class="btn btn-dark form-control" value="Criar Repositório">
         </div>
     </form>
+    
     @if(!empty($repositorios))
         @includeIf('layouts.layout_admin_new.componentes.tables',[
                             'titulos' => $titulos,
-                            'usuarios' => $repositorios,
+                            'repositorios' => $repositorios,
                             'rota_edicao' => 'controle_usuarios.edit',
                             'rota_exclusao' => 'controle_usuarios.destroy',
                             'nome_botao' => 'Novo',

@@ -40,6 +40,9 @@
                     @case('usuario')
                     @includeIf('layouts.layout_admin_new.componentes.tables_usuarios')
                     @break;
+                    @case('repositorio')
+                    @includeIf('layouts.layout_admin_new.componentes.tables_repositorios')
+                    @break;
                 @endswitch
             </table>
         </div>

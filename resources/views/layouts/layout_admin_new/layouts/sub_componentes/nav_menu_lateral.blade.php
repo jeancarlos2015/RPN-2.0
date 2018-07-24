@@ -129,7 +129,7 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapseComponents4">
                 <li>
-                    <form class="form-group">
+                    <form class="form-group" action="{!! route('merge_checkout') !!}" method="post">
                         @csrf
                         <div class="form-group">
                             <select name="branch" class="form-control">
@@ -138,12 +138,17 @@
                                 <option>branch 3</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-secondary form-control">Checkout</button>
+                        <div class="form-group text-light">
+                            <input type="radio"  name="tipo" value="merge"> Merge
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-secondary form-control">Merge</button>
+                        <div class="form-group text-light">
+                            <input type="radio" name="tipo" value="checkout" checked>Checkout
                         </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-secondary form-control">Executar</button>
+                        </div>
+                        
                     </form>
                 </li>
 
@@ -158,7 +163,7 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapseComponents6">
                 <li>
-                    <form class="form-group">
+                    <form class="form-group" action="{!! route('pull') !!}" method="post">
                         @csrf
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary form-control">Pull</button>
@@ -177,7 +182,7 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapseComponents7">
                 <li>
-                    <form class="form-group">
+                    <form class="form-group" action="{!! route('create') !!}" method="post">
                         @csrf
                         <div class="form-control">
                             <input type="text" name="branch" placeholder="Branch">
