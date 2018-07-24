@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Models\Branchs;
 use App\Http\Models\UsuarioGithub;
 use App\Http\Repositorys\GitSistemaRepository;
+use App\Http\Repositorys\OrganizacaoRepository;
 use App\Http\Util\Dado;
 use Github\Client;
 use Illuminate\Http\Request;
@@ -106,13 +107,22 @@ class GitController extends Controller
             $branc_old->delete();
         }
 
-        foreach ($branchs as $branch) {
-            $data = [
-                'branch' => $branch['name'],
-                'descricao' => 'Nenhum',
-                'codusuario' => Auth::user()->codusuario
-            ];
-            Branchs::create($data);
+            foreach ($branchs as $branch) {
+                $data = [
+                    'branch' => $branch['name'],
+                    'descricao' => 'Nenhum',
+                    'codusuario' => Auth::user()->codusuario
+                ];
+                Branchs::create($data);
+            }
+            OrganizacaoRepository::excluir_todos();
+            GitSistemaRepository::apaga_modelos();
+            GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
+            GitSistemaRepository::pull($default_branch);
+            return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
+        } catch (\Exception $ex) {
+            flash($ex->getMessage())->error();
+            return redirect()->route('index_init');
         }
 
         GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
@@ -141,7 +151,6 @@ class GitController extends Controller
                 'repositorio_atual' => $repositorio['name']
             ];
             $user_github->update($data);
-
             return redirect()->route('controle_versao.show', ['nome_repositorio' => $request->nome]);
         } catch (\Exception $ex) {
             flash($ex->getMessage())->error();

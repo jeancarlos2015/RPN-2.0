@@ -417,6 +417,13 @@ class GitSistemaRepository
         return $dado;
     }
 
+    public static function apaga_modelos(){
+        $files = self::map_files_local(database_path('banco/modelos'));
+        foreach ($files as $file){
+            unlink(database_path('banco/modelos/').$file);
+        }
+    }
+
 //$nome = $dado['nome'];
 //$conteudo =  $dado['conteudo'];
 //$formato = $dado['formato'];
