@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Branchs;
 use App\Http\Models\UsuarioGithub;
+use App\Http\Repositorys\BranchsRepository;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\OrganizacaoRepository;
 use App\Http\Util\Dado;
 use Github\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class GitController extends Controller
 {
@@ -95,16 +97,18 @@ class GitController extends Controller
 ////        'codusuario'
     public function selecionar_repositorio($repositorio_atual, $default_branch)
     {
+
         try {
             $client = new Client();
             $github = Auth::user()->github;
-            $client->authenticate($github->usuario_github, $github->senha_github);
-            $branchs = $client->repo()->branches($github->usuario_github, $repositorio_atual);
 
-            foreach (Auth::user()->branchs as $branch1) {
-                $branc_old = Branchs::findOrFail($branch1->codbranch);
-                $branc_old->delete();
-            }
+            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+
+            $branchs = $client->repo()->branches(Crypt::decrypt($github->usuario_github), $repositorio_atual);
+            //Ao selecionar um outro repositório é necessário atualizar a base de dados, então quanto a operação é feita
+            //é necessário deletar todas as branchs do antigo repositório
+            BranchsRepository::excluir_todos();
+            //Busca as branchs do repositório que está no github e salva na base de dados;
 
             foreach ($branchs as $branch) {
                 $data = [
@@ -112,17 +116,27 @@ class GitController extends Controller
                     'descricao' => 'Nenhum',
                     'codusuario' => Auth::user()->codusuario
                 ];
-                Branchs::create($data);
+                (new Branchs)->create($data);
             }
+            //Informações pertinentes aos registros do banco do repositório antigo também são apagados
             OrganizacaoRepository::excluir_todos();
+
             GitSistemaRepository::apaga_modelos();
+
+            //As branchs são atualizadas
             GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
+
+            //Os dados do novo repositório são baixados
             GitSistemaRepository::pull($default_branch);
             return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
         } catch (\Exception $ex) {
             flash($ex->getMessage())->error();
             return redirect()->route('index_init');
         }
+
+        GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
+        GitSistemaRepository::pull($default_branch);
+        return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
     }
 
     public function init(Request $request)
@@ -274,5 +288,6 @@ class GitController extends Controller
     /**
      *
      */
+
 
 }

@@ -8,6 +8,7 @@ use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class UsuarioGithubController extends Controller
 {
@@ -44,12 +45,22 @@ class UsuarioGithubController extends Controller
                 ->withInput();
         }
         try {
+
+            $data = [
+                'usuario_github' => Crypt::encrypt($request->usuario_github),
+                'codusuario' => $request->codusuario,
+                'email_github' => $request->email_github,
+                'token_github' => bcrypt($request->token_github),
+                'branch_atual' => 'Nenhuma Branch',
+                'repositorio_atual' => 'Nenhum Repositório',
+                'senha_github' => Crypt::encrypt($request->senha_github)
+            ];
             GitSistemaRepository::delete_all_github();
-            $usuario_github = UsuarioGithub::create($request->all());
+            UsuarioGithub::create($data);
             LogRepository::criar("Dados Salvo Com sucesso", "Rota De Configuração Github");
             flash('Configuração salva com sucesso!!');
         } catch (\Exception $ex) {
-            flash('O registro já existe!!!')->error();
+            flash($ex->getMessage())->error();
         }
         return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
 
