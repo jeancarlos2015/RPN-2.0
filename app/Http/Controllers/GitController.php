@@ -164,7 +164,7 @@ class GitController extends Controller
     public function pull(Request $request)
     {
         try {
-            GitSistemaRepository::pull();
+            GitSistemaRepository::pull(Auth::user()->github->branch_atual);
             flash('Operação Feita com sucesso!!!');
         } catch (\Exception $ex) {
            flash('Error ao atualizar')->error();
@@ -182,20 +182,27 @@ class GitController extends Controller
 
     public function merge_checkout(Request $request)
     {
-//        dd($request);
-////        $validate = [
-////            'branch',
-////            'tipo'
-////        ];
-////        $erros = \Validator::make($request->all(), $validate);
-////        if ($erros->fails()){
-////            return redirect()->route('painel')
-////                ->withErrors($erros)
-////                ->withInput();
-////        }else{
-////            flash('Operação Feita com sucesso');
-////            return redirect()->route('painel');
-////        }
+
+        $validate = [
+            'branch',
+            'tipo'
+        ];
+        $erros = \Validator::make($request->all(), $validate);
+        if ($erros->fails()){
+            return redirect()->route('painel')
+                ->withErrors($erros)
+                ->withInput();
+        }else{
+            if ($request->tipo==='checkout'){
+                GitSistemaRepository::checkout($request->branch);
+            }elseif ($request->tipo==='merge'){
+
+            }
+            
+            flash('Operação Feita com sucesso');
+            return redirect()->route('painel');
+        }
+        
         return redirect()->route('painel');
     }
 

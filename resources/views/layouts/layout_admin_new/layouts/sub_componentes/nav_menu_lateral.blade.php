@@ -132,23 +132,28 @@
                     <form class="form-group" action="{!! route('merge_checkout') !!}" method="post">
                         @csrf
                         <div class="form-group">
-                            <select name="branch" class="form-control">
-                                <option>branch 1</option>
-                                <option>branch 2</option>
-                                <option>branch 3</option>
+
+                            <select class="form-control" name="branch">
+                                @if(!empty(Auth::user()->branchs))
+                                    @foreach(Auth::user()->branchs as $branch)
+                                        @if(Auth::user()->github->branch_atual !== $branch->branch)
+                                            <option value="{!! $branch->branch !!}">{!! $branch->branch !!}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                         <div class="form-group text-light">
-                            <input type="radio"  name="tipo" value="merge"> Merge
+                            <input type="radio" name="tipo" value="merge"> Merge
                         </div>
                         <div class="form-group text-light">
                             <input type="radio" name="tipo" value="checkout" checked>Checkout
                         </div>
-                        
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary form-control">Executar</button>
                         </div>
-                        
+
                     </form>
                 </li>
 
@@ -207,13 +212,17 @@
                     <form class="form-group">
                         @csrf
                         <div class="form-group">
-                            <select name="branch" class="form-control">
-                                <option>branch 1</option>
-                                <option>branch 2</option>
-                                <option>branch 3</option>
+                            <select class="form-control" name="branch">
+                                @if(!empty(Auth::user()->branchs))
+                                    @foreach(Auth::user()->branchs as $branch)
+                                        @if(Auth::user()->github->branch_atual !== $branch->branch)
+                                            <option value="{!! $branch->branch !!}">{!! $branch->branch !!}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
-                      
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary form-control">Delete Branch</button>
                         </div>

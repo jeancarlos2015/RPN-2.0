@@ -151,7 +151,7 @@ class GitSistemaRepository
             flash('Branch ' . $branch . ' criada com sucesso!!!');
 
         } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash('A branch já existe')->warning();
         } catch (ApiLimitExceedException $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
         }
@@ -286,13 +286,13 @@ class GitSistemaRepository
     }
 
     public
-    static function pull_auxiliar($arquivo, $path)
+    static function pull_auxiliar($arquivo, $path, $branch_atual)
     {
 
         $client = new Client();
         $github = Auth::user()->github;
         $client->authenticate($github->usuario_github, $github->senha_github);
-        $conteudo = $client->repo()->contents()->download($github->usuario_github, $github->repositorio_atual, $arquivo, $github->branch_atual);
+        $conteudo = $client->repo()->contents()->download($github->usuario_github, $github->repositorio_atual, $arquivo, $branch_atual);
         self::escrer_arquivo($path . "/" . $arquivo, $conteudo);
     }
 
@@ -476,7 +476,7 @@ class GitSistemaRepository
             }
             return $dado;
         } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
         }
@@ -484,7 +484,7 @@ class GitSistemaRepository
     }
 
     public
-    static function pull()
+    static function pull($default_branch)
     {
         try {
             //obtem o caminho do banco
@@ -496,13 +496,13 @@ class GitSistemaRepository
             //obtem o nome dos modelos
             $file_modelos = self::map_files_local($path_modelo);
             //baixa o banco e sobrescreve-o
-            self::pull_auxiliar($file_banco[1], $path_banco);
+            self::pull_auxiliar($file_banco[1], $path_banco, $default_branch);
             //baixa os modelos e os sobrescreve
             for ($indice = 1; $indice <= count($file_modelos); $indice++) {
-                self::pull_auxiliar($file_modelos[$indice], $path_modelo);
+                self::pull_auxiliar($file_modelos[$indice], $path_modelo, $default_branch);
             }
         } catch (\Exception $ex) {
-            flash('Alguns arquivos podem não ter sido atualizados, favor atualizar novamente!!!')->warning();
+            flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
         }
@@ -541,7 +541,7 @@ class GitSistemaRepository
             ];
             $user_github->update($data);
         } catch (\Exception $ex) {
-            flash('Error ao atualizar a branch')->error();
+            flash($ex->getMessage())->warning();
         }
 
     }
@@ -551,9 +551,10 @@ class GitSistemaRepository
         try {
             $github = Auth::user()->github;
             self::change_branch($github->repositorio_atual, $default_branch);
-            self::pull();
+            sleep(10);
+            self::pull($default_branch);
         } catch (\Exception $ex) {
-            flash('Erro ao obter dados do usuário do github')->warning();
+            flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
         }
