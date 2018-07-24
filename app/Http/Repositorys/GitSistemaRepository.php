@@ -121,7 +121,7 @@ class GitSistemaRepository
     }
 
 
-    public static function create_branch($branch, $branch_referencia)
+    public static function create_branch($branch)
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -129,9 +129,7 @@ class GitSistemaRepository
         $usuario_git = $github->usuario_github;
         $client->authenticate($github->usuario_github, $github->senha_github);
         $branchs = $client->repo()->branches($usuario_git, $repositorio,$github->branch_atual);
-         dd($branchs);
-//        $sha = $branch_commit['commit']['sha'];
-        $sha = "fsdafdsafs";
+        $sha = $branchs['commit']['sha'];
         $http_Client = $client->getHttpClient();
         $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs';
         $header = array("Authorization" => "Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA==");
@@ -450,27 +448,7 @@ class GitSistemaRepository
         }
     }
 
-    public
-    static function checkout($dados)
-    {
-
-        $tipo = $dados['tipo'];
-        if ($tipo === 'merge') {
-
-        } else {
-            $branch = $dados['branch'];
-            $data = [
-                'branch_atual' => $branch
-            ];
-            $github = Auth::user()->github;
-            dd($github->codusuariogithub);
-            $user_github = UsuarioGithub::findOrFail($github->codusuariogithub);
-            if ($user_github->update($data)) {
-                self::pull();
-            }
-        }
-
-    }
+    
 
     public static function listar_repositorios(){
         $client = new Client();
@@ -478,4 +456,42 @@ class GitSistemaRepository
         $client->authenticate($github->usuario_github, $github->senha_github);
         return collect($client->currentUser()->repositories());
     }
+
+    public static function change_branch($repositorio_atual, $default_branch){
+        $github_data = Auth::user()->github;
+        $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
+        $data = [
+            'branch_atual' => $default_branch,
+            'repositorio_atual' => $repositorio_atual
+        ];
+        $user_github->update($data);
+    }
+
+    public static function checkout($default_branch){
+        $github = Auth::user()->github;
+        self::change_branch($github->repositorio_atual, $default_branch);
+        self::pull();
+    }
+
+//    public
+//    static function checkout($dados)
+//    {
+//
+//        $tipo = $dados['tipo'];
+//        if ($tipo === 'merge') {
+//
+//        } else {
+//            $branch = $dados['branch'];
+//            $data = [
+//                'branch_atual' => $branch
+//            ];
+//            $github = Auth::user()->github;
+//            dd($github->codusuariogithub);
+//            $user_github = UsuarioGithub::findOrFail($github->codusuariogithub);
+//            if ($user_github->update($data)) {
+//                self::pull();
+//            }
+//        }
+//
+//    }
 }

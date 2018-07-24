@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Branchs;
 use App\Http\Models\UsuarioGithub;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
@@ -87,18 +88,11 @@ class GitController extends Controller
         return view('controle_versao.index', compact('branch_atual', 'funcionalidades'));
     }
 
-    private function select_repositorio(){
-        
-    }
+    
     public function selecionar_repositorio($repositorio_atual, $default_branch){
         try {
-            $github_data = Auth::user()->github;
-            $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
-            $data = [
-                'branch_atual' => $default_branch,
-                'repositorio_atual' => $repositorio_atual
-            ];
-            $user_github->update($data);
+            GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
+            GitSistemaRepository::pull();
             return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
         } catch (\Exception $ex) {
             flash($ex->getMessage())->error();
@@ -146,10 +140,19 @@ class GitController extends Controller
         return redirect()->route('index_create_delete');
     }
 
+//'branch',
+//'descricao',
+//'codusuario'
     public function create(Request $request)
     {
         GitSistemaRepository::create_branch($request->branch);
-    
+        $data_branch = [
+            'branch' => $request->branch,
+            'descricao' => 'Nenhum',
+            'codusuario' => Auth::user()->codusuario
+        ];
+        Branchs::create($data_branch);
+        GitSistemaRepository::checkout($request->branch);
         return redirect()->route('painel');
     }
 
@@ -179,8 +182,21 @@ class GitController extends Controller
 
     public function merge_checkout(Request $request)
     {
-        dd(null);
-        return $this->checkout($request);
+//        dd($request);
+////        $validate = [
+////            'branch',
+////            'tipo'
+////        ];
+////        $erros = \Validator::make($request->all(), $validate);
+////        if ($erros->fails()){
+////            return redirect()->route('painel')
+////                ->withErrors($erros)
+////                ->withInput();
+////        }else{
+////            flash('Operação Feita com sucesso');
+////            return redirect()->route('painel');
+////        }
+        return redirect()->route('painel');
     }
 
     private function checkout(Request $request)
