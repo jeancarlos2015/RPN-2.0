@@ -137,7 +137,7 @@ class GitSistemaRepository
             $client = new Client();
             $github = Auth::user()->github;
             $repositorio = $github->repositorio_atual;
-            $usuario_git = $github->usuario_github;
+            $usuario_git = Crypt::decrypt($github->usuario_github);
             $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
             $branchs = $client->repo()->branches($usuario_git, $repositorio, $github->branch_atual);
             $sha = $branchs['commit']['sha'];
@@ -237,18 +237,22 @@ class GitSistemaRepository
     private
     static function map_files_local($path)
     {
-        try {
-            $Iterator = new \DirectoryIterator($path);
-            $i = 0;
-            for ($Iterator; $Iterator->valid(); $Iterator->next()) {
-                if ($Iterator->isFile() && !$Iterator->isDot()) {
-                    $Files[++$i] = $Iterator->getFilename();
+        if(file_exists($path)){
+            try {
+                $Iterator = new \DirectoryIterator($path);
+                $i = 0;
+                $Files = [];
+                for ($Iterator; $Iterator->valid(); $Iterator->next()) {
+                    if ($Iterator->isFile() && !$Iterator->isDot()) {
+                        $Files[++$i] = $Iterator->getFilename();
+                    }
                 }
+                return $Files;
+            } catch (\Exception $ex) {
+                flash('Por Favor Sincronize os dados do github com o sistema')->error();
             }
-            return $Files;
-        } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
         }
+
 
     }
 
@@ -293,7 +297,7 @@ class GitSistemaRepository
         $client = new Client();
         $github = Auth::user()->github;
         $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-        $conteudo = $client->repo()->contents()->download($github->usuario_github, $github->repositorio_atual, $arquivo, $branch_atual);
+        $conteudo = $client->repo()->contents()->download(Crypt::decrypt($github->usuario_github), $github->repositorio_atual, $arquivo, $branch_atual);
         self::escrer_arquivo($path . "/" . $arquivo, $conteudo);
     }
 
@@ -346,7 +350,7 @@ class GitSistemaRepository
             $client = new Client();
             $github = Auth::user()->github;
             $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-            $client->repo()->remove($github->usuario_github, $repositorio);
+            $client->repo()->remove(Crypt::decrypt($github->usuario_github), $repositorio);
         } catch (\Exception $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
         } catch (ApiLimitExceedException $ex) {
@@ -419,8 +423,10 @@ class GitSistemaRepository
 
     public static function apaga_modelos(){
         $files = self::map_files_local(database_path('banco/modelos'));
-        foreach ($files as $file){
-            unlink(database_path('banco/modelos/').$file);
+        if (!empty($files)){
+            foreach ($files as $file){
+                unlink(database_path('banco/modelos/').$file);
+            }
         }
     }
 
@@ -448,7 +454,7 @@ class GitSistemaRepository
         $dados['branch'] = $github->branch_atual;
         $dados['mensagem'] = $dado->mensagem;
         $dados['repositorio'] = $github->repositorio_atual;
-        $dados['usuario'] = $github->usuario_github;
+        $dados['usuario'] = Crypt::decrypt($github->usuario_github);
         $dados['email'] = $github->email_github;
 
         return $dados;
@@ -498,7 +504,7 @@ class GitSistemaRepository
     public
     static function pull($default_branch)
     {
-        try {
+//        try {
             //obtem o caminho do banco
             $path_banco = database_path('banco');
             //obtem o caminho dos modelos
@@ -513,11 +519,11 @@ class GitSistemaRepository
             for ($indice = 1; $indice <= count($file_modelos); $indice++) {
                 self::pull_auxiliar($file_modelos[$indice], $path_modelo, $default_branch);
             }
-        } catch (\Exception $ex) {
-            flash($ex->getMessage())->warning();
-        } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
-        }
+//        } catch (\Exception $ex) {
+//            flash($ex->getMessage())->warning();
+//        } catch (ApiLimitExceedException $ex) {
+//            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+//        }
 
     }
 
@@ -544,20 +550,20 @@ class GitSistemaRepository
 
     public static function change_branch($repositorio_atual, $default_branch)
     {
-        $github_data = Auth::user()->github;
-        $user_github = (new \App\Http\Models\UsuarioGithub)->findOrFail($github_data->codusuariogithub);
-        $data = [
-            'codusuario' => Auth::user()->codusuario,
-            'email_github' => $github_data->email_github,
-            'token_github' => $github_data->token_github,
-            'senha_github' => $github_data->senha_github,
-            'branch_atual' => $default_branch,
-            'repositorio_atual' => $repositorio_atual
-        ];
-        $user_github->update($data);
+
 //        try {
-//
-//
+            $github_data = Auth::user()->github;
+            $user_github = (new \App\Http\Models\UsuarioGithub)->findOrFail($github_data->codusuariogithub);
+            $data = [
+                'codusuario' => Auth::user()->codusuario,
+                'email_github' => $github_data->email_github,
+                'token_github' => $github_data->token_github,
+                'senha_github' => $github_data->senha_github,
+                'branch_atual' => $default_branch,
+                'repositorio_atual' => $repositorio_atual
+            ];
+            $user_github->update($data);
+
 //        } catch (\Exception $ex) {
 //            flash($ex->getMessage())->warning();
 //        } catch (ApiLimitExceedException $ex) {
