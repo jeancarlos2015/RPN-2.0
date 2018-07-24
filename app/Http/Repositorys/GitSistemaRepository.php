@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Auth;
 
 class GitSistemaRepository
 {
-  
+
 
     private static function ler_arquivo($path)
     {
-        try{
+        try {
             $handle = fopen($path, "r");
             $conteudo = fread($handle, filesize($path));
             fclose($handle);
             return $conteudo;
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             flash('error ao ler o arquivo')->error();
         }
 
@@ -28,10 +28,10 @@ class GitSistemaRepository
 
     private static function escrer_arquivo($path, $conteudo)
     {
-        try{
+        try {
             file_put_contents($path, $conteudo);
-        }catch (\Exception $ex){
-           flash('error ao gravar o arquivo')->error();
+        } catch (\Exception $ex) {
+            flash('error ao gravar o arquivo')->error();
         }
 
     }
@@ -502,7 +502,7 @@ class GitSistemaRepository
                 self::pull_auxiliar($file_modelos[$indice], $path_modelo);
             }
         } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash('Alguns arquivos podem não ter sido atualizados, favor atualizar novamente!!!')->warning();
         } catch (ApiLimitExceedException $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
         }
@@ -518,7 +518,7 @@ class GitSistemaRepository
             $client->authenticate($github->usuario_github, $github->senha_github);
             return collect($client->currentUser()->repositories());
         } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash('Error ao obter dados do usuário do github, é provável que não tenha sincronizado com a conta do github')->warning();
             return collect(array());
         } catch (ApiLimitExceedException $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
@@ -537,9 +537,7 @@ class GitSistemaRepository
             ];
             $user_github->update($data);
         } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
-        } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash('Error ao atualizar a branch')->error();
         }
 
     }
@@ -551,32 +549,11 @@ class GitSistemaRepository
             self::change_branch($github->repositorio_atual, $default_branch);
             self::pull();
         } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash('Erro ao obter dados do usuário do github')->warning();
         } catch (ApiLimitExceedException $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
         }
 
     }
 
-//    public
-//    static function checkout($dados)
-//    {
-//
-//        $tipo = $dados['tipo'];
-//        if ($tipo === 'merge') {
-//
-//        } else {
-//            $branch = $dados['branch'];
-//            $data = [
-//                'branch_atual' => $branch
-//            ];
-//            $github = Auth::user()->github;
-//            dd($github->codusuariogithub);
-//            $user_github = UsuarioGithub::findOrFail($github->codusuariogithub);
-//            if ($user_github->update($data)) {
-//                self::pull();
-//            }
-//        }
-//
-//    }
 }
