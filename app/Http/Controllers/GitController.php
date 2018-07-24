@@ -61,8 +61,16 @@ class GitController extends Controller
     public function index_init()
     {
         $branch_atual = 'Em construção';
-        return view('controle_versao.init', compact('tipo', 'branch_atual', 'titulos'));
+        $repositorios = GitSistemaRepository::listar_repositorios();
+        $tipo = 'repositorio';
+        $titulos = [
+            'Nome Do Repositório',
+            'Nome Completo Do Repositório',
+            'Ações'
+        ];
+        return view('controle_versao.init', compact('tipo', 'branch_atual', 'titulos','repositorios'));
     }
+
 
     public function index()
     {
@@ -79,10 +87,26 @@ class GitController extends Controller
         return view('controle_versao.index', compact('branch_atual', 'funcionalidades'));
     }
 
-
+    private function select_repositorio(){
+        
+    }
+    public function selecionar_repositorio($repositorio_atual, $default_branch){
+        try {
+            $github_data = Auth::user()->github;
+            $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
+            $data = [
+                'branch_atual' => $default_branch,
+                'repositorio_atual' => $repositorio_atual
+            ];
+            $user_github->update($data);
+            return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
+        } catch (\Exception $ex) {
+            flash($ex->getMessage())->error();
+            return redirect()->route('index_init');
+        }
+    }
     public function init(Request $request)
     {
-        $branch_atual = 'Em construção';
         try {
             $repositorio = GitSistemaRepository::create_repository($request->nome);
             $github_data = Auth::user()->github;
@@ -155,17 +179,13 @@ class GitController extends Controller
 
     public function merge_checkout(Request $request)
     {
-
+        dd(null);
         return $this->checkout($request);
     }
 
     private function checkout(Request $request)
     {
-        $data = [
-            'branch_atual' => $request->branch
-        ];
-        $github = Auth::user()->github;
-        dd($request, $github);
+        
         return redirect()->route('index_merge_checkout');
     }
 

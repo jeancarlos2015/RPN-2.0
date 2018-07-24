@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Http\Models\Branchs;
 use App\Http\Models\Log;
 use App\Http\Models\Organizacao;
 use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * App\User
@@ -53,7 +54,7 @@ class User extends Authenticatable
             'type' => 'required'
         ];
     }
-    
+
     public function organizacoes()
     {
         return $this->belongsTo(Organizacao::class, 'codusuario', 'codusuario');
@@ -64,11 +65,18 @@ class User extends Authenticatable
         return $this->hasOne(UsuarioGithub::class, 'codusuario', 'codusuario');
     }
 
-    public function logs(){
+    public function branchs()
+    {
+        return $this->hasMany(Branchs::class, 'codusuario', 'codusuario');
+    }
+
+    public function logs()
+    {
         return $this->belongsTo(Log::class, 'codusuario', 'codusuario');
     }
 
-    public static function titulos(){
+    public static function titulos()
+    {
         return [
             'Nome',
             'Email',
@@ -98,16 +106,20 @@ class User extends Authenticatable
         ];
 
     }
+
 //Instancia todas as posições de memória que serão exibidas no título
-    public static function dados_objeto(){
+    public static function dados_objeto()
+    {
         $dado = array();
-        for($indice=0;$indice<5;$indice++){
+        for ($indice = 0; $indice < 5; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
     }
+
 //Instancia somente os campos que serão exibidos no formulário e preenche os títulos da listagem
-    public static function dados(){
+    public static function dados()
+    {
         $campos = self::campos();
         $atributos = self::atributos();
         $dados = self::dados_objeto();

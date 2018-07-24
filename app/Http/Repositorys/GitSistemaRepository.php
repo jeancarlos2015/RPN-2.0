@@ -6,6 +6,7 @@ use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
 use Github\Api\Repository\Contents;
 use Github\Client;
+use Http\Client\Exception;
 use Illuminate\Support\Facades\Auth;
 
 class GitSistemaRepository
@@ -120,33 +121,36 @@ class GitSistemaRepository
     }
 
 
-    public static function create_branch($branch)
+    public static function create_branch($branch, $branch_referencia)
     {
         $client = new Client();
         $github = Auth::user()->github;
         $repositorio = $github->repositorio_atual;
         $usuario_git = $github->usuario_github;
         $client->authenticate($github->usuario_github, $github->senha_github);
+        $branchs = $client->repo()->branches($usuario_git, $repositorio,$github->branch_atual);
+         dd($branchs);
+//        $sha = $branch_commit['commit']['sha'];
+        $sha = "fsdafdsafs";
         $http_Client = $client->getHttpClient();
         $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs';
-        $header = [
-            [
-//                'Authorization' => 'Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA=='
-            ]
-        ];
-
-        $body = array("ref" => "refs/heads/" . $branch, "sha" => "a84deace201e8f873741cf82b5f999b482b1c91c");
-
+        $header = array("Authorization" => "Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA==");
+        $body = '{
+                "ref" : "refs/heads/'.$branch.'",
+                "sha" : "'.$sha.'"
+        }';
         try {
             $http_Client->post($url, $header, $body);
             flash('Branch ' . $branch . ' criada com sucesso!!!');
-        } catch (\Exception $e) {
-
-            flash($e->getMessage());
+        } catch (Exception $e) {
+            flash($e->getMessage())->error();
         }
+
+
     }
 
-    private function delete_branch_teste()
+    private
+    function delete_branch_teste()
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -175,7 +179,8 @@ class GitSistemaRepository
 
     }
 
-    private function update_branch_teste()
+    private
+    function update_branch_teste()
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -204,7 +209,8 @@ class GitSistemaRepository
         dd($client->repository()->merge('jeancarlos2015', 'teste2015', 'master', 'teste'));
     }
 
-    private function merge_branch_teste($base, $branch, $mensagem)
+    private
+    function merge_branch_teste($base, $branch, $mensagem)
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -217,7 +223,8 @@ class GitSistemaRepository
             $mensagem);
     }
 
-    private static function map_files_local($path)
+    private
+    static function map_files_local($path)
     {
         $Iterator = new \DirectoryIterator($path);
         $i = 0;
@@ -229,7 +236,8 @@ class GitSistemaRepository
         return $Files;
     }
 
-    private function teste_sob_arquivo_serializado()
+    private
+    function teste_sob_arquivo_serializado()
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -242,7 +250,8 @@ class GitSistemaRepository
 
     }
 
-    private function get_files_github()
+    private
+    function get_files_github()
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -251,7 +260,8 @@ class GitSistemaRepository
         dd($client->repo()->contents()->archive('jeancarlos2015', 'teste2015', '.sqlite'));
     }
 
-    private function get_file_http()
+    private
+    function get_file_http()
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -260,7 +270,8 @@ class GitSistemaRepository
 
     }
 
-    public static function pull_auxiliar($arquivo, $path)
+    public
+    static function pull_auxiliar($arquivo, $path)
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -269,7 +280,8 @@ class GitSistemaRepository
         self::escrer_arquivo($path . "/" . $arquivo, $conteudo);
     }
 
-    public static function create_repository($nome_repositorio)
+    public
+    static function create_repository($nome_repositorio)
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -282,7 +294,8 @@ class GitSistemaRepository
         }
     }
 
-    public static function get_repositorio($username, $repository)
+    public
+    static function get_repositorio($username, $repository)
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -290,7 +303,8 @@ class GitSistemaRepository
         return $client->repo()->show($username, $repository);
     }
 
-    public function delete_repository($repositorio, $usuario_git)
+    public
+    function delete_repository($repositorio, $usuario_git)
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -298,7 +312,8 @@ class GitSistemaRepository
         $client->repo()->remove($usuario_git, $repositorio);
     }
 
-    public static function titulos_repositorio()
+    public
+    static function titulos_repositorio()
     {
         return [
             'nome',
@@ -306,7 +321,8 @@ class GitSistemaRepository
         ];
     }
 
-    public function client_autenticate()
+    public
+    function client_autenticate()
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -314,19 +330,22 @@ class GitSistemaRepository
         return $client;
     }
 
-    public static function listar_githubs()
+    public
+    static function listar_githubs()
     {
         return UsuarioGithub::all()->where('codusuario', \Auth::user()->codusuario);
     }
 
-    public static function delete_all_github()
+    public
+    static function delete_all_github()
     {
         foreach (UsuarioGithub::all() as $github) {
             $github->delete();
         }
     }
 
-    private static function carrega_dados()
+    private
+    static function carrega_dados()
     {
         $files_bpmn = self::map_files_local(database_path('banco/modelos'));
         $dado = new Dado();
@@ -362,7 +381,8 @@ class GitSistemaRepository
 //$table->string('senha_github');
 //$table->bigInteger('codusuario');
 
-    private static function extrai_dados_banco(Dado $dado, $indice)
+    private
+    static function extrai_dados_banco(Dado $dado, $indice)
     {
         $github = Auth::user()->github;
         $dados['nome'] = $dado->banco[$indice];
@@ -378,7 +398,8 @@ class GitSistemaRepository
     }
 
 
-    private static function extrai_dados_modelos(Dado $dado, $indice)
+    private
+    static function extrai_dados_modelos(Dado $dado, $indice)
     {
         $github = Auth::user()->github;
         $dados['nome'] = $dado->modelo[$indice];
@@ -392,7 +413,8 @@ class GitSistemaRepository
         return $dados;
     }
 
-    public static function commit($mensagem)
+    public
+    static function commit($mensagem)
     {
         $dado = self::carrega_dados();
         $dado->mensagem = $mensagem;
@@ -409,7 +431,8 @@ class GitSistemaRepository
         return $dado;
     }
 
-    public static function pull()
+    public
+    static function pull()
     {
         //obtem o caminho do banco
         $path_banco = database_path('banco');
@@ -427,5 +450,32 @@ class GitSistemaRepository
         }
     }
 
-    
+    public
+    static function checkout($dados)
+    {
+
+        $tipo = $dados['tipo'];
+        if ($tipo === 'merge') {
+
+        } else {
+            $branch = $dados['branch'];
+            $data = [
+                'branch_atual' => $branch
+            ];
+            $github = Auth::user()->github;
+            dd($github->codusuariogithub);
+            $user_github = UsuarioGithub::findOrFail($github->codusuariogithub);
+            if ($user_github->update($data)) {
+                self::pull();
+            }
+        }
+
+    }
+
+    public static function listar_repositorios(){
+        $client = new Client();
+        $github = Auth::user()->github;
+        $client->authenticate($github->usuario_github, $github->senha_github);
+        return collect($client->currentUser()->repositories());
+    }
 }

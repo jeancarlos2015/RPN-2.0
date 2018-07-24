@@ -79,6 +79,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('index_create_delete', 'GitController@index_create_delete')->name('index_create_delete');
         Route::get('index_commit_branch', 'GitController@index_commit_branch')->name('index_commit_branch');
         Route::get('index_pull_push', 'GitController@index_pull_push')->name('index_pull_push');
+        Route::get('selecionar_repositorio/{repositorio_atual}/{default_branch}', 'GitController@selecionar_repositorio')->name('selecionar_repositorio');
 
 
 
