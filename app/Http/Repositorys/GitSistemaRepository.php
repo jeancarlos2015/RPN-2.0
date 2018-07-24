@@ -518,7 +518,7 @@ class GitSistemaRepository
             $client->authenticate($github->usuario_github, $github->senha_github);
             return collect($client->currentUser()->repositories());
         } catch (\Exception $ex) {
-            flash('Error ao obter dados do usuário do github, é provável que não tenha sincronizado com a conta do github')->warning();
+            flash('Error ao obter dados do usuário do github, é provável que não tenha sincronizado com a conta do github, se o mesmo foi sincronizado da forma correta favor desconsiderar esta mensagem!!')->warning();
             return collect(array());
         } catch (ApiLimitExceedException $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
