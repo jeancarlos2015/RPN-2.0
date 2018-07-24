@@ -47,7 +47,7 @@
 
 
             <li>
-                <a href="{!! route('index_init') !!}"><i class="fa fa-fw fa-pencil"></i>Criação de Repositório</a>
+                <a href="{!! route('index_init') !!}"><i class="fa fa-fw fa-pencil"></i>Controle de Repositório</a>
             </li>
 
         </ul>

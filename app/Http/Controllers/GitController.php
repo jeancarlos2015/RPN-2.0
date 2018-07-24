@@ -92,7 +92,7 @@ class GitController extends Controller
     public function selecionar_repositorio($repositorio_atual, $default_branch){
         try {
             GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
-            GitSistemaRepository::pull();
+            GitSistemaRepository::pull($default_branch);
             return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
         } catch (\Exception $ex) {
             flash($ex->getMessage())->error();
@@ -106,10 +106,15 @@ class GitController extends Controller
             $github_data = Auth::user()->github;
             $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
             $data = [
+                'codusuario' => Auth::user()->codusuario,
+                'email_github' => $github_data->email_github,
+                'token_github' => $github_data->token_github,
+                'senha_github' => $github_data->senha_github,
                 'branch_atual' => $repositorio['default_branch'],
                 'repositorio_atual' => $repositorio['name']
             ];
             $user_github->update($data);
+            
             return redirect()->route('controle_versao.show', ['nome_repositorio' => $request->nome]);
         } catch (\Exception $ex) {
             flash($ex->getMessage())->error();
@@ -124,9 +129,9 @@ class GitController extends Controller
         return view('controle_versao.show', compact('tipo', 'branch_atual', 'repositorio'));
     }
 
-    public function delete_repository(Request $request)
+    public function delete_repository($repositorio_atual, $default_branch)
     {
-        dd($request);
+        dd($repositorio_atual, $default_branch);
     }
 
     public function edit_repository(Request $request)

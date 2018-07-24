@@ -23,10 +23,8 @@
         @includeIf('layouts.layout_admin_new.componentes.tables',[
                             'titulos' => $titulos,
                             'repositorios' => $repositorios,
-                            'rota_edicao' => 'controle_usuarios.edit',
-                            'rota_exclusao' => 'controle_usuarios.destroy',
                             'nome_botao' => 'Novo',
-                            'titulo' =>'Usuarios'
+                            'titulo' =>'Repositórios'
             ])
     @endif
 @endsection

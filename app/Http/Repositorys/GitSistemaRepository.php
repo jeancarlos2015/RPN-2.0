@@ -302,16 +302,20 @@ class GitSistemaRepository
         try {
             $client = new Client();
             $github = Auth::user()->github;
-            $repositorio = self::listar_repositorios()->where('name', $nome_repositorio);
             $client->authenticate($github->usuario_github, $github->senha_github);
-            if (empty($repositorio)) {
-                return $client->repo()->create($nome_repositorio);
-
-            } else {
-                flash('Repositório Já Existe!!!')->error();
-            }
+            return $client->repo()->create(
+                $nome_repositorio,
+                '',
+                '',
+                true,
+                null,
+                false,
+                false,
+                false,
+                null,
+                true);
         } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash('Repositório Já Existe!!!')->warning();
         } catch (ApiLimitExceedException $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
         }
@@ -478,7 +482,7 @@ class GitSistemaRepository
         } catch (\Exception $ex) {
             flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash('error..Resolvendo..')->error();
         }
 
     }

@@ -68,7 +68,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         
         Route::post('merge_checkout', 'GitController@merge_checkout')->name('merge_checkout');
         Route::post('delete', 'GitController@delete')->name('delete');
-        Route::post('delete_repository', 'GitController@delete_repository')->name('delete_repository');
+        Route::get('delete_repository/{repositorio_atual}/{default_branch}', 'GitController@delete_repository')->name('delete_repository');
         Route::post('update_repository', 'GitController@update_repository')->name('update_repository');
 
         Route::get('index_reset_files', 'GitController@index_reset_files')->name('index_reset_files');
