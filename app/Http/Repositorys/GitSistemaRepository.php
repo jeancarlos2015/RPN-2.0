@@ -338,14 +338,14 @@ class GitSistemaRepository
 
     }
 
-    public
-    function delete_repository($repositorio, $usuario_git)
+    public static 
+    function delete_repository($repositorio)
     {
         try {
             $client = new Client();
             $github = Auth::user()->github;
             $client->authenticate($github->usuario_github, $github->senha_github);
-            $client->repo()->remove($usuario_git, $repositorio);
+            $client->repo()->remove($github->usuario_github, $repositorio);
         } catch (\Exception $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
         } catch (ApiLimitExceedException $ex) {
@@ -537,6 +537,7 @@ class GitSistemaRepository
     public static function change_branch($repositorio_atual, $default_branch)
     {
         try {
+            
             $github_data = Auth::user()->github;
             $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
             $data = [
@@ -546,6 +547,9 @@ class GitSistemaRepository
             $user_github->update($data);
         } catch (\Exception $ex) {
             flash($ex->getMessage())->warning();
+        } catch (ApiLimitExceedException $ex) {
+            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            return collect(array());
         }
 
     }

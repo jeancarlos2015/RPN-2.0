@@ -63,13 +63,14 @@ class GitController extends Controller
     {
         $branch_atual = 'Em construção';
         $repositorios = GitSistemaRepository::listar_repositorios();
+
         $tipo = 'repositorio';
         $titulos = [
             'Nome Do Repositório',
             'Nome Completo Do Repositório',
             'Ações'
         ];
-        return view('controle_versao.init', compact('tipo', 'branch_atual', 'titulos','repositorios'));
+        return view('controle_versao.init', compact('tipo', 'branch_atual', 'titulos', 'repositorios'));
     }
 
 
@@ -88,9 +89,30 @@ class GitController extends Controller
         return view('controle_versao.index', compact('branch_atual', 'funcionalidades'));
     }
 
-    
-    public function selecionar_repositorio($repositorio_atual, $default_branch){
+//'branch',
+////        'descricao',
+////        'codusuario'
+    public function selecionar_repositorio($repositorio_atual, $default_branch)
+    {
         try {
+            $client = new Client();
+            $github = Auth::user()->github;
+            $client->authenticate($github->usuario_github, $github->senha_github);
+            $branchs = $client->repo()->branches($github->usuario_github, $repositorio_atual);
+
+            foreach (Auth::user()->branchs as $branch1) {
+                $branc_old = Branchs::findOrFail($branch1->codbranch);
+                $branc_old->delete();
+            }
+
+            foreach ($branchs as $branch) {
+                $data = [
+                    'branch' => $branch['name'],
+                    'descricao' => 'Nenhum',
+                    'codusuario' => Auth::user()->codusuario
+                ];
+                Branchs::create($data);
+            }
             GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
             GitSistemaRepository::pull($default_branch);
             return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
@@ -99,6 +121,7 @@ class GitController extends Controller
             return redirect()->route('index_init');
         }
     }
+
     public function init(Request $request)
     {
         try {
@@ -114,7 +137,7 @@ class GitController extends Controller
                 'repositorio_atual' => $repositorio['name']
             ];
             $user_github->update($data);
-            
+
             return redirect()->route('controle_versao.show', ['nome_repositorio' => $request->nome]);
         } catch (\Exception $ex) {
             flash($ex->getMessage())->error();
@@ -131,7 +154,8 @@ class GitController extends Controller
 
     public function delete_repository($repositorio_atual, $default_branch)
     {
-        dd($repositorio_atual, $default_branch);
+        GitSistemaRepository::delete_repository($repositorio_atual);
+        return redirect()->route('index_init');
     }
 
     public function edit_repository(Request $request)
@@ -172,7 +196,7 @@ class GitController extends Controller
             GitSistemaRepository::pull(Auth::user()->github->branch_atual);
             flash('Operação Feita com sucesso!!!');
         } catch (\Exception $ex) {
-           flash('Error ao atualizar')->error();
+            flash('Error ao atualizar')->error();
         }
 
         return redirect()->route('painel');
@@ -193,27 +217,27 @@ class GitController extends Controller
             'tipo'
         ];
         $erros = \Validator::make($request->all(), $validate);
-        if ($erros->fails()){
+        if ($erros->fails()) {
             return redirect()->route('painel')
                 ->withErrors($erros)
                 ->withInput();
-        }else{
-            if ($request->tipo==='checkout'){
+        } else {
+            if ($request->tipo === 'checkout') {
                 GitSistemaRepository::checkout($request->branch);
-            }elseif ($request->tipo==='merge'){
+            } elseif ($request->tipo === 'merge') {
 
             }
-            
+
             flash('Operação Feita com sucesso');
             return redirect()->route('painel');
         }
-        
+
         return redirect()->route('painel');
     }
 
     private function checkout(Request $request)
     {
-        
+
         return redirect()->route('index_merge_checkout');
     }
 
