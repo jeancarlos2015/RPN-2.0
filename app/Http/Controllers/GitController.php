@@ -9,6 +9,7 @@ use App\Http\Util\Dado;
 use Github\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class GitController extends Controller
 {
@@ -94,32 +95,35 @@ class GitController extends Controller
 ////        'codusuario'
     public function selecionar_repositorio($repositorio_atual, $default_branch)
     {
-        try {
-            $client = new Client();
-            $github = Auth::user()->github;
-            $client->authenticate($github->usuario_github, $github->senha_github);
-            $branchs = $client->repo()->branches($github->usuario_github, $repositorio_atual);
+        $client = new Client();
+        $github = Auth::user()->github;
+        
+        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $branchs = $client->repo()->branches($github->usuario_github, $repositorio_atual);
 
-            foreach (Auth::user()->branchs as $branch1) {
-                $branc_old = Branchs::findOrFail($branch1->codbranch);
-                $branc_old->delete();
-            }
-
-            foreach ($branchs as $branch) {
-                $data = [
-                    'branch' => $branch['name'],
-                    'descricao' => 'Nenhum',
-                    'codusuario' => Auth::user()->codusuario
-                ];
-                Branchs::create($data);
-            }
-            GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
-            GitSistemaRepository::pull($default_branch);
-            return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
-        } catch (\Exception $ex) {
-            flash($ex->getMessage())->error();
-            return redirect()->route('index_init');
+        foreach (Auth::user()->branchs as $branch1) {
+            $branc_old = Branchs::findOrFail($branch1->codbranch);
+            $branc_old->delete();
         }
+
+        foreach ($branchs as $branch) {
+            $data = [
+                'branch' => $branch['name'],
+                'descricao' => 'Nenhum',
+                'codusuario' => Auth::user()->codusuario
+            ];
+            Branchs::create($data);
+        }
+
+        GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
+        GitSistemaRepository::pull($default_branch);
+        return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
+//        try {
+//
+//        } catch (\Exception $ex) {
+//            flash($ex->getMessage())->error();
+//            return redirect()->route('index_init');
+//        }
     }
 
     public function init(Request $request)

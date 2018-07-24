@@ -22,7 +22,7 @@
 
         <div class="form-group">
             <label>Token Github</label>
-            <input type="text" class="form-control" name="token_github" required>
+            <input type="password" class="form-control" name="token_github" required>
         </div>
 
         <div class="form-group">
