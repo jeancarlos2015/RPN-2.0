@@ -7,7 +7,7 @@
         </a>
         <ul class="sidenav-second-level collapse" id="collapseComponents1">
             <li>
-                <a href="{!! route('painel') !!}"><i class="fa fa-fw fa-pencil"></i>Painel</a>
+                <a href="{!! route('painel') !!}"><i class="fa fa-fw fa-pencil"></i>Painel Sistema</a>
             </li>
 
             <li>
@@ -38,12 +38,12 @@
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
            data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-building"></i>
-            <span class="nav-link-text">Versionamento</span>
+            <span class="nav-link-text">Controle de Versionamento</span>
         </a>
         <ul class="sidenav-second-level collapse" id="collapseComponents">
-            <li>
-                <a href="{!! route('index_painel') !!}"><i class="fa fa-fw fa-pencil"></i>Painel</a>
-            </li>
+            {{--<li>--}}
+                {{--<a href="{!! route('index_painel') !!}"><i class="fa fa-fw fa-pencil"></i>Painel Git</a>--}}
+            {{--</li>--}}
 
 
             <li>
@@ -66,7 +66,7 @@
                 </li>
                 <li>
                     <a href="{!! route('create_github',['codusuario' => Auth::user()->codusuario]) !!}"><i
-                                class="fa fa-fw fa-pencil"></i>Github</a>
+                                class="fa fa-fw fa-pencil"></i>Configuração Do Github</a>
                 </li>
             </ul>
         </li>
@@ -86,7 +86,7 @@
                 </li>
                 <li>
                     <a href="{!! route('create_github',['codusuario' => Auth::user()->codusuario]) !!}"><i
-                                class="fa fa-fw fa-pencil"></i>Github</a>
+                                class="fa fa-fw fa-pencil"></i>Configuração do Github</a>
                 </li>
 
 

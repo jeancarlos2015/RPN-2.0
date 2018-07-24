@@ -131,7 +131,7 @@ class GitController extends Controller
             return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
         } catch (\Exception $ex) {
             flash($ex->getMessage())->error();
-            return redirect()->route('index_init');
+            return redirect()->route('painel');
         }
 
         GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
@@ -206,7 +206,7 @@ class GitController extends Controller
 
     }
 
-    public function pull(Request $request)
+    public function pull()
     {
         try {
             GitSistemaRepository::pull(Auth::user()->github->branch_atual);
