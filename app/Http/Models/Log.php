@@ -49,4 +49,11 @@ class Log extends Model
         else
             return $value;
     }
+    public function setCreatedAtAttribute($value)
+    {
+        if (isset($value))
+            $this->attributes['created_at'] = Carbon::createFromFormat('d/m/Y H:i:s', $value)->toDateString();
+        else
+            $this->attributes['created_at'] = null;
+    }
 }
