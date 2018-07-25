@@ -47,24 +47,24 @@ class GitSistemaRepository
             $branch = $dado['branch'];
             $mensagem = $dado['mensagem'];
             $repositorio = $dado['repositorio'];
-            $user_name = $dado['usuario'];
-            $email = $dado['email'];
+//            $user_name = $dado['usuario'];
+//            $email = $dado['email'];
 
             $client = new Client();
             $github = Auth::user()->github;
             $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
             $contents = new Contents($client);
 
-            if (!$contents->exists($user_name, $repositorio, $nome, $branch)) {
+            if (!$contents->exists(decrypt($github->usuario_github), $repositorio, $nome, $branch)) {
                 try {
-                    $contents->archive('jeancarlos2015', 'teste', '.db', 'master');
+                    $contents->archive(decrypt($github->usuario_github), $repositorio, $formato, $branch);
                 } catch (\Exception $ex) {
                     dd($ex->getMessage());
                 }
 
 
                 $contents->create(
-                    $user_name,
+                    decrypt($github->usuario_github),
                     $repositorio,
                     $nome,
                     $conteudo,
@@ -96,11 +96,27 @@ class GitSistemaRepository
             $email = $dado['email'];
             $client = new Client();
             $github = Auth::user()->github;
-            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+            $client->authenticate(
+                Crypt::decrypt($github->usuario_github),
+                Crypt::decrypt($github->senha_github)
+            );
             $contents = new Contents($client);
-            $commiter = array('name' => $user_name, 'email' => $email);
-            $oldfile = $client->repo()->contents()->show($user_name, $repositorio, $nome, $branch);
-            $contents->archive($user_name, $repositorio, $formato, $branch);
+            $commiter = array('name' => Crypt::decrypt($github->usuario_github), 'email' => $email);
+            $oldfile = $client
+                ->repo()
+                ->contents()
+                ->show(
+                    Crypt::decrypt($github->usuario_github),
+                    $repositorio,
+                    $nome,
+                    $branch
+                );
+            $contents->archive(
+                $user_name,
+                $repositorio,
+                $formato,
+                $branch
+            );
             $contents->update(
                 $user_name,
                 $repositorio,
@@ -109,7 +125,8 @@ class GitSistemaRepository
                 $mensagem,
                 $oldfile['sha'],
                 $branch,
-                $commiter);
+                $commiter
+            );
         } catch (\Exception $ex) {
             flash('Por Favor Sincronize os dados do github com o sistema')->error();
         } catch (ApiLimitExceedException $ex) {
@@ -139,7 +156,7 @@ class GitSistemaRepository
             $github = Auth::user()->github;
             $repositorio = $github->repositorio_atual;
             $usuario_git = Crypt::decrypt($github->usuario_github);
-            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+            $client->authenticate($usuario_git, Crypt::decrypt($github->senha_github));
             $branchs = $client->repo()->branches($usuario_git, $repositorio, $github->branch_atual);
             $sha = $branchs['commit']['sha'];
             $http_Client = $client->getHttpClient();
@@ -433,7 +450,6 @@ class GitSistemaRepository
             $dado->conteudo_banco[$indice] = [];
             $dado->banco[$indice] = $files__db[$indice];
             $dado->conteudo_banco[$indice] = self::ler_arquivo(database_path('banco') . "/" . $files__db[$indice]);
-
         }
 
         return $dado;
@@ -612,17 +628,17 @@ class GitSistemaRepository
     {
 
         try {
-        $github_data = Auth::user()->github;
-        $user_github = (new \App\Http\Models\UsuarioGithub)->findOrFail($github_data->codusuariogithub);
-        $data = [
-            'codusuario' => Auth::user()->codusuario,
-            'email_github' => $github_data->email_github,
-            'token_github' => $github_data->token_github,
-            'senha_github' => $github_data->senha_github,
-            'branch_atual' => $default_branch,
-            'repositorio_atual' => $repositorio_atual
-        ];
-        $user_github->update($data);
+            $github_data = Auth::user()->github;
+            $user_github = (new \App\Http\Models\UsuarioGithub)->findOrFail($github_data->codusuariogithub);
+            $data = [
+                'codusuario' => Auth::user()->codusuario,
+                'email_github' => $github_data->email_github,
+                'token_github' => $github_data->token_github,
+                'senha_github' => $github_data->senha_github,
+                'branch_atual' => $default_branch,
+                'repositorio_atual' => $repositorio_atual
+            ];
+            $user_github->update($data);
 
         } catch (\Exception $ex) {
             flash($ex->getMessage())->warning();
