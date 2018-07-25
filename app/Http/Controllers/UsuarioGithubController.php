@@ -37,32 +37,38 @@ class UsuarioGithubController extends Controller
 
     public function store(Request $request)
     {
-        $erros = \Validator::make($request->all(), UsuarioGithub::validacao());
-        $usuario_github = null;
-        if ($erros->fails()) {
-            return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario])
-                ->withErrors($erros)
-                ->withInput();
-        }
         try {
+            $erros = \Validator::make($request->all(), UsuarioGithub::validacao());
+            $usuario_github = null;
+            if ($erros->fails()) {
+                return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario])
+                    ->withErrors($erros)
+                    ->withInput();
+            }
+            try {
 
-            $data = [
-                'usuario_github' => Crypt::encrypt($request->usuario_github),
-                'codusuario' => $request->codusuario,
-                'email_github' => $request->email_github,
-                'token_github' => bcrypt($request->token_github),
-                'branch_atual' => 'Nenhuma Branch',
-                'repositorio_atual' => 'Nenhum Repositório',
-                'senha_github' => Crypt::encrypt($request->senha_github)
-            ];
-            GitSistemaRepository::delete_all_github();
-            UsuarioGithub::create($data);
-            LogRepository::criar("Dados Salvo Com sucesso", "Rota De Configuração Github");
-            flash('Configuração salva com sucesso!!');
+                $data = [
+                    'usuario_github' => Crypt::encrypt($request->usuario_github),
+                    'codusuario' => $request->codusuario,
+                    'email_github' => $request->email_github,
+                    'token_github' => bcrypt($request->token_github),
+                    'branch_atual' => 'Nenhuma Branch',
+                    'repositorio_atual' => 'Nenhum Repositório',
+                    'senha_github' => Crypt::encrypt($request->senha_github)
+                ];
+                GitSistemaRepository::delete_all_github();
+                UsuarioGithub::create($data);
+                LogRepository::criar("Dados Salvo Com sucesso", "Rota De Configuração Github");
+                flash('Configuração salva com sucesso!!');
+            } catch (\Exception $ex) {
+                flash($ex->getMessage())->error();
+            }
+            return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
         } catch (\Exception $ex) {
-            flash($ex->getMessage())->error();
+            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            return redirect()->route('painel');
         }
-        return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
 
     }
 

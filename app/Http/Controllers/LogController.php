@@ -20,6 +20,7 @@ class LogController extends Controller
     {
         $titulos = [
             'código',
+            'Nome',
             'descricao',
             'Usuário'
         ];

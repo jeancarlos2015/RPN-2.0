@@ -4,6 +4,7 @@
     @foreach($logs as $log)
         <tr>
             <td>{!! $log->codlog !!}</td>
+            <td>{!! $log->nome !!}</td>
             <td>{!! $log->descricao !!}</td>
             <td>{!! $log->usuario->name !!}</td>
             <td>
