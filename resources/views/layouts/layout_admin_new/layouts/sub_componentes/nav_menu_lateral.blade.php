@@ -33,26 +33,23 @@
         </ul>
     </li>
 
+    @if(!empty(Auth::user()->github))
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
+               data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-building"></i>
+                <span class="nav-link-text">Controle de Versionamento</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseComponents">
+                <li>
+                    <a href="{!! route('index_init') !!}"><i class="fa fa-fw fa-pencil"></i>Controle de Repositório</a>
+                </li>
 
-    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
-           data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-building"></i>
-            <span class="nav-link-text">Controle de Versionamento</span>
-        </a>
-        <ul class="sidenav-second-level collapse" id="collapseComponents">
-            {{--<li>--}}
-                {{--<a href="{!! route('index_painel') !!}"><i class="fa fa-fw fa-pencil"></i>Painel Git</a>--}}
-            {{--</li>--}}
-
-
-            <li>
-                <a href="{!! route('index_init') !!}"><i class="fa fa-fw fa-pencil"></i>Controle de Repositório</a>
-            </li>
-
-        </ul>
-    </li>
-    @if(Auth::user()->type === 'administrador')
+            </ul>
+        </li>
+    @endif
+    
+    @if(Auth::user()->type === 'administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com')
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2"
                data-parent="#exampleAccordion">
@@ -108,8 +105,8 @@
                     <form class="form-group" action="{!! route('commit') !!}" method="post">
                         @csrf
                         <div class="form-group">
-                            <textarea type="text" name="commit" class="form-control"
-                                      placeholder="Commit Message"></textarea>
+                        <textarea type="text" name="commit" class="form-control"
+                                  placeholder="Commit Message"></textarea>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary form-control">Commit & Push</button>
