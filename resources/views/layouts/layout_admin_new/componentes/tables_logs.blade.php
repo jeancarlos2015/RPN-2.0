@@ -7,7 +7,7 @@
             <td>{!! $log->nome !!}</td>
             <td>{!! $log->descricao !!}</td>
             <td>{!! $log->usuario->name !!}</td>
-            <td>{!! $log->ocorrencia !!}</td>
+            <td>{!! $log->created_at !!}</td>
             <td>
                 @if(!empty($rota_edicao))
                     @include('componentes.link',['id' => $log->codlog, 'rota' => $rota_edicao])

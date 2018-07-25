@@ -3,6 +3,7 @@
 namespace App\Http\Models;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -31,12 +32,21 @@ class Log extends Model
         'nome',
         'descricao',
         'codusuario',
-        'ocorrencia'
+        'ocorrencia',
+        'created_at'
     ];
 
 
     public  function usuario()
     {
         return $this->hasOne(User::class, 'codusuario', 'codusuario');
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        if (isset($value))
+            return Carbon::parse($value)->format('d/m/Y H:i:s');
+        else
+            return $value;
     }
 }

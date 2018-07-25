@@ -8,7 +8,7 @@
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
                     'modelos' => $logs,
-                    'rota_exclusao' => 'controle_modelos.destroy',
+                    'rota_exclusao' => 'controle_logs.destroy',
                     'titulo' =>'Logs Do Sistema'
     ])
 @endsection
