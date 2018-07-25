@@ -76,9 +76,9 @@ class GitSistemaRepository
                 self::upload_github_update($dado);
             }
         } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash($ex->getMessage())->error();
         }
 
     }
@@ -128,9 +128,9 @@ class GitSistemaRepository
                 $commiter
             );
         } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash($ex->getMessage())->error();
         }
 
 
@@ -170,9 +170,9 @@ class GitSistemaRepository
             flash('Branch ' . $branch . ' criada com sucesso!!!');
 
         } catch (\Exception $ex) {
-            flash('A branch já existe')->warning();
+            flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash($ex->getMessage())->error();
         }
 
 
@@ -267,7 +267,7 @@ class GitSistemaRepository
                 }
                 return $Files;
             } catch (\Exception $ex) {
-                flash('Por Favor Sincronize os dados do github com o sistema')->error();
+                flash($ex->getMessage())->warning();
             }
         }
         return array();
@@ -331,6 +331,7 @@ class GitSistemaRepository
                 );
             self::escrer_arquivo($path . "/" . $arquivo, $conteudo);
         } catch (ErrorException $e) {
+            flash($e->getMessage())->warning();
         }
 
 
@@ -531,7 +532,7 @@ class GitSistemaRepository
         } catch (\Exception $ex) {
             flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
-            flash('error..Resolvendo..')->error();
+            flash($ex->getMessage())->error();
         }
 
     }
@@ -598,7 +599,7 @@ class GitSistemaRepository
         } catch (\Exception $ex) {
             flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash($ex->getMessage())->error();
         }
 
     }
@@ -643,7 +644,7 @@ class GitSistemaRepository
         } catch (\Exception $ex) {
             flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash($ex->getMessage())->error();
             return collect(array());
         }
 
@@ -659,7 +660,7 @@ class GitSistemaRepository
         } catch (\Exception $ex) {
             flash($ex->getMessage())->warning();
         } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
+            flash($ex->getMessage())->error();
         }
 
     }
