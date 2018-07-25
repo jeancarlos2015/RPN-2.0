@@ -18,7 +18,7 @@
 <script>
     $(document).ready(function () {
         // $("#successMessage").delay(5000).slideUp(60);
-        $('div.alert').delay(3000).slideUp(60);
+        // $('div.alert').delay(3000).slideUp(60);
     });
 
 </script>

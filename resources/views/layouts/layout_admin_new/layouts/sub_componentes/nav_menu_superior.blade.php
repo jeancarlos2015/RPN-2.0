@@ -1,4 +1,11 @@
 <ul class="navbar-nav ml-auto">
+
+    <li class="nav-item">
+        <a class="nav-link" href="{!! route('controle_logs.index') !!}">
+            Logs do Sistema <span class="sr-only"></span>
+        </a>
+    </li>
+    
     <li class="nav-item">
         <a class="nav-link">
             Usuário: {{ Auth::user()->name }} <span class="sr-only"></span>

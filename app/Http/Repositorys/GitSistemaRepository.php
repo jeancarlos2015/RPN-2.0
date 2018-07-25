@@ -6,8 +6,6 @@ use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
 use Github\Api\Repository\Contents;
 use Github\Client;
-use Github\Exception\ApiLimitExceedException;
-use Github\Exception\ErrorException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 
@@ -17,121 +15,107 @@ class GitSistemaRepository
 
     private static function ler_arquivo($path)
     {
-        try {
-            $handle = fopen($path, "r");
-            $conteudo = fread($handle, filesize($path));
-            fclose($handle);
-            return $conteudo;
-        } catch (\Exception $ex) {
-            flash('error ao ler o arquivo')->error();
-        }
+
+        $handle = fopen($path, "r");
+        $conteudo = fread($handle, filesize($path));
+        fclose($handle);
+        return $conteudo;
+
 
     }
 
     private static function escrer_arquivo($path, $conteudo)
     {
-        try {
-            file_put_contents($path, $conteudo);
-        } catch (\Exception $ex) {
-            flash('error ao gravar o arquivo')->error();
-        }
+
+        file_put_contents($path, $conteudo);
 
     }
 
     private static function upload_github_create($dado)
     {
-        try {
-            $nome = $dado['nome'];
-            $conteudo = $dado['conteudo'];
-            $formato = $dado['formato'];
-            $branch = $dado['branch'];
-            $mensagem = $dado['mensagem'];
-            $repositorio = $dado['repositorio'];
+
+        $nome = $dado['nome'];
+        $conteudo = $dado['conteudo'];
+        $formato = $dado['formato'];
+        $branch = $dado['branch'];
+        $mensagem = $dado['mensagem'];
+        $repositorio = $dado['repositorio'];
 //            $user_name = $dado['usuario'];
 //            $email = $dado['email'];
 
-            $client = new Client();
-            $github = Auth::user()->github;
-            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-            $contents = new Contents($client);
+        $client = new Client();
+        $github = Auth::user()->github;
+        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $contents = new Contents($client);
 
-            if (!$contents->exists(decrypt($github->usuario_github), $repositorio, $nome, $branch)) {
-                try {
-                    $contents->archive(decrypt($github->usuario_github), $repositorio, $formato, $branch);
-                } catch (\Exception $ex) {
-                    dd($ex->getMessage());
-                }
-
-
-                $contents->create(
-                    decrypt($github->usuario_github),
-                    $repositorio,
-                    $nome,
-                    $conteudo,
-                    $mensagem,
-                    $branch);
-
-            } else {
-
-                self::upload_github_update($dado);
+        if (!$contents->exists(decrypt($github->usuario_github), $repositorio, $nome, $branch)) {
+            try {
+                $contents->archive(decrypt($github->usuario_github), $repositorio, $formato, $branch);
+            } catch (\Exception $ex) {
+                dd($ex->getMessage());
             }
-        } catch (\Exception $ex) {
-            flash($ex->getMessage())->warning();
-        } catch (ApiLimitExceedException $ex) {
-            flash($ex->getMessage())->error();
+
+
+            $contents->create(
+                decrypt($github->usuario_github),
+                $repositorio,
+                $nome,
+                $conteudo,
+                $mensagem,
+                $branch);
+
+        } else {
+
+            self::upload_github_update($dado);
         }
+
 
     }
 
     private static function upload_github_update($dado)
     {
-        try {
-            $nome = $dado['nome'];
-            $conteudo = $dado['conteudo'];
-            $formato = $dado['formato'];
-            $branch = $dado['branch'];
-            $mensagem = $dado['mensagem'];
-            $repositorio = $dado['repositorio'];
-            $user_name = $dado['usuario'];
-            $email = $dado['email'];
-            $client = new Client();
-            $github = Auth::user()->github;
-            $client->authenticate(
+
+        $nome = $dado['nome'];
+        $conteudo = $dado['conteudo'];
+        $formato = $dado['formato'];
+        $branch = $dado['branch'];
+        $mensagem = $dado['mensagem'];
+        $repositorio = $dado['repositorio'];
+        $user_name = $dado['usuario'];
+        $email = $dado['email'];
+        $client = new Client();
+        $github = Auth::user()->github;
+        $client->authenticate(
+            Crypt::decrypt($github->usuario_github),
+            Crypt::decrypt($github->senha_github)
+        );
+        $contents = new Contents($client);
+        $commiter = array('name' => Crypt::decrypt($github->usuario_github), 'email' => $email);
+        $oldfile = $client
+            ->repo()
+            ->contents()
+            ->show(
                 Crypt::decrypt($github->usuario_github),
-                Crypt::decrypt($github->senha_github)
-            );
-            $contents = new Contents($client);
-            $commiter = array('name' => Crypt::decrypt($github->usuario_github), 'email' => $email);
-            $oldfile = $client
-                ->repo()
-                ->contents()
-                ->show(
-                    Crypt::decrypt($github->usuario_github),
-                    $repositorio,
-                    $nome,
-                    $branch
-                );
-            $contents->archive(
-                $user_name,
-                $repositorio,
-                $formato,
-                $branch
-            );
-            $contents->update(
-                $user_name,
                 $repositorio,
                 $nome,
-                $conteudo,
-                $mensagem,
-                $oldfile['sha'],
-                $branch,
-                $commiter
+                $branch
             );
-        } catch (\Exception $ex) {
-            flash($ex->getMessage())->warning();
-        } catch (ApiLimitExceedException $ex) {
-            flash($ex->getMessage())->error();
-        }
+        $contents->archive(
+            $user_name,
+            $repositorio,
+            $formato,
+            $branch
+        );
+        $contents->update(
+            $user_name,
+            $repositorio,
+            $nome,
+            $conteudo,
+            $mensagem,
+            $oldfile['sha'],
+            $branch,
+            $commiter
+        );
 
 
     }
@@ -151,29 +135,22 @@ class GitSistemaRepository
 
     public static function create_branch($branch)
     {
-        try {
-            $client = new Client();
-            $github = Auth::user()->github;
-            $repositorio = $github->repositorio_atual;
-            $usuario_git = Crypt::decrypt($github->usuario_github);
-            $client->authenticate($usuario_git, Crypt::decrypt($github->senha_github));
-            $branchs = $client->repo()->branches($usuario_git, $repositorio, $github->branch_atual);
-            $sha = $branchs['commit']['sha'];
-            $http_Client = $client->getHttpClient();
-            $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs';
-            $header = array("Authorization" => "Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA==");
-            $body = '{
+
+        $client = new Client();
+        $github = Auth::user()->github;
+        $repositorio = $github->repositorio_atual;
+        $usuario_git = Crypt::decrypt($github->usuario_github);
+        $client->authenticate($usuario_git, Crypt::decrypt($github->senha_github));
+        $branchs = $client->repo()->branches($usuario_git, $repositorio, $github->branch_atual);
+        $sha = $branchs['commit']['sha'];
+        $http_Client = $client->getHttpClient();
+        $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs';
+        $header = array("Authorization" => "Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA==");
+        $body = '{
                 "ref" : "refs/heads/' . $branch . '",
                 "sha" : "' . $sha . '"
         }';
-            $http_Client->post($url, $header, $body);
-            flash('Branch ' . $branch . ' criada com sucesso!!!');
-
-        } catch (\Exception $ex) {
-            flash($ex->getMessage())->warning();
-        } catch (ApiLimitExceedException $ex) {
-            flash($ex->getMessage())->error();
-        }
+        $http_Client->post($url, $header, $body);
 
 
     }
@@ -314,25 +291,21 @@ class GitSistemaRepository
     {
 
 
-        try {
-            $client = new Client();
-            $github = Auth::user()->github;
+        $client = new Client();
+        $github = Auth::user()->github;
 
-            $client->authenticate(
+        $client->authenticate(
+            Crypt::decrypt($github->usuario_github),
+            Crypt::decrypt($github->senha_github)
+        );
+        $conteudo = $client->repo()
+            ->contents()
+            ->download(
                 Crypt::decrypt($github->usuario_github),
-                Crypt::decrypt($github->senha_github)
+                $github->repositorio_atual, $arquivo,
+                $branch_atual
             );
-            $conteudo = $client->repo()
-                ->contents()
-                ->download(
-                    Crypt::decrypt($github->usuario_github),
-                    $github->repositorio_atual, $arquivo,
-                    $branch_atual
-                );
-            self::escrer_arquivo($path . "/" . $arquivo, $conteudo);
-        } catch (ErrorException $e) {
-            flash($e->getMessage())->warning();
-        }
+        self::escrer_arquivo($path . "/" . $arquivo, $conteudo);
 
 
     }
@@ -340,58 +313,42 @@ class GitSistemaRepository
     public
     static function create_repository($nome_repositorio)
     {
-        try {
-            $client = new Client();
-            $github = Auth::user()->github;
-            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-            return $client->repo()->create(
-                $nome_repositorio,
-                '',
-                '',
-                true,
-                null,
-                false,
-                false,
-                false,
-                null,
-                true);
-        } catch (\Exception $ex) {
-            flash('Repositório Já Existe!!!')->warning();
-        } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
-        }
+        $client = new Client();
+        $github = Auth::user()->github;
+        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        return $client->repo()->create(
+            $nome_repositorio,
+            '',
+            '',
+            true,
+            null,
+            false,
+            false,
+            false,
+            null,
+            true);
+
 
     }
 
     public
     static function get_repositorio($username, $repository)
     {
-        try {
-            $client = new Client();
-            $github = Auth::user()->github;
-            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-            return $client->repo()->show($username, $repository);
-        } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
-        } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
-        }
-
+        $client = new Client();
+        $github = Auth::user()->github;
+        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        return $client->repo()->show($username, $repository);
     }
 
     public static
     function delete_repository($repositorio)
     {
-        try {
-            $client = new Client();
-            $github = Auth::user()->github;
-            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-            $client->repo()->remove(Crypt::decrypt($github->usuario_github), $repositorio);
-        } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
-        } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
-        }
+
+        $client = new Client();
+        $github = Auth::user()->github;
+        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $client->repo()->remove(Crypt::decrypt($github->usuario_github), $repositorio);
+
 
     }
 
@@ -407,16 +364,11 @@ class GitSistemaRepository
     public
     function client_autenticate()
     {
-        try {
-            $client = new Client();
-            $github = Auth::user()->github;
-            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-            return $client;
-        } catch (\Exception $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
-        } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
-        }
+
+        $client = new Client();
+        $github = Auth::user()->github;
+        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        return $client;
 
     }
 
@@ -515,25 +467,21 @@ class GitSistemaRepository
     public
     static function commit($mensagem)
     {
-        try {
-            $dado = self::carrega_dados();
-            $dado->mensagem = $mensagem;
-            $dados = self::extrai_dados_banco($dado, 1);
 
-            //upload do banco
-            self::upload_github_create($dados);
+        $dado = self::carrega_dados();
+        $dado->mensagem = $mensagem;
+        $dados = self::extrai_dados_banco($dado, 1);
 
-            //upload dos modelos
-            for ($indice = 1; $indice <= count($dado->modelo); $indice++) {
-                $dados1 = self::extrai_dados_modelos($dado, $indice);
-                self::upload_github_create($dados1);
-            }
-            return $dado;
-        } catch (\Exception $ex) {
-            flash($ex->getMessage())->warning();
-        } catch (ApiLimitExceedException $ex) {
-            flash($ex->getMessage())->error();
+        //upload do banco
+        self::upload_github_create($dados);
+
+        //upload dos modelos
+        for ($indice = 1; $indice <= count($dado->modelo); $indice++) {
+            $dados1 = self::extrai_dados_modelos($dado, $indice);
+            self::upload_github_create($dados1);
         }
+        return $dado;
+
 
     }
 
@@ -580,27 +528,23 @@ class GitSistemaRepository
     public
     static function pull($default_branch)
     {
-        try {
-            //obtem o caminho do banco
-            $path_banco = database_path('banco');
-            //obtem o caminho dos modelos
-            $path_modelo = database_path('banco/modelos');
-            self::verifica_arquivos($path_banco, $path_modelo);
-            //obtem o nome do banco
-            $dados = self::get_files_github_pull();
-            $nome_banco = $dados['banco']['name'];
-            $modelos = $dados['modelos'];
 
-            //baixa os modelos e os sobrescreve
-            self::pull_auxiliar($nome_banco, $path_banco, $default_branch);
-            foreach ($modelos as $modelo) {
-                self::pull_auxiliar($modelo['name'], $path_modelo, $default_branch);
-            }
-        } catch (\Exception $ex) {
-            flash($ex->getMessage())->warning();
-        } catch (ApiLimitExceedException $ex) {
-            flash($ex->getMessage())->error();
+        //obtem o caminho do banco
+        $path_banco = database_path('banco');
+        //obtem o caminho dos modelos
+        $path_modelo = database_path('banco/modelos');
+        self::verifica_arquivos($path_banco, $path_modelo);
+        //obtem o nome do banco
+        $dados = self::get_files_github_pull();
+        $nome_banco = $dados['banco']['name'];
+        $modelos = $dados['modelos'];
+
+        //baixa os modelos e os sobrescreve
+        self::pull_auxiliar($nome_banco, $path_banco, $default_branch);
+        foreach ($modelos as $modelo) {
+            self::pull_auxiliar($modelo['name'], $path_modelo, $default_branch);
         }
+
 
     }
 
@@ -619,49 +563,35 @@ class GitSistemaRepository
                           forma correta favor desconsiderar esta mensagem. Para Configurar a conta
                           é necessário ir na aba Configuração->Github e prencher o formulário')->warning();
             return collect(array());
-        } catch (ApiLimitExceedException $ex) {
-            flash('Por Favor Sincronize os dados do github com o sistema')->error();
-            return collect(array());
         }
     }
 
     public static function change_branch($repositorio_atual, $default_branch)
     {
 
-        try {
-            $github_data = Auth::user()->github;
-            $user_github = (new \App\Http\Models\UsuarioGithub)->findOrFail($github_data->codusuariogithub);
-            $data = [
-                'codusuario' => Auth::user()->codusuario,
-                'email_github' => $github_data->email_github,
-                'token_github' => $github_data->token_github,
-                'senha_github' => $github_data->senha_github,
-                'branch_atual' => $default_branch,
-                'repositorio_atual' => $repositorio_atual
-            ];
-            $user_github->update($data);
 
-        } catch (\Exception $ex) {
-            flash($ex->getMessage())->warning();
-        } catch (ApiLimitExceedException $ex) {
-            flash($ex->getMessage())->error();
-            return collect(array());
-        }
+        $github_data = Auth::user()->github;
+        $user_github = (new \App\Http\Models\UsuarioGithub)->findOrFail($github_data->codusuariogithub);
+        $data = [
+            'codusuario' => Auth::user()->codusuario,
+            'email_github' => $github_data->email_github,
+            'token_github' => $github_data->token_github,
+            'senha_github' => $github_data->senha_github,
+            'branch_atual' => $default_branch,
+            'repositorio_atual' => $repositorio_atual
+        ];
+        $user_github->update($data);
 
     }
 
     public static function checkout($default_branch)
     {
-        try {
-            $github = Auth::user()->github;
-            self::change_branch($github->repositorio_atual, $default_branch);
-            sleep(10);
-            self::pull($default_branch);
-        } catch (\Exception $ex) {
-            flash($ex->getMessage())->warning();
-        } catch (ApiLimitExceedException $ex) {
-            flash($ex->getMessage())->error();
-        }
+
+        $github = Auth::user()->github;
+        self::change_branch($github->repositorio_atual, $default_branch);
+        sleep(10);
+        self::pull($default_branch);
+
 
     }
 

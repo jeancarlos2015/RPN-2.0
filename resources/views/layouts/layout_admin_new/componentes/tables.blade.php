@@ -43,6 +43,9 @@
                     @case('repositorio')
                     @includeIf('layouts.layout_admin_new.componentes.tables_repositorios')
                     @break;
+                    @case('log')
+                    @includeIf('layouts.layout_admin_new.componentes.tables_logs')
+                    @break;
                 @endswitch
             </table>
         </div>
