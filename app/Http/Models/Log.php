@@ -30,7 +30,8 @@ class Log extends Model
     protected $fillable = [
         'nome',
         'descricao',
-        'codusuario'
+        'codusuario',
+        'ocorrencia'
     ];
 
 

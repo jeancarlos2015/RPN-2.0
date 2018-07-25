@@ -4,6 +4,7 @@ namespace App\Http\Repositorys;
 
 
 use App\Http\Models\Log;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class LogRepository extends Repository
@@ -20,8 +21,8 @@ class LogRepository extends Repository
 
             'nome' => $nome,
             'descricao' => $mensagem,
-            'codusuario' => Auth::user()->codusuario
-
+            'codusuario' => Auth::user()->codusuario,
+            'ocorrencia' => Carbon::now()
         ]);
         return $log->codlog;
     }

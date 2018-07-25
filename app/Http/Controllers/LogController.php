@@ -22,7 +22,8 @@ class LogController extends Controller
             'código',
             'Nome',
             'descricao',
-            'Usuário'
+            'Usuário',
+            'Ocorrência'
         ];
         $tipo = 'log';
         $logs = LogRepository::listar();
