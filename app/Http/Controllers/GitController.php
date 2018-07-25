@@ -136,7 +136,7 @@ class GitController extends Controller
             GitSistemaRepository::apaga_modelos();
             GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
             GitSistemaRepository::pull($default_branch);
-            return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
+            
 
         } catch (\Exception $ex) {
             $codigo = LogRepository::criar($ex->getMessage(), 'warning');
@@ -146,8 +146,8 @@ class GitController extends Controller
         (ApiLimitExceedException $ex) {
             $codigo = LogRepository::criar($ex->getMessage(), 'error');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
-            return redirect()->route('painel');
         }
+        return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
     }
 
     public function init(Request $request)
