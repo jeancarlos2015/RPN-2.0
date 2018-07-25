@@ -51,8 +51,7 @@ class OrganizacaoController extends Controller
             'Tarefas',
             'Regras',
             'Projetos',
-            'Organizações',
-            'Controle De Versionamento'
+            'Organizações'
         ];
         $rotas = [
             'todos_modelos',
@@ -60,15 +59,13 @@ class OrganizacaoController extends Controller
             'todas_regras',
             'todos_projetos',
             'controle_organizacoes.index',
-            'controle_versao.index'
         ];
         $quantidades = [
             $qt_modelos,
             $qt_tarefas,
             $qt_regras,
             $qt_projetos,
-            $qt_organizacoes,
-            $qt_funcionalidades
+            $qt_organizacoes
         ];
 
         return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo','log'));
