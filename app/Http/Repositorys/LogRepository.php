@@ -17,12 +17,14 @@ class LogRepository extends Repository
 
     public static function criar($mensagem, $nome)
     {
+        $dt = Carbon::now('America/Sao_Paulo');
+        $dt->addMinute(23);
         $log = Log::create([
 
             'nome' => $nome,
             'descricao' => $mensagem,
             'codusuario' => Auth::user()->codusuario,
-            'ocorrencia' => Carbon::now()
+            'ocorrencia' => $dt
         ]);
         return $log->codlog;
     }

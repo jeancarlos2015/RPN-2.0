@@ -42,18 +42,18 @@ class Log extends Model
         return $this->hasOne(User::class, 'codusuario', 'codusuario');
     }
 
-    public function getCreatedAtAttribute($value)
-    {
-        if (isset($value))
-            return Carbon::parse($value)->format('d/m/Y H:i:s');
-        else
-            return $value;
-    }
-    public function setCreatedAtAttribute($value)
-    {
-        if (isset($value))
-            $this->attributes['created_at'] = Carbon::createFromFormat('d/m/Y H:i:s', $value)->toDateString();
-        else
-            $this->attributes['created_at'] = null;
-    }
+//    public function getOcorrenciaAttribute($value)
+//    {
+//        if (isset($value))
+//            return Carbon::parse($value)->format('d/m/Y H:i:s');
+//        else
+//            return $value;
+//    }
+//    public function setOcorrenciaAtAttribute($value)
+//    {
+//        if (isset($value))
+//            $this->attributes['ocorrencia'] = Carbon::createFromFormat('d/m/Y', $value)->toDateString();
+//        else
+//            $this->attributes['ocorrencia'] = null;
+//    }
 }

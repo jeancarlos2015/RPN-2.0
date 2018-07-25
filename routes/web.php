@@ -32,12 +32,11 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_logs', 'LogController');
 
 
-        
         Route::resource('controle_github', 'UsuarioGithubController');
-        
+
         Route::get('create_github/{codusuario}', 'UsuarioGithubController@create')->name('create_github');
 
-    
+
         Route::get('controle_projetos_index/{codorganizacao}', 'ProjetoController@index')->name('controle_projetos_index');
         Route::get('show_tarefas/{codmodelo}', 'ModeloController@show_tarefas')->name('show_tarefas');
         Route::get('show_regras/{codmodelo}', 'ModeloController@show_regras')->name('show_regras');
@@ -46,8 +45,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('todos_projetos', 'ProjetoController@todos_projetos')->name('todos_projetos');
         Route::get('todas_tarefas', 'TarefaController@todas_tarefas')->name('todas_tarefas');
         Route::get('todas_regras', 'RegraController@todas_regras')->name('todas_regras');
-
-
 
 
         Route::get('controle_projetos_create/{codorganizacao}', 'ProjetoController@create')->name('controle_projetos_create');
@@ -66,7 +63,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::post('create', 'GitController@create')->name('create');
         Route::post('commit', 'GitController@commit')->name('commit');
         Route::post('pull', 'GitController@pull')->name('pull');
-        
+
         Route::post('merge_checkout', 'GitController@merge_checkout')->name('merge_checkout');
         Route::post('delete', 'GitController@delete')->name('delete');
         Route::get('delete_repository/{repositorio_atual}/{default_branch}', 'GitController@delete_repository')->name('delete_repository');
@@ -81,9 +78,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('index_commit_branch', 'GitController@index_commit_branch')->name('index_commit_branch');
         Route::get('index_pull_push', 'GitController@index_pull_push')->name('index_pull_push');
         Route::get('selecionar_repositorio/{repositorio_atual}/{default_branch}', 'GitController@selecionar_repositorio')->name('selecionar_repositorio');
-
-
-
 
 
         Route::get('pagina_inicializacao_repositorio', 'GitController@pagina_inicializacao_repositorio')->name('pagina_inicializacao_repositorio');

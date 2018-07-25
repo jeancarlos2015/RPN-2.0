@@ -209,7 +209,7 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapseComponents8">
                 <li>
-                    <form class="form-group">
+                    <form class="form-group" action="{!! route('delete') !!}" method="post">
                         @csrf
                         <div class="form-group">
                             <select class="form-control" name="branch">

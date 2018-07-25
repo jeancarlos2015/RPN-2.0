@@ -135,7 +135,6 @@ class GitSistemaRepository
 
     public static function create_branch($branch)
     {
-
         $client = new Client();
         $github = Auth::user()->github;
         $repositorio = $github->repositorio_atual;
@@ -145,44 +144,27 @@ class GitSistemaRepository
         $sha = $branchs['commit']['sha'];
         $http_Client = $client->getHttpClient();
         $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs';
-        $header = array("Authorization" => "Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA==");
+        $header = array("Authorization" => "");
         $body = '{
                 "ref" : "refs/heads/' . $branch . '",
                 "sha" : "' . $sha . '"
         }';
         $http_Client->post($url, $header, $body);
-
-
     }
 
-    private
-    function delete_branch_teste()
+    public static
+    function delete_branch($branch)
     {
         $client = new Client();
         $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $repositorio = $github->repositorio_atual;
+        $usuario_git = Crypt::decrypt($github->usuario_github);
+        $client->authenticate($usuario_git, Crypt::decrypt($github->senha_github));
+        $branchs = $client->repo()->branches($usuario_git, $repositorio, $branch);
+        $sha = $branchs['commit']['sha'];
         $http_Client = $client->getHttpClient();
-        $base_url = "https://api.github.com";
-
-        $url = 'https://api.github.com/repos/jeancarlos2015/teste2015/git/refs/heads/teste';
-        $header = [
-            [
-                'Authorization' => 'Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA=='
-            ]
-
-        ];
-
-        $body = '
-        {
-            
-                "ref" : "refs/heads/teste1",
-                "sha" : "a84deace201e8f873741cf82b5f999b482b1c91c"
-        }
-
-        ';
-
-        dd($http_Client->delete($url, $header)->getStatusCode());
-
+        $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs/heads/' . $branch;
+        return $http_Client->delete($url)->getStatusCode();
     }
 
     private
@@ -215,18 +197,26 @@ class GitSistemaRepository
         dd($client->repository()->merge('jeancarlos2015', 'teste2015', 'master', 'teste'));
     }
 
-    private
-    function merge_branch_teste($base, $branch, $mensagem)
+    private static
+    function merge_auxiliar($branch)
     {
         $client = new Client();
         $github = Auth::user()->github;
         $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
         $client->repo()->merge(
-            'jeancarlos2015',
-            'teste2015',
-            $base,
+            Crypt::decrypt($github->usuario_github),
+            $github->repositorio_atual,
+            $github->branch_atual,
             $branch,
-            $mensagem);
+            'Merger da ' . $branch . ' para dentro ' . $github->branch_atual
+        );
+    }
+
+    public static function merge($branch)
+    {
+        self::merge_auxiliar($branch);
+        $github = Auth::user()->github;
+        self::pull($github->branch_atual);
     }
 
     private

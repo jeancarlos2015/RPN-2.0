@@ -104,9 +104,6 @@ class GitController extends Controller
         return view('controle_versao.index', compact('branch_atual', 'funcionalidades'));
     }
 
-//'branch',
-////        'descricao',
-////        'codusuario'
     public function selecionar_repositorio($repositorio_atual, $default_branch)
     {
 
@@ -136,7 +133,7 @@ class GitController extends Controller
             GitSistemaRepository::apaga_modelos();
             GitSistemaRepository::change_branch($repositorio_atual, $default_branch);
             GitSistemaRepository::pull($default_branch);
-            
+
 
         } catch (\Exception $ex) {
             $codigo = LogRepository::criar($ex->getMessage(), 'warning');
@@ -214,13 +211,38 @@ class GitController extends Controller
 
     public function delete(Request $request)
     {
+        try {
+            if (GitSistemaRepository::delete_branch($request->branch) === 204) {
+                $branchs = Branchs::all()->where('branch', '=', $request->branch);
+                foreach ($branchs as $b) {
+                    $codbranch = $b->codbranch;
+                    BranchsRepository::excluir($codbranch);
+                }
+            }
+            flash('Branch deletada com sucesso!!!');
+            return redirect()->route('painel');
+        } catch (\Exception $ex) {
+            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            try {
 
-        return redirect()->route('index_create_delete');
+                $branchs = Branchs::all()->where('branch', '=', $request->branch);
+                foreach ($branchs as $b) {
+                    $codbranch = $b->codbranch;
+                    BranchsRepository::excluir($codbranch);
+                }
+            } catch (\Exception $ex) {
+                $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+                flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            }
+
+        } catch (ApiLimitExceedException $ex) {
+            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
+        }
+        return redirect()->route('painel');
     }
 
-//'branch',
-//'descricao',
-//'codusuario'
     public function create(Request $request)
     {
         try {
@@ -242,10 +264,7 @@ class GitController extends Controller
         return redirect()->route('painel');
     }
 
-    public function push(Request $request)
-    {
-
-    }
+    
 
     public function pull()
     {
@@ -263,12 +282,7 @@ class GitController extends Controller
         return redirect()->route('painel');
     }
 
-    private function merge(Request $request)
-    {
-
-        return redirect()->route('index_merge_checkout');
-    }
-
+  
 
     public function merge_checkout(Request $request)
     {
@@ -286,9 +300,8 @@ class GitController extends Controller
                 if ($request->tipo === 'checkout') {
                     GitSistemaRepository::checkout($request->branch);
                 } elseif ($request->tipo === 'merge') {
-
+                    GitSistemaRepository::merge($request->branch);
                 }
-
                 flash('Operação Feita com sucesso');
 
             }
@@ -303,11 +316,7 @@ class GitController extends Controller
         return redirect()->route('painel');
     }
 
-    private function checkout(Request $request)
-    {
-
-        return redirect()->route('index_merge_checkout');
-    }
+  
 
     public function commit(Request $request)
     {
