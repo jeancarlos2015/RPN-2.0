@@ -1,17 +1,11 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+//Route::resource('controle_xml', 'DadoXmlController');
+
 
 Auth::routes();
+
+
 Route::get('/', function () {
     return view('inicio');
 })->name('/');
@@ -22,7 +16,9 @@ Route::get('/logout', function () {
 
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
-
+        
+        Route::post('/xml_store','DadoXmlController@store')->name('xml_store');
+        
         Route::resource('controle_organizacoes', 'OrganizacaoController');
         Route::resource('controle_tarefas', 'TarefaController');
         Route::resource('controle_projetos', 'ProjetoController');
@@ -30,7 +26,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_regras', 'RegraController');
         Route::resource('controle_usuarios', 'UserController');
         Route::resource('controle_logs', 'LogController');
-
+        
 
         Route::resource('controle_github', 'UsuarioGithubController');
 
@@ -85,11 +81,3 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('painel', 'OrganizacaoController@painel')->name('painel');
 
     });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

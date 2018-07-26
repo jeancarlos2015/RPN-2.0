@@ -93,7 +93,8 @@ class ModeloController extends Controller
         return view('controle_modelos.create', compact('dados', 'organizacao', 'projeto'));
     }
 
-    private function valida_redireciona(Request $request, $codorganizacao, $codprojeto){
+    private function valida_redireciona(Request $request, $codorganizacao, $codprojeto)
+    {
         $request->request->add([
             'xml_modelo' => 'nenhum',
             'codusuario' => Auth::user()->codusuario
@@ -109,7 +110,9 @@ class ModeloController extends Controller
                 ->withInput();
         }
     }
-    private function valida_tipo_redireciona($modelo){
+
+    private function valida_tipo_redireciona($modelo)
+    {
         if ($modelo->tipo === 'declarativo') {
             flash('Modelos criado com sucesso!!!');
             return redirect()->route('controle_regras_index',
@@ -118,28 +121,28 @@ class ModeloController extends Controller
                     'codprojeto' => $modelo->codprojeto,
                     'codmodelo' => $modelo->codmodelo
                 ]);
-        } else {
-            return view('controle_modelos.form_diagramatico', compact('modelo'));
         }
     }
+
     public function store(Request $request)
     {
-        try {
-            $codprojeto = $request->codprojeto;
-            $codorganizacao = $request->codorganizacao;
-             $this->valida_redireciona($request, $codorganizacao, $codprojeto);
-            $modelo = Modelo::create($request->all());
-            $this->valida_tipo_redireciona($modelo);
-        }
-        catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'form - modelos',
-                'store');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-        }
-        return view('controle_modelos.form_diagramatico', compact('modelo'));
+//        try {
+//            $codprojeto = $request->codprojeto;
+//            $codorganizacao = $request->codorganizacao;
+//             $this->valida_redireciona($request, $codorganizacao, $codprojeto);
+//            $modelo = Modelo::create($request->all());
+//            $this->valida_tipo_redireciona($modelo);
+//        }
+//        catch (\Exception $ex) {
+//            $codigo = LogRepository::criar(
+//                $ex->getMessage(),
+//                'warning',
+//                'form - modelos',
+//                'store');
+//            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+//        }
+
+        return view('controle_modelos.modeler', compact('modelo'));
     }
 
     /**
@@ -178,18 +181,18 @@ class ModeloController extends Controller
 
     public function show_tarefas($codmodelo)
     {
-        try{
-        $modelo = Modelo::findOrFail($codmodelo);
-        if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
-            flash('Não existem tarefas para serem exibidas!!!')->error();
-            return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
-        } else {
-            return redirect()->route('controle_tarefas_index', [
-                'codorganizacao' => $modelo->codorganizacao,
-                'codprojeto' => $modelo->codprojeto,
-                'codmodelo' => $modelo->codmodelo
-            ]);
-        }
+        try {
+            $modelo = Modelo::findOrFail($codmodelo);
+            if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
+                flash('Não existem tarefas para serem exibidas!!!')->error();
+                return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
+            } else {
+                return redirect()->route('controle_tarefas_index', [
+                    'codorganizacao' => $modelo->codorganizacao,
+                    'codprojeto' => $modelo->codprojeto,
+                    'codmodelo' => $modelo->codmodelo
+                ]);
+            }
         } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
@@ -203,18 +206,18 @@ class ModeloController extends Controller
 
     public function show_regras($codmodelo)
     {
-        try{
-        $modelo = Modelo::findOrFail($codmodelo);
-        if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
-            flash('Não existem regras para serem exibidas!!!')->error();
-            return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
-        } else {
-            return redirect()->route('controle_regras_index', [
-                'codorganizacao' => $modelo->codorganizacao,
-                'codprojeto' => $modelo->codprojeto,
-                'codmodelo' => $modelo->codmodelo
-            ]);
-        }
+        try {
+            $modelo = Modelo::findOrFail($codmodelo);
+            if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
+                flash('Não existem regras para serem exibidas!!!')->error();
+                return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
+            } else {
+                return redirect()->route('controle_regras_index', [
+                    'codorganizacao' => $modelo->codorganizacao,
+                    'codprojeto' => $modelo->codprojeto,
+                    'codmodelo' => $modelo->codmodelo
+                ]);
+            }
         } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
@@ -234,15 +237,15 @@ class ModeloController extends Controller
      */
     public function edit($codmodelo)
     {
-        try{
-        $modelo = Modelo::findOrFail($codmodelo);
-        $dados = Modelo::dados();
-        $projeto = $modelo->projeto;
-        $organizacao = $modelo->organizacao;
-        $dados[0]->valor = $modelo->nome;
-        $dados[1]->valor = $modelo->descricao;
-        $dados[2]->valor = $modelo->tipo;
-        return view('controle_modelos.edit', compact('dados', 'modelo', 'projeto', 'organizacao'));
+        try {
+            $modelo = Modelo::findOrFail($codmodelo);
+            $dados = Modelo::dados();
+            $projeto = $modelo->projeto;
+            $organizacao = $modelo->organizacao;
+            $dados[0]->valor = $modelo->nome;
+            $dados[1]->valor = $modelo->descricao;
+            $dados[2]->valor = $modelo->tipo;
+            return view('controle_modelos.edit', compact('dados', 'modelo', 'projeto', 'organizacao'));
         } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
@@ -263,19 +266,19 @@ class ModeloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
-        $modelo = Modelo::findOrFail($id);
-        $modelo->update($request->all());
-        if (isset($modelo)) {
-            flash('Modelos atualizado com sucesso!!');
-        } else {
-            flash('Modelos não foi atualizado!!');
-        }
-        return redirect()->route('controle_tarefas_index', [
-            'codorganizacao' => $modelo->codorganizacao,
-            'codprojeto' => $modelo->codprojeto,
-            'codmodelo' => $modelo->codmodelo
-        ]);
+        try {
+            $modelo = Modelo::findOrFail($id);
+            $modelo->update($request->all());
+            if (isset($modelo)) {
+                flash('Modelos atualizado com sucesso!!');
+            } else {
+                flash('Modelos não foi atualizado!!');
+            }
+            return redirect()->route('controle_tarefas_index', [
+                'codorganizacao' => $modelo->codorganizacao,
+                'codprojeto' => $modelo->codprojeto,
+                'codmodelo' => $modelo->codmodelo
+            ]);
         } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
@@ -295,33 +298,34 @@ class ModeloController extends Controller
      */
 
     private function delete($codmodelo)
-    {   try{
-        $modelo = ModeloRepository::excluir($codmodelo);
-        return $modelo;
-    } catch (\Exception $ex) {
-        $codigo = LogRepository::criar($ex->getMessage(), 'warning');
-        flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-        return redirect()->route('painel');
-    }
+    {
+        try {
+            $modelo = ModeloRepository::excluir($codmodelo);
+            return $modelo;
+        } catch (\Exception $ex) {
+            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            return redirect()->route('painel');
+        }
     }
 
     public function destroy($codprojeto)
     {
-        try{
-        $modelo = Modelo::findOrFail($codprojeto);
+        try {
+            $modelo = Modelo::findOrFail($codprojeto);
 
-        $this->delete($modelo);
-        if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
+            $this->delete($modelo);
+            if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
 
-            return redirect()->route('todos_modelos');
-        } else {
-            return redirect()->route('controle_modelos_index',
-                [
-                    'codorganizacao' => $modelo->codorganizacao,
-                    'codprojeto' => $modelo->codprojeto
-                ]
-            );
-        }
+                return redirect()->route('todos_modelos');
+            } else {
+                return redirect()->route('controle_modelos_index',
+                    [
+                        'codorganizacao' => $modelo->codorganizacao,
+                        'codprojeto' => $modelo->codprojeto
+                    ]
+                );
+            }
         } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
