@@ -18,7 +18,8 @@ class CreateLogsTable extends Migration
             $table->string('nome');
             $table->string('descricao');
             $table->bigInteger('codusuario');
-            $table->date('ocorrencia');
+            $table->string('acao');
+            $table->string('pagina');
 //            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });

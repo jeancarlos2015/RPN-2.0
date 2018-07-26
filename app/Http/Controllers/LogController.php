@@ -24,6 +24,8 @@ class LogController extends Controller
             'descricao',
             'Usuário',
             'Ocorrência',
+            'Página',
+            'Action',
             'Ações'
         ];
         $tipo = 'log';
@@ -98,8 +100,14 @@ class LogController extends Controller
         try {
             $log->delete();
             flash('Log removido com sucesso!!!');
-        } catch (\Exception $e) {
-            LogRepository::criar($e->getMessage(), 'error');
+        }
+        catch (\Exception $ex) {
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'logs',
+                'delete/destroy');
+            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         }
         return redirect()->route('controle_logs.index');
     }

@@ -32,8 +32,9 @@ class Log extends Model
         'nome',
         'descricao',
         'codusuario',
-        'ocorrencia',
-        'created_at'
+        'created_at',
+        'acao',
+        'pagina'
     ];
 
 

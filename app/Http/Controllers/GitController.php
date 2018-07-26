@@ -76,14 +76,20 @@ class GitController extends Controller
                 'Ações'
             ];
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_versao.init',
+                'listagem de repositórios');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-
-        } catch
-        (ApiLimitExceedException $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+        } catch (ApiLimitExceedException $ex) {
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'error',
+                'controle_versao.init',
+                'listagem de repositórios'
+            );
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
-            return redirect()->route('painel');
         }
         return view('controle_versao.init', compact('tipo', 'branch_atual', 'titulos', 'repositorios'));
     }
@@ -136,12 +142,19 @@ class GitController extends Controller
 
 
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_versao.init',
+                'selecionar_repositorio');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-
-        } catch
-        (ApiLimitExceedException $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+        } catch (ApiLimitExceedException $ex) {
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'error',
+                'controle_versao.init',
+                'selecionar_repositorio'
+            );
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
         }
         return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
@@ -165,10 +178,19 @@ class GitController extends Controller
             return redirect()->route('controle_versao.show', ['nome_repositorio' => $request->nome]);
 
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_versao.init',
+                'init');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         } catch (ApiLimitExceedException $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'error',
+                'controle_versao.init',
+                'init'
+            );
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
         }
         return redirect()->route('index_init');
@@ -180,10 +202,19 @@ class GitController extends Controller
         try {
             $repositorio = GitSistemaRepository::get_repositorio('jeancarlos2015', $nome_repositorio);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_versao.show',
+                'show');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         } catch (ApiLimitExceedException $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'error',
+                'controle_versao.show',
+                'show'
+            );
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
         }
         return view('controle_versao.show', compact('tipo', 'branch_atual', 'repositorio'));
@@ -195,10 +226,19 @@ class GitController extends Controller
         try {
             GitSistemaRepository::delete_repository($repositorio_atual);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'Painel',
+                'create');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         } catch (ApiLimitExceedException $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'error',
+                'Painel',
+                'delete_repository'
+            );
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
         }
         return redirect()->route('index_init');
@@ -220,24 +260,22 @@ class GitController extends Controller
                 }
             }
             flash('Branch deletada com sucesso!!!');
-            return redirect()->route('painel');
-        } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+        } 
+        catch (\Exception $ex) {
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'Painel',
+                'delete');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            try {
-
-                $branchs = Branchs::all()->where('branch', '=', $request->branch);
-                foreach ($branchs as $b) {
-                    $codbranch = $b->codbranch;
-                    BranchsRepository::excluir($codbranch);
-                }
-            } catch (\Exception $ex) {
-                $codigo = LogRepository::criar($ex->getMessage(), 'warning');
-                flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            }
-
+            BranchsRepository::excluir_branch($request->branch);
         } catch (ApiLimitExceedException $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'error',
+                'Painel',
+                'delete'
+            );
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
         }
         return redirect()->route('painel');
@@ -255,10 +293,19 @@ class GitController extends Controller
             Branchs::create($data_branch);
             GitSistemaRepository::checkout($request->branch);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'Painel',
+                'create');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         } catch (ApiLimitExceedException $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'error',
+                'Painel',
+                'create'
+            );
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
         }
         return redirect()->route('painel');
@@ -271,11 +318,20 @@ class GitController extends Controller
         try {
             GitSistemaRepository::pull(Auth::user()->github->branch_atual);
             flash('Operação Feita com sucesso!!!');
-        } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+        }catch (\Exception $ex) {
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'Painel',
+                'pull');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         } catch (ApiLimitExceedException $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'error',
+                'Painel',
+                'pull'
+            );
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
         }
 
@@ -307,10 +363,19 @@ class GitController extends Controller
             }
 
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'Painel',
+                'merge_checkout');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         } catch (ApiLimitExceedException $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'error',
+                'Painel',
+                'merge_checkout'
+            );
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
         }
         return redirect()->route('painel');
@@ -325,36 +390,24 @@ class GitController extends Controller
             flash('Operação feita com sucesso !!!');
 
 
-        } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+        }catch (\Exception $ex) {
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'Painel',
+                'commit');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         } catch (ApiLimitExceedException $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'error');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'error',
+                'Painel',
+                'commit'
+            );
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->error();
         }
         return redirect()->route('painel');
     }
-
-
-    public function reset_files(Request $request)
-    {
-        $client = new Client();
-        $client->authenticate(Client::AUTH_HTTP_TOKEN, Client::AUTH_HTTP_PASSWORD);
-
-        return redirect()->route('index_reset_files');
-    }
-
-
-    public function index_reset_files()
-    {
-        $git = new GitSistemaRepository();
-        $branch_atual = 'Não implementado';
-        return view('controle_versao.teste', compact('branch_atual'));
-    }
-
-    /**
-     *
-     */
 
 
 }

@@ -21,7 +21,11 @@ class ModeloController extends Controller
             $titulos = Modelo::titulos();
             $modelos = ModeloRepository::listar_modelo_por_projeto_organizacao($codorganizacao, $codprojeto);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'index',
+                'index/listar');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         }
         $tipo = 'modelo';
@@ -36,7 +40,11 @@ class ModeloController extends Controller
             $tipo = 'modelo';
             $log = LogRepository::log();
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'index',
+                'todos_modelos');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         }
         return view('controle_modelos.index_todos_modelos', compact('modelos', 'titulos', 'tipo', 'log'));
@@ -58,7 +66,11 @@ class ModeloController extends Controller
             $projeto = Projeto::findOrFail($request->codprojeto);
             $organizacao = Organizacao::findOrFail($request->codorganizacao);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'form - modelos',
+                'escolher_modelo');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         }
         return view('controle_modelos.create', compact('dado', 'projeto', 'organizacao'));
@@ -71,51 +83,63 @@ class ModeloController extends Controller
             $organizacao = Organizacao::findOrFail($codorganizacao);
             $dados = Modelo::dados();
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'form - modelos',
+                'create');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
         }
         return view('controle_modelos.create', compact('dados', 'organizacao', 'projeto'));
     }
 
+    private function valida_redireciona(Request $request, $codorganizacao, $codprojeto){
+        $request->request->add([
+            'xml_modelo' => 'nenhum',
+            'codusuario' => Auth::user()->codusuario
+        ]);
 
+        $erros = \Validator::make($request->all(), Modelo::validacao());
+        if ($erros->fails()) {
+            return redirect()->route('controle_modelos_create', [
+                'codorganizacao' => $codorganizacao,
+                'codprojeto' => $codprojeto
+            ])
+                ->withErrors($erros)
+                ->withInput();
+        }
+    }
+    private function valida_tipo_redireciona($modelo){
+        if ($modelo->tipo === 'declarativo') {
+            flash('Modelos criado com sucesso!!!');
+            return redirect()->route('controle_regras_index',
+                [
+                    'codorganizacao' => $modelo->codorganizacao,
+                    'codprojeto' => $modelo->codprojeto,
+                    'codmodelo' => $modelo->codmodelo
+                ]);
+        } else {
+            return view('controle_modelos.form_diagramatico', compact('modelo'));
+        }
+    }
     public function store(Request $request)
     {
         try {
             $codprojeto = $request->codprojeto;
             $codorganizacao = $request->codorganizacao;
-            $request->request->add([
-                'xml_modelo' => 'nenhum',
-                'codusuario' => Auth::user()->codusuario
-            ]);
-
-            $erros = \Validator::make($request->all(), Modelo::validacao());
-            if ($erros->fails()) {
-                return redirect()->route('controle_modelos_create', [
-                    'codorganizacao' => $codorganizacao,
-                    'codprojeto' => $codprojeto
-                ])
-                    ->withErrors($erros)
-                    ->withInput();
-            }
-
+             $this->valida_redireciona($request, $codorganizacao, $codprojeto);
             $modelo = Modelo::create($request->all());
-
-            if ($modelo->tipo === 'declarativo') {
-                flash('Modelos criado com sucesso!!!');
-                return redirect()->route('controle_regras_index',
-                    [
-                        'codorganizacao' => $modelo->codorganizacao,
-                        'codprojeto' => $modelo->codprojeto,
-                        'codmodelo' => $modelo->codmodelo
-                    ]);
-            } else {
-                return view('controle_modelos.form_diagramatico', compact('modelo'));
-            }
-        } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return view('controle_modelos.form_diagramatico', compact('modelo'));
+            $this->valida_tipo_redireciona($modelo);
         }
+        catch (\Exception $ex) {
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'form - modelos',
+                'store');
+            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+        }
+        return view('controle_modelos.form_diagramatico', compact('modelo'));
     }
 
     /**
@@ -140,10 +164,14 @@ class ModeloController extends Controller
                 return view('controle_modelos.form_diagramatico', compact('modelo'));
             }
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_modelos.form_declrativo/form_diagramatico',
+                'show');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return view('controle_modelos.form_diagramatico', compact('modelo'));
         }
+        return redirect()->route('painel');
 
 
     }
@@ -163,10 +191,14 @@ class ModeloController extends Controller
             ]);
         }
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_tarefas.index',
+                'show_tarefas');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     public function show_regras($codmodelo)
@@ -184,10 +216,14 @@ class ModeloController extends Controller
             ]);
         }
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_regras_index',
+                'show_regras');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     /**
@@ -208,10 +244,14 @@ class ModeloController extends Controller
         $dados[2]->valor = $modelo->tipo;
         return view('controle_modelos.edit', compact('dados', 'modelo', 'projeto', 'organizacao'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'edit',
+                'edit');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     /**
@@ -237,10 +277,14 @@ class ModeloController extends Controller
             'codmodelo' => $modelo->codmodelo
         ]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'edit/update',
+                'update');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     /**
@@ -279,10 +323,14 @@ class ModeloController extends Controller
             );
         }
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'todos_modelos',
+                'delete/destroy');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
 
     }
 }

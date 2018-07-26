@@ -32,10 +32,14 @@ class RegraController extends Controller
 
                 ]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_regras.create',
+                'index');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     public function todas_regras()
@@ -46,13 +50,16 @@ class RegraController extends Controller
             $tarefas = null;
             $tipo = 'regra';
             $log = LogRepository::log(2);
-
             return view('controle_regras.all', compact('regras', 'titulos', 'tarefas', 'tipo', 'log'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_regras.all',
+                'todas_regras');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     public function create($codorganizacao, $codprojeto, $codmodelo)
@@ -66,10 +73,14 @@ class RegraController extends Controller
             $tipo = 'regra';
             return view('controle_regras.form_regra', compact('organizacao', 'projeto', 'modelo', 'titulos', 'regras', 'tipo'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_regras.create',
+                'create');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     private function adiciona_request(Request $request)
@@ -134,23 +145,39 @@ class RegraController extends Controller
         ];
     }
 
+
+    private function create_tarefas_redireciona($regra, Request $request)
+    {
+        if (count($regra->tarefas) == 0) {
+            $tarefa1 = Tarefa::create(self::set_param_tarefa1($request, $regra));
+            $tarefa2 = Tarefa::create(self::set_param_tarefa2($request, $regra));
+            self::msg("Regra Criada com sucesso");
+        } else {
+            self::msg("Atingiu o limite máximo para essa regra");
+        }
+    }
+
+    private function valida_erros(Request $request, $codorganizacao, $codprojeto, $codmodelo)
+    {
+        $erros = \Validator::make($request->all(), Regra::validacao());
+        if ($erros->fails()) {
+            return redirect()->route('controle_regras_create', [
+                'codorganizacao' => $codorganizacao,
+                'codprojeto' => $codprojeto,
+                'codmodelo' => $codmodelo
+            ])
+                ->withErrors($erros)
+                ->withInput();
+        }
+    }
+
     public function store(Request $request)
     {
         try {
             $codorganizacao = $request->codorganizacao;
             $codprojeto = $request->codprojeto;
             $codmodelo = $request->codmodelo;
-            $erros = \Validator::make($request->all(), Regra::validacao());
-            if ($erros->fails()) {
-                return redirect()->route('controle_regras_create', [
-                    'codorganizacao' => $codorganizacao,
-                    'codprojeto' => $codprojeto,
-                    'codmodelo' => $codmodelo
-                ])
-                    ->withErrors($erros)
-                    ->withInput();
-            }
-
+            $this->valida_erros($request, $codorganizacao, $codprojeto, $codmodelo);
             $projeto = Projeto::findOrFail($codprojeto);
             $organizacao = Organizacao::findOrFail($codorganizacao);
             $modelo = Modelo::findOrFail($codmodelo);
@@ -161,24 +188,21 @@ class RegraController extends Controller
             ]);
 
             $regra = Regra::create(self::set_param_regra($request));
-            if (count($regra->tarefas) == 0) {
-                $tarefa1 = Tarefa::create(self::set_param_tarefa1($request, $regra));
-                $tarefa2 = Tarefa::create(self::set_param_tarefa2($request, $regra));
-                self::msg("Regra Criada com sucesso");
-            } else {
-                self::msg("Atingiu o limite máximo para essa regra");
-            }
-
+            $this->create_tarefas_redireciona($regra, $request);
             return redirect()->route('controle_regras_create', [
                 'codorganizacao' => $organizacao->codorganizacao,
                 'codprojeto' => $projeto->codprojeto,
                 'codmodelo' => $modelo->codmodelo
             ]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_regras.create',
+                'store');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     public function show($id)
@@ -187,10 +211,14 @@ class RegraController extends Controller
             $tarefa = Tarefa::findOrFail($id);
             return view('controle_tarefas.show', compact('tarefa'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_regras.show',
+                'show');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     public function edit($id)
@@ -208,10 +236,14 @@ class RegraController extends Controller
             $tarefas = TarefaRepository::listar();
             return view('controle_regras.edit', compact('dados', 'regra', 'organizacao', 'projeto', 'modelo', 'tarefas'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_regras.edit',
+                'create');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -220,22 +252,22 @@ class RegraController extends Controller
         try {
             $regra = Regra::findOrFail($codregra);
             $regra->update($request->all());
-            LogRepository::criar("Regra Atualizada Com sucesso", "Rota De Atualização de Regra");
-            if (isset($tarefa)) {
-                flash('Regra atualizada com sucesso!!');
-            } else {
-                flash('Regra não foi atualizada!!');
-            }
+            flash('Regra atualizada com sucesso!!');
+
             return redirect()->route('controle_regras_index', [
                 'codorganizacao' => $regra->codorganizacao,
                 'codprojeto' => $regra->codprojeto,
                 'codmodelo' => $regra->codmodelo
             ]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_regras.create',
+                'create');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -248,12 +280,10 @@ class RegraController extends Controller
             $modelo = $regra->modelo;
 
             $regra->delete();
-            LogRepository::criar("Regra Excluída Com sucesso", "Rota De Exclusão de Regra");
-            if (!$regra->exists) {
-                flash('Regra excluída com sucesso!!');
-            } else {
-                flash('Regra não foi excluída!!')->warning();
-            }
+
+
+            flash('Regra excluída com sucesso!!');
+
 
             if (!empty($projeto) || !empty($organizacao) && !empty($modelo)) {
                 $titulos = Regra::titulos();
@@ -268,10 +298,14 @@ class RegraController extends Controller
                 ]);
             }
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_regras.index',
+                'destroy');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
 
     }
 }

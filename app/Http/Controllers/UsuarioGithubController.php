@@ -58,17 +58,25 @@ class UsuarioGithubController extends Controller
                 ];
                 GitSistemaRepository::delete_all_github();
                 UsuarioGithub::create($data);
-                LogRepository::criar("Dados Salvo Com sucesso", "Rota De Configuração Github");
+                LogRepository::criar(
+                    "Dados Salvo Com sucesso",
+                    "Rota De Configuração Github",
+                    'controle_github.configuracao',
+                    'store');
                 flash('Configuração salva com sucesso!!');
             } catch (\Exception $ex) {
                 flash($ex->getMessage())->error();
             }
             return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_github.configuracao',
+                'store');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
 
     }
 

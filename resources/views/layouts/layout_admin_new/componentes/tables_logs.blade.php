@@ -8,6 +8,8 @@
             <td>{!! $log->descricao !!}</td>
             <td>{!! $log->usuario->name !!}</td>
             <td>{!! $log->created_at !!}</td>
+            <td>{!! $log->pagina !!}</td>
+            <td>{!! $log->acao !!}</td>
             <td>
                 @if(!empty($rota_edicao))
                     @include('componentes.link',['id' => $log->codlog, 'rota' => $rota_edicao])
