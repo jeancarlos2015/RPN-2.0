@@ -3,8 +3,8 @@
 namespace App\Http\Repositorys;
 
 
+use App\Http\Models\Branchs;
 use App\Http\Models\Log;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class LogRepository extends Repository
@@ -15,19 +15,20 @@ class LogRepository extends Repository
         $this->setModel(Log::class);
     }
 
-    public static function criar($mensagem, $nome)
+    public static function criar($mensagem, $nome, $pagina, $acao)
     {
-        $dt = Carbon::now('America/Sao_Paulo');
-        $dt->addMinute(23);
         $log = Log::create([
 
             'nome' => $nome,
             'descricao' => $mensagem,
             'codusuario' => Auth::user()->codusuario,
-            'ocorrencia' => $dt
+            'pagina' => $pagina,
+            'acao' => $acao
         ]);
         return $log->codlog;
     }
+
+   
 
     public static function listar()
     {

@@ -23,10 +23,14 @@ class ProjetoController extends Controller
             $log = LogRepository::log();
             return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos', 'tipo', 'log'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_projetos.index',
+                'index');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     public function todos_projetos()
@@ -38,10 +42,14 @@ class ProjetoController extends Controller
             $log = LogRepository::log();
             return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo', 'log'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_projetos.index',
+                'todos_projetos');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     /**
@@ -51,14 +59,9 @@ class ProjetoController extends Controller
      */
     private function exists($codorganizacao)
     {
-        try {
-            $organizacao = (new Organizacao)->where('codorganizacao', '=', $codorganizacao)->first();
-            return $organizacao === null;
-        } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
-        }
+        $organizacao = (new Organizacao)->where('codorganizacao', '=', $codorganizacao)->first();
+        return $organizacao === null;
+
     }
 
     public function create($codorganizacao)
@@ -73,10 +76,14 @@ class ProjetoController extends Controller
 
             return view('controle_projetos.create', compact('dados', 'organizacao'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_projetos.create',
+                'create');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -95,20 +102,17 @@ class ProjetoController extends Controller
 
             $request->request->add(['codusuario' => Auth::user()->codusuario]);
             $projeto = Projeto::create($request->all());
-
-
-            LogRepository::criar("Projeto Salva Com sucesso", "Rota De Adição de projeto");
-            if (isset($projeto)) {
-                flash('Projeto criado com sucesso!!');
-            } else {
-                flash('Projeto não foi criado!!');
-            }
+            flash('Projeto criado com sucesso!!');
             return redirect()->route('controle_modelos_index', ['codorganizacao' => $codorganizacao, 'codprojeto' => $projeto->codprojeto]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_projetos.create',
+                'store');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     /**
@@ -123,10 +127,14 @@ class ProjetoController extends Controller
             $projeto = Projeto::findOrFail($codprojeto);
             return redirect()->route('controle_modelos_index', ['codorganizacao' => $projeto->codorganizacao, 'codprojeto' => $codprojeto]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_modelos.index',
+                'show');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     /**
@@ -145,10 +153,14 @@ class ProjetoController extends Controller
             $dados[1]->valor = $projeto->descricao;
             return view('controle_projetos.edit', compact('dados', 'projeto', 'organizacao'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_projetos.edit',
+                'edit');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     /**
@@ -162,13 +174,16 @@ class ProjetoController extends Controller
     {
         try {
             $projeto = ProjetoRepository::atualizar($request, $codprojeto);
-            LogRepository::criar("Projeto Atualizado Com sucesso", "Rota De Atualização de projeto");
             return redirect()->route('controle_modelos_index', ['codorganizacao' => $projeto->codorganizacao, 'codprojeto' => $codprojeto]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_modelos.edit',
+                'update');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
 
     }
 
@@ -182,9 +197,13 @@ class ProjetoController extends Controller
                 'codorganizacao' => $projeto->codorganizacao
             ]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_projetos.index',
+                'destroy');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 }

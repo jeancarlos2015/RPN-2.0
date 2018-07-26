@@ -65,4 +65,13 @@
             }
         }
 
+        public static function excluir_branch($branch)
+        {
+            $branchs = Branchs::all()->where('branch', '=', $branch);
+            foreach ($branchs as $b) {
+                $codbranch = $b->codbranch;
+                self::excluir($codbranch);
+            }
+        }
+
     }

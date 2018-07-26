@@ -32,10 +32,14 @@ class TarefaController extends Controller
             $log = LogRepository::log();
             return view('controle_tarefas.index', compact('tarefas', 'titulos', 'organizacao', 'projeto', 'modelo', 'tipo', 'log'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_tarefas.index',
+                'index');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     public function todas_tarefas()
@@ -47,10 +51,14 @@ class TarefaController extends Controller
             $log = LogRepository::log();
             return view('controle_tarefas.all', compact('tarefas', 'titulos', 'tipo', 'log'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_tarefas.all',
+                'todas_tarefas');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     public function create($codorganizacao, $codprojeto, $codmodelo, $codregra)
@@ -63,10 +71,14 @@ class TarefaController extends Controller
             $regra = Regra::findOrFail($codregra);
             return view('controle_tarefas.form_tarefa', compact('dados', 'organizacao', 'projeto', 'modelo', 'regra'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_tarefas.create',
+                'create');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -76,7 +88,6 @@ class TarefaController extends Controller
             $projeto = Projeto::findOrFail($request->codprojeto);
             $organizacao = Organizacao::findOrFail($request->codorganizacao);
             $modelo = Modelo::findOrFail($request->codmodelo);
-            $regra = Regra::findOrFail($request->codregra);
 
 
             if (isset($tarefa1) && isset($tarefa1)) {
@@ -90,10 +101,14 @@ class TarefaController extends Controller
                 'codmodelo' => $modelo->codmodelo
             ]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_tarefas.create',
+                'store');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -103,10 +118,14 @@ class TarefaController extends Controller
             $tarefa = Tarefa::findOrFail($codtarefa);
             return view('controle_tarefas.show', compact('tarefa'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_tarefas.show',
+                'show');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -118,11 +137,15 @@ class TarefaController extends Controller
             $dados[0]->valor = $tarefa->nome;
             $dados[1]->valor = $tarefa->descricao;
             return view('controle_tarefas.edit', compact('dados', 'tarefa'));
-        } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+        }catch (\Exception $ex) {
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_tarefas.edit',
+                'edit');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -131,22 +154,22 @@ class TarefaController extends Controller
         try {
             $tarefa = Tarefa::findOrFail($codtarefa);
             $tarefa->update($request->all());
-            LogRepository::criar("Tarefa Atualizada Com sucesso", "Rota De Atualização de organização");
-            if (isset($tarefa)) {
-                flash('Tarefa atualizada com sucesso!!');
-            } else {
-                flash('Tarefa não foi atualizada!!');
-            }
+            flash('Tarefa atualizada com sucesso!!');
+
             return redirect()->route('controle_tarefas_index', [
                 'codorganizacao' => $tarefa->codorganizacao,
                 'codprojeto' => $tarefa->codprojeto,
                 'codmodelo' => $tarefa->codmodelo
             ]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_tarefas.edit',
+                'update');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -157,8 +180,6 @@ class TarefaController extends Controller
             $projeto = $tarefa->projeto;
             $organizacao = $tarefa->organizacao;
             $modelo = $tarefa->modelo;
-            LogRepository::criar("Tarefa Excluída Com sucesso", "Rota De Exclusão de tarefa");
-
             $tarefa->delete();
             if (!$tarefa->exists) {
                 flash('Tarefa excluída com sucesso!!');
@@ -179,9 +200,13 @@ class TarefaController extends Controller
                 ]);
             }
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_tarefas.index',
+                'destroy');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 }

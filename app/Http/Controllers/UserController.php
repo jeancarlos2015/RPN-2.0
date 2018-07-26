@@ -24,10 +24,14 @@ class UserController extends Controller
 
             return view('controle_usuario.index', compact('usuarios', 'tipo', 'titulos'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_usuarios.index',
+                'index');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -37,10 +41,14 @@ class UserController extends Controller
             $dados = User::dados();
             return view('controle_usuario.create', compact('dados'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_usuarios.create',
+                'create');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     private function create_user(array $data)
@@ -80,7 +88,11 @@ class UserController extends Controller
                     ->withInput();
             }
             $user = $this->create_user($request->all());
-            LogRepository::criar("Usuário Criado Com sucesso", "Rota De Criação de usuário");
+            LogRepository::criar(
+                "Usuário Criado Com sucesso",
+                "Rota De Criação de usuário",
+                'controle_usuarios.create',
+                'store');
             if (isset($user)) {
                 flash('Usuário criado com sucesso!!');
             } else {
@@ -88,10 +100,14 @@ class UserController extends Controller
             }
             return redirect()->route('controle_usuarios.index');
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_usuarios.create',
+                'store');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
     public function show($id)
@@ -110,10 +126,14 @@ class UserController extends Controller
             $dados[2]->valor = $usuario->password;
             return view('controle_usuario.edit', compact('dados', 'usuario'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_usuarios.edit',
+                'edit');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -126,7 +146,11 @@ class UserController extends Controller
             }
             $user = User::findOrFail($id);
             $user_novo = $this->update_user($user, $request->all());
-            LogRepository::criar("Usuário Atualizado Com sucesso", "Rota De Atualização de Usuário");
+            LogRepository::criar(
+                "Usuário Atualizado Com sucesso",
+                "Rota De Atualização de Usuário",
+                'controle_usuarios.edit',
+                'update');
             if (isset($user_novo)) {
                 flash('Usuário Atualizado com sucesso!!');
             } else {
@@ -139,10 +163,14 @@ class UserController extends Controller
             }
 
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_usuarios.create',
+                'update');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 
 
@@ -151,12 +179,20 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         try {
             $user->delete();
-            LogRepository::criar("Usuário Excluído Com sucesso", "Rota De Exclusão de Usuário");
+            LogRepository::criar(
+                "Usuário Excluído Com sucesso",
+                "Rota De Exclusão de Usuário",
+                'controle_usuarios.index',
+                'destroy');
             return redirect()->route('controle_usuarios.index');
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'controle_usuarios.index',
+                'destroy');
             flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
         }
+        return redirect()->route('painel');
     }
 }
