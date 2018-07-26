@@ -1,5 +1,12 @@
 <ul class="navbar-nav ml-auto">
-    @if(!empty(Auth::user()->github))
+    @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
+        <li class="nav-item">
+            <form action="{!! route('pull') !!}" method="post">
+                @csrf
+                <button type="submit" class="btn btn-dark">Atualizar</button>
+            </form>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="{!! route('index_init') !!}">
                 Repositórios <span class="sr-only"></span>

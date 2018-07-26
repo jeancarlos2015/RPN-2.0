@@ -143,24 +143,24 @@
             </ul>
         </li>
 
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents6"
-               data-parent="#exampleAccordion">
-                <i class="fa fa-fw fa-cogs"></i>
-                <span class="nav-link-text">Pull</span>
-            </a>
-            <ul class="sidenav-second-level collapse" id="collapseComponents6">
-                <li>
-                    <form class="form-group" action="{!! route('pull') !!}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-secondary form-control">Pull</button>
-                        </div>
-                    </form>
-                </li>
+        {{--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">--}}
+            {{--<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents6"--}}
+               {{--data-parent="#exampleAccordion">--}}
+                {{--<i class="fa fa-fw fa-cogs"></i>--}}
+                {{--<span class="nav-link-text">Pull</span>--}}
+            {{--</a>--}}
+            {{--<ul class="sidenav-second-level collapse" id="collapseComponents6">--}}
+                {{--<li>--}}
+                    {{--<form class="form-group" action="{!! route('pull') !!}" method="post">--}}
+                        {{--@csrf--}}
+                        {{--<div class="form-group">--}}
+                            {{--<button type="submit" class="btn btn-secondary form-control">Pull</button>--}}
+                        {{--</div>--}}
+                    {{--</form>--}}
+                {{--</li>--}}
 
-            </ul>
-        </li>
+            {{--</ul>--}}
+        {{--</li>--}}
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents7"
