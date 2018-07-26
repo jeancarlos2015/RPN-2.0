@@ -126,21 +126,21 @@ class ModeloController extends Controller
 
     public function store(Request $request)
     {
-//        try {
-//            $codprojeto = $request->codprojeto;
-//            $codorganizacao = $request->codorganizacao;
-//             $this->valida_redireciona($request, $codorganizacao, $codprojeto);
-//            $modelo = Modelo::create($request->all());
-//            $this->valida_tipo_redireciona($modelo);
-//        }
-//        catch (\Exception $ex) {
-//            $codigo = LogRepository::criar(
-//                $ex->getMessage(),
-//                'warning',
-//                'form - modelos',
-//                'store');
-//            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-//        }
+        try {
+            $codprojeto = $request->codprojeto;
+            $codorganizacao = $request->codorganizacao;
+             $this->valida_redireciona($request, $codorganizacao, $codprojeto);
+            $modelo = Modelo::create($request->all());
+            $this->valida_tipo_redireciona($modelo);
+        }
+        catch (\Exception $ex) {
+            $codigo = LogRepository::criar(
+                $ex->getMessage(),
+                'warning',
+                'form - modelos',
+                'store');
+            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+        }
 
         return view('controle_modelos.modeler', compact('modelo'));
     }
