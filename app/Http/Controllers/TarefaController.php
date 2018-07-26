@@ -181,11 +181,7 @@ class TarefaController extends Controller
             $organizacao = $tarefa->organizacao;
             $modelo = $tarefa->modelo;
             $tarefa->delete();
-            if (!$tarefa->exists) {
-                flash('Tarefa excluída com sucesso!!');
-            } else {
-                flash('Tarefa não foi excluída!!');
-            }
+            flash('Operação feita com sucesso!!');
 
 
             if (empty($projeto->codprojeto) || empty($organizacao->codorganizacao) || empty($modelo->codmodelo)) {

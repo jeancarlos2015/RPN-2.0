@@ -315,6 +315,7 @@ class ModeloController extends Controller
             $modelo = Modelo::findOrFail($codprojeto);
 
             $this->delete($modelo);
+            flash('Operação feita com sucesso!!');
             if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
 
                 return redirect()->route('todos_modelos');

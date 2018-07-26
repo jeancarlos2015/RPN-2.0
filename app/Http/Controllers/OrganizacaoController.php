@@ -210,7 +210,7 @@ class OrganizacaoController extends Controller
         try {
             OrganizacaoRepository::excluir($codorganizacao);
 
-            
+            flash('Operação feita com sucesso!!');
             return response()->redirectToRoute('controle_organizacoes.index');
         } catch (\Exception $ex) {
             $codigo = LogRepository::criar(

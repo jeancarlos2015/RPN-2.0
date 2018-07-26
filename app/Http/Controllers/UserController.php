@@ -179,6 +179,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         try {
             $user->delete();
+            flash('Operação feita com sucesso!!');
             LogRepository::criar(
                 "Usuário Excluído Com sucesso",
                 "Rota De Exclusão de Usuário",

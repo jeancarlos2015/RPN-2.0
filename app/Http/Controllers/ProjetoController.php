@@ -193,6 +193,7 @@ class ProjetoController extends Controller
         try {
             $projeto = Projeto::findOrFail($codprojeto);
             ProjetoRepository::excluir($codprojeto);
+            flash('Operação feita com sucesso!!');
             return redirect()->route('controle_projetos_index', [
                 'codorganizacao' => $projeto->codorganizacao
             ]);
