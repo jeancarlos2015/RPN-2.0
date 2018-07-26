@@ -287,7 +287,8 @@ class RegraController extends Controller
 
             if (!empty($projeto) || !empty($organizacao) && !empty($modelo)) {
                 $titulos = Regra::titulos();
-                $regras = Regra::join('users', 'users.codusuario', '=', 'regras.codusuario')->get();
+
+                $regras = RegraRepository::listar();
                 $tipo = 'regra';
                 return view('controle_regras.all', compact('titulos', 'regras', 'tipo'));
             } else {
