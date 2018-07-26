@@ -579,7 +579,7 @@ class GitSistemaRepository
 
         $github = Auth::user()->github;
         self::change_branch($github->repositorio_atual, $default_branch);
-        sleep(10);
+        sleep(3);
         self::pull($default_branch);
 
 
