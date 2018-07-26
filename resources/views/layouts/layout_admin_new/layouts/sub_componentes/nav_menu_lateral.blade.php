@@ -33,21 +33,7 @@
         </ul>
     </li>
 
-    @if(!empty(Auth::user()->github))
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
-               data-parent="#exampleAccordion">
-                <i class="fa fa-fw fa-building"></i>
-                <span class="nav-link-text">Controle de Versionamento</span>
-            </a>
-            <ul class="sidenav-second-level collapse" id="collapseComponents">
-                <li>
-                    <a href="{!! route('index_init') !!}"><i class="fa fa-fw fa-pencil"></i>Controle de Repositório</a>
-                </li>
-
-            </ul>
-        </li>
-    @endif
+    
     
     @if(Auth::user()->type === 'administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com')
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">

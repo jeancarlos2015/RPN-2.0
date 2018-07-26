@@ -11,4 +11,6 @@
                     'rota_exclusao' => 'controle_logs.destroy',
                     'titulo' =>'Logs Do Sistema'
     ])
+
+
 @endsection

@@ -1,11 +1,18 @@
 <ul class="navbar-nav ml-auto">
+    @if(!empty(Auth::user()->github))
+        <li class="nav-item">
+            <a class="nav-link" href="{!! route('index_init') !!}">
+                Repositórios <span class="sr-only"></span>
+            </a>
+        </li>
+    @endif
 
     <li class="nav-item">
         <a class="nav-link" href="{!! route('controle_logs.index') !!}">
             Logs do Sistema <span class="sr-only"></span>
         </a>
     </li>
-    
+
     <li class="nav-item">
         <a class="nav-link">
             Usuário: {{ Auth::user()->name }} <span class="sr-only"></span>
