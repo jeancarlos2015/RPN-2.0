@@ -6,7 +6,6 @@
             <td>{!! $documentacao->coddocumentacao !!}</td>
             <td>{!! $documentacao->nome !!}</td>
             <td>{!! $documentacao->descricao !!}</td>
-            <td>{!! $documentacao->acao !!}</td>
             <td>
                 @if(!empty($rota_edicao))
                     @include('componentes.link',['id' => $documentacao->coddocumentacao, 'rota' => $rota_edicao])
