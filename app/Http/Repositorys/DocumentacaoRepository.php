@@ -3,12 +3,12 @@
 namespace App\Http\Repositorys;
 
 
+use App\Http\Models\Documentacao;
 use App\Http\Models\Organizacao;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
-class OrganizacaoRepository extends Repository
+class DocumentacaoRepository extends Repository
 {
 
     public function __construct()
@@ -18,8 +18,7 @@ class OrganizacaoRepository extends Repository
 
     public static function listar()
     {
-        return Organizacao::all()
-            ->where('codusuario', '=', Auth::user()->codusuario);
+        return Documentacao::all();
     }
 
 
@@ -28,9 +27,9 @@ class OrganizacaoRepository extends Repository
         return collect(self::listar())->count();
     }
 
-    public static function atualizar(Request $request, $codorganizacao)
+    public static function atualizar(Request $request, $coddocumentacao)
     {
-        $value = Organizacao::findOrFail($codorganizacao);
+        $value = Documentacao::findOrFail($coddocumentacao);
         $value->update($request->all());
         self::limpar_cache();
         return $value;
@@ -43,30 +42,25 @@ class OrganizacaoRepository extends Repository
 
     public static function incluir(Request $request)
     {
-        $value = Organizacao::create($request->all());
+        $value = Documentacao::create($request->all());
         self::limpar_cache();
         return $value;
     }
 
-    public static function findOrFail($codorganizacao)
+    public static function excluir($coddocumentacao)
     {
-
-    }
-
-    public static function excluir($codorganizacao)
-    {
-        $doc = Organizacao::findOrFail($codorganizacao);
+        $doc = Documentacao::findOrFail($coddocumentacao);
         $value = $doc->delete();
-        flash('Organização excluida com sucesso!!!');
+        flash('Documentação excluida com sucesso!!!');
         self::limpar_cache();
         return $value;
     }
 
     public static function excluir_todos()
     {
-        $organizacoes = Organizacao::all();
-        foreach ($organizacoes as $organizacao) {
-            $organizacao->delete();
+        $documentacoes = Documentacao::all();
+        foreach ($documentacoes as $documentacao) {
+            $documentacao->delete();
         }
     }
 

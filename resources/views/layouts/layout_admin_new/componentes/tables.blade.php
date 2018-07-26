@@ -46,6 +46,9 @@
                     @case('log')
                     @includeIf('layouts.layout_admin_new.componentes.tables_logs')
                     @break;
+                    @case('documentacao')
+                    @includeIf('layouts.layout_admin_new.componentes.tables_documentacoes')
+                    @break;
                 @endswitch
             </table>
         </div>

@@ -16,9 +16,9 @@ Route::get('/logout', function () {
 
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
-        
-        Route::post('/xml_store','DadoXmlController@store')->name('xml_store');
-        
+
+        Route::post('/xml_store', 'DadoXmlController@store')->name('xml_store');
+
         Route::resource('controle_organizacoes', 'OrganizacaoController');
         Route::resource('controle_tarefas', 'TarefaController');
         Route::resource('controle_projetos', 'ProjetoController');
@@ -26,7 +26,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_regras', 'RegraController');
         Route::resource('controle_usuarios', 'UserController');
         Route::resource('controle_logs', 'LogController');
-        
+        Route::resource('controle_documentacoes', 'DocumentacaoController');
+
 
         Route::resource('controle_github', 'UsuarioGithubController');
 

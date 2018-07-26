@@ -52,7 +52,11 @@
            href="{!! route('controle_projetos_create',['organizacao_id' => $organizacao->codorganizacao]) !!}">Novo
             Projeto</a>
         @break;
-
+        @case ('documentacao')
+        <a class="btn btn-dark form-control"
+           href="{!! route('controle_documentacoes.create')!!}">Nova
+            Documentação</a>
+        @break;
     @endswitch
 
 

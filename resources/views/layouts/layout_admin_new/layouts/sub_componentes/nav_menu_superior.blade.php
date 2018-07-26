@@ -1,4 +1,9 @@
 <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="{!! route('controle_documentacoes.index') !!}">
+            Documentação do Sistema <span class="sr-only"></span>
+        </a>
+    </li>
     @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
         <li class="nav-item">
             <form action="{!! route('pull') !!}" method="post">
