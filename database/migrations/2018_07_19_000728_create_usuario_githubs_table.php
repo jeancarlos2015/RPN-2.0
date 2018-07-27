@@ -17,7 +17,6 @@ class CreateUsuarioGithubsTable extends Migration
             $table->bigIncrements('codusuariogithub');
             $table->string('usuario_github',4000);
             $table->string('email_github')->unique();
-            $table->string('token_github',4000);
             $table->string('repositorio_atual')->nullable();
             $table->string('branch_atual')->nullable();
             $table->string('senha_github',4000);

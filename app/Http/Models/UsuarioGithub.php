@@ -14,7 +14,6 @@ class UsuarioGithub extends Model
         'usuario_github',
         'codusuario',
         'email_github',
-        'token_github',
         'branch_atual',
         'repositorio_atual',
         'senha_github'
@@ -25,7 +24,6 @@ class UsuarioGithub extends Model
         return [
             'usuario_github' => 'required|max:50',
             'email_github' => 'required|max:50',
-            'token_github' => 'required|max:50',
             'senha_github' => 'required|max:50',
         ];
     }
@@ -58,7 +56,6 @@ class UsuarioGithub extends Model
         return [
             'usuario_github',
             'email_github',
-            'token_github',
             'senha_github'
         ];
 

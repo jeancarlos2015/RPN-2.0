@@ -565,7 +565,6 @@ class GitSistemaRepository
         $data = [
             'codusuario' => Auth::user()->codusuario,
             'email_github' => $github_data->email_github,
-            'token_github' => $github_data->token_github,
             'senha_github' => $github_data->senha_github,
             'branch_atual' => $default_branch,
             'repositorio_atual' => $repositorio_atual
