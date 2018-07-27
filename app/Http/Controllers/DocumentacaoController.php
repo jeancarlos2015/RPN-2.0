@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Documentacao;
 use App\Http\Repositorys\DocumentacaoRepository;
-use App\Http\Repositorys\LogRepository;
 use Illuminate\Http\Request;
 
 class DocumentacaoController extends Controller
@@ -43,9 +42,14 @@ class DocumentacaoController extends Controller
         try {
             $data['all'] = $request->all();
             $data['validacao'] = Documentacao::validacao();
-            $data['rota'] =   'controle_documentacoes.create';
+            $data['rota'] = 'controle_documentacoes.create';
             $this->validar($data);
-            DocumentacaoRepository::incluir($request);
+            $documentacao = DocumentacaoRepository::incluir($request);
+            if (isset($documentacao)) {
+                flash('Documentação criada com sucesso!!');
+            } else {
+                flash('Documentação não foi criada!!');
+            }
             return redirect()->route('controle_documentacoes.index');
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -93,7 +97,6 @@ class DocumentacaoController extends Controller
             } else {
                 flash('Documentação não foi Atualizada!!');
             }
-
             return redirect()->route('controle_documentacoes.index');
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -110,8 +113,7 @@ class DocumentacaoController extends Controller
     {
         try {
             DocumentacaoRepository::excluir($coddocumentacao);
-
-            flash('Operação feita com sucesso!!');
+            flash('Documentação excluida com sucesso!!!');
             return response()->redirectToRoute('controle_documentacoes.index');
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();

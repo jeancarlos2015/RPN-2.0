@@ -166,7 +166,7 @@ class GitController extends Controller
 
     }
 
-    public function delete_repository($repositorio_atual, $default_branch)
+    public function delete_repository($repositorio_atual)
     {
         try {
             GitSistemaRepository::delete_repository($repositorio_atual);
