@@ -2,7 +2,7 @@
 
 @section('content')
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
-                      'titulo' => 'Paianel',
+                      'titulo' => 'Painel',
                     'sub_titulo' => 'Versionamento',
                     'rota' => 'todas_tarefas',
                     'branch_atual' => $branch_atual

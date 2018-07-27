@@ -4,7 +4,7 @@
     {!! csrf_field() !!}
     @if(!empty($repositorio))
         @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
-                          'titulo' => 'Paianel',
+                          'titulo' => 'Painel',
                         'sub_titulo' => 'Versionamento',
                         'rota' => 'index_painel',
                         'branch_atual' => $repositorio['default_branch']

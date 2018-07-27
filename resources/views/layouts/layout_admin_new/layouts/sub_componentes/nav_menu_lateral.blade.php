@@ -7,7 +7,7 @@
         </a>
         <ul class="sidenav-second-level collapse" id="collapseComponents1">
             <li>
-                <a href="{!! route('painel') !!}"><i class="fa fa-fw fa-pencil"></i>Painel Sistema</a>
+                <a href="{!! route('painel') !!}"><i class="fa fa-fw fa-pencil"></i>Todos</a>
             </li>
 
             <li>
@@ -49,7 +49,7 @@
                 </li>
                 <li>
                     <a href="{!! route('create_github',['codusuario' => Auth::user()->codusuario]) !!}"><i
-                                class="fa fa-fw fa-pencil"></i>Configuração Do Github</a>
+                                class="fa fa-fw fa-pencil"></i>Github</a>
                 </li>
             </ul>
         </li>
@@ -69,7 +69,7 @@
                 </li>
                 <li>
                     <a href="{!! route('create_github',['codusuario' => Auth::user()->codusuario]) !!}"><i
-                                class="fa fa-fw fa-pencil"></i>Configuração do Github</a>
+                                class="fa fa-fw fa-pencil"></i>Github</a>
                 </li>
 
 
