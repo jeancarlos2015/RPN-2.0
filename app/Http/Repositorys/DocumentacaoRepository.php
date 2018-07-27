@@ -42,9 +42,13 @@ class DocumentacaoRepository extends Repository
 
     public static function incluir(Request $request)
     {
-        $value = Documentacao::create($request->all());
-        self::limpar_cache();
-        return $value;
+        $documentacao = Documentacao::create($request->all());
+        if (isset($documentacao)) {
+            flash('Documentação criada com sucesso!!');
+        } else {
+            flash('Documentação não foi criada!!');
+        }
+        return $documentacao;
     }
 
     public static function excluir($coddocumentacao)

@@ -23,12 +23,11 @@ class DocumentacaoController extends Controller
             $tipo = 'documentacao';
             return view('controle_documentacao.index', compact('documentacoes', 'titulos', 'campos', 'tipo'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_documentacao.index',
-                'index');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
     }
 
@@ -42,27 +41,18 @@ class DocumentacaoController extends Controller
     public function store(Request $request)
     {
         try {
-            $erros = \Validator::make($request->all(), Documentacao::validacao());
-            if ($erros->fails()) {
-                return redirect()->route('controle_documentacoes.create')
-                    ->withErrors($erros)
-                    ->withInput();
-            }
-            $documentacao = Documentacao::create($request->all());
-            if (isset($documentacao)) {
-                flash('Documentação criada com sucesso!!');
-            } else {
-                flash('Documentação não foi criada!!');
-            }
-
+            $data['all'] = $request->all();
+            $data['validacao'] = Documentacao::validacao();
+            $data['rota'] =   'controle_documentacoes.create';
+            $this->validar($data);
+            DocumentacaoRepository::incluir($request);
             return redirect()->route('controle_documentacoes.index');
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_documentacao.form',
-                'store');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -84,12 +74,11 @@ class DocumentacaoController extends Controller
             $dados[2]->valor = $documentacao->link;
             return view('controle_documentacao.edit', compact('dados', 'documentacao'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_documentacao.edit',
-                'edit');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -107,12 +96,11 @@ class DocumentacaoController extends Controller
 
             return redirect()->route('controle_documentacoes.index');
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_documentacao.index',
-                'update');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -126,12 +114,11 @@ class DocumentacaoController extends Controller
             flash('Operação feita com sucesso!!');
             return response()->redirectToRoute('controle_documentacoes.index');
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_documentacao.index',
-                'destroy');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
     }
 }
