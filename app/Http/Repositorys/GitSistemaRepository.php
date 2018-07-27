@@ -2,6 +2,7 @@
 
 namespace App\Http\Repositorys;
 
+use App\Http\Models\Branchs;
 use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
 use Github\Api\Repository\Contents;
@@ -127,7 +128,7 @@ class GitSistemaRepository
     }
 
 
-    public static function create_branch($branch)
+    public static function create_branch_aux($branch)
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -147,7 +148,7 @@ class GitSistemaRepository
     }
 
     public static
-    function delete_branch($branch)
+    function delete_branch_aux($branch)
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -292,6 +293,35 @@ class GitSistemaRepository
         self::escrer_arquivo($path . "/" . $arquivo, $conteudo);
 
 
+    }
+
+    public static function selecionar_repositorio($default_branch, $repositorio_atual)
+    {
+        $client = new Client();
+        $github = Auth::user()->github;
+
+        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+
+        $branchs = $client->repo()->branches(Crypt::decrypt($github->usuario_github), $repositorio_atual);
+        //Ao selecionar um outro repositório é necessário atualizar a base de dados, então quanto a operação é feita
+        //é necessário deletar todas as branchs do antigo repositório
+        BranchsRepository::excluir_todos();
+        //Busca as branchs do repositório que está no github e salva na base de dados;
+
+        foreach ($branchs as $branch) {
+            $data = [
+                'branch' => $branch['name'],
+                'descricao' => 'Nenhum',
+                'codusuario' => Auth::user()->codusuario
+            ];
+            (new Branchs())->create($data);
+        }
+        //Informações pertinentes aos registros do banco do repositório antigo também são apagados
+        OrganizacaoRepository::excluir_todos();
+
+        self::apaga_modelos();
+        self::change_branch($repositorio_atual, $default_branch);
+        self::pull($default_branch);
     }
 
     public
@@ -578,4 +608,45 @@ class GitSistemaRepository
 
     }
 
+    public static function atualizar_usuario_github($repositorio){
+        $github_data = Auth::user()->github;
+        $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
+        $data = [
+            'codusuario' => Auth::user()->codusuario,
+            'email_github' => $github_data->email_github,
+            'senha_github' => $github_data->senha_github,
+            'branch_atual' => $repositorio['default_branch'],
+            'repositorio_atual' => $repositorio['name']
+        ];
+        $user_github->update($data);
+    }
+
+    public static function delete_branch($branch){
+        if (self::delete_branch_aux($branch) === 204) {
+            $branchs = Branchs::all()->where('branch', '=', $branch);
+            foreach ($branchs as $b) {
+                $codbranch = $b->codbranch;
+                BranchsRepository::excluir($codbranch);
+            }
+        }
+    }
+
+    public static function create_branch($branch){
+        self::create_branch_aux($branch);
+        $data_branch = [
+            'branch' => $branch,
+            'descricao' => 'Nenhum',
+            'codusuario' => Auth::user()->codusuario
+        ];
+        Branchs::create($data_branch);
+        GitSistemaRepository::checkout($branch);
+    }
+
+    public static function merge_checkout($tipo, $branch){
+        if ($tipo === 'checkout') {
+            self::checkout($branch);
+        } elseif ($tipo === 'merge') {
+            self::merge($branch);
+        }
+    }
 }
