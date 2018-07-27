@@ -35,7 +35,6 @@ class UsuarioGithub extends Model
             'Usuário Do Github',
             'Usuário Do Sistema',
             'Email Do Github',
-            'Token Do Github',
             'Senha Do Github',
             'Ações'
         ];
@@ -46,7 +45,6 @@ class UsuarioGithub extends Model
         return [
             'Usuário Do Github',
             'Email Do Github',
-            'Token Do Github',
             'Senha Do Github'
         ];
     }
@@ -65,7 +63,7 @@ class UsuarioGithub extends Model
     public static function dados_objeto()
     {
         $dado = array();
-        for ($indice = 0; $indice < 7; $indice++) {
+        for ($indice = 0; $indice < 6; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
@@ -79,8 +77,8 @@ class UsuarioGithub extends Model
         $dados = self::dados_objeto();
         $titulos = self::titulos();
 
-        for ($indice = 0; $indice < 7; $indice++) {
-            if ($indice < 4) {
+        for ($indice = 0; $indice < 6; $indice++) {
+            if ($indice < 3) {
                 $dados[$indice]->campo = $campos[$indice];
                 $dados[$indice]->atributo = $atributos[$indice];
             }
