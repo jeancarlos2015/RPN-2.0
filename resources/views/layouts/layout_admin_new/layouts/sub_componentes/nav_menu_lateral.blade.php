@@ -62,7 +62,7 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapseComponents2">
                 <li>
-                    <a href="{!! route('controle_usuarios.edit',['id' => Auth::user()->codusuario]) !!}"><i
+                    <a href="{!! route('edit_user',['id' => Auth::user()->codusuario]) !!}"><i
                                 class="fa fa-fw fa-pencil"></i>Atualizar Conta</a>
 
 

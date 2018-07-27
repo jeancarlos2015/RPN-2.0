@@ -24,9 +24,10 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_projetos', 'ProjetoController');
         Route::resource('controle_modelos', 'ModeloController');
         Route::resource('controle_regras', 'RegraController');
-        
+        Route::get('edit_user/{id}', 'UserController@edit')->name('edit_user');
         Route::resource('controle_usuarios', 'UserController')->middleware('can:admin');
-        Route::resource('controle_logs', 'LogController');
+        Route::resource('controle_logs', 'LogController')->middleware('can:admin');
+        Route::get('index_logs','LogController@index')->name('index_logs');
         Route::resource('controle_documentacoes', 'DocumentacaoController');
 
 

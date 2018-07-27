@@ -137,7 +137,7 @@ class TarefaController extends Controller
             $dados[0]->valor = $tarefa->nome;
             $dados[1]->valor = $tarefa->descricao;
             return view('controle_tarefas.edit', compact('dados', 'tarefa'));
-        }catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
                 'warning',

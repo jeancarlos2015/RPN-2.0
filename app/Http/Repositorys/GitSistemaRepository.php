@@ -49,12 +49,6 @@ class GitSistemaRepository
         $contents = new Contents($client);
 
         if (!$contents->exists(decrypt($github->usuario_github), $repositorio, $nome, $branch)) {
-            try {
-                $contents->archive(decrypt($github->usuario_github), $repositorio, $formato, $branch);
-            } catch (\Exception $ex) {
-                dd($ex->getMessage());
-            }
-
 
             $contents->create(
                 decrypt($github->usuario_github),

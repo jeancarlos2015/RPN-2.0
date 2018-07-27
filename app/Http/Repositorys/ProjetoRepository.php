@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class ProjetoRepository extends Repository
 {
@@ -22,17 +21,18 @@ class ProjetoRepository extends Repository
     {
 
         return Projeto::all()
-            ->where('codusuario','=',Auth::user()->codusuario);
+            ->where('codusuario', '=', Auth::user()->codusuario);
 
     }
 
     public static function listar_por_organizacao($codorganizacao)
     {
         return Projeto::all()
-            ->where('codusuario','=',Auth::user()->codusuario)
-            ->where('codorganizacao','=',$codorganizacao);
+            ->where('codusuario', '=', Auth::user()->codusuario)
+            ->where('codorganizacao', '=', $codorganizacao);
 
     }
+
     public static function count()
     {
         return collect(self::listar())->count();

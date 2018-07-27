@@ -259,8 +259,7 @@ class GitController extends Controller
                 }
             }
             flash('Branch deletada com sucesso!!!');
-        } 
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
                 'warning',
@@ -310,14 +309,13 @@ class GitController extends Controller
         return redirect()->route('painel');
     }
 
-    
 
     public function pull()
     {
         try {
             GitSistemaRepository::pull(Auth::user()->github->branch_atual);
             flash('Operação Feita com sucesso!!!');
-        }catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
                 'warning',
@@ -337,7 +335,6 @@ class GitController extends Controller
         return redirect()->route('painel');
     }
 
-  
 
     public function merge_checkout(Request $request)
     {
@@ -380,7 +377,6 @@ class GitController extends Controller
         return redirect()->route('painel');
     }
 
-  
 
     public function commit(Request $request)
     {
@@ -389,7 +385,7 @@ class GitController extends Controller
             flash('Operação feita com sucesso !!!');
 
 
-        }catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
                 'warning',

@@ -129,11 +129,10 @@ class ModeloController extends Controller
         try {
             $codprojeto = $request->codprojeto;
             $codorganizacao = $request->codorganizacao;
-             $this->valida_redireciona($request, $codorganizacao, $codprojeto);
+            $this->valida_redireciona($request, $codorganizacao, $codprojeto);
             $modelo = Modelo::create($request->all());
             $this->valida_tipo_redireciona($modelo);
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
                 'warning',
