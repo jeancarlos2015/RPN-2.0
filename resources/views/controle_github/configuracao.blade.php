@@ -20,10 +20,6 @@
             <input type="email" class="form-control" name="email_github" required>
         </div>
 
-        <div class="form-group">
-            <label>Token Github</label>
-            <input type="password" class="form-control" name="token_github" required>
-        </div>
 
         <div class="form-group">
             <label>Senha Github</label>

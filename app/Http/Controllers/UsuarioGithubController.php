@@ -51,7 +51,6 @@ class UsuarioGithubController extends Controller
                     'usuario_github' => Crypt::encrypt($request->usuario_github),
                     'codusuario' => $request->codusuario,
                     'email_github' => $request->email_github,
-                    'token_github' => bcrypt($request->token_github),
                     'branch_atual' => 'Nenhuma Branch',
                     'repositorio_atual' => 'Nenhum Repositório',
                     'senha_github' => Crypt::encrypt($request->senha_github)

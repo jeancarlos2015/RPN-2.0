@@ -169,7 +169,6 @@ class GitController extends Controller
             $data = [
                 'codusuario' => Auth::user()->codusuario,
                 'email_github' => $github_data->email_github,
-                'token_github' => $github_data->token_github,
                 'senha_github' => $github_data->senha_github,
                 'branch_atual' => $repositorio['default_branch'],
                 'repositorio_atual' => $repositorio['name']
