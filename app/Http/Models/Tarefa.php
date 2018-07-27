@@ -74,7 +74,8 @@ class Tarefa extends Model
 
     }
 
-    public static function validacao(){
+    public static function validacao()
+    {
         return [
             'nome' => 'required|max:50',
             'descricao' => 'required|max:255'
@@ -82,16 +83,18 @@ class Tarefa extends Model
     }
 
     //Instancia todas as posições de memória que serão exibidas no título
-    public static function dados_objeto(){
+    public static function dados_objeto()
+    {
         $dado = array();
-        for($indice=0;$indice<4;$indice++){
+        for ($indice = 0; $indice < 4; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
     }
 
     //Instancia somente os campos que serão exibidos no formulário e preenche os títulos da listagem
-    public static function dados(){
+    public static function dados()
+    {
         $campos = self::campos();
         $atributos = self::atributos();
         $dados = self::dados_objeto();
@@ -107,29 +110,31 @@ class Tarefa extends Model
         return $dados;
     }
 
-    public  function modelo()
+    public function modelo()
     {
         return $this->hasOne(Modelo::class, 'codmodelo', 'codmodelo');
     }
 
-    public  function projeto()
+    public function projeto()
     {
         return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
     }
 
-    public  function organizacao()
+    public function organizacao()
     {
         return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
 
-    public function regras(){
+    public function regras()
+    {
 
         return $this->hasOne(Regra::class, 'codregra', 'codregra');
     }
 
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
-        static::deleting(function($tarefa) { // before delete() method call this
+        static::deleting(function ($tarefa) { // before delete() method call this
             $tarefa->regras()->delete();
         });
     }

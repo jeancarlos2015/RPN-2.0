@@ -62,6 +62,7 @@ class Regra extends Model
             'operador' => 'required|max:255'
         ];
     }
+
     public static function titulos()
     {
         return [
@@ -125,23 +126,23 @@ class Regra extends Model
     }
 
 
-    public  function tarefas()
+    public function tarefas()
     {
         return $this->hasMany(Tarefa::class, 'codregra', 'codregra');
     }
 
 
-    public  function modelo()
+    public function modelo()
     {
         return $this->hasOne(Modelo::class, 'codmodelo', 'codmodelo');
     }
 
-    public  function projeto()
+    public function projeto()
     {
         return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
     }
 
-    public  function organizacao()
+    public function organizacao()
     {
         return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }

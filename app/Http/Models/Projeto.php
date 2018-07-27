@@ -2,7 +2,6 @@
 
 namespace App\Http\Models;
 
-use App\Http\Util\Configuracao;
 use App\Http\Util\Dado;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,6 +37,7 @@ class Projeto extends Model
         'codorganizacao',
         'codusuario'
     ];
+
     public static function validacao()
     {
         return [
@@ -108,9 +108,9 @@ class Projeto extends Model
         return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
 
-    public  function modelos()
+    public function modelos()
     {
-        return $this->belongsTo(Modelo::class,'codprojeto','codprojeto');
+        return $this->belongsTo(Modelo::class, 'codprojeto', 'codprojeto');
     }
 
 
@@ -124,18 +124,19 @@ class Projeto extends Model
         return $this->belongsTo(Tarefa::class, 'codprojeto', 'codprojeto');
     }
 
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
 
-        static::deleting(function($modelo) { // before delete() method call this
+        static::deleting(function ($modelo) { // before delete() method call this
             $modelo->modelos()->delete();
         });
 
-        static::deleting(function($tarefa) { // before delete() method call this
+        static::deleting(function ($tarefa) { // before delete() method call this
             $tarefa->tarefas()->delete();
         });
 
-        static::deleting(function($regra) { // before delete() method call this
+        static::deleting(function ($regra) { // before delete() method call this
             $regra->regras()->delete();
         });
     }

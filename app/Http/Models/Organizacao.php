@@ -118,21 +118,22 @@ class Organizacao extends Model
         return $this->belongsTo(Tarefa::class, 'codorganizacao', 'codorganizacao');
     }
 
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
-        static::deleting(function($projeto) { // before delete() method call this
+        static::deleting(function ($projeto) { // before delete() method call this
             $projeto->projetos()->delete();
         });
 
-        static::deleting(function($modelo) { // before delete() method call this
+        static::deleting(function ($modelo) { // before delete() method call this
             $modelo->modelos()->delete();
         });
 
-        static::deleting(function($tarefa) { // before delete() method call this
+        static::deleting(function ($tarefa) { // before delete() method call this
             $tarefa->tarefas()->delete();
         });
 
-        static::deleting(function($regra) { // before delete() method call this
+        static::deleting(function ($regra) { // before delete() method call this
             $regra->regras()->delete();
         });
     }

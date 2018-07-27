@@ -34,7 +34,8 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    const ROLE_ADMIN = 1;
+    const ROLE_USER = 2;
     protected $primaryKey = 'codusuario';
     protected $table = 'users';
     protected $fillable = [

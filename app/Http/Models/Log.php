@@ -3,7 +3,6 @@
 namespace App\Http\Models;
 
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -38,7 +37,7 @@ class Log extends Model
     ];
 
 
-    public  function usuario()
+    public function usuario()
     {
         return $this->hasOne(User::class, 'codusuario', 'codusuario');
     }

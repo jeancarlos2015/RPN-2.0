@@ -14,6 +14,7 @@ class Documentacao extends Model
         'descricao',
         'link'
     ];
+
     public static function validacao()
     {
         return [
