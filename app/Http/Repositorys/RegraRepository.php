@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class RegraRepository extends Repository
 {
@@ -31,10 +30,10 @@ class RegraRepository extends Repository
         $codprojeto = $dado['codprojeto'];
         $codmodelo = $dado['codmodelo'];
         return Regra::all()
-            ->where('codusuario','=',Auth::user()->codusuario)
-            ->where('codmodelo','=',$codmodelo)
-            ->where('codprojeto','=',$codprojeto)
-            ->where('codorganizacao','=',$codorganizacao);
+            ->where('codusuario', '=', Auth::user()->codusuario)
+            ->where('codmodelo', '=', $codmodelo)
+            ->where('codprojeto', '=', $codprojeto)
+            ->where('codorganizacao', '=', $codorganizacao);
 
 
     }
@@ -77,9 +76,10 @@ class RegraRepository extends Repository
         return $value;
     }
 
-    public static function excluir_todos(){
+    public static function excluir_todos()
+    {
         $regras = Regra::all();
-        foreach ($regras as $regra){
+        foreach ($regras as $regra) {
             $regra->delete();
         }
     }

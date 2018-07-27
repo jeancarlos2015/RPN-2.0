@@ -20,7 +20,7 @@
     @endif
 
     <li class="nav-item">
-        <a class="nav-link" href="{!! route('controle_logs.index') !!}">
+        <a class="nav-link" href="{!! route('index_logs') !!}">
             Logs do Sistema <span class="sr-only"></span>
         </a>
     </li>

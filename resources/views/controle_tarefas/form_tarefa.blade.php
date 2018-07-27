@@ -3,7 +3,7 @@
 @section('content')
 
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
-                      'titulo' => 'Paianel',
+                      'titulo' => 'Painel',
                     'sub_titulo' => 'Tarefas',
                     'rota' => 'todas_tarefas'
     ])

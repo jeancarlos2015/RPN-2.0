@@ -83,16 +83,20 @@ class Modelo extends Model
         ];
 
     }
+
 //Instancia todas as posições de memória que serão exibidas no título
-    public static function dados_objeto(){
+    public static function dados_objeto()
+    {
         $dado = array();
-        for($indice=0;$indice<5;$indice++){
+        for ($indice = 0; $indice < 5; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
     }
+
 //Instancia somente os campos que serão exibidos no formulário e preenche os títulos da listagem
-    public static function dados(){
+    public static function dados()
+    {
         $campos = self::campos();
         $atributos = self::atributos();
         $dados = self::dados_objeto();
@@ -109,12 +113,12 @@ class Modelo extends Model
     }
 
 //Relacionamentos
-    public  function projeto()
+    public function projeto()
     {
         return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
     }
 
-    public  function organizacao()
+    public function organizacao()
     {
         return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
@@ -124,27 +128,30 @@ class Modelo extends Model
         return $this->belongsTo(Regra::class, 'codmodelo', 'codmodelo');
     }
 
-    public static function validacao(){
+    public static function validacao()
+    {
         return [
             'nome' => 'required',
             'descricao' => 'required',
             'tipo' => 'required',
         ];
     }
+
     public function tarefas()
     {
         return $this->belongsTo(Tarefa::class, 'codmodelo', 'codmodelo');
     }
 
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
 
 
-        static::deleting(function($tarefa) { // before delete() method call this
+        static::deleting(function ($tarefa) { // before delete() method call this
             $tarefa->tarefas()->delete();
         });
 
-        static::deleting(function($regra) { // before delete() method call this
+        static::deleting(function ($regra) { // before delete() method call this
             $regra->regras()->delete();
         });
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Repositorys;
 
 
-use App\Http\Models\Branchs;
 use App\Http\Models\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +27,6 @@ class LogRepository extends Repository
         return $log->codlog;
     }
 
-   
 
     public static function listar()
     {

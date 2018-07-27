@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class TarefaRepository extends Repository
 {
@@ -22,7 +21,7 @@ class TarefaRepository extends Repository
     {
 
         return Tarefa::all()
-            ->where('codusuario','=',Auth::user()->codusuario);
+            ->where('codusuario', '=', Auth::user()->codusuario);
 
     }
 
@@ -32,10 +31,10 @@ class TarefaRepository extends Repository
         $codprojeto = $dado['codprojeto'];
         $codmodelo = $dado['codmodelo'];
         return Tarefa::all()
-            ->where('codmodelo','=',$codmodelo)
-            ->where('codprojeto','=',$codprojeto)
-            ->where('codorganizacao','=',$codorganizacao)
-            ->where('codusuario','=',Auth::user()->codusuario);
+            ->where('codmodelo', '=', $codmodelo)
+            ->where('codprojeto', '=', $codprojeto)
+            ->where('codorganizacao', '=', $codorganizacao)
+            ->where('codusuario', '=', Auth::user()->codusuario);
     }
 
     public static function count()
@@ -76,9 +75,10 @@ class TarefaRepository extends Repository
         return $value;
     }
 
-    public static function excluir_todos(){
+    public static function excluir_todos()
+    {
         $tarefas = Tarefa::all();
-        foreach ($tarefas as $tarefa){
+        foreach ($tarefas as $tarefa) {
             $tarefa->delete();
         }
     }

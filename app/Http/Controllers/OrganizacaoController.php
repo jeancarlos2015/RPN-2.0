@@ -101,7 +101,7 @@ class OrganizacaoController extends Controller
             }
 
             return view('controle_organizacoes.create_nome', compact('projeto'));
-        }catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             $codigo = LogRepository::criar(
                 $ex->getMessage(),
                 'warning',

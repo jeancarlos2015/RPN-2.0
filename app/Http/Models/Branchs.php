@@ -14,7 +14,8 @@ class Branchs extends Model
         'codusuario'
     ];
 
-    public function usuario(){
+    public function usuario()
+    {
         return $this->hasOne(User::class, 'codusuario', 'codusuario');
     }
 }
