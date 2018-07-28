@@ -29,9 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('admin', function ($user){
                 return $user->email==='jeancarlospenas25@gmail.com';
         });
-      
-        Gate::define('update-user', function ($user, $user2){
-            return $user2->codusuario = $user->codusuario;
+
+        Gate::define('edit-user', function($userAuthenticated,$targetUser){
+            return $userAuthenticated->id == $targetUser->id;
         });
     }
 }

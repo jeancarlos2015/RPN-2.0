@@ -34,54 +34,68 @@ class OrganizacaoController extends Controller
             $log = LogRepository::log();
             return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos', 'tipo', 'log'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_organizacoes.index',
-                'index');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
+    }
+
+    private function rotas()
+    {
+        return [
+            'todos_modelos',
+            'todas_tarefas',
+            'todas_regras',
+            'todos_projetos',
+            'controle_organizacoes.index',
+        ];
+    }
+
+    private function titulos()
+    {
+        return [
+            'Modelos',
+            'Tarefas',
+            'Regras',
+            'Projetos',
+            'Organizações'
+        ];
+    }
+
+    private function quantidades()
+    {
+        $qt_organizacoes = OrganizacaoRepository::count();
+        $qt_projetos = ProjetoRepository::count();
+        $qt_modelos = ModeloRepository::count();
+        $qt_tarefas = TarefaRepository::count();
+        $qt_regras = RegraRepository::count();
+        $qt_funcionalidades = 6;
+        return [
+            $qt_modelos,
+            $qt_tarefas,
+            $qt_regras,
+            $qt_projetos,
+            $qt_organizacoes
+        ];
     }
 
     public function painel()
     {
         try {
-            $qt_organizacoes = OrganizacaoRepository::count();
-            $qt_projetos = ProjetoRepository::count();
-            $qt_modelos = ModeloRepository::count();
-            $qt_tarefas = TarefaRepository::count();
-            $qt_regras = RegraRepository::count();
-            $qt_funcionalidades = 6;
+
             $log = LogRepository::log();
             $tipo = 'painel';
-            $titulos = [
-                'Modelos',
-                'Tarefas',
-                'Regras',
-                'Projetos',
-                'Organizações'
-            ];
-            $rotas = [
-                'todos_modelos',
-                'todas_tarefas',
-                'todas_regras',
-                'todos_projetos',
-                'controle_organizacoes.index',
-            ];
-            $quantidades = [
-                $qt_modelos,
-                $qt_tarefas,
-                $qt_regras,
-                $qt_projetos,
-                $qt_organizacoes
-            ];
+            $titulos = $this->titulos();
+            $rotas = $this->rotas();
+            $quantidades = $this->quantidades();
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'painel.index',
-                'painel');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo', 'log'));
     }
@@ -102,12 +116,11 @@ class OrganizacaoController extends Controller
 
             return view('controle_organizacoes.create_nome', compact('projeto'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_organizacoes.create_nome',
-                'create_nome');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
     }
 
@@ -145,12 +158,11 @@ class OrganizacaoController extends Controller
 
             return redirect()->route('controle_projetos_index', ['codorganizacao' => $organizacao->codorganizacao]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_organizacoes.form',
-                'store');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -171,12 +183,11 @@ class OrganizacaoController extends Controller
             $dados[1]->valor = $organizacao->descricao;
             return view('controle_organizacoes.edit', compact('dados', 'organizacao'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_organizacoes.edit',
-                'edit');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -194,12 +205,11 @@ class OrganizacaoController extends Controller
 
             return redirect()->route('controle_organizacoes.index');
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_organizacoes.index',
-                'update');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -213,17 +223,12 @@ class OrganizacaoController extends Controller
             flash('Operação feita com sucesso!!');
             return response()->redirectToRoute('controle_organizacoes.index');
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_organizacoes.index',
-                'destroy');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
     }
 
-    public function voltar()
-    {
-        redirect()->back();
-    }
 }

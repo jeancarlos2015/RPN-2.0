@@ -29,10 +29,9 @@ class DocumentacaoRepository extends Repository
 
     public static function atualizar(Request $request, $coddocumentacao)
     {
-        $value = Documentacao::findOrFail($coddocumentacao);
-        $value->update($request->all());
-        self::limpar_cache();
-        return $value;
+        $organizacao = Documentacao::findOrFail($coddocumentacao);
+        $organizacao->update($request->all());
+        return $organizacao;
     }
 
     public static function limpar_cache()
@@ -42,16 +41,15 @@ class DocumentacaoRepository extends Repository
 
     public static function incluir(Request $request)
     {
-        $value = Documentacao::create($request->all());
-        self::limpar_cache();
-        return $value;
+        $documentacao = Documentacao::create($request->all());
+        
+        return $documentacao;
     }
 
     public static function excluir($coddocumentacao)
     {
         $doc = Documentacao::findOrFail($coddocumentacao);
         $value = $doc->delete();
-        flash('Documentação excluida com sucesso!!!');
         self::limpar_cache();
         return $value;
     }

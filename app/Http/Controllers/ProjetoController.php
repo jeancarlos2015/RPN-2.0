@@ -23,12 +23,11 @@ class ProjetoController extends Controller
             $log = LogRepository::log();
             return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos', 'tipo', 'log'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_projetos.index',
-                'index');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -42,12 +41,11 @@ class ProjetoController extends Controller
             $log = LogRepository::log();
             return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo', 'log'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_projetos.index',
-                'todos_projetos');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -76,12 +74,11 @@ class ProjetoController extends Controller
 
             return view('controle_projetos.create', compact('dados', 'organizacao'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_projetos.create',
-                'create');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -105,12 +102,11 @@ class ProjetoController extends Controller
             flash('Projeto criado com sucesso!!');
             return redirect()->route('controle_modelos_index', ['codorganizacao' => $codorganizacao, 'codprojeto' => $projeto->codprojeto]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_projetos.create',
-                'store');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -127,12 +123,11 @@ class ProjetoController extends Controller
             $projeto = Projeto::findOrFail($codprojeto);
             return redirect()->route('controle_modelos_index', ['codorganizacao' => $projeto->codorganizacao, 'codprojeto' => $codprojeto]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_modelos.index',
-                'show');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -153,12 +148,11 @@ class ProjetoController extends Controller
             $dados[1]->valor = $projeto->descricao;
             return view('controle_projetos.edit', compact('dados', 'projeto', 'organizacao'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_projetos.edit',
-                'edit');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -176,12 +170,11 @@ class ProjetoController extends Controller
             $projeto = ProjetoRepository::atualizar($request, $codprojeto);
             return redirect()->route('controle_modelos_index', ['codorganizacao' => $projeto->codorganizacao, 'codprojeto' => $codprojeto]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_modelos.edit',
-                'update');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
 
@@ -198,12 +191,11 @@ class ProjetoController extends Controller
                 'codorganizacao' => $projeto->codorganizacao
             ]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_projetos.index',
-                'destroy');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }

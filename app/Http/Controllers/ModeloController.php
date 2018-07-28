@@ -21,12 +21,11 @@ class ModeloController extends Controller
             $titulos = Modelo::titulos();
             $modelos = ModeloRepository::listar_modelo_por_projeto_organizacao($codorganizacao, $codprojeto);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'index',
-                'index/listar');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         $tipo = 'modelo';
         return view('controle_modelos.index', compact('modelos', 'projeto', 'organizacao', 'titulos', 'tipo'));
@@ -40,12 +39,11 @@ class ModeloController extends Controller
             $tipo = 'modelo';
             $log = LogRepository::log();
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'index',
-                'todos_modelos');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return view('controle_modelos.index_todos_modelos', compact('modelos', 'titulos', 'tipo', 'log'));
     }
@@ -66,12 +64,11 @@ class ModeloController extends Controller
             $projeto = Projeto::findOrFail($request->codprojeto);
             $organizacao = Organizacao::findOrFail($request->codorganizacao);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'form - modelos',
-                'escolher_modelo');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return view('controle_modelos.create', compact('dado', 'projeto', 'organizacao'));
     }
@@ -83,12 +80,11 @@ class ModeloController extends Controller
             $organizacao = Organizacao::findOrFail($codorganizacao);
             $dados = Modelo::dados();
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'form - modelos',
-                'create');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return view('controle_modelos.create', compact('dados', 'organizacao', 'projeto'));
     }
@@ -124,21 +120,45 @@ class ModeloController extends Controller
         }
     }
 
+//$codorganizacao, $codprojeto, $codmodelo
     public function store(Request $request)
     {
         try {
             $codprojeto = $request->codprojeto;
             $codorganizacao = $request->codorganizacao;
-            $this->valida_redireciona($request, $codorganizacao, $codprojeto);
-            $modelo = Modelo::create($request->all());
-            $this->valida_tipo_redireciona($modelo);
+            $data['all'] = $request->all();
+            $data['validacao'] = Modelo::validacao();
+            if (!$this->exists_errors($data)) {
+                $request->request->add([
+                    'xml_modelo' => "Nenhum",
+                    'codprojeto' => $codprojeto,
+                    'codorganizacao' => $codorganizacao,
+                    'codusuario'   => Auth::user()->codusuario
+                ]);
+                $modelo = Modelo::create($request->all());
+                if ($modelo->tipo === 'declarativo') {
+                    return redirect()->route('controle_regras_index', [
+                        'codorganizacao' => $codorganizacao,
+                        'codprojeto' => $codprojeto,
+                        'codmodelo' => $modelo->codmodelo
+                    ]);
+                } else {
+                    return view('controle_modelos.modeler');
+                }
+            }
+            $erros = $this->get_errors($data);
+            return redirect()->route('controle_modelos_create', [
+                'codorganizacao' => $codorganizacao,
+                'codprojeto' => $codprojeto
+            ])
+                ->withErrors($erros)
+                ->withInput();
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'form - modelos',
-                'store');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
 
         return view('controle_modelos.modeler', compact('modelo'));
@@ -166,12 +186,11 @@ class ModeloController extends Controller
                 return view('controle_modelos.form_diagramatico', compact('modelo'));
             }
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_modelos.form_declrativo/form_diagramatico',
-                'show');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
 
@@ -193,12 +212,11 @@ class ModeloController extends Controller
                 ]);
             }
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_tarefas.index',
-                'show_tarefas');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -218,12 +236,11 @@ class ModeloController extends Controller
                 ]);
             }
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_regras_index',
-                'show_regras');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -246,12 +263,11 @@ class ModeloController extends Controller
             $dados[2]->valor = $modelo->tipo;
             return view('controle_modelos.edit', compact('dados', 'modelo', 'projeto', 'organizacao'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'edit',
-                'edit');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -279,12 +295,11 @@ class ModeloController extends Controller
                 'codmodelo' => $modelo->codmodelo
             ]);
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'edit/update',
-                'update');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -302,18 +317,20 @@ class ModeloController extends Controller
             $modelo = ModeloRepository::excluir($codmodelo);
             return $modelo;
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar($ex->getMessage(), 'warning');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
-            return redirect()->route('painel');
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
     }
 
     public function destroy($codprojeto)
     {
         try {
-            $modelo = Modelo::findOrFail($codprojeto);
 
-            $this->delete($modelo);
+            $modelo = Modelo::findOrFail($codprojeto);
+            $modelo->delete();
             flash('Operação feita com sucesso!!');
             if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
 
@@ -327,12 +344,11 @@ class ModeloController extends Controller
                 );
             }
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'todos_modelos',
-                'delete/destroy');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
 
