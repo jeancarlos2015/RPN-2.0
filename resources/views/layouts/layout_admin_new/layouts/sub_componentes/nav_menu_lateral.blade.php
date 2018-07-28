@@ -68,7 +68,9 @@
 
                 <li>
                     <a href="{!! route('edit_user',['id' => Auth::user()->codusuario]) !!}"><i
-                                class="fa fa-fw fa-pencil"></i>Alterar Dados</a>
+                                class="fa fa-fw fa-pencil"></i>Atualizar Conta</a>
+
+
                 </li>
             </ul>
 

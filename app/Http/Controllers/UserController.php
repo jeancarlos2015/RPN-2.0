@@ -119,11 +119,10 @@ class UserController extends Controller
     {
 
         try {
-            dd($id)
             $usuario = User::findOrFail($id);
-            if(\Gate::denies('edit-user',$usuario)){
-                abort(403);
-            }
+//            if (\Gate::denies('edit-user', $usuario)) {
+//                abort(403);
+//            }
             $dados = User::dados();
             $dados[0]->valor = $usuario->name;
             $dados[1]->valor = $usuario->email;
