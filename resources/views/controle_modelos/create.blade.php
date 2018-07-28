@@ -4,10 +4,10 @@
 @section('content')
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
-                    'titulo' => 'Modelos',
-                    'rota' => 'todos_modelos'
-    ])
-
+                   'titulo' => 'Painel',
+                   'rota' => 'painel',
+                   'sub_titulo' => 'Modelos'
+   ])
     <form action="{!! route('controle_modelos.store') !!}" method="post">
     @includeIf('controle_modelos.form',
     [

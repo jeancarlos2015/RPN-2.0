@@ -3,9 +3,10 @@
 @section('content')
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
-              'titulo' => 'Painel',
-              'sub_titulo' => 'Nova Organização',
-    ])
+                   'titulo' => 'Painel',
+                   'rota' => 'painel',
+                   'sub_titulo' => 'Nova Organização'
+   ])
 
     <form action="{!! route('controle_organizacoes.store') !!}" method="post">
         {{ method_field('POST')}}

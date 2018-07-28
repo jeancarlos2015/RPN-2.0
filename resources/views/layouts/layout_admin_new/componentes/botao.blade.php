@@ -42,6 +42,7 @@
             <br>
             <br>
         @endif
+        @break
         @case ('usuario')
         <a class="btn btn-dark form-control"
            href="{!! route('controle_usuarios.create') !!}">Novo Usuário</a>

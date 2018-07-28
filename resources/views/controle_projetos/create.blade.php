@@ -6,6 +6,7 @@
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
       'titulo' => 'Painel',
     'sub_titulo' => 'Novo Projeto',
+    'rota' => 'painel'
     ])
     <form action="{!! route('controle_projetos.store') !!}" method="post">
     @includeIf('controle_projetos.form',

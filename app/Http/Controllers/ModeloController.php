@@ -202,6 +202,7 @@ class ModeloController extends Controller
         try {
             $modelo = Modelo::findOrFail($codmodelo);
             if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
+
                 flash('Não existem tarefas para serem exibidas!!!')->error();
                 return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
             } else {
