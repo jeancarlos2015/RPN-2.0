@@ -120,14 +120,39 @@ class ModeloController extends Controller
         }
     }
 
+//$codorganizacao, $codprojeto, $codmodelo
     public function store(Request $request)
     {
         try {
             $codprojeto = $request->codprojeto;
             $codorganizacao = $request->codorganizacao;
-            $this->valida_redireciona($request, $codorganizacao, $codprojeto);
-            $modelo = Modelo::create($request->all());
-            $this->valida_tipo_redireciona($modelo);
+            $data['all'] = $request->all();
+            $data['validacao'] = Modelo::validacao();
+            if (!$this->exists_errors($data)) {
+                $request->request->add([
+                    'xml_modelo' => "Nenhum",
+                    'codprojeto' => $codprojeto,
+                    'codorganizacao' => $codorganizacao,
+                    'codusuario'   => Auth::user()->codusuario
+                ]);
+                $modelo = Modelo::create($request->all());
+                if ($modelo->tipo === 'declarativo') {
+                    return redirect()->route('controle_regras_index', [
+                        'codorganizacao' => $codorganizacao,
+                        'codprojeto' => $codprojeto,
+                        'codmodelo' => $modelo->codmodelo
+                    ]);
+                } else {
+                    return view('controle_modelos.modeler');
+                }
+            }
+            $erros = $this->get_errors($data);
+            return redirect()->route('controle_modelos_create', [
+                'codorganizacao' => $codorganizacao,
+                'codprojeto' => $codprojeto
+            ])
+                ->withErrors($erros)
+                ->withInput();
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -303,9 +328,9 @@ class ModeloController extends Controller
     public function destroy($codprojeto)
     {
         try {
-            $modelo = Modelo::findOrFail($codprojeto);
 
-            $this->delete($modelo);
+            $modelo = Modelo::findOrFail($codprojeto);
+            $modelo->delete();
             flash('Operação feita com sucesso!!');
             if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
 

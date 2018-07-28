@@ -38,4 +38,16 @@ class Controller extends BaseController
                 ->withInput();
         }
     }
+
+    protected function exists_errors($data){
+        $all = $data['all'];
+        $validacao = $data['validacao'];
+        return \Validator::make($all, $validacao)->fails();
+    }
+
+    protected function get_errors($data){
+        $all = $data['all'];
+        $validacao = $data['validacao'];
+        return \Validator::make($all, $validacao);
+    }
 }
