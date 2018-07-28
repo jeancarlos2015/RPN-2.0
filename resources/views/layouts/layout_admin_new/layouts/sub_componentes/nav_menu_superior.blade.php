@@ -1,47 +1,53 @@
 <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-        <a class="nav-link" href="{!! route('controle_documentacoes.index') !!}">
-            Documentação do Sistema <span class="sr-only"></span>
-        </a>
-    </li>
-    @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
-        <li class="nav-item">
-            <form action="{!! route('pull') !!}" method="post">
-                @csrf
-                <button type="submit" class="btn btn-dark">Atualizar</button>
-            </form>
-        </li>
+    <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Opções
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item btn-secondary" href="{!! route('painel') !!}">Painel</a>
+            <a class="dropdown-item btn-secondary" href="{!! route('index_logs') !!}">Logs do Sistema</a>
+            @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
+                <a class="dropdown-item btn-secondary" href="{!! route('pull') !!}">Atualizar</a>
+                <a class="dropdown-item btn-secondary" href="{!! route('index_init') !!}">Repositórios</a>
+            @endif
+            <a class="dropdown-item btn-secondary" href="{!! route('controle_documentacoes.index') !!}">Documentação do
+                Sistema</a>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{!! route('index_init') !!}">
-                Repositórios <span class="sr-only"></span>
-            </a>
-        </li>
-    @endif
+        </div>
+    </div>
+    {{--<li class="nav-item">--}}
+    {{--<a class="nav-link" href="{!! route('controle_documentacoes.index') !!}">--}}
+    {{--Documentação do Sistema <span class="sr-only"></span>--}}
+    {{--</a>--}}
+    {{--</li>--}}
+    {{--@if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))--}}
+    {{--<li class="nav-item">--}}
+    {{--<form action="{!! route('pull') !!}" method="post">--}}
+    {{--@csrf--}}
+    {{--<button type="submit" class="btn btn-dark">Atualizar</button>--}}
+    {{--</form>--}}
+    {{--</li>--}}
 
-    <li class="nav-item">
-        <a class="nav-link" href="{!! route('index_logs') !!}">
-            Logs do Sistema <span class="sr-only"></span>
-        </a>
-    </li>
+    {{--<li class="nav-item">--}}
+    {{--<a class="nav-link" href="{!! route('index_init') !!}">--}}
+    {{--Repositórios <span class="sr-only"></span>--}}
+    {{--</a>--}}
+    {{--</li>--}}
+    {{--@endif--}}
+
+    {{--<li class="nav-item">--}}
+    {{--<a class="nav-link" href="{!! route('index_logs') !!}">--}}
+    {{--Logs do Sistema <span class="sr-only"></span>--}}
+    {{--</a>--}}
+    {{--</li>--}}
 
     <li class="nav-item">
         <a class="nav-link">
             Usuário: {{ Auth::user()->name }} <span class="sr-only"></span>
         </a>
     </li>
-    @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
-        <li class="nav-item">
-            <a class="nav-link">
-                Branch Atual: {{ Auth::user()->github->branch_atual }} <span class="sr-only"></span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link">
-                Repositório Atual: {{ Auth::user()->github->repositorio_atual }} <span class="sr-only"></span>
-            </a>
-        </li>
-    @endif
+
     <li class="nav-item dropdown">
 
         <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown"
@@ -82,4 +88,6 @@
             @csrf
         </form>
     </li>
+
+
 </ul>
