@@ -2,7 +2,11 @@
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Todos os modelos'])
+    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+                   'titulo' => 'Painel',
+                   'rota' => 'painel',
+                   'sub_titulo' => 'Modelos'
+   ])
 
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,

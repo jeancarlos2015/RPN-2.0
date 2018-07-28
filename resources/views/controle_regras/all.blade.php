@@ -3,8 +3,9 @@
 @section('content')
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
-      'titulo' => 'Painel',
-      'sub_titulo' => 'Regras',
+                      'titulo' => 'Painel',
+                    'sub_titulo' => 'Regras',
+                    'rota' => 'painel'
     ])
 
     @includeIf('layouts.layout_admin_new.componentes.tables',[

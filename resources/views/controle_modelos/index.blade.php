@@ -4,8 +4,9 @@
 @section('content')
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
-                    'titulo' => 'Modelos',
-                    'rota' => 'painel'
+                    'titulo' => 'Painel',
+                    'rota' => 'painel',
+                    'sub_titulo' => 'Modelos'
     ])
     @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
     @includeIf('layouts.layout_admin_new.componentes.tables',[
