@@ -16,6 +16,18 @@
 
         </div>
     </div>
+    @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
+        <li class="nav-item">
+            <a class="nav-link">
+                Branch Atual: {{ Auth::user()->github->branch_atual }} <span class="sr-only"></span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link">
+                Repositório Atual: {{ Auth::user()->github->repositorio_atual }} <span class="sr-only"></span>
+            </a>
+        </li>
+    @endif
     {{--<li class="nav-item">--}}
     {{--<a class="nav-link" href="{!! route('controle_documentacoes.index') !!}">--}}
     {{--Documentação do Sistema <span class="sr-only"></span>--}}
