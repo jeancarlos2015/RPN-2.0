@@ -67,9 +67,10 @@ class RegraController extends Controller
             $projeto = Projeto::findOrFail($codprojeto);
             $modelo = Modelo::findOrFail($codmodelo);
             $regras = RegraRepository::listar();
+            $tarefas = TarefaRepository::listar();
             $titulos = Regra::titulos();
             $tipo = 'regra';
-            return view('controle_regras.form_regra', compact('organizacao', 'projeto', 'modelo', 'titulos', 'regras', 'tipo'));
+            return view('controle_regras.form_regra', compact('organizacao', 'projeto', 'modelo', 'titulos', 'regras', 'tipo','tarefas'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';

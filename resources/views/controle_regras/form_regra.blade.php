@@ -17,7 +17,12 @@
                     <datalist id="tarefa_ou_regra1">
                         @if(!empty($regras))
                             @foreach($regras as $regra)
-                                <option value="{!! $regra->codregra !!}" label="teste"></option>
+                                <option value="{!! $regra->nome !!}" label="regra"></option>
+                            @endforeach
+                        @endif
+                        @if(!empty($tarefas))
+                            @foreach($tarefas as $tarefa)
+                                <option value="{!! $tarefa->nome !!}" label="tarefa"></option>
                             @endforeach
                         @endif
                     </datalist>
@@ -31,7 +36,12 @@
                     <datalist id="tarefa_ou_regra2">
                         @if(!empty($regras))
                             @foreach($regras as $regra)
-                                <option value="{!! $regra->codregra !!}">{!! $regra->nome !!}</option>
+                                <option value="{!! $regra->nome !!}" label="regra"></option>
+                            @endforeach
+                        @endif
+                        @if(!empty($tarefas))
+                            @foreach($tarefas as $tarefa)
+                                <option value="{!! $tarefa->nome !!}" label="tarefa"></option>
                             @endforeach
                         @endif
                     </datalist>
