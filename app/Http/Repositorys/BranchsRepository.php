@@ -59,7 +59,6 @@ class BranchsRepository extends Repository
     public static function excluir_branch($branch)
     {
         $branchs = Auth::user()->branchs;
-        dd($branchs, $branch);
         foreach ($branchs as $b) {
             if ($b->branch===$branch){
                 

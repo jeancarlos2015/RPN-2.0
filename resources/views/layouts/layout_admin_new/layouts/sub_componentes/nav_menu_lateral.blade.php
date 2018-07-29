@@ -193,20 +193,41 @@
                 <li>
                     <form class="form-group" action="{!! route('delete') !!}" method="post">
                         @csrf
+                        {{ method_field('POST')}}
+                        {{--<div class="form-group">--}}
+                            {{--<input type="text" class="form-control" name="branch">--}}
+                            {{--<select  name="branch">--}}
+                            {{--@if(!empty(Auth::user()->branchs))--}}
+                            {{--@foreach(Auth::user()->branchs as $branch)--}}
+                            {{--@if(Auth::user()->github->branch_atual !== $branch->branch)--}}
+                            {{--<option value="{!! $branch->$branch !!}">{!! $branch->branch !!}</option>--}}
+                            {{--@endif--}}
+                            {{--@endforeach--}}
+                            {{--@endif--}}
+                            {{--<option value="">teste1</option>--}}
+                            {{--<option value="">teste2</option>--}}
+                            {{--<option value="">teste3</option>--}}
+                            {{--<option value="">teste4</option>--}}
+                            {{--</select>--}}
+
+
+                        {{--</div>--}}
                         <div class="form-group">
+                            @if(!empty(Auth::user()->branchs))
+                                @foreach(Auth::user()->branchs as $branch)
+                                    @if(Auth::user()->github->branch_atual !== $branch->branch)
 
-
-                            <select class="form-control" id="sel1" name="branch">
-                                @if(!empty(Auth::user()->branchs))
-                                    @foreach(Auth::user()->branchs as $branch)
-                                        @if(Auth::user()->github->branch_atual !== $branch->branch)
-                                            <option value="{!! $branch->$branch !!}">{!! $branch->branch !!}</option>
-                                        @endif
-                                    @endforeach
-                                @endif
-                          
-                            </select>
+                                        {{--<input type="radio" name="branch" value="{{$branch->branch}}"--}}
+                                               {{--class=""> {{$branch->branch}}<br>--}}
+                                        <div class="form-check btn-dark">
+                                            <input type="radio" class="form-check-input" id="materialUnchecked{{$branch->codbranch}}" name="branch" value="{{$branch->branch}}">
+                                            <label class="form-check-label" for="materialUnchecked" >{{$branch->branch}}</label>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
                         </div>
+
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary form-control">Delete Branch</button>

@@ -220,6 +220,8 @@ return [
 
         'Table' => Bootstrapper\Facades\Table::class,
         'Button' => Bootstrapper\Facades\Button::class,
+        'InputGroup' => Bootstrapper\Facades\InputGroup::class,
+
         'GitHub' => GrahamCampbell\GitHub\Facades\GitHub::class,
     ],
 
