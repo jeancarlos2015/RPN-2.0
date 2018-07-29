@@ -77,7 +77,7 @@ class Tarefa extends Model
     public static function validacao()
     {
         return [
-            'nome' => 'required|max:50',
+            'nome' => 'required|unique:tarefas|max:50',
             'descricao' => 'required|max:255'
         ];
     }

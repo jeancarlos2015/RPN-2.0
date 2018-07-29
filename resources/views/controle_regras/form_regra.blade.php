@@ -1,4 +1,3 @@
-
 @extends('layouts.layout_admin_new.layouts.main')
 
 @section('content')
@@ -13,10 +12,35 @@
         {{--{{ method_field('PUT')}}--}}
         <div class="form-group">
             <div class="row">
-                <div class="col-2"><input type="text" class="form-control" name="nome" placeholder="Nome da regra" required></div>
-                <div class="col-4"><input type="text" class="form-control" name="tarefa1.nome" placeholder="Tarefa 1" required></div>
+                <div class="col-5">
+                    <input list="tarefa_ou_regra1" name="tarefa_ou_regra1" class="form-control">
+                    <datalist id="tarefa_ou_regra1">
+                        @if(!empty($regras))
+                            @foreach($regras as $regra)
+                                <option value="{!! $regra->codregra !!}" label="teste"></option>
+                            @endforeach
+                        @endif
+                    </datalist>
+                </div>
+
+
                 <div class="col-2 "><input type="text" class="form-control text-center" name="operador" required></div>
-                <div class="col-4 "><input type="text"  class="form-control" name="tarefa2.nome" placeholder="Tarefa 2" required></div>
+
+                <div class="col-5">
+                    <input list="tarefa_ou_regra2" name="tarefa_ou_regra2" class="form-control">
+                    <datalist id="tarefa_ou_regra2">
+                        @if(!empty($regras))
+                            @foreach($regras as $regra)
+                                <option value="{!! $regra->codregra !!}">{!! $regra->nome !!}</option>
+                            @endforeach
+                        @endif
+                    </datalist>
+                </div>
+
+                {{--<div class="col-2"><input type="text" class="form-control" name="nome" placeholder="Nome da regra" required></div>--}}
+                {{--<div class="col-4"><input type="text" class="form-control" name="tarefa1.nome" placeholder="Tarefa 1" required></div>--}}
+                {{--<div class="col-2 "><input type="text" class="form-control text-center" name="operador" required></div>--}}
+                {{--<div class="col-4 "><input type="text"  class="form-control" name="tarefa2.nome" placeholder="Tarefa 2" required></div>--}}
             </div>
         </div>
 

@@ -28,16 +28,24 @@
         @break;
 
         @case ('tarefa')
+        {{--<a class="btn btn-dark form-control"--}}
+           {{--href="{!! route('controle_tarefas_create',--}}
+                {{--[--}}
+                {{--'organizacao_id' => $organizacao->codorganizacao,--}}
+                     {{--'projeto_id' => $projeto->codprojeto,--}}
+                       {{--'modelo_id' => $modelo->codmodelo--}}
+                {{--]--}}
+           {{--) !!}">Nova Tarefa</a>--}}
         @if(count($tarefas)>1)
 
-            <a class="btn btn-dark form-control"
-               href="{!! route('controle_regras_create',
-                [
-                'organizacao_id' => $organizacao->codorganizacao,
-                     'projeto_id' => $projeto->codprojeto,
-                       'modelo_id' => $modelo->codmodelo
-                ]
-           ) !!}">Nova Regra</a>
+            {{--<a class="btn btn-dark form-control"--}}
+               {{--href="{!! route('controle_regras_create',--}}
+                {{--[--}}
+                {{--'organizacao_id' => $organizacao->codorganizacao,--}}
+                     {{--'projeto_id' => $projeto->codprojeto,--}}
+                       {{--'modelo_id' => $modelo->codmodelo--}}
+                {{--]--}}
+           {{--) !!}">Nova Regra</a>--}}
             <br>
             <br>
             <br>

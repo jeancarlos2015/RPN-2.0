@@ -15,7 +15,7 @@ class CreateTarefasTable extends Migration
     {
         Schema::connection('banco')->create('tarefas', function (Blueprint $table) {
             $table->bigIncrements('codtarefa');
-            $table->string('nome');
+            $table->string('nome')->unique();
             $table->string('descricao');
 
             $table->bigInteger('codmodelo');

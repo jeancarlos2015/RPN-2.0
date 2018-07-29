@@ -58,7 +58,7 @@ class Regra extends Model
     public static function validacao()
     {
         return [
-            'nome' => 'required|max:50',
+            'nome' => 'required|unique:regras|max:50',
             'operador' => 'required|max:255'
         ];
     }

@@ -89,37 +89,7 @@ class ModeloController extends Controller
         return view('controle_modelos.create', compact('dados', 'organizacao', 'projeto'));
     }
 
-    private function valida_redireciona(Request $request, $codorganizacao, $codprojeto)
-    {
-        $request->request->add([
-            'xml_modelo' => 'nenhum',
-            'codusuario' => Auth::user()->codusuario
-        ]);
-
-        $erros = \Validator::make($request->all(), Modelo::validacao());
-        if ($erros->fails()) {
-            return redirect()->route('controle_modelos_create', [
-                'codorganizacao' => $codorganizacao,
-                'codprojeto' => $codprojeto
-            ])
-                ->withErrors($erros)
-                ->withInput();
-        }
-    }
-
-    private function valida_tipo_redireciona($modelo)
-    {
-        if ($modelo->tipo === 'declarativo') {
-            flash('Modelos criado com sucesso!!!');
-            return redirect()->route('controle_regras_index',
-                [
-                    'codorganizacao' => $modelo->codorganizacao,
-                    'codprojeto' => $modelo->codprojeto,
-                    'codmodelo' => $modelo->codmodelo
-                ]);
-        }
-    }
-
+   
 //$codorganizacao, $codprojeto, $codmodelo
     public function store(Request $request)
     {
@@ -202,7 +172,6 @@ class ModeloController extends Controller
         try {
             $modelo = Modelo::findOrFail($codmodelo);
             if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
-
                 flash('Não existem tarefas para serem exibidas!!!')->error();
                 return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
             } else {
