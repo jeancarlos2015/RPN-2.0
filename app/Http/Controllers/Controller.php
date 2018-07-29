@@ -19,15 +19,27 @@ class Controller extends BaseController
 
     protected function create_log($data)
     {
-        $codigo = LogRepository::criar(
-            $data['mensagem'],
-            $data['tipo'],
-            $data['pagina'],
-            $data['acao']);
-        flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+        if ($data['tipo'] === 'success') {
+            flash('A operação feita com sucesso!!!');
+        }else{
+            $codigo = LogRepository::criar(
+                $data['mensagem'],
+                $data['tipo'],
+                $data['pagina'],
+                $data['acao']);
+            if ($data['tipo'] === 'error') {
+                flash('A operação gerou o log de código ' . $codigo . ', favor consultar na página "Logs Do Sistema"')->error();
+            } else {
+                flash('A operação gerou o log de código ' . $codigo . ', favor consultar na página "Logs Do Sistema"')->warning();
+            }
+
+            return $codigo;
+        }
+        
     }
 
-    protected function validar($data) {
+    protected function validar($data)
+    {
         $all = $data['all'];
         $validacao = $data['validacao'];
         $rota = $data['rota'];
@@ -39,13 +51,15 @@ class Controller extends BaseController
         }
     }
 
-    protected function exists_errors($data){
+    protected function exists_errors($data)
+    {
         $all = $data['all'];
         $validacao = $data['validacao'];
         return \Validator::make($all, $validacao)->fails();
     }
 
-    protected function get_errors($data){
+    protected function get_errors($data)
+    {
         $all = $data['all'];
         $validacao = $data['validacao'];
         return \Validator::make($all, $validacao);

@@ -4,7 +4,7 @@ namespace App\Http\Repositorys;
 
 
 use App\Http\Models\Branchs;
-use Exception;
+use App\Http\Models\UsuarioGithub;
 use Illuminate\Support\Facades\Auth;
 
 class BranchsRepository extends Repository
@@ -38,24 +38,18 @@ class BranchsRepository extends Repository
 
     public static function incluir($data = [])
     {
-        $value = Branchs::create($data);
-        return $value;
+        return Branchs::create($data);
     }
 
     public static function excluir($codbranch)
     {
         $value = null;
-        try {
-            $doc = Branchs::findOrFail($codbranch);
-            $value = $doc->delete();
-            self::limpar_cache();
-        } catch (Exception $e) {
-
-        }
+        $doc = Branchs::findOrFail($codbranch);
+        $value = $doc->delete();
         return $value;
     }
 
-    public static function excluir_todos()
+    public static function excluir_todas_branchs()
     {
         foreach (Branchs::all()->where('codusuario', '=', Auth::user()->codusuario) as $branch) {
             $branch->delete();
@@ -64,11 +58,44 @@ class BranchsRepository extends Repository
 
     public static function excluir_branch($branch)
     {
-        $branchs = Branchs::all()->where('branch', '=', $branch);
+        $branchs = Auth::user()->branchs;
+        dd($branchs, $branch);
         foreach ($branchs as $b) {
-            $codbranch = $b->codbranch;
-            self::excluir($codbranch);
+            if ($b->branch===$branch){
+                
+                self::excluir($b->codbranch);
+            }
+
         }
+    }
+
+    public static function incluir_todas_branchs($branchs = [])
+    {
+
+        foreach ($branchs as $branch) {
+            $data = [
+                'branch' => $branch['name'],
+                'descricao' => 'Nenhum',
+                'codusuario' => Auth::user()->codusuario
+            ];
+            Branchs::create($data);
+        }
+
+    }
+
+    public static function change_branch($default_branch)
+    {
+        $github_data = Auth::user()->github;
+        $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
+        $data = [
+            'codusuario' => Auth::user()->codusuario,
+            'email_github' => $github_data->email_github,
+            'senha_github' => $github_data->senha_github,
+            'branch_atual' => $default_branch,
+            'repositorio_atual' => $github_data->repositorio_atual
+        ];
+        $user_github->update($data);
+
     }
 
 }

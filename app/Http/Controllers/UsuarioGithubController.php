@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Models\UsuarioGithub;
+use App\Http\Repositorys\BranchsRepository;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class UsuarioGithubController extends Controller
                     'repositorio_atual' => 'Nenhum Repositório',
                     'senha_github' => Crypt::encrypt($request->senha_github)
                 ];
-                GitSistemaRepository::delete_all_github();
+                BranchsRepository::excluir_todas_branchs();
                 UsuarioGithub::create($data);
                 LogRepository::criar(
                     "Dados Salvo Com sucesso",
@@ -64,7 +65,11 @@ class UsuarioGithubController extends Controller
                     'store');
                 flash('Configuração salva com sucesso!!');
             } catch (\Exception $ex) {
-                flash($ex->getMessage())->error();
+                $data['mensagem'] = $ex->getMessage();
+                $data['tipo'] = 'error';
+                $data['pagina'] = 'Painel';
+                $data['acao'] = 'merge_checkout';
+                $this->create_log($data);
             }
             return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
         } catch (\Exception $ex) {

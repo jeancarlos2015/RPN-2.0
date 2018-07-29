@@ -33,8 +33,7 @@
         </ul>
     </li>
 
-    
-    
+
     @if(Auth::user()->type === 'administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com')
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2"
@@ -119,7 +118,7 @@
                                 @if(!empty(Auth::user()->branchs))
                                     @foreach(Auth::user()->branchs as $branch)
                                         @if(Auth::user()->github->branch_atual !== $branch->branch)
-                                            <option value="{!! $branch->branch !!}">{!! $branch->branch !!}</option>
+                                            <option value="{!! $branch->$branch !!}">{!! $branch->branch !!}</option>
                                         @endif
                                     @endforeach
                                 @endif
@@ -143,22 +142,22 @@
         </li>
 
         {{--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">--}}
-            {{--<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents6"--}}
-               {{--data-parent="#exampleAccordion">--}}
-                {{--<i class="fa fa-fw fa-cogs"></i>--}}
-                {{--<span class="nav-link-text">Pull</span>--}}
-            {{--</a>--}}
-            {{--<ul class="sidenav-second-level collapse" id="collapseComponents6">--}}
-                {{--<li>--}}
-                    {{--<form class="form-group" action="{!! route('pull') !!}" method="post">--}}
-                        {{--@csrf--}}
-                        {{--<div class="form-group">--}}
-                            {{--<button type="submit" class="btn btn-secondary form-control">Pull</button>--}}
-                        {{--</div>--}}
-                    {{--</form>--}}
-                {{--</li>--}}
+        {{--<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents6"--}}
+        {{--data-parent="#exampleAccordion">--}}
+        {{--<i class="fa fa-fw fa-cogs"></i>--}}
+        {{--<span class="nav-link-text">Pull</span>--}}
+        {{--</a>--}}
+        {{--<ul class="sidenav-second-level collapse" id="collapseComponents6">--}}
+        {{--<li>--}}
+        {{--<form class="form-group" action="{!! route('pull') !!}" method="post">--}}
+        {{--@csrf--}}
+        {{--<div class="form-group">--}}
+        {{--<button type="submit" class="btn btn-secondary form-control">Pull</button>--}}
+        {{--</div>--}}
+        {{--</form>--}}
+        {{--</li>--}}
 
-            {{--</ul>--}}
+        {{--</ul>--}}
         {{--</li>--}}
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
@@ -187,21 +186,25 @@
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents8"
                data-parent="#exampleAccordion">
                 <i class="fa fa-fw fa-cogs"></i>
-                <span class="nav-link-text">Delete Branch</span>
+
+                <label for="sel1"><span class="nav-link-text">Delete Branch</span></label>
             </a>
             <ul class="sidenav-second-level collapse" id="collapseComponents8">
                 <li>
                     <form class="form-group" action="{!! route('delete') !!}" method="post">
                         @csrf
                         <div class="form-group">
-                            <select class="form-control" name="branch">
+
+
+                            <select class="form-control" id="sel1" name="branch">
                                 @if(!empty(Auth::user()->branchs))
                                     @foreach(Auth::user()->branchs as $branch)
                                         @if(Auth::user()->github->branch_atual !== $branch->branch)
-                                            <option value="{!! $branch->branch !!}">{!! $branch->branch !!}</option>
+                                            <option value="{!! $branch->$branch !!}">{!! $branch->branch !!}</option>
                                         @endif
                                     @endforeach
                                 @endif
+                          
                             </select>
                         </div>
 
@@ -215,5 +218,5 @@
         </li>
     @endif
 
-    
+
 </ul>

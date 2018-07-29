@@ -16,13 +16,15 @@ class LogRepository extends Repository
 
     public static function criar($mensagem, $nome, $pagina, $acao)
     {
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i:s');
         $log = Log::create([
-
             'nome' => $nome,
             'descricao' => $mensagem,
             'codusuario' => Auth::user()->codusuario,
             'pagina' => $pagina,
-            'acao' => $acao
+            'acao' => $acao,
+            'created_at' => $date
         ]);
         return $log->codlog;
     }

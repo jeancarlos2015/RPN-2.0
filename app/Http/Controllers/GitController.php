@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositorys\BranchsRepository;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
 use Illuminate\Http\Request;
@@ -102,22 +103,24 @@ class GitController extends Controller
 
     public function selecionar_repositorio($repositorio_atual, $default_branch)
     {
-
         try {
 
             GitSistemaRepository::selecionar_repositorio($default_branch, $repositorio_atual);
+            $data['tipo'] = 'success';
+            $this->create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
+            $data['tipo'] = 'error!';
             $data['pagina'] = 'controle_versao.init';
             $data['acao'] = 'selecionar_repositorio';
             $this->create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
+            $data['tipo'] = 'error!';
             $data['pagina'] = 'controle_versao.init';
             $data['acao'] = 'selecionar_repositorio';
             $this->create_log($data);
+
         }
         return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
     }
@@ -194,8 +197,10 @@ class GitController extends Controller
     public function delete(Request $request)
     {
         try {
-            GitSistemaRepository::delete_branch($request->branch);
-            flash('Branch deletada com sucesso!!!');
+
+            BranchsRepository::excluir_branch($request->branch);
+            $data['tipo'] = 'success';
+            $this->create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -215,7 +220,14 @@ class GitController extends Controller
     public function create(Request $request)
     {
         try {
-            GitSistemaRepository::create_branch($request->branch);
+//            GitSistemaRepository::create_branch($request->branch);
+            $request->request->add([
+                'descricao' => 'nenhum',
+                'codusuario' => Auth::user()->codusuario
+            ]);
+            BranchsRepository::incluir($request->all());
+            $data['tipo']='success';
+            $this->create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -294,6 +306,7 @@ class GitController extends Controller
     public function commit(Request $request)
     {
         try {
+            
             GitSistemaRepository::commit($request->commit);
             flash('Operação feita com sucesso !!!');
         } catch (\Exception $ex) {

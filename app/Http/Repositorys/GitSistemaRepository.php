@@ -7,6 +7,7 @@ use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
 use Github\Api\Repository\Contents;
 use Github\Client;
+use Github\Exception\ErrorException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 
@@ -128,11 +129,13 @@ class GitSistemaRepository
     }
 
 
-    public static function create_branch_aux($branch)
+    public static function create_branch_remote($branch)
     {
         $client = new Client();
         $github = Auth::user()->github;
+
         $repositorio = $github->repositorio_atual;
+
         $usuario_git = Crypt::decrypt($github->usuario_github);
         $client->authenticate($usuario_git, Crypt::decrypt($github->senha_github));
         $branchs = $client->repo()->branches($usuario_git, $repositorio, $github->branch_atual);
@@ -148,7 +151,7 @@ class GitSistemaRepository
     }
 
     public static
-    function delete_branch_aux($branch)
+    function delete_branch_remote($branch)
     {
         $client = new Client();
         $github = Auth::user()->github;
@@ -283,13 +286,18 @@ class GitSistemaRepository
             Crypt::decrypt($github->usuario_github),
             Crypt::decrypt($github->senha_github)
         );
-        $conteudo = $client->repo()
-            ->contents()
-            ->download(
-                Crypt::decrypt($github->usuario_github),
-                $github->repositorio_atual, $arquivo,
-                $branch_atual
-            );
+        //O try/cat neste bloco é necessário pois o repositório pode está vazio quando for feita a operação
+        //pull automática
+        try {
+            $conteudo = $client->repo()
+                ->contents()
+                ->download(
+                    Crypt::decrypt($github->usuario_github),
+                    $github->repositorio_atual, $arquivo,
+                    $branch_atual
+                );
+        } catch (ErrorException $e) {
+        }
         self::escrer_arquivo($path . "/" . $arquivo, $conteudo);
 
 
@@ -303,25 +311,24 @@ class GitSistemaRepository
         $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
 
         $branchs = $client->repo()->branches(Crypt::decrypt($github->usuario_github), $repositorio_atual);
+        $repositorio['default_branch'] = $default_branch;
+        $repositorio['name'] = $repositorio_atual;
+        self::atualizar_usuario_github($repositorio);
+
         //Ao selecionar um outro repositório é necessário atualizar a base de dados, então quanto a operação é feita
         //é necessário deletar todas as branchs do antigo repositório
-        BranchsRepository::excluir_todos();
+        BranchsRepository::excluir_todas_branchs();
+
         //Busca as branchs do repositório que está no github e salva na base de dados;
 
-        foreach ($branchs as $branch) {
-            $data = [
-                'branch' => $branch['name'],
-                'descricao' => 'Nenhum',
-                'codusuario' => Auth::user()->codusuario
-            ];
-            (new Branchs())->create($data);
-        }
+        BranchsRepository::incluir_todas_branchs($branchs);
         //Informações pertinentes aos registros do banco do repositório antigo também são apagados
-        OrganizacaoRepository::excluir_todos();
 
-        self::apaga_modelos();
-        self::change_branch($repositorio_atual, $default_branch);
         self::pull($default_branch);
+
+//        self::apaga_modelos();
+        GitSistemaRepository::checkout($default_branch);
+
     }
 
     public
@@ -483,14 +490,20 @@ class GitSistemaRepository
     {
 
         $dado = self::carrega_dados();
+
         $dado->mensagem = $mensagem;
         $dados = self::extrai_dados_banco($dado, 1);
-
+        
         //upload do banco
         self::upload_github_create($dados);
-
+//        dd(null);
+        if (isset($dado->modelo)){
+            $max = count($dado->modelo);
+        }else{
+            $max=0;
+        }
         //upload dos modelos
-        for ($indice = 1; $indice <= count($dado->modelo); $indice++) {
+        for ($indice = 1; $indice <= $max; $indice++) {
             $dados1 = self::extrai_dados_modelos($dado, $indice);
             self::upload_github_create($dados1);
         }
@@ -503,24 +516,35 @@ class GitSistemaRepository
     {
         $client = new Client();
         $github = Auth::user()->github;
-
+        $username = Crypt::decrypt($github->usuario_github);
+        $repository = $github->repositorio_atual;
+        $branch_atual = $github->branch_atual;
         $client->authenticate(
             Crypt::decrypt($github->usuario_github),
             Crypt::decrypt($github->senha_github)
         );
-        $contents = $client
-            ->repo()
-            ->contents()
-            ->show(
-                Crypt::decrypt($github->usuario_github),
-                'IFES',
-                '',
-                'master'
-            );
-        $banco = collect($contents)->where('name', '=', 'database.db');
-        $modelos = collect($contents)->where('name', '!=', 'database.db');
-        $dados['banco'] = $banco[0];
-        $dados['modelos'] = $modelos;
+        $contents = array();
+        if ($client->repo()->contents()->exists($username, $repository, '')) {
+            $contents = $client
+                ->repo()
+                ->contents()
+                ->show(
+                    $username,
+                    $repository,
+                    ''
+
+                );
+        }
+        if (!empty($contents)) {
+            $banco = collect($contents)->where('name', '=', 'database.db');
+            $modelos = collect($contents)->where('name', '!=', 'database.db');
+            $dados['banco'] = $banco[0];
+            $dados['modelos'] = $modelos;
+        } else {
+            $dados = [];
+        }
+
+
         return $dados;
     }
 
@@ -550,13 +574,15 @@ class GitSistemaRepository
         self::verifica_arquivos($path_banco, $path_modelo);
         //obtem o nome do banco
         $dados = self::get_files_github_pull();
-        $nome_banco = $dados['banco']['name'];
-        $modelos = $dados['modelos'];
+        if (!empty($dados)) {
+            $nome_banco = $dados['banco']['name'];
+            $modelos = $dados['modelos'];
 
-        //baixa os modelos e os sobrescreve
-        self::pull_auxiliar($nome_banco, $path_banco, $default_branch);
-        foreach ($modelos as $modelo) {
-            self::pull_auxiliar($modelo['name'], $path_modelo, $default_branch);
+            //baixa os modelos e os sobrescreve
+            self::pull_auxiliar($nome_banco, $path_banco, $default_branch);
+            foreach ($modelos as $modelo) {
+                self::pull_auxiliar($modelo['name'], $path_modelo, $default_branch);
+            }
         }
 
 
@@ -565,50 +591,24 @@ class GitSistemaRepository
 
     public static function listar_repositorios()
     {
-        try {
-            $client = new Client();
-            $github = Auth::user()->github;
-            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-            return collect($client->currentUser()->repositories());
-        } catch (\Exception $ex) {
-            flash(
-                'Error ao obter dados do usuário do github, é provável que não tenha 
-                          sincronizado com a conta do github, se o mesmo foi sincronizado da 
-                          forma correta favor desconsiderar esta mensagem. Para Configurar a conta
-                          é necessário ir na aba Configuração->Github e prencher o formulário')->warning();
-            return collect(array());
-        }
-    }
 
-    public static function change_branch($repositorio_atual, $default_branch)
-    {
-
-
-        $github_data = Auth::user()->github;
-        $user_github = (new \App\Http\Models\UsuarioGithub)->findOrFail($github_data->codusuariogithub);
-        $data = [
-            'codusuario' => Auth::user()->codusuario,
-            'email_github' => $github_data->email_github,
-            'senha_github' => $github_data->senha_github,
-            'branch_atual' => $default_branch,
-            'repositorio_atual' => $repositorio_atual
-        ];
-        $user_github->update($data);
+        $client = new Client();
+        $github = Auth::user()->github;
+        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        return collect($client->currentUser()->repositories());
 
     }
+
 
     public static function checkout($default_branch)
     {
-
-        $github = Auth::user()->github;
-        self::change_branch($github->repositorio_atual, $default_branch);
+        BranchsRepository::change_branch($default_branch);
         sleep(3);
         self::pull($default_branch);
-
-
     }
 
-    public static function atualizar_usuario_github($repositorio){
+    public static function atualizar_usuario_github($repositorio)
+    {
         $github_data = Auth::user()->github;
         $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
         $data = [
@@ -621,8 +621,10 @@ class GitSistemaRepository
         $user_github->update($data);
     }
 
-    public static function delete_branch($branch){
-        if (self::delete_branch_aux($branch) === 204) {
+
+    public static function delete_branch($branch)
+    {
+        if (self::delete_branch_remote($branch) === 204) {
             $branchs = Branchs::all()->where('branch', '=', $branch);
             foreach ($branchs as $b) {
                 $codbranch = $b->codbranch;
@@ -631,22 +633,15 @@ class GitSistemaRepository
         }
     }
 
-    public static function create_branch($branch){
-        self::create_branch_aux($branch);
-        $data_branch = [
-            'branch' => $branch,
-            'descricao' => 'Nenhum',
-            'codusuario' => Auth::user()->codusuario
-        ];
-        Branchs::create($data_branch);
-        GitSistemaRepository::checkout($branch);
-    }
 
-    public static function merge_checkout($tipo, $branch){
+    public static function merge_checkout($tipo, $branch)
+    {
         if ($tipo === 'checkout') {
             self::checkout($branch);
         } elseif ($tipo === 'merge') {
             self::merge($branch);
         }
     }
+
+
 }
