@@ -71,4 +71,8 @@ class ProjetoRepository extends Repository
         return $value;
     }
 
+    public static function projeto_existe($nome_do_projeto){
+        $projetos = self::listar();
+        return $projetos->where('nome', $nome_do_projeto)->count()>0;
+    }
 }

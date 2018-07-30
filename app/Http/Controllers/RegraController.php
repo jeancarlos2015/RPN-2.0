@@ -169,9 +169,33 @@ class RegraController extends Controller
         }
     }
 
+//nome',
+//        'descricao',
+//        'codorganizacao',
+//        'codprojeto',
+//        'codmodelo',
+//        'codusuario',
+//        'codregra'
+    private function verificar_se_existe(Request $request){
+           $nome = $request->tarefa_ou_regra1;
+           $tipo = $request->tipo1;
+           if ($tipo==='tarefa'){
+               if(!TarefaRepository::tarefa_existe($nome)){
+                  $data = [
+                      'codusuario' => Auth::user()->codusuario,
+                      'nome' => $nome,
+                      'descricao' => 'Nenhum',
+                      'codorganizacao' => $request->codorganizacao,
+                      'codprojeto' => $request->codprojeto,
+                      'codmodelo' => $request->codmodelo,
+                  ];
+               }
+           }
+    }
     public function store(Request $request)
     {
         try {
+            dd($request);
             $codorganizacao = $request->codorganizacao;
             $codprojeto = $request->codprojeto;
             $codmodelo = $request->codmodelo;

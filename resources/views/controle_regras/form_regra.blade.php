@@ -12,45 +12,77 @@
         {{--{{ method_field('PUT')}}--}}
         <div class="form-group">
             <div class="row">
+
+                <div class="col-3">
+                    <div class="form-group">
+                        <label>Nome da regra</label>
+                        <input type="text" name="nome_regra" class="form-control">
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+
                 <div class="col-5">
-                    <input list="tarefa_ou_regra1" name="tarefa_ou_regra1" class="form-control">
-                    <datalist id="tarefa_ou_regra1">
-                        @if(!empty($regras))
-                            @foreach($regras as $regra)
-                                <option value="{!! $regra->nome !!}" label="regra"></option>
-                            @endforeach
-                        @endif
-                        @if(!empty($tarefas))
-                            @foreach($tarefas as $tarefa)
-                                <option value="{!! $tarefa->nome !!}" label="tarefa"></option>
-                            @endforeach
-                        @endif
-                    </datalist>
+
+                    <div class="form-group">
+                        <label>Tarefa/Regra </label>
+                        <input list="tarefa_ou_regra1" name="tarefa_ou_regra1" class="form-control">
+                        <datalist id="tarefa_ou_regra1">
+                            @if(!empty($regras))
+                                @foreach($regras as $regra)
+                                    <option value="{!! $regra->nome !!}" label="regra">{!! $regra->nome !!}</option>
+                                @endforeach
+                            @endif
+                            @if(!empty($tarefas))
+                                @foreach($tarefas as $tarefa)
+                                    <option value="{!! $tarefa->nome !!}" label="tarefa">{!! $tarefa->nome !!}</option>
+                                @endforeach
+                            @endif
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="tipo1" value="regra" checked>Regra
+                        <input type="radio" name="tipo1" value="tarefa">Tarefa
+                    </div>
+
                 </div>
 
 
-                <div class="col-2 "><input type="text" class="form-control text-center" name="operador" required></div>
-
-                <div class="col-5">
-                    <input list="tarefa_ou_regra2" name="tarefa_ou_regra2" class="form-control">
-                    <datalist id="tarefa_ou_regra2">
-                        @if(!empty($regras))
-                            @foreach($regras as $regra)
-                                <option value="{!! $regra->nome !!}" label="regra"></option>
-                            @endforeach
-                        @endif
-                        @if(!empty($tarefas))
-                            @foreach($tarefas as $tarefa)
-                                <option value="{!! $tarefa->nome !!}" label="tarefa"></option>
-                            @endforeach
-                        @endif
-                    </datalist>
+                <div class="col-2 ">
+                    <label>Operador</label>
+                    <input type="text" class="form-control text-center" name="operador" required>
                 </div>
 
-                {{--<div class="col-2"><input type="text" class="form-control" name="nome" placeholder="Nome da regra" required></div>--}}
-                {{--<div class="col-4"><input type="text" class="form-control" name="tarefa1.nome" placeholder="Tarefa 1" required></div>--}}
-                {{--<div class="col-2 "><input type="text" class="form-control text-center" name="operador" required></div>--}}
-                {{--<div class="col-4 "><input type="text"  class="form-control" name="tarefa2.nome" placeholder="Tarefa 2" required></div>--}}
+                <div class="col-5">
+                    <div class="form-group">
+                        <label>Tarefa/Regra</label>
+                        <input list="tarefa_ou_regra2" name="tarefa_ou_regra2" class="form-control">
+                        <datalist id="tarefa_ou_regra2">
+                            @if(!empty($regras))
+                                @foreach($regras as $regra1)
+                                    <option value="{!! $regra1->nome !!}" label="regra">{!! $regra1->nome !!}</option>
+                                @endforeach
+                            @endif
+                            @if(!empty($tarefas))
+                                @foreach($tarefas as $tarefa1)
+                                    <option value="{!! $tarefa1->nome !!}"
+                                            label="tarefa">{!! $tarefa1->nome !!}</option>
+                                @endforeach
+                            @endif
+                        </datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-group">
+                            <input type="radio" name="tipo2" value="regra" checked>Regra
+                            <input type="radio" name="tipo2" value="tarefa">Tarefa
+                        </div>
+                    </div>
+
+
+                </div>
+
             </div>
         </div>
 

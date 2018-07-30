@@ -84,4 +84,9 @@ class RegraRepository extends Repository
         }
     }
 
+    public static function regra_existe($nome_da_regra){
+        $regras = self::listar();
+        return $regras->where('nome', $nome_da_regra)->count()>0;
+    }
+
 }
