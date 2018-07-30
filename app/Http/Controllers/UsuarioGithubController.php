@@ -58,12 +58,8 @@ class UsuarioGithubController extends Controller
                 ];
                 BranchsRepository::excluir_todas_branchs();
                 UsuarioGithub::create($data);
-                LogRepository::criar(
-                    "Dados Salvo Com sucesso",
-                    "Rota De Configuração Github",
-                    'controle_github.configuracao',
-                    'store');
-                flash('Configuração salva com sucesso!!');
+                $dados['tipo']  = 'success';
+                $this->create_log($dados);
             } catch (\Exception $ex) {
                 $data['mensagem'] = $ex->getMessage();
                 $data['tipo'] = 'error';

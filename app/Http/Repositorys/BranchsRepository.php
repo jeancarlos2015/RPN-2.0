@@ -82,16 +82,16 @@ class BranchsRepository extends Repository
 
     }
 
-    public static function change_branch($default_branch)
+    public static function change_branch($branch_atual)
     {
         $github_data = Auth::user()->github;
         $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
         $data = [
-            'codusuario' => Auth::user()->codusuario,
+            'codusuario' => $user_github->codusuario,
             'email_github' => $github_data->email_github,
             'senha_github' => $github_data->senha_github,
-            'branch_atual' => $default_branch,
-            'repositorio_atual' => $github_data->repositorio_atual
+            'branch_atual' => $branch_atual,
+            'repositorio_atual' => $user_github->repositorio_atual
         ];
         $user_github->update($data);
 

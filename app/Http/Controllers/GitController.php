@@ -104,8 +104,9 @@ class GitController extends Controller
     public function selecionar_repositorio($repositorio_atual, $default_branch)
     {
         try {
-
+            
             GitSistemaRepository::selecionar_repositorio($default_branch, $repositorio_atual);
+            
             $data['tipo'] = 'success';
             $this->create_log($data);
         } catch (\Exception $ex) {

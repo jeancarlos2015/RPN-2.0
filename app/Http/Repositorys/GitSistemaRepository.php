@@ -314,21 +314,22 @@ class GitSistemaRepository
         $repositorio['default_branch'] = $default_branch;
         $repositorio['name'] = $repositorio_atual;
         self::atualizar_usuario_github($repositorio);
-
+        
         //Ao selecionar um outro repositório é necessário atualizar a base de dados, então quanto a operação é feita
         //é necessário deletar todas as branchs do antigo repositório
-        BranchsRepository::excluir_todas_branchs();
+//        BranchsRepository::excluir_todas_branchs();
 
         //Busca as branchs do repositório que está no github e salva na base de dados;
 
         BranchsRepository::incluir_todas_branchs($branchs);
+        
         //Informações pertinentes aos registros do banco do repositório antigo também são apagados
 
         self::pull($default_branch);
 
 //        self::apaga_modelos();
         GitSistemaRepository::checkout($default_branch);
-
+        
     }
 
     public
@@ -600,11 +601,11 @@ class GitSistemaRepository
     }
 
 
-    public static function checkout($default_branch)
+    public static function checkout($branch_atual)
     {
-        BranchsRepository::change_branch($default_branch);
+        BranchsRepository::change_branch($branch_atual);
         sleep(3);
-        self::pull($default_branch);
+        self::pull($branch_atual);
     }
 
     public static function atualizar_usuario_github($repositorio)
@@ -612,7 +613,7 @@ class GitSistemaRepository
         $github_data = Auth::user()->github;
         $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
         $data = [
-            'codusuario' => Auth::user()->codusuario,
+            'codusuario' => $user_github->codusuario,
             'email_github' => $github_data->email_github,
             'senha_github' => $github_data->senha_github,
             'branch_atual' => $repositorio['default_branch'],
