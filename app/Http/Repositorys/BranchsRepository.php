@@ -60,8 +60,8 @@ class BranchsRepository extends Repository
     {
         $branchs = Auth::user()->branchs;
         foreach ($branchs as $b) {
-            if ($b->branch===$branch){
-                
+            if ($b->branch === $branch) {
+
                 self::excluir($b->codbranch);
             }
 
@@ -77,7 +77,10 @@ class BranchsRepository extends Repository
                 'descricao' => 'Nenhum',
                 'codusuario' => Auth::user()->codusuario
             ];
-            Branchs::create($data);
+            if (!self::exists($branch['name'])) {
+                Branchs::create($data);
+            }
+
         }
 
     }
@@ -97,6 +100,17 @@ class BranchsRepository extends Repository
         ];
         $user_github->update($data);
 
+    }
+
+    public static function exists($branch)
+    {
+        $branchs = self::listar();
+        foreach ($branchs as $branch_base) {
+            if ($branch === $branch_base->branch) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

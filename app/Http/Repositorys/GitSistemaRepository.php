@@ -309,7 +309,6 @@ class GitSistemaRepository
         $github = Auth::user()->github;
         $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
         $branchs = $client->repo()->branches(Crypt::decrypt($github->usuario_github), $repositorio_atual);
-        BranchsRepository::excluir_todas_branchs();
         BranchsRepository::incluir_todas_branchs($branchs);
     }
 

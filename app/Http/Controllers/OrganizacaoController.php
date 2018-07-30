@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Models\Organizacao;
 use App\Http\Models\Projeto;
 use App\Http\Models\Regra;
+use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\ModeloRepository;
 use App\Http\Repositorys\OrganizacaoRepository;
@@ -84,7 +85,8 @@ class OrganizacaoController extends Controller
     public function painel()
     {
         try {
-
+            $repositorio_atual = Auth::user()->github->repositorio_atual;
+            GitSistemaRepository::atualizar_todas_branchs($repositorio_atual);
             $log = LogRepository::log();
             $tipo = 'painel';
             $titulos = $this->titulos();
