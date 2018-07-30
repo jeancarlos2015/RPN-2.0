@@ -8,7 +8,7 @@
             <a class="dropdown-item" href="{!! route('painel') !!}">Painel</a>
             <a class="dropdown-item" href="{!! route('index_logs') !!}">Logs do Sistema</a>
             @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
-                <a class="dropdown-item" href="{!! route('pull') !!}">Atualizar</a>
+                
                 <a class="dropdown-item" href="{!! route('index_init') !!}">Repositórios</a>
             @endif
             <a class="dropdown-item" href="{!! route('controle_documentacoes.index') !!}">Documentação do
@@ -18,10 +18,16 @@
     </div>
     @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
         <li class="nav-item">
+            <a class="btn btn-dark" href="{!! route('pull') !!}">Atualizar</a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link">
                 Branch Atual: {{ Auth::user()->github->branch_atual }} <span class="sr-only"></span>
             </a>
         </li>
+
+
         <li class="nav-item">
             <a class="nav-link">
                 Repositório Atual: {{ Auth::user()->github->repositorio_atual }} <span class="sr-only"></span>
