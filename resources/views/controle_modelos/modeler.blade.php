@@ -41,15 +41,30 @@
 
         #save-button {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
+            bottom: 50px;
+            left: 40px;
+            padding: 20px 50px;
+            background-color: darkgray;
+        }
+        #save-button2 {
+            position: fixed;
+            bottom: 50px;
+            left:  300px;
+            padding: 20px 50px;
+            background-color: darkgray;
         }
     </style>
 </head>
 <body>
 <div id="canvas"></div>
+<div class="form-group">
+    <button id="save-button">Salvar Modelo</button>
+</div>
 
-<button id="save-button">print to console</button>
+<div class="form-group">
+    <button id="save-button2">Aplicar Regras</button>
+</div>
+
 
 <script>
 
@@ -77,7 +92,7 @@
             //     xml: xml,
             //     _token: $('meta[name="csrf-token"]').attr('content')
             // };
-
+              alert('Este comando vai funcionar em breve!!!');
             $.ajax({
                 type: "POST",
                 headers: {
@@ -137,6 +152,7 @@
 
     // wire save button
     $('#save-button').click(exportDiagram);
+    $('#save-button2').click(exportDiagram);
 
 
 </script>
