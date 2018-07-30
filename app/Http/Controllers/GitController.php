@@ -319,12 +319,10 @@ class GitController extends Controller
         try {
             
             GitSistemaRepository::commit($request->commit);
-            flash('Operação feita com sucesso !!!');
+            $data['tipo'] = 'success';
+            $this->create_log($data);
         } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'commit';
+            $data['tipo'] = 'success';
             $this->create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();

@@ -33,7 +33,7 @@ class GitSistemaRepository
 
     }
 
-    private static function upload_github_create($dado)
+    private static function cria_e_atualiza_arquivos_no_github($dado)
     {
 
         $nome = $dado['nome'];
@@ -96,22 +96,27 @@ class GitSistemaRepository
                 $nome,
                 $branch
             );
+
         $contents->archive(
             $user_name,
             $repositorio,
             $formato,
             $branch
         );
-        $contents->update(
-            $user_name,
-            $repositorio,
-            $nome,
-            $conteudo,
-            $mensagem,
-            $oldfile['sha'],
-            $branch,
-            $commiter
-        );
+        if ($contents->exists($user_name, $repositorio, $nome)) {
+
+            $contents->update(
+                $user_name,
+                $repositorio,
+                $nome,
+                $conteudo,
+                $mensagem,
+                $oldfile['sha'],
+                $branch,
+                $commiter
+            );
+
+        }
 
 
     }
@@ -119,13 +124,13 @@ class GitSistemaRepository
     private function upload_github_database_not_exists()
     {
         $conteudo = $this->ler_arquivo(database_path('banco/database.sqlite'));
-        $this->upload_github_create(null);
+        $this->cria_e_atualiza_arquivos_no_github(null);
     }
 
     private function upload_github_database()
     {
         $conteudo = $this->ler_arquivo(database_path('banco/database.sqlite'));
-        $this->upload_github_create(null);
+        $this->cria_e_atualiza_arquivos_no_github(null);
     }
 
 
@@ -218,7 +223,7 @@ class GitSistemaRepository
     }
 
     private
-    static function map_files_local($path)
+    static function mapeia_arquivos_locais($path)
     {
         if (file_exists($path)) {
             try {
@@ -250,7 +255,7 @@ class GitSistemaRepository
         $dado->modelos = $this->ler_arquivo(database_path('banco/modelos/diagram.bpmn'));
         $dado->banco = $this->ler_arquivo(database_path('banco/database.sqlite'));
         $serializado = serialize($dado);
-        $this->upload_github_create("database.dat", $serializado, '.dat', 'teste');
+        $this->cria_e_atualiza_arquivos_no_github("database.dat", $serializado, '.dat', 'teste');
 
     }
 
@@ -423,22 +428,24 @@ class GitSistemaRepository
     }
 
     private
-    static function carrega_dados()
+    static function mapeia_todos_arquivos_locais()
     {
-        $files_bpmn = self::map_files_local(database_path('banco/modelos'));
+        $arquivos_bpmn = self::mapeia_arquivos_locais(database_path('banco/modelos'));
         $dado = new Dado();
-        for ($indice = 1; $indice <= count($files_bpmn); $indice++) {
+        $max_bpmn = count($arquivos_bpmn);
+        for ($indice = 1; $indice <= $max_bpmn; $indice++) {
             $dado->modelo[$indice] = [];
             $dado->conteudo_modelo[$indice] = [];
-            $dado->modelo[$indice] = $files_bpmn[$indice];
-            $dado->conteudo_modelo[$indice] = self::ler_arquivo(database_path('banco/modelos/') . "/" . $files_bpmn[$indice]);
+            $dado->modelo[$indice] = $arquivos_bpmn[$indice];
+            $dado->conteudo_modelo[$indice] = self::ler_arquivo(database_path('banco/modelos/') . "/" . $arquivos_bpmn[$indice]);
         }
-        $files__db = self::map_files_local(database_path('banco'));
-        for ($indice = 1; $indice <= count($files__db); $indice++) {
+        $arquivo__db = self::mapeia_arquivos_locais(database_path('banco'));
+        $max_db = count($arquivo__db);
+        for ($indice = 1; $indice <= $max_db; $indice++) {
             $dado->banco[$indice] = [];
             $dado->conteudo_banco[$indice] = [];
-            $dado->banco[$indice] = $files__db[$indice];
-            $dado->conteudo_banco[$indice] = self::ler_arquivo(database_path('banco') . "/" . $files__db[$indice]);
+            $dado->banco[$indice] = $arquivo__db[$indice];
+            $dado->conteudo_banco[$indice] = self::ler_arquivo(database_path('banco') . "/" . $arquivo__db[$indice]);
         }
 
         return $dado;
@@ -446,7 +453,7 @@ class GitSistemaRepository
 
     public static function apaga_modelos()
     {
-        $files = self::map_files_local(database_path('banco/modelos'));
+        $files = self::mapeia_arquivos_locais(database_path('banco/modelos'));
         if (!empty($files)) {
             foreach ($files as $file) {
                 unlink(database_path('banco/modelos/') . $file);
@@ -469,7 +476,7 @@ class GitSistemaRepository
 //$table->bigInteger('codusuario');
 
     private
-    static function extrai_dados_banco(Dado $dado, $indice)
+    static function extrai_dados_github_do_banco(Dado $dado, $indice)
     {
         $github = Auth::user()->github;
         $dados['nome'] = $dado->banco[$indice];
@@ -486,7 +493,7 @@ class GitSistemaRepository
 
 
     private
-    static function extrai_dados_modelos(Dado $dado, $indice)
+    static function carrega_dados_dos_modelos(Dado $dado, $indice)
     {
         $github = Auth::user()->github;
         $dados['nome'] = $dado->modelo[$indice];
@@ -504,23 +511,26 @@ class GitSistemaRepository
     static function commit($mensagem)
     {
 
-        $dado = self::carrega_dados();
+        $dado = self::mapeia_todos_arquivos_locais();
 
         $dado->mensagem = $mensagem;
-        $dados = self::extrai_dados_banco($dado, 1);
+        $dados = self::extrai_dados_github_do_banco($dado, 1);
 
         //upload do banco
-        self::upload_github_create($dados);
-//        dd(null);
+        self::cria_e_atualiza_arquivos_no_github($dados);
+
+
         if (isset($dado->modelo)) {
             $max = count($dado->modelo);
         } else {
             $max = 0;
         }
+
         //upload dos modelos
         for ($indice = 1; $indice <= $max; $indice++) {
-            $dados1 = self::extrai_dados_modelos($dado, $indice);
-            self::upload_github_create($dados1);
+            $dados1 = self::carrega_dados_dos_modelos($dado, $indice);
+            self::cria_e_atualiza_arquivos_no_github($dados1);
+
         }
         return $dado;
 
