@@ -303,18 +303,27 @@ class GitSistemaRepository
 
     }
 
+    public static function atualizar_todas_branchs($repositorio_atual)
+    {
+        $client = new Client();
+        $github = Auth::user()->github;
+        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $branchs = $client->repo()->branches(Crypt::decrypt($github->usuario_github), $repositorio_atual);
+        BranchsRepository::excluir_todas_branchs();
+        BranchsRepository::incluir_todas_branchs($branchs);
+    }
+
     public static function selecionar_repositorio($default_branch, $repositorio_atual)
     {
         $client = new Client();
         $github = Auth::user()->github;
 
         $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-
         $branchs = $client->repo()->branches(Crypt::decrypt($github->usuario_github), $repositorio_atual);
         $repositorio['default_branch'] = $default_branch;
         $repositorio['name'] = $repositorio_atual;
         self::atualizar_usuario_github($repositorio);
-        
+
         //Ao selecionar um outro repositório é necessário atualizar a base de dados, então quanto a operação é feita
         //é necessário deletar todas as branchs do antigo repositório
 //        BranchsRepository::excluir_todas_branchs();
@@ -322,14 +331,14 @@ class GitSistemaRepository
         //Busca as branchs do repositório que está no github e salva na base de dados;
 
         BranchsRepository::incluir_todas_branchs($branchs);
-        
+
         //Informações pertinentes aos registros do banco do repositório antigo também são apagados
 
         self::pull($default_branch);
 
 //        self::apaga_modelos();
         GitSistemaRepository::checkout($default_branch);
-        
+
     }
 
     public
@@ -494,14 +503,14 @@ class GitSistemaRepository
 
         $dado->mensagem = $mensagem;
         $dados = self::extrai_dados_banco($dado, 1);
-        
+
         //upload do banco
         self::upload_github_create($dados);
 //        dd(null);
-        if (isset($dado->modelo)){
+        if (isset($dado->modelo)) {
             $max = count($dado->modelo);
-        }else{
-            $max=0;
+        } else {
+            $max = 0;
         }
         //upload dos modelos
         for ($indice = 1; $indice <= $max; $indice++) {
@@ -524,7 +533,7 @@ class GitSistemaRepository
             Crypt::decrypt($github->usuario_github),
             Crypt::decrypt($github->senha_github)
         );
-        $contents = array();
+        
         if ($client->repo()->contents()->exists($username, $repository, '')) {
             $contents = $client
                 ->repo()
@@ -535,18 +544,10 @@ class GitSistemaRepository
                     ''
 
                 );
-        }
-        if (!empty($contents)) {
-            $banco = collect($contents)->where('name', '=', 'database.db');
-            $modelos = collect($contents)->where('name', '!=', 'database.db');
-            $dados['banco'] = $banco[0];
-            $dados['modelos'] = $modelos;
+            return collect($contents);
         } else {
-            $dados = [];
+            return  collect([]);
         }
-
-
-        return $dados;
     }
 
     private static function verifica_arquivos($path_banco, $path_modelo)
@@ -567,6 +568,7 @@ class GitSistemaRepository
     public
     static function pull($default_branch)
     {
+        
 
         //obtem o caminho do banco
         $path_banco = database_path('banco');
@@ -574,19 +576,17 @@ class GitSistemaRepository
         $path_modelo = database_path('banco/modelos');
         self::verifica_arquivos($path_banco, $path_modelo);
         //obtem o nome do banco
+        
         $dados = self::get_files_github_pull();
         if (!empty($dados)) {
-            $nome_banco = $dados['banco']['name'];
-            $modelos = $dados['modelos'];
-
-            //baixa os modelos e os sobrescreve
-            self::pull_auxiliar($nome_banco, $path_banco, $default_branch);
-            foreach ($modelos as $modelo) {
-                self::pull_auxiliar($modelo['name'], $path_modelo, $default_branch);
+            foreach ($dados as $arquivo){
+                if ($arquivo['name']==='database.db'){
+                    self::pull_auxiliar($arquivo['name'], $path_banco, $default_branch);
+                }else{
+                    self::pull_auxiliar($arquivo['name'], $path_modelo, $default_branch);
+                }
             }
         }
-
-
     }
 
 
@@ -604,6 +604,7 @@ class GitSistemaRepository
     public static function checkout($branch_atual)
     {
         BranchsRepository::change_branch($branch_atual);
+
         sleep(3);
         self::pull($branch_atual);
     }

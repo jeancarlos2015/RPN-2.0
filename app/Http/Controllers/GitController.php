@@ -245,12 +245,21 @@ class GitController extends Controller
         return redirect()->route('painel');
     }
 
+    /* Atualizar_todas_branchs: -deleta as branchs que existem no banco de acordo com o repositório fornecido.
+                                -busca todas as branchs que existem no repositório fornecido.
+                                -Inclui as branchs no banco.
 
+       Pull:                    -Verifica se existem arquivos locais, baixa os arquivos que existem no repositório
+                                -Atualiza os arquivos locais de acordo com o repositório e a branch fornecida
+     *
+     *
+     */
     public function pull()
     {
         try {
             GitSistemaRepository::pull(Auth::user()->github->branch_atual);
-            flash('Operação Feita com sucesso!!!');
+            $data['tipo'] = 'success';
+            $this->create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -283,7 +292,8 @@ class GitController extends Controller
                     ->withInput();
             } else {
                 GitSistemaRepository::merge_checkout($request->tipo, $request->branch);
-                flash('Operação Feita com sucesso');
+                $data['tipo'] = 'success';
+                $this->create_log($data);
 
             }
 

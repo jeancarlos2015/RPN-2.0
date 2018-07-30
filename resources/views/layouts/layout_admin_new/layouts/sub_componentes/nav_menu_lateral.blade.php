@@ -103,34 +103,34 @@
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents4"
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents10"
                data-parent="#exampleAccordion">
                 <i class="fa fa-fw fa-cogs"></i>
-                <span class="nav-link-text">Merge & Checkout</span>
+                <span class="nav-link-text">Merge</span>
             </a>
-            <ul class="sidenav-second-level collapse" id="collapseComponents4">
+            <ul class="sidenav-second-level collapse" id="collapseComponents10">
                 <li>
                     <form class="form-group" action="{!! route('merge_checkout') !!}" method="post">
                         @csrf
                         <div class="form-group">
-
-                            <select class="form-control" name="branch">
+                            
                                 @if(!empty(Auth::user()->branchs))
                                     @foreach(Auth::user()->branchs as $branch)
                                         @if(Auth::user()->github->branch_atual !== $branch->branch)
-                                            <option value="{!! $branch->$branch !!}">{!! $branch->branch !!}</option>
+
+                                            {{--<input type="radio" name="branch" value="{{$branch->branch}}"--}}
+                                            {{--class=""> {{$branch->branch}}<br>--}}
+                                            <div class="form-check btn-dark">
+                                                <input type="radio" class="form-check-input" id="materialUnchecked{{$branch->codbranch}}" name="branch" value="{{$branch->branch}}">
+                                                <label class="form-check-label" for="materialUnchecked" >{{$branch->branch}}</label>
+                                            </div>
                                         @endif
                                     @endforeach
                                 @endif
-                            </select>
                         </div>
                         <div class="form-group text-light">
-                            <input type="radio" name="tipo" value="merge"> Merge
+                            <input type="hidden" name="tipo" value="merge">
                         </div>
-                        <div class="form-group text-light">
-                            <input type="radio" name="tipo" value="checkout" checked>Checkout
-                        </div>
-
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary form-control">Executar</button>
                         </div>
@@ -141,6 +141,44 @@
             </ul>
         </li>
 
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents11"
+               data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-cogs"></i>
+                <span class="nav-link-text">Checkout</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseComponents11">
+                <li>
+                    <form class="form-group" action="{!! route('merge_checkout') !!}" method="post">
+                        @csrf
+                        <div class="form-group">
+
+                            @if(!empty(Auth::user()->branchs))
+                                @foreach(Auth::user()->branchs as $branch)
+                                    @if(Auth::user()->github->branch_atual !== $branch->branch)
+
+                                        {{--<input type="radio" name="branch" value="{{$branch->branch}}"--}}
+                                        {{--class=""> {{$branch->branch}}<br>--}}
+                                        <div class="form-check btn-dark">
+                                            <input type="radio" class="form-check-input" id="materialUnchecked{{$branch->codbranch}}" name="branch" value="{{$branch->branch}}">
+                                            <label class="form-check-label" for="materialUnchecked" >{{$branch->branch}}</label>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </div>
+                        <div class="form-group text-light">
+                            <input type="hidden" name="tipo" value="checkout"> 
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-secondary form-control">Executar</button>
+                        </div>
+
+                    </form>
+                </li>
+
+            </ul>
+        </li>
         {{--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">--}}
         {{--<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents6"--}}
         {{--data-parent="#exampleAccordion">--}}

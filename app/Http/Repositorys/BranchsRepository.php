@@ -86,7 +86,9 @@ class BranchsRepository extends Repository
     {
         $github_data = Auth::user()->github;
         $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
+
         $data = [
+            'usuario_github' => $user_github->usuario_github,
             'codusuario' => $user_github->codusuario,
             'email_github' => $github_data->email_github,
             'senha_github' => $github_data->senha_github,

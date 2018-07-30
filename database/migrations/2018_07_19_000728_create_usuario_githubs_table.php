@@ -16,7 +16,7 @@ class CreateUsuarioGithubsTable extends Migration
         Schema::create('usuarios_github', function (Blueprint $table) {
             $table->bigIncrements('codusuariogithub');
             $table->string('usuario_github',4000);
-            $table->string('email_github')->unique();
+            $table->string('email_github');
             $table->string('repositorio_atual')->nullable();
             $table->string('branch_atual')->nullable();
             $table->string('senha_github',4000);
