@@ -84,9 +84,12 @@ class OrganizacaoController extends Controller
 
     public function painel()
     {
+        
+        
+
         try {
-            $repositorio_atual = Auth::user()->github->repositorio_atual;
-            GitSistemaRepository::atualizar_todas_branchs($repositorio_atual);
+
+            GitSistemaRepository::atualizar_todas_branchs();
             $log = LogRepository::log();
             $tipo = 'painel';
             $titulos = $this->titulos();

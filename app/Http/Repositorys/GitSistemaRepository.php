@@ -303,13 +303,19 @@ class GitSistemaRepository
 
     }
 
-    public static function atualizar_todas_branchs($repositorio_atual)
+    public static function atualizar_todas_branchs()
     {
-        $client = new Client();
-        $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-        $branchs = $client->repo()->branches(Crypt::decrypt($github->usuario_github), $repositorio_atual);
-        BranchsRepository::incluir_todas_branchs($branchs);
+        try {
+            $repositorio_atual = Auth::user()->github->repositorio_atual;
+            $client = new Client();
+            $github = Auth::user()->github;
+            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+            $branchs = $client->repo()->branches(Crypt::decrypt($github->usuario_github), $repositorio_atual);
+            BranchsRepository::incluir_todas_branchs($branchs);
+        } catch (\Exception $ex) {
+
+        }
+
     }
 
     public static function selecionar_repositorio($default_branch, $repositorio_atual)
@@ -532,7 +538,7 @@ class GitSistemaRepository
             Crypt::decrypt($github->usuario_github),
             Crypt::decrypt($github->senha_github)
         );
-        
+
         if ($client->repo()->contents()->exists($username, $repository, '')) {
             $contents = $client
                 ->repo()
@@ -545,7 +551,7 @@ class GitSistemaRepository
                 );
             return collect($contents);
         } else {
-            return  collect([]);
+            return collect([]);
         }
     }
 
@@ -567,7 +573,7 @@ class GitSistemaRepository
     public
     static function pull($default_branch)
     {
-        
+
 
         //obtem o caminho do banco
         $path_banco = database_path('banco');
@@ -575,13 +581,13 @@ class GitSistemaRepository
         $path_modelo = database_path('banco/modelos');
         self::verifica_arquivos($path_banco, $path_modelo);
         //obtem o nome do banco
-        
+
         $dados = self::get_files_github_pull();
         if (!empty($dados)) {
-            foreach ($dados as $arquivo){
-                if ($arquivo['name']==='database.db'){
+            foreach ($dados as $arquivo) {
+                if ($arquivo['name'] === 'database.db') {
                     self::pull_auxiliar($arquivo['name'], $path_banco, $default_branch);
-                }else{
+                } else {
                     self::pull_auxiliar($arquivo['name'], $path_modelo, $default_branch);
                 }
             }
