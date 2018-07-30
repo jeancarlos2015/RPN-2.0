@@ -172,26 +172,27 @@ class RegraController extends Controller
     public function store(Request $request)
     {
         try {
-            $codorganizacao = $request->codorganizacao;
-            $codprojeto = $request->codprojeto;
-            $codmodelo = $request->codmodelo;
-            $this->valida_erros($request, $codorganizacao, $codprojeto, $codmodelo);
-            $projeto = Projeto::findOrFail($codprojeto);
-            $organizacao = Organizacao::findOrFail($codorganizacao);
-            $modelo = Modelo::findOrFail($codmodelo);
-
-            $request->request->add([
-                'codusuario' => Auth::user()->codusuario,
-                'codregra1' => 0
-            ]);
-
-            $regra = Regra::create(self::set_param_regra($request));
-            $this->create_tarefas_redireciona($regra, $request);
-            return redirect()->route('controle_regras_create', [
-                'codorganizacao' => $organizacao->codorganizacao,
-                'codprojeto' => $projeto->codprojeto,
-                'codmodelo' => $modelo->codmodelo
-            ]);
+//            $codorganizacao = $request->codorganizacao;
+//            $codprojeto = $request->codprojeto;
+//            $codmodelo = $request->codmodelo;
+//            $this->valida_erros($request, $codorganizacao, $codprojeto, $codmodelo);
+//            $projeto = Projeto::findOrFail($codprojeto);
+//            $organizacao = Organizacao::findOrFail($codorganizacao);
+//            $modelo = Modelo::findOrFail($codmodelo);
+//
+//            $request->request->add([
+//                'codusuario' => Auth::user()->codusuario,
+//                'codregra1' => 0
+//            ]);
+//
+//            $regra = Regra::create(self::set_param_regra($request));
+//            $this->create_tarefas_redireciona($regra, $request);
+//            return redirect()->route('controle_regras_create', [
+//                'codorganizacao' => $organizacao->codorganizacao,
+//                'codprojeto' => $projeto->codprojeto,
+//                'codmodelo' => $modelo->codmodelo
+//            ]);
+            return view('controle_regras.aviso');
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
