@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Branch extends Model
 {
     protected $primaryKey = 'codbranch';
+    protected $table = 'branchs';
     protected $fillable = [
         'branch',
         'descricao',
