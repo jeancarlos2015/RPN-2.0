@@ -1,0 +1,45 @@
+
+html, body, #canvas {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    top: 50px;
+}
+
+.diagram-note {
+    background-color: rgba(66, 180, 21, 0.7);
+    color: White;
+    border-radius: 5px;
+    font-family: Arial;
+    font-size: 12px;
+    padding: 5px;
+    min-height: 16px;
+    width: 50px;
+    text-align: center;
+}
+
+.needs-discussion:not(.djs-connection) .djs-visual > :nth-child(1) {
+    stroke: rgba(66, 180, 21, 0.7) !important; /* color elements as red */
+}
+
+#save-button {
+    position: fixed;
+    bottom: 50px;
+    left: 20px;
+    padding: 20px 50px;
+    background-color: darkgray;
+}
+#save-button2 {
+    position: fixed;
+    bottom: 50px;
+    left:  250px;
+    padding: 20px 50px;
+    background-color: darkgray;
+}
+#save-button3 {
+    position: fixed;
+    bottom: 50px;
+    left:  480px;
+    padding: 20px 50px;
+    background-color: darkgray;
+}
