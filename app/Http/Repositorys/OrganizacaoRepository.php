@@ -70,4 +70,8 @@ class OrganizacaoRepository extends Repository
         }
     }
 
+    public static function organizacao_existe($nome_da_organizacao){
+        $organizacoes = self::listar();
+        return $organizacoes->where('nome', $nome_da_organizacao)->count()>0;
+    }
 }

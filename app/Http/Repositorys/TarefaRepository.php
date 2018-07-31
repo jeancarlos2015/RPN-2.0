@@ -82,4 +82,9 @@ class TarefaRepository extends Repository
             $tarefa->delete();
         }
     }
+
+    public static function tarefa_existe($nome_da_tarefa){
+        $tarefas = self::listar();
+        return $tarefas->where('nome', $nome_da_tarefa)->count()>0;
+    }
 }

@@ -70,4 +70,9 @@ class ModeloRepository extends Repository
         return $value;
     }
 
+    public static function modelo_existe($nome_do_modelo){
+        $modelos = self::listar();
+        return $modelos->where('nome', $nome_do_modelo)->count()>0;
+    }
+
 }

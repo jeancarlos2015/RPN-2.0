@@ -169,30 +169,53 @@ class RegraController extends Controller
         }
     }
 
+//nome',
+//        'descricao',
+//        'codorganizacao',
+//        'codprojeto',
+//        'codmodelo',
+//        'codusuario',
+//        'codregra'
+    private function verificar_se_existe(Request $request){
+           $nome = $request->tarefa_ou_regra1;
+           $tipo = $request->tipo1;
+           if ($tipo==='tarefa'){
+               if(!TarefaRepository::tarefa_existe($nome)){
+                  $data = [
+                      'codusuario' => Auth::user()->codusuario,
+                      'nome' => $nome,
+                      'descricao' => 'Nenhum',
+                      'codorganizacao' => $request->codorganizacao,
+                      'codprojeto' => $request->codprojeto,
+                      'codmodelo' => $request->codmodelo,
+                  ];
+               }
+           }
+    }
     public function store(Request $request)
     {
         try {
-//            $codorganizacao = $request->codorganizacao;
-//            $codprojeto = $request->codprojeto;
-//            $codmodelo = $request->codmodelo;
-//            $this->valida_erros($request, $codorganizacao, $codprojeto, $codmodelo);
-//            $projeto = Projeto::findOrFail($codprojeto);
-//            $organizacao = Organizacao::findOrFail($codorganizacao);
-//            $modelo = Modelo::findOrFail($codmodelo);
-//
-//            $request->request->add([
-//                'codusuario' => Auth::user()->codusuario,
-//                'codregra1' => 0
-//            ]);
-//
-//            $regra = Regra::create(self::set_param_regra($request));
-//            $this->create_tarefas_redireciona($regra, $request);
-//            return redirect()->route('controle_regras_create', [
-//                'codorganizacao' => $organizacao->codorganizacao,
-//                'codprojeto' => $projeto->codprojeto,
-//                'codmodelo' => $modelo->codmodelo
-//            ]);
-            return view('controle_regras.aviso');
+            dd($request);
+            $codorganizacao = $request->codorganizacao;
+            $codprojeto = $request->codprojeto;
+            $codmodelo = $request->codmodelo;
+            $this->valida_erros($request, $codorganizacao, $codprojeto, $codmodelo);
+            $projeto = Projeto::findOrFail($codprojeto);
+            $organizacao = Organizacao::findOrFail($codorganizacao);
+            $modelo = Modelo::findOrFail($codmodelo);
+
+            $request->request->add([
+                'codusuario' => Auth::user()->codusuario,
+                'codregra1' => 0
+            ]);
+
+            $regra = Regra::create(self::set_param_regra($request));
+            $this->create_tarefas_redireciona($regra, $request);
+            return redirect()->route('controle_regras_create', [
+                'codorganizacao' => $organizacao->codorganizacao,
+                'codprojeto' => $projeto->codprojeto,
+                'codmodelo' => $modelo->codmodelo
+            ]);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
