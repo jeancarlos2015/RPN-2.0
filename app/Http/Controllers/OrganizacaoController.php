@@ -153,15 +153,22 @@ class OrganizacaoController extends Controller
                     ->withErrors($erros)
                     ->withInput();
             }
-            $request->request->add(['codusuario' => Auth::user()->codusuario]);
-            $organizacao = Organizacao::create($request->all());
-            if (isset($organizacao)) {
-                flash('Organização criada com sucesso!!');
-            } else {
-                flash('Organização não foi criada!!');
+            if(!OrganizacaoRepository::organizacao_existe($request->nome)){
+                $request->request->add(['codusuario' => Auth::user()->codusuario]);
+                $organizacao = Organizacao::create($request->all());
+                if (isset($organizacao)) {
+                    flash('Organização criada com sucesso!!');
+                } else {
+                    flash('Organização não foi criada!!');
+                }
+
+                return redirect()->route('controle_projetos_index', ['codorganizacao' => $organizacao->codorganizacao]);
+            }else{
+                $data['tipo'] = 'existe';
+                $this->create_log($data);
+                return redirect()->route('controle_organizacoes.create');
             }
 
-            return redirect()->route('controle_projetos_index', ['codorganizacao' => $organizacao->codorganizacao]);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';

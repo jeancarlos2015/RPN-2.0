@@ -21,7 +21,10 @@ class Controller extends BaseController
     {
         if ($data['tipo'] === 'success') {
             flash('A operação feita com sucesso!!!');
-        }else{
+        }else if($data['tipo']==='existe'){
+            flash('Este registro já existe')->warning();
+        }
+        else{
             $codigo = LogRepository::criar(
                 $data['mensagem'],
                 $data['tipo'],

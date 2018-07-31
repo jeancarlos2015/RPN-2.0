@@ -99,22 +99,29 @@ class ModeloController extends Controller
             $data['all'] = $request->all();
             $data['validacao'] = Modelo::validacao();
             if (!$this->exists_errors($data)) {
-                $request->request->add([
-                    'xml_modelo' => "Nenhum",
-                    'codprojeto' => $codprojeto,
-                    'codorganizacao' => $codorganizacao,
-                    'codusuario'   => Auth::user()->codusuario
-                ]);
-                $modelo = Modelo::create($request->all());
-                if ($modelo->tipo === 'declarativo') {
-                    return redirect()->route('controle_regras_index', [
-                        'codorganizacao' => $codorganizacao,
+                if(!ModeloRepository::modelo_existe($request->nome)){
+                    $request->request->add([
+                        'xml_modelo' => "Nenhum",
                         'codprojeto' => $codprojeto,
-                        'codmodelo' => $modelo->codmodelo
+                        'codorganizacao' => $codorganizacao,
+                        'codusuario'   => Auth::user()->codusuario
                     ]);
-                } else {
-                    return view('controle_modelos.modeler');
+
+                    $modelo = Modelo::create($request->all());
+                    if ($modelo->tipo === 'declarativo') {
+                        return redirect()->route('controle_regras_index', [
+                            'codorganizacao' => $codorganizacao,
+                            'codprojeto' => $codprojeto,
+                            'codmodelo' => $modelo->codmodelo
+                        ]);
+                    } else {
+                        return view('controle_modelos.modeler');
+                    }
+                }{
+                    $data['tipo'] = 'existe';
+                    $this->create_log($data);
                 }
+
             }
             $erros = $this->get_errors($data);
             return redirect()->route('controle_modelos_create', [

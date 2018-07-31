@@ -96,11 +96,21 @@ class ProjetoController extends Controller
                     ->withErrors($erros)
                     ->withInput();
             }
-
-            $request->request->add(['codusuario' => Auth::user()->codusuario]);
-            $projeto = Projeto::create($request->all());
-            flash('Projeto criado com sucesso!!');
-            return redirect()->route('controle_modelos_index', ['codorganizacao' => $codorganizacao, 'codprojeto' => $projeto->codprojeto]);
+            if(!ProjetoRepository::projeto_existe($request->nome)){
+                $request->request->add(['codusuario' => Auth::user()->codusuario]);
+                $projeto = Projeto::create($request->all());
+                flash('Projeto criado com sucesso!!');
+                return redirect()->route('controle_modelos_index', ['codorganizacao' => $codorganizacao, 'codprojeto' => $projeto->codprojeto]);
+            }else{
+                $data['tipo'] = 'existe';
+                $this->create_log($data);
+                return redirect()->route('controle_projetos_create',
+                    [
+                        'codorganizacao' =>  $codorganizacao
+                    ]
+                );
+            }
+            
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
