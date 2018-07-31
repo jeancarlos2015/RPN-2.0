@@ -1,6 +1,6 @@
 
 
-var diagramUrl = 'http://projeto.test/novo_bpmn/novo.bpmn';
+var diagramUrl = 'http://127.0.0.1/novo_bpmn/novo.bpmn';
 
 // modeler instance
 var bpmnModeler = new BpmnJS({
