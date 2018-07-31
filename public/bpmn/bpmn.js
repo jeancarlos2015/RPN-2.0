@@ -1,6 +1,6 @@
 
 
-var diagramUrl = 'https://cdn.rawgit.com/bpmn-io/bpmn-js-examples/dfceecba/starter/diagram.bpmn';
+// var diagramUrl = 'https://cdn.rawgit.com/bpmn-io/bpmn-js-examples/dfceecba/starter/diagram.bpmn';
 
 // modeler instance
 var bpmnModeler = new BpmnJS({
@@ -80,7 +80,7 @@ function openDiagram(bpmnXML) {
 
 
 // load external diagram file via AJAX and open it
-$.get(diagramUrl, openDiagram, 'text');
+// $.get(diagramUrl, openDiagram, 'text');
 
 // wire save button
 $('#save-button').click(exportDiagram);
