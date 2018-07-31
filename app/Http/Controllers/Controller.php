@@ -28,7 +28,7 @@ class Controller extends BaseController
                 $data['pagina'],
                 $data['acao']);
             if ($data['tipo'] === 'error') {
-                flash('A operação gerou o log de código ' . $codigo . ', favor consultar na página "Logs Do Sistema"')->error();
+                flash('A operação gerou o log de código ' . $codigo . ', favor consultar na página "Logs Do Sistema", se for um conflito de merger será necessário resolver o conflito no github')->error();
             } else {
                 flash('A operação gerou o log de código ' . $codigo . ', favor consultar na página "Logs Do Sistema"')->warning();
             }

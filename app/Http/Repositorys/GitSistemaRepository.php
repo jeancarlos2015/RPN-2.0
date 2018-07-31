@@ -2,7 +2,7 @@
 
 namespace App\Http\Repositorys;
 
-use App\Http\Models\Branchs;
+use App\Http\Models\Branch;
 use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
 use Github\Api\Repository\Contents;
@@ -642,7 +642,7 @@ class GitSistemaRepository
     public static function delete_branch($branch)
     {
         if (self::delete_branch_remote($branch) === 204) {
-            $branchs = Branchs::all()->where('branch', '=', $branch);
+            $branchs = Branch::all()->where('branch', '=', $branch);
             foreach ($branchs as $b) {
                 $codbranch = $b->codbranch;
                 BranchsRepository::excluir($codbranch);

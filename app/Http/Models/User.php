@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Http\Models\Branchs;
+use App\Http\Models\Branch;
 use App\Http\Models\Log;
 use App\Http\Models\Organizacao;
 use App\Http\Models\UsuarioGithub;
@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     public function branchs()
     {
-        return $this->hasMany(Branchs::class, 'codusuario', 'codusuario');
+        return $this->hasMany(Branch::class, 'codusuario', 'codusuario');
     }
 
     public function logs()

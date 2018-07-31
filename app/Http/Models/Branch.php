@@ -6,7 +6,7 @@ use App\Http\Repositorys\GitSistemaRepository;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Branchs extends Model
+class Branch extends Model
 {
     protected $primaryKey = 'codbranch';
     protected $fillable = [
@@ -21,7 +21,7 @@ class Branchs extends Model
     }
 
     public static function boot(){
-        Branchs::created(function ($branch) {
+        Branch::created(function ($branch) {
             try{
 
                 GitSistemaRepository::create_branch_remote($branch->branch);
@@ -32,7 +32,7 @@ class Branchs extends Model
 
         });
 
-        Branchs::deleted(function ($branch) {
+        Branch::deleted(function ($branch) {
             try{
                 GitSistemaRepository::delete_branch_remote($branch->branch);
             }catch (\Exception $ex){

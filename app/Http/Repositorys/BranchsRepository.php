@@ -3,7 +3,7 @@
 namespace App\Http\Repositorys;
 
 
-use App\Http\Models\Branchs;
+use App\Http\Models\Branch;
 use App\Http\Models\UsuarioGithub;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,13 +12,13 @@ class BranchsRepository extends Repository
 
     public function __construct()
     {
-        $this->setModel(Branchs::class);
+        $this->setModel(Branch::class);
     }
 
     public static function listar()
     {
 
-        return Branchs::all()
+        return Branch::all()
             ->where('codusuario', '=', Auth::user()->codusuario);
 
     }
@@ -31,27 +31,27 @@ class BranchsRepository extends Repository
 
     public static function atualizar($data = [], $codbranch)
     {
-        $value = Branchs::findOrFail($codbranch);
+        $value = Branch::findOrFail($codbranch);
         $value->update($data);
         return $value;
     }
 
     public static function incluir($data = [])
     {
-        return Branchs::create($data);
+        return Branch::create($data);
     }
 
     public static function excluir($codbranch)
     {
         $value = null;
-        $doc = Branchs::findOrFail($codbranch);
+        $doc = Branch::findOrFail($codbranch);
         $value = $doc->delete();
         return $value;
     }
 
     public static function excluir_todas_branchs()
     {
-        foreach (Branchs::all()->where('codusuario', '=', Auth::user()->codusuario) as $branch) {
+        foreach (Branch::all()->where('codusuario', '=', Auth::user()->codusuario) as $branch) {
             $branch->delete();
         }
     }
@@ -78,7 +78,7 @@ class BranchsRepository extends Repository
                 'codusuario' => Auth::user()->codusuario
             ];
             if (!self::exists($branch['name'])) {
-                Branchs::create($data);
+                Branch::create($data);
             }
 
         }
@@ -91,7 +91,7 @@ class BranchsRepository extends Repository
                 //se ela não existir no repositório do github será deletada do banco do sistema
                 if ($result->count()==0){
                     $codbranch = $branch_banco->codbranch;
-                    $instancia_branch = Branchs::findOrFail($codbranch);
+                    $instancia_branch = Branch::findOrFail($codbranch);
                     $instancia_branch->delete();
                 }
             }
