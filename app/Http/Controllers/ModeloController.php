@@ -118,8 +118,7 @@ class ModeloController extends Controller
                         return view('controle_modelos.modeler');
                     }
                 }{
-                    $data['tipo'] = 'existe';
-                    $this->create_log($data);
+                    return view('controle_modelos.modeler');
                 }
 
             }
