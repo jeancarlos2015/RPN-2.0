@@ -55,9 +55,9 @@ class TarefaRepository extends Repository
         Cache::forget('listar_tarefas');
     }
 
-    public static function incluir(Request $request)
+    public static function incluir($data = [])
     {
-        $value = Tarefa::create($request->all());
+        $value = Tarefa::create($data);
         self::limpar_cache();
         return $value;
     }

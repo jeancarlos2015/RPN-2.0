@@ -16,7 +16,7 @@ class CreateRegrasTable extends Migration
         Schema::connection('banco')->create('regras', function (Blueprint $table) {
             $table->bigIncrements('codregra')->unsigned();
             $table->string('operador');
-            $table->string('nome')->unique();
+            $table->string('nome');
             $table->bigInteger('codprojeto');
             $table->bigInteger('codorganizacao');
             $table->bigInteger('codmodelo');

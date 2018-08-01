@@ -56,10 +56,9 @@ class RegraRepository extends Repository
         Cache::forget('listar_regras');
     }
 
-    public static function incluir(Request $request)
+    public static function incluir($data = [])
     {
-        $value = Regra::create($request->all());
-        self::limpar_cache();
+        $value = Regra::create($data);
         return $value;
     }
 
@@ -76,6 +75,19 @@ class RegraRepository extends Repository
         return $value;
     }
 
+    public static function busca_regra_por_nome($nome_regra)
+    {
+        $regras = Regra::all()->where('codusuario', Auth::user()->codusuario);
+        foreach ($regras as $regra) {
+            if ($regra->nome === $nome_regra) {
+                $codregra = $regra->codregra;
+                $instancia_regra = Regra::findOrFail($codregra);
+                return $instancia_regra;
+
+            }
+        }
+    }
+
     public static function excluir_todos()
     {
         $regras = Regra::all();
@@ -84,9 +96,10 @@ class RegraRepository extends Repository
         }
     }
 
-    public static function regra_existe($nome_da_regra){
+    public static function regra_existe($nome_da_regra)
+    {
         $regras = self::listar();
-        return $regras->where('nome', $nome_da_regra)->count()>0;
+        return $regras->where('nome', $nome_da_regra)->count() > 0;
     }
 
 }

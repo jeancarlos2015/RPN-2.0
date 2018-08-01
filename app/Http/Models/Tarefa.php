@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Tarefa extends Model
 {
+    const TIPO = 1;
     protected $connection = "banco";
     protected $primaryKey = 'codtarefa';
     protected $table = 'tarefas';

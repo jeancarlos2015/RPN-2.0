@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Regra extends Model
 {
+    const TIPO = 2;
     protected $connection = "banco";
     protected $primaryKey = 'codregra';
     protected $table = 'regras';
@@ -58,8 +59,12 @@ class Regra extends Model
     public static function validacao()
     {
         return [
-            'nome' => 'required|max:50',
-            'operador' => 'required|max:255'
+            'nome_regra' => 'required|max:50',
+            'operador' => 'required|max:50',
+            'tarefa_ou_regra1' => 'required|max:50',
+            'tarefa_ou_regra2' => 'required|max:50',
+            'tipo1' => 'required|max:50',
+            'tipo2' => 'required|max:50'
         ];
     }
 

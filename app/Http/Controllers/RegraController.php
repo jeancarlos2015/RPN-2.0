@@ -17,47 +17,49 @@ class RegraController extends Controller
 {
     public function index($codorganizacao, $codprojeto, $codmodelo)
     {
-        try {
-            $dado['codorganizacao'] = $codorganizacao;
-            $dado['codprojeto'] = $codprojeto;
-            $dado['codmodelo'] = $codmodelo;
-            $organizacao = Organizacao::findOrFail($codorganizacao);
-            $projeto = Projeto::findOrFail($codprojeto);
-            $modelo = Modelo::findOrFail($codmodelo);
-            return redirect()->route('controle_regras_create',
-                [
-                    'codorganizacao' => $organizacao->codorganizacao,
-                    'codprojeto' => $projeto->codprojeto,
-                    'codmodelo' => $modelo->codmodelo
-
-                ]);
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
+//        try {
+//            $dado['codorganizacao'] = $codorganizacao;
+//            $dado['codprojeto'] = $codprojeto;
+//            $dado['codmodelo'] = $codmodelo;
+//            $organizacao = Organizacao::findOrFail($codorganizacao);
+//            $projeto = Projeto::findOrFail($codprojeto);
+//            $modelo = Modelo::findOrFail($codmodelo);
+//            return redirect()->route('controle_regras_create',
+//                [
+//                    'codorganizacao' => $organizacao->codorganizacao,
+//                    'codprojeto' => $projeto->codprojeto,
+//                    'codmodelo' => $modelo->codmodelo
+//
+//                ]);
+//        } catch (\Exception $ex) {
+//            $data['mensagem'] = $ex->getMessage();
+//            $data['tipo'] = 'error';
+//            $data['pagina'] = 'Painel';
+//            $data['acao'] = 'merge_checkout';
+//            $this->create_log($data);
+//        }
+//        return redirect()->route('painel');
+        return view('controle_tarefas.aviso');
     }
 
     public function todas_regras()
     {
-        try {
-            $regras = RegraRepository::listar();
-            $titulos = Regra::titulos();
-            $tarefas = null;
-            $tipo = 'regra';
-            $log = LogRepository::log(2);
-            return view('controle_regras.all', compact('regras', 'titulos', 'tarefas', 'tipo', 'log'));
-        }catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
+//        try {
+//            $regras = RegraRepository::listar();
+//            $titulos = Regra::titulos();
+//            $tarefas = null;
+//            $tipo = 'regra';
+//            dd($regras);
+//            return view('controle_regras.all', compact('regras', 'titulos', 'tarefas', 'tipo'));
+//        } catch (\Exception $ex) {
+//            $data['mensagem'] = $ex->getMessage();
+//            $data['tipo'] = 'error';
+//            $data['pagina'] = 'Painel';
+//            $data['acao'] = 'merge_checkout';
+//            $this->create_log($data);
+//        }
+//        return redirect()->route('painel');
+        return view('controle_tarefas.aviso');
     }
 
     public function create($codorganizacao, $codprojeto, $codmodelo)
@@ -70,7 +72,7 @@ class RegraController extends Controller
             $tarefas = TarefaRepository::listar();
             $titulos = Regra::titulos();
             $tipo = 'regra';
-            return view('controle_regras.form_regra', compact('organizacao', 'projeto', 'modelo', 'titulos', 'regras', 'tipo','tarefas'));
+            return view('controle_regras.form_regra', compact('organizacao', 'projeto', 'modelo', 'titulos', 'regras', 'tipo', 'tarefas'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -155,20 +157,61 @@ class RegraController extends Controller
         }
     }
 
-    private function valida_erros(Request $request, $codorganizacao, $codprojeto, $codmodelo)
+//    private function valida_erros(Request $request, $codorganizacao, $codprojeto, $codmodelo)
+//    {
+//        $erros = \Validator::make($request->all(), Regra::validacao());
+//        if ($erros->fails()) {
+//            return redirect()->route('controle_regras_create', [
+//                'codorganizacao' => $codorganizacao,
+//                'codprojeto' => $codprojeto,
+//                'codmodelo' => $codmodelo
+//            ])
+//                ->withErrors($erros)
+//                ->withInput();
+//        }
+//    }
+
+
+
+    private function verifica_se_existe_e_cria_regra_auxiliar($data1)
     {
-        $erros = \Validator::make($request->all(), Regra::validacao());
-        if ($erros->fails()) {
-            return redirect()->route('controle_regras_create', [
-                'codorganizacao' => $codorganizacao,
-                'codprojeto' => $codprojeto,
-                'codmodelo' => $codmodelo
-            ])
-                ->withErrors($erros)
-                ->withInput();
+        $nome = $data1['nome'];
+        $tipo = $data1['tipo'];
+        $codorganizacao = $data1['codorganizacao'];
+        $codprojeto = $data1['codprojeto'];
+        $codmodelo = $data1['codmodelo'];
+        if ($tipo === 'regra') {
+            if (!RegraRepository::regra_existe($nome)) {
+
+                $operador = $data1['operador'];
+
+                $data = [
+                    'codusuario' => Auth::user()->codusuario,
+                    'nome' => $nome,
+                    'operador' => $operador,
+                    'codregra1' => 0,
+                    'codorganizacao' => $codorganizacao,
+                    'codprojeto' => $codprojeto,
+                    'codmodelo' => $codmodelo,
+                ];
+               return RegraRepository::incluir($data);
+
+            } else {
+                $regra = RegraRepository::busca_regra_por_nome($nome);
+                $operador = $data1['operador'];
+                $data = [
+                    'codusuario' => Auth::user()->codusuario,
+                    'nome' => $nome,
+                    'operador' => $operador,
+                    'codregra1' => $regra->codregra,
+                    'codorganizacao' => $codorganizacao,
+                    'codprojeto' => $codprojeto,
+                    'codmodelo' => $codmodelo,
+                ];
+               return  RegraRepository::incluir($data);
+            }
         }
     }
-
 //nome',
 //        'descricao',
 //        'codorganizacao',
@@ -176,154 +219,189 @@ class RegraController extends Controller
 //        'codmodelo',
 //        'codusuario',
 //        'codregra'
-    private function verificar_se_existe(Request $request){
-           $nome = $request->tarefa_ou_regra1;
-           $tipo = $request->tipo1;
-           if ($tipo==='tarefa'){
-               if(!TarefaRepository::tarefa_existe($nome)){
-                  $data = [
-                      'codusuario' => Auth::user()->codusuario,
-                      'nome' => $nome,
-                      'descricao' => 'Nenhum',
-                      'codorganizacao' => $request->codorganizacao,
-                      'codprojeto' => $request->codprojeto,
-                      'codmodelo' => $request->codmodelo,
-                  ];
-               }
-           }
+    private function verificar_se_existe_e_cria_tarefa_auxiliar($data1)
+    {
+
+        $nome = $data1['nome'];
+        $tipo = $data1['tipo'];
+        $codorganizacao = $data1['codorganizacao'];
+        $codprojeto = $data1['codprojeto'];
+        $codmodelo = $data1['codmodelo'];
+        $codregra = $data1['codregra'];
+        if ($tipo === 'tarefa') {
+
+            if (!TarefaRepository::tarefa_existe($nome)) {
+                $data = [
+                    'codusuario' => Auth::user()->codusuario,
+                    'nome' => $nome,
+                    'descricao' => 'Nenhum',
+                    'codorganizacao' => $codorganizacao,
+                    'codprojeto' => $codprojeto,
+                    'codmodelo' => $codmodelo,
+                    'codregra' => $codregra
+                ];
+                TarefaRepository::incluir($data);
+            }
+        }
+
     }
+
+
     public function store(Request $request)
     {
-        try {
-            dd($request);
-            $codorganizacao = $request->codorganizacao;
-            $codprojeto = $request->codprojeto;
-            $codmodelo = $request->codmodelo;
-            $this->valida_erros($request, $codorganizacao, $codprojeto, $codmodelo);
-            $projeto = Projeto::findOrFail($codprojeto);
-            $organizacao = Organizacao::findOrFail($codorganizacao);
-            $modelo = Modelo::findOrFail($codmodelo);
-
-            $request->request->add([
-                'codusuario' => Auth::user()->codusuario,
-                'codregra1' => 0
-            ]);
-
-            $regra = Regra::create(self::set_param_regra($request));
-            $this->create_tarefas_redireciona($regra, $request);
-            return redirect()->route('controle_regras_create', [
-                'codorganizacao' => $organizacao->codorganizacao,
-                'codprojeto' => $projeto->codprojeto,
-                'codmodelo' => $modelo->codmodelo
-            ]);
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
+//        try {
+//
+//            $data['all'] = $request->all();
+//            $data['validacao'] = Regra::validacao();
+//            $codorganizacao = $request->codorganizacao;
+//            $codprojeto = $request->codprojeto;
+//            $codmodelo = $request->codmodelo;
+//
+//            if (!$this->exists_errors($data)) {
+//
+//                $dado['codorganizacao'] = $codorganizacao;
+//                $dado['codprojeto'] = $codprojeto;
+//                $dado['codmodelo'] = $codmodelo;
+//
+//                $dado['tipo'] = $request->tipo1;
+//                $dado['nome'] = $request->tarefa_ou_regra1;
+//                $dado['operador'] = $request->operador;
+//                $regra = $this->verifica_se_existe_e_cria_regra_auxiliar($dado);
+//                if (!empty($regra)){
+//                    $dado['codregra'] = $regra->codregra;
+//                }
+//
+//                $this->verificar_se_existe_e_cria_tarefa_auxiliar($dado);
+//
+//
+//                $dado['tipo'] = $request->tipo2;
+//                $dado['nome'] = $request->tarefa_ou_regra2;
+//                $regra2 = $this->verifica_se_existe_e_cria_regra_auxiliar($dado);
+//                $this->verificar_se_existe_e_cria_tarefa_auxiliar($dado);
+//
+//
+//                return redirect()->route('controle_regras_create', [
+//                    'codorganizacao' => $codorganizacao,
+//                    'codprojeto' => $codprojeto,
+//                    'codmodelo' => $codmodelo
+//                ]);
+//            }
+//
+//            $data['rota'] = 'controle_regras_create';
+//            $data['erros'] = $this->get_errors($data);
+//            $this->validar($data);
+//        } catch (\Exception $ex) {
+//            $data['mensagem'] = $ex->getMessage();
+//            $data['tipo'] = 'error';
+//            $data['pagina'] = 'Painel';
+//            $data['acao'] = 'merge_checkout';
+//            $this->create_log($data);
+//        }
+//        return redirect()->route('painel');
+        return view('controle_tarefas.aviso');
     }
 
     public function show($id)
     {
-        try {
-            $tarefa = Tarefa::findOrFail($id);
-            return view('controle_tarefas.show', compact('tarefa'));
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
+//        try {
+//            $tarefa = Tarefa::findOrFail($id);
+//            return view('controle_tarefas.show', compact('tarefa'));
+//        } catch (\Exception $ex) {
+//            $data['mensagem'] = $ex->getMessage();
+//            $data['tipo'] = 'error';
+//            $data['pagina'] = 'Painel';
+//            $data['acao'] = 'merge_checkout';
+//            $this->create_log($data);
+//        }
+//        return redirect()->route('painel');
+        return view('controle_tarefas.aviso');
     }
 
     public function edit($id)
     {
-        try {
-            $regra = Regra::findOrFail($id);
-            $dados = Regra::dados();
-            $dados[0]->valor = $regra->tarefas[0]->codtarefa;
-            $dados[1]->valor = $regra->operador;
-            $dados[2]->valor = $regra->tarefas[1]->codtarefa;
-            $dados[3]->valor = $regra->nome;
-            $organizacao = $regra->organizacao;
-            $projeto = $regra->projeto;
-            $modelo = $regra->modelo;
-            $tarefas = TarefaRepository::listar();
-            return view('controle_regras.edit', compact('dados', 'regra', 'organizacao', 'projeto', 'modelo', 'tarefas'));
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
+//        try {
+//            $regra = Regra::findOrFail($id);
+//            $dados = Regra::dados();
+//            $dados[0]->valor = $regra->tarefas[0]->codtarefa;
+//            $dados[1]->valor = $regra->operador;
+//            $dados[2]->valor = $regra->tarefas[1]->codtarefa;
+//            $dados[3]->valor = $regra->nome;
+//            $organizacao = $regra->organizacao;
+//            $projeto = $regra->projeto;
+//            $modelo = $regra->modelo;
+//            $tarefas = TarefaRepository::listar();
+//            return view('controle_regras.edit', compact('dados', 'regra', 'organizacao', 'projeto', 'modelo', 'tarefas'));
+//        } catch (\Exception $ex) {
+//            $data['mensagem'] = $ex->getMessage();
+//            $data['tipo'] = 'error';
+//            $data['pagina'] = 'Painel';
+//            $data['acao'] = 'merge_checkout';
+//            $this->create_log($data);
+//        }
+//        return redirect()->route('painel');
+        return view('controle_tarefas.aviso');
     }
 
 
     public function update(Request $request, $codregra)
     {
-        try {
-            $regra = Regra::findOrFail($codregra);
-            $regra->update($request->all());
-            flash('Regra atualizada com sucesso!!');
-
-            return redirect()->route('controle_regras_index', [
-                'codorganizacao' => $regra->codorganizacao,
-                'codprojeto' => $regra->codprojeto,
-                'codmodelo' => $regra->codmodelo
-            ]);
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
+//        try {
+//            $regra = Regra::findOrFail($codregra);
+//            $regra->update($request->all());
+//            flash('Regra atualizada com sucesso!!');
+//
+//            return redirect()->route('controle_regras_index', [
+//                'codorganizacao' => $regra->codorganizacao,
+//                'codprojeto' => $regra->codprojeto,
+//                'codmodelo' => $regra->codmodelo
+//            ]);
+//        } catch (\Exception $ex) {
+//            $data['mensagem'] = $ex->getMessage();
+//            $data['tipo'] = 'error';
+//            $data['pagina'] = 'Painel';
+//            $data['acao'] = 'merge_checkout';
+//            $this->create_log($data);
+//        }
+//        return redirect()->route('painel');
+        return view('controle_tarefas.aviso');
     }
 
 
     public function destroy($codregra)
     {
-        try {
-            $regra = Regra::findOrFail($codregra);
-            $projeto = $regra->projeto;
-            $organizacao = $regra->organizacao;
-            $modelo = $regra->modelo;
-
-            $regra->delete();
-
-
-            flash('Regra excluída com sucesso!!');
-
-
-            if (!empty($projeto) || !empty($organizacao) && !empty($modelo)) {
-                $titulos = Regra::titulos();
-
-                $regras = RegraRepository::listar();
-                $tipo = 'regra';
-                return view('controle_regras.all', compact('titulos', 'regras', 'tipo'));
-            } else {
-                return redirect()->route('controle_regras_index', [
-                    'codorganizacao' => $organizacao->codorganizacao,
-                    'codprojeto' => $projeto->codprojeto,
-                    'codmodelo' => $modelo->codmodelo
-                ]);
-            }
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
-
+//        try {
+//            $regra = Regra::findOrFail($codregra);
+//            $projeto = $regra->projeto;
+//            $organizacao = $regra->organizacao;
+//            $modelo = $regra->modelo;
+//
+//            $regra->delete();
+//
+//
+//            flash('Regra excluída com sucesso!!');
+//
+//
+//            if (!empty($projeto) || !empty($organizacao) && !empty($modelo)) {
+//                $titulos = Regra::titulos();
+//
+//                $regras = RegraRepository::listar();
+//                $tipo = 'regra';
+//                return view('controle_regras.all', compact('titulos', 'regras', 'tipo'));
+//            } else {
+//                return redirect()->route('controle_regras_index', [
+//                    'codorganizacao' => $organizacao->codorganizacao,
+//                    'codprojeto' => $projeto->codprojeto,
+//                    'codmodelo' => $modelo->codmodelo
+//                ]);
+//            }
+//        } catch (\Exception $ex) {
+//            $data['mensagem'] = $ex->getMessage();
+//            $data['tipo'] = 'error';
+//            $data['pagina'] = 'Painel';
+//            $data['acao'] = 'merge_checkout';
+//            $this->create_log($data);
+//        }
+//        return redirect()->route('painel');
+        return view('controle_tarefas.aviso');
     }
 }
