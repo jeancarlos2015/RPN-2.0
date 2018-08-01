@@ -14,3 +14,5 @@ npm-debug.log
 _ide_helper\.php
 
 database/banco/database\.db
+
+database/
