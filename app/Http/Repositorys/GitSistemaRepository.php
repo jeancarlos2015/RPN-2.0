@@ -373,12 +373,12 @@ class GitSistemaRepository
     }
 
     public
-    static function get_repositorio($username, $repository)
+    static function get_repositorio($repository)
     {
         $client = new Client();
         $github = Auth::user()->github;
         $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-        return $client->repo()->show($username, $repository);
+        return $client->repo()->show(Crypt::decrypt($github->usuario_github), $repository);
     }
 
     public static

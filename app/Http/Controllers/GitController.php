@@ -152,7 +152,7 @@ class GitController extends Controller
     public function show($nome_repositorio)
     {
         try {
-            $repositorio = GitSistemaRepository::get_repositorio('jeancarlos2015', $nome_repositorio);
+            $repositorio = GitSistemaRepository::get_repositorio($nome_repositorio);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
