@@ -4,7 +4,6 @@
 @section('content')
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Modelos'])
-    {!! csrf_field() !!}
     {{--@includeIf('componentes.dados_exibicao')--}}
     <hr>
     <h3>Modelo Declarativo</h3>

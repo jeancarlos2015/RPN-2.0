@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\UsuarioGithub;
 use App\Http\Repositorys\BranchsRepository;
-use App\Http\Repositorys\GitSistemaRepository;
-use App\Http\Repositorys\LogRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -38,16 +36,22 @@ class UsuarioGithubController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $erros = \Validator::make($request->all(), UsuarioGithub::validacao());
-            $usuario_github = null;
-            if ($erros->fails()) {
-                return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario])
-                    ->withErrors($erros)
-                    ->withInput();
-            }
-            try {
-
+        $erros = \Validator::make($request->all(), UsuarioGithub::validacao());
+        if ($erros->fails()) {
+            return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario])
+                ->withErrors($erros)
+                ->withInput();
+        } else
+            if (BranchsRepository::existe_usuario()) {
+                $usuario = Auth::user()->github;
+                $usuario_github = UsuarioGithub::findOrFail($usuario->codusuariogithub);
+                $usuario_github->usuario_github = Crypt::encrypt($request->usuario_github);
+                $usuario_github->email_github = $request->email_github;
+                $usuario_github->senha_github = Crypt::encrypt($request->senha_github);
+                $usuario_github->update();
+                $data['tipo'] = 'success';
+                $this->create_log($data);
+            } else {
                 $data = [
                     'usuario_github' => Crypt::encrypt($request->usuario_github),
                     'codusuario' => $request->codusuario,
@@ -56,26 +60,51 @@ class UsuarioGithubController extends Controller
                     'repositorio_atual' => 'Nenhum Repositório',
                     'senha_github' => Crypt::encrypt($request->senha_github)
                 ];
-                BranchsRepository::excluir_todas_branchs();
                 UsuarioGithub::create($data);
-                $dados['tipo']  = 'success';
-                $this->create_log($dados);
-            } catch (\Exception $ex) {
-                $data['mensagem'] = $ex->getMessage();
-                $data['tipo'] = 'error';
-                $data['pagina'] = 'Painel';
-                $data['acao'] = 'merge_checkout';
+                $data['tipo'] = 'success';
                 $this->create_log($data);
             }
-            return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
+        return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
+
+//        try {
+//            $erros = \Validator::make($request->all(), UsuarioGithub::validacao());
+//            $usuario_github = null;
+//            if ($erros->fails()) {
+//                return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario])
+//                    ->withErrors($erros)
+//                    ->withInput();
+//            }
+//            try {
+//
+//                $data = [
+//                    'usuario_github' => Crypt::encrypt($request->usuario_github),
+//                    'codusuario' => $request->codusuario,
+//                    'email_github' => $request->email_github,
+//                    'branch_atual' => 'Nenhuma Branch',
+//                    'repositorio_atual' => 'Nenhum Repositório',
+//                    'senha_github' => Crypt::encrypt($request->senha_github)
+//                ];
+//
+//                BranchsRepository::excluir_todas_branchs();
+//                UsuarioGithub::create($data);
+//                $dados['tipo']  = 'success';
+//                $this->create_log($dados);
+//            } catch (\Exception $ex) {
+//                $data['mensagem'] = $ex->getMessage();
+//                $data['tipo'] = 'error';
+//                $data['pagina'] = 'Painel';
+//                $data['acao'] = 'merge_checkout';
+//                $this->create_log($data);
+//            }
+//            return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
+//        } catch (\Exception $ex) {
+//            $data['mensagem'] = $ex->getMessage();
+//            $data['tipo'] = 'error';
+//            $data['pagina'] = 'Painel';
+//            $data['acao'] = 'merge_checkout';
+//            $this->create_log($data);
+//        }
+//        return redirect()->route('painel');
 
     }
 
@@ -108,6 +137,12 @@ class UsuarioGithubController extends Controller
      * @param  \App\UsuarioGithub $usuarioGithub
      * @return \Illuminate\Http\Response
      */
+    private function atualiza($data, $id)
+    {
+        $usuario_github = UsuarioGithub::findOrFail($id);
+        $usuario_github->update($data);
+    }
+
     public function update(Request $request, UsuarioGithub $usuarioGithub)
     {
         //
@@ -119,9 +154,20 @@ class UsuarioGithubController extends Controller
      * @param  \App\UsuarioGithub $usuarioGithub
      * @return \Illuminate\Http\Response
      */
-    public function destroy($codusuario)
+    public function destroy($id)
     {
-
-
+        try {
+            $usuario_github = UsuarioGithub::findOrFail($id);
+            $usuario_github->delete();
+            $data['tipo'] = 'success';
+            $this->create_log($data);
+        } catch (\Exception $e) {
+            $data['mensagem'] = $e->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        }
+        return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
     }
 }
