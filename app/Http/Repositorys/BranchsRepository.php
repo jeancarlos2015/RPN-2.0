@@ -84,18 +84,18 @@ class BranchsRepository extends Repository
         }
         $branchs_repositorio_github = collect($branchs);
         $branchs_banco = Auth::user()->branchs;
-        foreach ($branchs_banco as $branch_banco){
+        foreach ($branchs_banco as $branch_banco) {
             //consulto a branch no repositório do github
-            if ($branch_banco->branch!='master'){
+            if ($branch_banco->branch != 'master') {
                 $result = $branchs_repositorio_github->where('name', $branch_banco->branch);
                 //se ela não existir no repositório do github será deletada do banco do sistema
-                if ($result->count()==0){
+                if ($result->count() == 0) {
                     $codbranch = $branch_banco->codbranch;
                     $instancia_branch = Branch::findOrFail($codbranch);
                     $instancia_branch->delete();
                 }
             }
-            
+
         }
 
     }
@@ -128,4 +128,9 @@ class BranchsRepository extends Repository
         return false;
     }
 
+    public static function existe_usuario()
+    {
+        $usuarios_github = UsuarioGithub::all();
+        return $usuarios_github->count() > 0;
+    }
 }
