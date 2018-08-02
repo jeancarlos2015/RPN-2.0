@@ -55,7 +55,7 @@ class UsuarioGithubController extends Controller
                 } else {
                     $data = [
                         'usuario_github' => Crypt::encrypt($request->usuario_github),
-                        'codusuario' => $request->codusuario,
+                        'codusuario' => Auth::user()->codusuario,
                         'email_github' => $request->email_github,
                         'branch_atual' => 'Nenhuma Branch',
                         'repositorio_atual' => 'Nenhum Repositório',

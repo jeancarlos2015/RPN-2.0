@@ -130,7 +130,7 @@ class BranchsRepository extends Repository
 
     public static function existe_usuario()
     {
-        $usuarios_github = UsuarioGithub::all();
+        $usuarios_github = UsuarioGithub::all()->where('codusuario',Auth::user()->codusuario);
         return $usuarios_github->count() > 0;
     }
 }
