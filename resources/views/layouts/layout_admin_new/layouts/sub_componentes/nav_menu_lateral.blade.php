@@ -64,13 +64,7 @@
                     <a href="{!! route('create_github',['codusuario' => Auth::user()->codusuario]) !!}"><i
                                 class="fa fa-fw fa-pencil"></i>Github</a>
                 </li>
-
-                <li>
-                    <a href="{!! route('edit_user',['id' => Auth::user()->codusuario]) !!}"><i
-                                class="fa fa-fw fa-pencil"></i>Atualizar Conta</a>
-
-
-                </li>
+                
             </ul>
 
 
