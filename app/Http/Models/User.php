@@ -9,6 +9,7 @@ use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * App\User
@@ -62,6 +63,14 @@ class User extends Authenticatable
     public function github()
     {
         return $this->hasOne(UsuarioGithub::class, 'codusuario', 'codusuario');
+    }
+
+    public function usuario_github(){
+        return Crypt::decrypt($this->github->usuario_github);
+    }
+
+    public function usuario_senha(){
+        return Crypt::decrypt($this->github->senha_github);
     }
 
     public function branchs()

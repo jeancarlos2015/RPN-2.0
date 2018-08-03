@@ -9,7 +9,6 @@ use Github\Api\Repository\Contents;
 use Github\Client;
 use Github\Exception\ErrorException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 
 class GitSistemaRepository
 {
@@ -17,13 +16,10 @@ class GitSistemaRepository
 
     private static function ler_arquivo($path)
     {
-
         $handle = fopen($path, "r");
         $conteudo = fread($handle, filesize($path));
         fclose($handle);
         return $conteudo;
-
-
     }
 
     private static function escrer_arquivo($path, $conteudo)
@@ -47,7 +43,7 @@ class GitSistemaRepository
 
         $client = new Client();
         $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
         $contents = new Contents($client);
 
         if (!$contents->exists(decrypt($github->usuario_github), $repositorio, $nome, $branch)) {
@@ -82,16 +78,16 @@ class GitSistemaRepository
         $client = new Client();
         $github = Auth::user()->github;
         $client->authenticate(
-            Crypt::decrypt($github->usuario_github),
-            Crypt::decrypt($github->senha_github)
+            Auth::user()->usuario_github(),
+            Auth::user()->usuario_senha()
         );
         $contents = new Contents($client);
-        $commiter = array('name' => Crypt::decrypt($github->usuario_github), 'email' => $email);
+        $commiter = array('name' => Auth::user()->usuario_github(), 'email' => $email);
         $oldfile = $client
             ->repo()
             ->contents()
             ->show(
-                Crypt::decrypt($github->usuario_github),
+                Auth::user()->usuario_github(),
                 $repositorio,
                 $nome,
                 $branch
@@ -141,8 +137,8 @@ class GitSistemaRepository
 
         $repositorio = $github->repositorio_atual;
 
-        $usuario_git = Crypt::decrypt($github->usuario_github);
-        $client->authenticate($usuario_git, Crypt::decrypt($github->senha_github));
+        $usuario_git = Auth::user()->usuario_github();
+        $client->authenticate($usuario_git, Auth::user()->usuario_senha());
         $branchs = $client->repo()->branches($usuario_git, $repositorio, $github->branch_atual);
         $sha = $branchs['commit']['sha'];
         $http_Client = $client->getHttpClient();
@@ -161,8 +157,8 @@ class GitSistemaRepository
         $client = new Client();
         $github = Auth::user()->github;
         $repositorio = $github->repositorio_atual;
-        $usuario_git = Crypt::decrypt($github->usuario_github);
-        $client->authenticate($usuario_git, Crypt::decrypt($github->senha_github));
+        $usuario_git = Auth::user()->usuario_github();
+        $client->authenticate($usuario_git, Auth::user()->usuario_senha());
         $branchs = $client->repo()->branches($usuario_git, $repositorio, $branch);
         $sha = $branchs['commit']['sha'];
         $http_Client = $client->getHttpClient();
@@ -175,7 +171,7 @@ class GitSistemaRepository
     {
         $client = new Client();
         $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
         $branchs = $client->repo()->branches('jeancarlos2015', 'teste2015');
 //        dd($branchs);
         $http_Client = $client->getHttpClient();
@@ -205,9 +201,9 @@ class GitSistemaRepository
     {
         $client = new Client();
         $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
         $client->repo()->merge(
-            Crypt::decrypt($github->usuario_github),
+            Auth::user()->usuario_github(),
             $github->repositorio_atual,
             $github->branch_atual,
             $branch,
@@ -250,7 +246,7 @@ class GitSistemaRepository
     {
         $client = new Client();
         $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
         $dado = new Dado();
         $dado->modelos = $this->ler_arquivo(database_path('banco/modelos/diagram.bpmn'));
         $dado->banco = $this->ler_arquivo(database_path('banco/database.sqlite'));
@@ -264,7 +260,7 @@ class GitSistemaRepository
     {
         $client = new Client();
         $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
 
         dd($client->repo()->contents()->archive('jeancarlos2015', 'teste2015', '.sqlite'));
     }
@@ -274,7 +270,7 @@ class GitSistemaRepository
     {
         $client = new Client();
         $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
         $conteudo = $client->repo()->contents()->download('jeancarlos2015', 'teste2015', 'database.sqlite');
 
     }
@@ -288,8 +284,8 @@ class GitSistemaRepository
         $github = Auth::user()->github;
 
         $client->authenticate(
-            Crypt::decrypt($github->usuario_github),
-            Crypt::decrypt($github->senha_github)
+            Auth::user()->usuario_github(),
+            Auth::user()->usuario_senha()
         );
         //O try/cat neste bloco é necessário pois o repositório pode está vazio quando for feita a operação
         //pull automática
@@ -297,7 +293,7 @@ class GitSistemaRepository
             $conteudo = $client->repo()
                 ->contents()
                 ->download(
-                    Crypt::decrypt($github->usuario_github),
+                    Auth::user()->usuario_github(),
                     $github->repositorio_atual, $arquivo,
                     $branch_atual
                 );
@@ -314,8 +310,8 @@ class GitSistemaRepository
             $repositorio_atual = Auth::user()->github->repositorio_atual;
             $client = new Client();
             $github = Auth::user()->github;
-            $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-            $branchs = $client->repo()->branches(Crypt::decrypt($github->usuario_github), $repositorio_atual);
+            $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
+            $branchs = $client->repo()->branches(Auth::user()->usuario_github(), $repositorio_atual);
             BranchsRepository::incluir_todas_branchs($branchs);
         } catch (\Exception $ex) {
 
@@ -328,8 +324,8 @@ class GitSistemaRepository
         $client = new Client();
         $github = Auth::user()->github;
 
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-        $branchs = $client->repo()->branches(Crypt::decrypt($github->usuario_github), $repositorio_atual);
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
+        $branchs = $client->repo()->branches(Auth::user()->usuario_github(), $repositorio_atual);
         $repositorio['default_branch'] = $default_branch;
         $repositorio['name'] = $repositorio_atual;
         self::atualizar_usuario_github($repositorio);
@@ -356,7 +352,7 @@ class GitSistemaRepository
     {
         $client = new Client();
         $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
         return $client->repo()->create(
             $nome_repositorio,
             '',
@@ -377,8 +373,8 @@ class GitSistemaRepository
     {
         $client = new Client();
         $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-        return $client->repo()->show(Crypt::decrypt($github->usuario_github), $repository);
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
+        return $client->repo()->show(Auth::user()->usuario_github(), $repository);
     }
 
     public static
@@ -386,9 +382,8 @@ class GitSistemaRepository
     {
 
         $client = new Client();
-        $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
-        $client->repo()->remove(Crypt::decrypt($github->usuario_github), $repositorio);
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
+        $client->repo()->remove(Auth::user()->usuario_github(), $repositorio);
 
 
     }
@@ -408,7 +403,7 @@ class GitSistemaRepository
 
         $client = new Client();
         $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
         return $client;
 
     }
@@ -485,7 +480,7 @@ class GitSistemaRepository
         $dados['branch'] = $github->branch_atual;
         $dados['mensagem'] = $dado->mensagem;
         $dados['repositorio'] = $github->repositorio_atual;
-        $dados['usuario'] = Crypt::decrypt($github->usuario_github);
+        $dados['usuario'] = Auth::user()->usuario_github();
         $dados['email'] = $github->email_github;
 
         return $dados;
@@ -541,12 +536,12 @@ class GitSistemaRepository
     {
         $client = new Client();
         $github = Auth::user()->github;
-        $username = Crypt::decrypt($github->usuario_github);
+        $username = Auth::user()->usuario_github();
         $repository = $github->repositorio_atual;
         $branch_atual = $github->branch_atual;
         $client->authenticate(
-            Crypt::decrypt($github->usuario_github),
-            Crypt::decrypt($github->senha_github)
+            Auth::user()->usuario_github(),
+            Auth::user()->usuario_senha()
         );
 
         if ($client->repo()->contents()->exists($username, $repository, '')) {
@@ -609,8 +604,7 @@ class GitSistemaRepository
     {
 
         $client = new Client();
-        $github = Auth::user()->github;
-        $client->authenticate(Crypt::decrypt($github->usuario_github), Crypt::decrypt($github->senha_github));
+        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
         return collect($client->currentUser()->repositories());
 
     }
@@ -659,7 +653,6 @@ class GitSistemaRepository
             self::merge($branch);
         }
     }
-
 
 
 }

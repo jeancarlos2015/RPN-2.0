@@ -20,7 +20,11 @@
         <li class="nav-item">
             <a class="btn btn-dark" href="{!! route('pull') !!}">Atualizar</a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link">
+                Usuário Github: {{ Auth::user()->usuario_github() }} <span class="sr-only"></span>
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link">
                 Branch Atual: {{ Auth::user()->github->branch_atual }} <span class="sr-only"></span>
