@@ -12,7 +12,3 @@ npm-debug.log
 .env
 .scannerwork
 _ide_helper\.php
-
-database/banco/database\.db
-
-database/
