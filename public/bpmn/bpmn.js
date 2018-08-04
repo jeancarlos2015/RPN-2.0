@@ -20,22 +20,7 @@ function exportDiagram() {
         if (err) {
             return console.error('could not save BPMN 2.0 diagram', err);
         }
-        var url = Routing.generate('xml_store', { $xml: xml });
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: xml,
-            dataType: "xml"
 
-        }).done(function(resposta) {
-            console.log(resposta);
-
-        }).fail(function(jqXHR, textStatus ) {
-            console.log("Request failed: " + textStatus);
-
-        }).always(function() {
-            console.log("completou");
-        });
     });
 }
 
