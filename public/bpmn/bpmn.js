@@ -1,6 +1,6 @@
 
 
-var diagramUrl = 'http://projetolaravel21.herokuapp.com/novo_bpmn/novo.bpmn';
+var diagramUrl = 'http://projeto.test/novo_bpmn/novo.bpmn';
 
 // modeler instance
 var bpmnModeler = new BpmnJS({
