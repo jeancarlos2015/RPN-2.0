@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Util\Dado;
 use Illuminate\Http\Request;
+use Psy\Util\Json;
 
 class DadoXmlController extends Controller
 {
@@ -32,8 +34,9 @@ class DadoXmlController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Json $dado)
     {
+        dd($dado);
         $dados = [];
         return $dados;
     }

@@ -20,25 +20,22 @@ function exportDiagram() {
         if (err) {
             return console.error('could not save BPMN 2.0 diagram', err);
         }
-        // var data = {
-        //     xml: xml,
-        //     _token: $('meta[name="csrf-token"]').attr('content')
-        // };
-        alert('Este comando vai funcionar em breve!!!');
+        var url = Routing.generate('xml_store', { $xml: xml });
         $.ajax({
+            url: url,
             type: "POST",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: "http://projeto.test/admin/xml_store",
-            data: {// change data to this object
-                _token : $('meta[name="csrf-token"]').attr('content'),
-            },
-            dataType: "text",
-            success: function(resultData) { alert(data) }
-        })
-        // alert(xml);
-        // console.log('DIAGRAM', data);
+            data: xml,
+            dataType: "xml"
+
+        }).done(function(resposta) {
+            console.log(resposta);
+
+        }).fail(function(jqXHR, textStatus ) {
+            console.log("Request failed: " + textStatus);
+
+        }).always(function() {
+            console.log("completou");
+        });
     });
 }
 
