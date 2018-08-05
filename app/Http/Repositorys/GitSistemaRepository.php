@@ -588,6 +588,7 @@ class GitSistemaRepository
         //obtem o nome do banco
 
         $dados = self::get_files_github_pull();
+//        dd($dados);
         if (!empty($dados)) {
             foreach ($dados as $arquivo) {
                 if ($arquivo['name'] === 'database.db') {
