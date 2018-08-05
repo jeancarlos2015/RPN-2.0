@@ -1,4 +1,6 @@
-var diagramUrl = 'http://projeto.test/novo_bpmn/novo.bpmn';
+var url = location.href; //pega endereço que esta no navegador
+url = url.split("/"); //quebra o endeço de acordo com a / (barra)
+var diagramUrl = 'http://'+url[2]+'/novo_bpmn/novo.bpmn';
 
 // modeler instance
 var bpmnModeler = new BpmnJS({
