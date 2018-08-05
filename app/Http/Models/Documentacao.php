@@ -12,7 +12,8 @@ class Documentacao extends Model
     protected $fillable = [
         'nome',
         'descricao',
-        'link'
+        'link',
+        'visibilidade'
     ];
 
     public static function validacao()

@@ -17,7 +17,7 @@ class CreateProjetosTable extends Migration
             $table->increments('codprojeto');
             $table->string('nome');
             $table->string('descricao');
-
+            $table->boolean('visibilidade');
             $table->bigInteger('codorganizacao');
             $table->bigInteger('codusuario');
 

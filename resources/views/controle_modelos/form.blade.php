@@ -17,6 +17,7 @@
         <div class="form-group">
             <input type="radio" name="tipo" value="declarativo" checked>Modelo Declarativo
         </div>
+
     @else
         <div class="form-group">
             <input type="radio" name="tipo" value="diagramatico" checked> Modelo Diagramatico
@@ -33,7 +34,10 @@
         <input type="radio" name="tipo" value="declarativo">Modelo Declarativo
     </div>
 @endif
-
+<div class="form-group">
+    <input id="checkbox-signup" type="checkbox" checked="checked" name="visibilidade">
+    <label class="control-label" for="checkbox-signup">Visível para outros usuários</label>
+</div>
 
 @if(!empty($codorganizacao))
     <input type="hidden" name="codorganizacao" class="form-control"

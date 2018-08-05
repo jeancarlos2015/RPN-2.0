@@ -46,7 +46,8 @@ class Modelo extends Model
         'xml_modelo',
         'codprojeto',
         'codorganizacao',
-        'codusuario'
+        'codusuario',
+        'visibilidade'
     ];
 
 

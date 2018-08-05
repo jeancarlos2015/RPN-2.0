@@ -585,6 +585,7 @@ class GitSistemaRepository
         //obtem o caminho dos modelos
         $path_modelo = database_path('banco/modelos');
         self::verifica_arquivos($path_banco, $path_modelo);
+        sleep(3);
         //obtem o nome do banco
 
         $dados = self::get_files_github_pull();

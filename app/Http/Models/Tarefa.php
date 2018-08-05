@@ -44,7 +44,8 @@ class Tarefa extends Model
         'codprojeto',
         'codmodelo',
         'codusuario',
-        'codregra'
+        'codregra',
+        'visibilidade'
     ];
 
     public static function titulos()

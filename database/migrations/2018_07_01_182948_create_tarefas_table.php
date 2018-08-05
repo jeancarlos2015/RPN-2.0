@@ -17,6 +17,7 @@ class CreateTarefasTable extends Migration
             $table->bigIncrements('codtarefa');
             $table->string('nome')->unique();
             $table->string('descricao');
+            $table->boolean('visibilidade');
 
             $table->bigInteger('codmodelo');
             $table->bigInteger('codprojeto');

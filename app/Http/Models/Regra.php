@@ -53,7 +53,8 @@ class Regra extends Model
         'codmodelo',
         'codprojeto',
         'codorganizacao',
-        'codusuario'
+        'codusuario',
+        'visibilidade'
     ];
 
     public static function validacao()

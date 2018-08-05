@@ -31,7 +31,8 @@ class Organizacao extends Model
     protected $fillable = [
         'nome',
         'descricao',
-        'codusuario'
+        'codusuario',
+        'visibilidade'
     ];
 
     public static function validacao()

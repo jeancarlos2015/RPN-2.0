@@ -17,6 +17,7 @@ class CreateRegrasTable extends Migration
             $table->bigIncrements('codregra')->unsigned();
             $table->string('operador');
             $table->string('nome');
+            $table->boolean('visibilidade');
             $table->bigInteger('codprojeto');
             $table->bigInteger('codorganizacao');
             $table->bigInteger('codmodelo');

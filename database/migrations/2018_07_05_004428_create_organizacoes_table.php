@@ -17,6 +17,7 @@ class CreateOrganizacoesTable extends Migration
             $table->bigIncrements('codorganizacao');
             $table->string('nome');
             $table->string('descricao');
+            $table->boolean('visibilidade');
             $table->bigInteger('codusuario');
 //            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
