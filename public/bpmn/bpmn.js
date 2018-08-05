@@ -1,5 +1,3 @@
-
-
 var diagramUrl = 'http://projeto.test/novo_bpmn/novo.bpmn';
 
 // modeler instance
@@ -13,13 +11,34 @@ var bpmnModeler = new BpmnJS({
 /**
  * Save diagram contents and print them to the console.
  */
-function exportDiagram() {
 
-    bpmnModeler.saveXML({format: true}, function (err, xml) {
+function exportDiagram(codmodelo) {
 
-        if (err) {
-            return console.error('could not save BPMN 2.0 diagram', err);
-        }
+    bpmnModeler.saveXML({ format: true }, function(err, xml) {
+        $.ajax({
+
+            url: 'gravar',
+            type: "POST",
+            cache: false,
+            dataType: "json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            data: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') ,
+                strXml: xml,
+                codmodelo: codmodelo
+            },
+            
+            success: function () {
+                alert('Modelo Salvo Com suceso!!');
+            },
+            error: function () {
+                alert('Erro ao salvar modelo');
+            }
+            
+        });
 
     });
 }
@@ -57,6 +76,8 @@ function openDiagram(bpmnXML) {
 
         // add marker
         canvas.addMarker('SCAN_OK', 'needs-discussion');
+        bpmnModeler.attachTo('#canvas');
+        bpmnModeler.detach();
     });
 }
 
@@ -64,10 +85,10 @@ function openDiagram(bpmnXML) {
 // load external diagram file via AJAX and open it
 $.get(diagramUrl, openDiagram, 'text');
 
-// wire save button
-$('#save-button').click(exportDiagram);
-$('#save-button2').click(exportDiagram);
-$('#save-button3').click(exportDiagram);
-
+// // wire save button
+// $('#save-button').click(exportDiagram);
+// $('#save-button2').click(exportDiagram);
+// $('#save-button3').click(exportDiagram);
+//
 
 

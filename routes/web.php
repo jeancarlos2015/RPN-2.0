@@ -2,9 +2,13 @@
 
 //Route::resource('controle_xml', 'DadoXmlController');
 
+Route::post('/getmsg','AjaxController@index');
+
+Route::get('ajax',function(){
+    return view('teste.message');
+});
 
 Auth::routes();
-
 
 Route::get('/', function () {
     return view('inicio');
@@ -17,7 +21,8 @@ Route::get('/logout', function () {
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
 
-        Route::post('/xml_store', 'DadoXmlController@store')->name('xml_store');
+        Route::post('gravar', 'DadoXmlController@gravar')->name('gravar');
+
 
         Route::resource('controle_organizacoes', 'OrganizacaoController');
         Route::resource('controle_tarefas', 'TarefaController');

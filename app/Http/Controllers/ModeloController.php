@@ -115,10 +115,17 @@ class ModeloController extends Controller
                             'codmodelo' => $modelo->codmodelo
                         ]);
                     } else {
-                        return view('controle_modelos.modeler');
+                        file_put_contents(public_path('novo_bpmn/novo.bpmn'),Modelo::get_modelo_default());
+                        sleep(2);
+                        return view('controle_modelos.modeler', compact('modelo'));
                     }
-                }{
-                    return view('controle_modelos.modeler');
+                }else{
+                    $data['tipo'] = 'existe';
+                    $this->create_log($data);
+                    return redirect()->route('controle_modelos_create', [
+                        'codorganizacao' => $codorganizacao,
+                        'codprojeto' => $codprojeto
+                    ]);
                 }
 
             }
@@ -159,7 +166,9 @@ class ModeloController extends Controller
                     'organizacao'
                 ));
             } else {
-                return view('controle_modelos.form_diagramatico', compact('modelo'));
+                file_put_contents(public_path('novo_bpmn/novo.bpmn'),$modelo->xml_modelo);
+                sleep(2);
+                return view('controle_modelos.visualizar_modelo', compact('modelo'));
             }
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
