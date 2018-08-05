@@ -1,6 +1,6 @@
-
-
-var diagramUrl = 'http://projetolaravel21.herokuapp.com/novo_bpmn/novo.bpmn';
+var url = location.href; //pega endereço que esta no navegador
+url = url.split("/"); //quebra o endeço de acordo com a / (barra)
+var diagramUrl = 'http://'+url[2]+'/novo_bpmn/novo.bpmn';
 
 // modeler instance
 var bpmnModeler = new BpmnJS({
@@ -10,35 +10,34 @@ var bpmnModeler = new BpmnJS({
     }
 });
 
-/**
- * Save diagram contents and print them to the console.
- */
-function exportDiagram() {
+function exportDiagram(codmodelo) {
 
-    bpmnModeler.saveXML({format: true}, function (err, xml) {
-
-        if (err) {
-            return console.error('could not save BPMN 2.0 diagram', err);
-        }
-        // var data = {
-        //     xml: xml,
-        //     _token: $('meta[name="csrf-token"]').attr('content')
-        // };
-        alert('Este comando vai funcionar em breve!!!');
+    bpmnModeler.saveXML({ format: true }, function(err, xml) {
         $.ajax({
+
+            url: 'gravar',
             type: "POST",
+            cache: false,
+            dataType: "json",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: "http://projeto.test/admin/xml_store",
-            data: {// change data to this object
-                _token : $('meta[name="csrf-token"]').attr('content'),
+
+            data: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') ,
+                strXml: xml,
+                codmodelo: codmodelo
             },
-            dataType: "text",
-            success: function(resultData) { alert(data) }
-        })
-        // alert(xml);
-        // console.log('DIAGRAM', data);
+            
+            success: function () {
+                alert('Modelo Salvo Com suceso!!');
+            },
+            error: function () {
+                alert('Erro ao salvar modelo');
+            }
+            
+        });
+
     });
 }
 
@@ -75,6 +74,8 @@ function openDiagram(bpmnXML) {
 
         // add marker
         canvas.addMarker('SCAN_OK', 'needs-discussion');
+        bpmnModeler.attachTo('#canvas');
+        bpmnModeler.detach();
     });
 }
 
@@ -82,10 +83,10 @@ function openDiagram(bpmnXML) {
 // load external diagram file via AJAX and open it
 $.get(diagramUrl, openDiagram, 'text');
 
-// wire save button
-$('#save-button').click(exportDiagram);
-$('#save-button2').click(exportDiagram);
-$('#save-button3').click(exportDiagram);
-
+// // wire save button
+// $('#save-button').click(exportDiagram);
+// $('#save-button2').click(exportDiagram);
+// $('#save-button3').click(exportDiagram);
+//
 
 

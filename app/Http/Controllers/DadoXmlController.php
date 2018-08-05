@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Modelo;
 use Illuminate\Http\Request;
+use Psy\Util\Json;
 
 class DadoXmlController extends Controller
 {
@@ -30,12 +32,21 @@ class DadoXmlController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function store(Request $request)
     {
-        $dados = [];
-        return $dados;
+
+    }
+
+    public function gravar(Request $request)
+    {
+        $codmodelo = $request->codmodelo;
+        $xml = $request->strXml;
+        $modelo = Modelo::findOrFail($codmodelo);
+        $modelo->xml_modelo = $xml."\n";
+        $result = $modelo->update();
+        return \Response::json($result);
     }
 
     /**
