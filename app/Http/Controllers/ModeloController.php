@@ -89,7 +89,7 @@ class ModeloController extends Controller
         return view('controle_modelos.create', compact('dados', 'organizacao', 'projeto'));
     }
 
-   
+
 //$codorganizacao, $codprojeto, $codmodelo
     public function store(Request $request)
     {
@@ -99,12 +99,12 @@ class ModeloController extends Controller
             $data['all'] = $request->all();
             $data['validacao'] = Modelo::validacao();
             if (!$this->exists_errors($data)) {
-                if(!ModeloRepository::modelo_existe($request->nome)){
+                if (!ModeloRepository::modelo_existe($request->nome)) {
                     $request->request->add([
                         'xml_modelo' => "Nenhum",
                         'codprojeto' => $codprojeto,
                         'codorganizacao' => $codorganizacao,
-                        'codusuario'   => Auth::user()->codusuario
+                        'codusuario' => Auth::user()->codusuario
                     ]);
 
                     $modelo = Modelo::create($request->all());
@@ -115,11 +115,16 @@ class ModeloController extends Controller
                             'codmodelo' => $modelo->codmodelo
                         ]);
                     } else {
-                        file_put_contents(public_path('novo_bpmn/novo.bpmn'),Modelo::get_modelo_default());
+                        $path_modelo = public_path('novo_bpmn/');
+                        if (!file_exists($path_modelo)) {
+                            mkdir($path_modelo, 777);
+                        }
+                        $file = $path_modelo.'novo.bpmn';
+                        file_put_contents($file, Modelo::get_modelo_default());
                         sleep(2);
                         return view('controle_modelos.modeler', compact('modelo'));
                     }
-                }else{
+                } else {
                     $data['tipo'] = 'existe';
                     $this->create_log($data);
                     return redirect()->route('controle_modelos_create', [
@@ -166,7 +171,12 @@ class ModeloController extends Controller
                     'organizacao'
                 ));
             } else {
-                file_put_contents(public_path('novo_bpmn/novo.bpmn'),$modelo->xml_modelo);
+                $path_modelo = public_path('novo_bpmn/');
+                if (!file_exists($path_modelo)) {
+                    mkdir($path_modelo, 777);
+                }
+                $file = $path_modelo.'novo.bpmn';
+                file_put_contents($file, $modelo->xml_modelo);
                 sleep(2);
                 return view('controle_modelos.visualizar_modelo', compact('modelo'));
             }

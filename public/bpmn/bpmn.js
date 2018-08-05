@@ -8,10 +8,6 @@ var bpmnModeler = new BpmnJS({
     }
 });
 
-/**
- * Save diagram contents and print them to the console.
- */
-
 function exportDiagram(codmodelo) {
 
     bpmnModeler.saveXML({ format: true }, function(err, xml) {
