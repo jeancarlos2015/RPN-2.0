@@ -92,13 +92,12 @@ class ModeloController extends Controller
     public function criacao_modelo_diagramatico($codmodelo)
     {
         $modelo = Modelo::findOrFail($codmodelo);
-
         $path_modelo = public_path('novo_bpmn/');
         if (!file_exists($path_modelo)) {
             mkdir($path_modelo, 777);
         }
         $file = $path_modelo . 'novo.bpmn';
-        file_put_contents($file, Modelo::get_modelo_default());
+        file_put_contents($file, $modelo->xml_modelo);
         sleep(2);
         return view('controle_modelos.modeler', compact('modelo'));
 }
@@ -115,7 +114,7 @@ function store(Request $request)
         if (!$this->exists_errors($data)) {
             if (!ModeloRepository::modelo_existe($request->nome)) {
                 $request->request->add([
-                    'xml_modelo' => "Nenhum",
+                    'xml_modelo' => Modelo::get_modelo_default(),
                     'codprojeto' => $codprojeto,
                     'codorganizacao' => $codorganizacao,
                     'codusuario' => Auth::user()->codusuario
