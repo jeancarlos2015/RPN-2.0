@@ -25,21 +25,7 @@ html, body, #canvas {
 #save-button {
     position: fixed;
     bottom: 50px;
-    left: 20px;
-    padding: 20px 50px;
-    background-color: darkgray;
-}
-#save-button2 {
-    position: fixed;
-    bottom: 50px;
-    left:  250px;
-    padding: 20px 50px;
-    background-color: darkgray;
-}
-#save-button3 {
-    position: fixed;
-    bottom: 50px;
-    left:  480px;
+    left: 200px;
     padding: 20px 50px;
     background-color: darkgray;
 }
