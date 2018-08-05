@@ -89,263 +89,277 @@ class ModeloController extends Controller
         return view('controle_modelos.create', compact('dados', 'organizacao', 'projeto'));
     }
 
+    public function criacao_modelo_diagramatico($codmodelo)
+    {
+        $modelo = Modelo::findOrFail($codmodelo);
+
+        $path_modelo = public_path('novo_bpmn/');
+        if (!file_exists($path_modelo)) {
+            mkdir($path_modelo, 777);
+        }
+        $file = $path_modelo . 'novo.bpmn';
+        file_put_contents($file, Modelo::get_modelo_default());
+        sleep(2);
+        return view('controle_modelos.modeler', compact('modelo'));
+}
 
 //$codorganizacao, $codprojeto, $codmodelo
-    public function store(Request $request)
-    {
-        try {
-            $codprojeto = $request->codprojeto;
-            $codorganizacao = $request->codorganizacao;
-            $data['all'] = $request->all();
-            $data['validacao'] = Modelo::validacao();
-            if (!$this->exists_errors($data)) {
-                if (!ModeloRepository::modelo_existe($request->nome)) {
-                    $request->request->add([
-                        'xml_modelo' => "Nenhum",
+public
+function store(Request $request)
+{
+    try {
+        $codprojeto = $request->codprojeto;
+        $codorganizacao = $request->codorganizacao;
+        $data['all'] = $request->all();
+        $data['validacao'] = Modelo::validacao();
+        if (!$this->exists_errors($data)) {
+            if (!ModeloRepository::modelo_existe($request->nome)) {
+                $request->request->add([
+                    'xml_modelo' => "Nenhum",
+                    'codprojeto' => $codprojeto,
+                    'codorganizacao' => $codorganizacao,
+                    'codusuario' => Auth::user()->codusuario
+                ]);
+                $modelo = Modelo::create($request->all());
+                if ($modelo->tipo === 'declarativo') {
+                    return redirect()->route('controle_regras_index', [
+                        'codorganizacao' => $codorganizacao,
                         'codprojeto' => $codprojeto,
-                        'codorganizacao' => $codorganizacao,
-                        'codusuario' => Auth::user()->codusuario
+                        'codmodelo' => $modelo->codmodelo
                     ]);
-
-                    $modelo = Modelo::create($request->all());
-                    if ($modelo->tipo === 'declarativo') {
-                        return redirect()->route('controle_regras_index', [
-                            'codorganizacao' => $codorganizacao,
-                            'codprojeto' => $codprojeto,
-                            'codmodelo' => $modelo->codmodelo
-                        ]);
-                    } else {
-                        $path_modelo = public_path('novo_bpmn/');
-                        if (!file_exists($path_modelo)) {
-                            mkdir($path_modelo, 777);
-                        }
-                        $file = $path_modelo.'novo.bpmn';
-                        file_put_contents($file, Modelo::get_modelo_default());
-                        sleep(2);
-                        return view('controle_modelos.modeler', compact('modelo'));
-                    }
                 } else {
-                    $data['tipo'] = 'existe';
-                    $this->create_log($data);
-                    return redirect()->route('controle_modelos_create', [
-                        'codorganizacao' => $codorganizacao,
-                        'codprojeto' => $codprojeto
-                    ]);
+                    return redirect()->route('criacao_modelo_diagramatico',
+                        ['codmodelo' => $modelo->codmodelo]);
                 }
-
-            }
-            $erros = $this->get_errors($data);
-            return redirect()->route('controle_modelos_create', [
-                'codorganizacao' => $codorganizacao,
-                'codprojeto' => $codprojeto
-            ])
-                ->withErrors($erros)
-                ->withInput();
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-
-        return view('controle_modelos.modeler', compact('modelo'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($codmodelo)
-    {
-        try {
-            $modelo = Modelo::findOrFail($codmodelo);
-            $projeto = $modelo->projeto;
-            $organizacao = $modelo->organizacao;
-            if ($modelo->tipo === 'declarativo') {
-                return view('controle_modelos.form_declarativo', compact(
-                    'modelo',
-                    'projeto',
-                    'organizacao'
-                ));
             } else {
-                $path_modelo = public_path('novo_bpmn/');
-                if (!file_exists($path_modelo)) {
-                    mkdir($path_modelo, 777);
-                }
-                $file = $path_modelo.'novo.bpmn';
-                file_put_contents($file, $modelo->xml_modelo);
-                sleep(2);
-                return view('controle_modelos.visualizar_modelo', compact('modelo'));
-            }
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
-
-
-    }
-
-    public function show_tarefas($codmodelo)
-    {
-        try {
-            $modelo = Modelo::findOrFail($codmodelo);
-            if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
-                flash('Não existem tarefas para serem exibidas!!!')->error();
-                return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
-            } else {
-                return redirect()->route('controle_tarefas_index', [
-                    'codorganizacao' => $modelo->codorganizacao,
-                    'codprojeto' => $modelo->codprojeto,
-                    'codmodelo' => $modelo->codmodelo
+                $data['tipo'] = 'existe';
+                $this->create_log($data);
+                return redirect()->route('controle_modelos_create', [
+                    'codorganizacao' => $codorganizacao,
+                    'codprojeto' => $codprojeto
                 ]);
             }
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
+
         }
-        return redirect()->route('painel');
+        $erros = $this->get_errors($data);
+        return redirect()->route('controle_modelos_create', [
+            'codorganizacao' => $codorganizacao,
+            'codprojeto' => $codprojeto
+        ])
+            ->withErrors($erros)
+            ->withInput();
+    } catch (\Exception $ex) {
+        $data['mensagem'] = $ex->getMessage();
+        $data['tipo'] = 'error';
+        $data['pagina'] = 'Painel';
+        $data['acao'] = 'merge_checkout';
+        $this->create_log($data);
     }
 
-    public function show_regras($codmodelo)
-    {
-        try {
-            $modelo = Modelo::findOrFail($codmodelo);
-            if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
-                flash('Não existem regras para serem exibidas!!!')->error();
-                return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
-            } else {
-                return redirect()->route('controle_regras_index', [
-                    'codorganizacao' => $modelo->codorganizacao,
-                    'codprojeto' => $modelo->codprojeto,
-                    'codmodelo' => $modelo->codmodelo
-                ]);
+    return view('controle_modelos.modeler', compact('modelo'));
+}
+
+/**
+ * Display the specified resource.
+ *
+ * @param  int $id
+ * @return \Illuminate\Http\Response
+ */
+public
+function show($codmodelo)
+{
+    try {
+        $modelo = Modelo::findOrFail($codmodelo);
+        $projeto = $modelo->projeto;
+        $organizacao = $modelo->organizacao;
+        if ($modelo->tipo === 'declarativo') {
+            return view('controle_modelos.form_declarativo', compact(
+                'modelo',
+                'projeto',
+                'organizacao'
+            ));
+        } else {
+            $path_modelo = public_path('novo_bpmn/');
+            if (!file_exists($path_modelo)) {
+                mkdir($path_modelo, 777);
             }
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
+            $file = $path_modelo . 'novo.bpmn';
+            file_put_contents($file, $modelo->xml_modelo);
+            sleep(2);
+            return view('controle_modelos.visualizar_modelo', compact('modelo'));
         }
-        return redirect()->route('painel');
+    } catch (\Exception $ex) {
+        $data['mensagem'] = $ex->getMessage();
+        $data['tipo'] = 'error';
+        $data['pagina'] = 'Painel';
+        $data['acao'] = 'merge_checkout';
+        $this->create_log($data);
     }
+    return redirect()->route('painel');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($codmodelo)
-    {
-        try {
-            $modelo = Modelo::findOrFail($codmodelo);
-            $dados = Modelo::dados();
-            $projeto = $modelo->projeto;
-            $organizacao = $modelo->organizacao;
-            $dados[0]->valor = $modelo->nome;
-            $dados[1]->valor = $modelo->descricao;
-            $dados[2]->valor = $modelo->tipo;
-            return view('controle_modelos.edit', compact('dados', 'modelo', 'projeto', 'organizacao'));
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        try {
-            $modelo = Modelo::findOrFail($id);
-            $modelo->update($request->all());
-            if (isset($modelo)) {
-                flash('Modelos atualizado com sucesso!!');
-            } else {
-                flash('Modelos não foi atualizado!!');
-            }
+}
+
+public
+function show_tarefas($codmodelo)
+{
+    try {
+        $modelo = Modelo::findOrFail($codmodelo);
+        if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
+            flash('Não existem tarefas para serem exibidas!!!')->error();
+            return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
+        } else {
             return redirect()->route('controle_tarefas_index', [
                 'codorganizacao' => $modelo->codorganizacao,
                 'codprojeto' => $modelo->codprojeto,
                 'codmodelo' => $modelo->codmodelo
             ]);
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
         }
-        return redirect()->route('painel');
+    } catch (\Exception $ex) {
+        $data['mensagem'] = $ex->getMessage();
+        $data['tipo'] = 'error';
+        $data['pagina'] = 'Painel';
+        $data['acao'] = 'merge_checkout';
+        $this->create_log($data);
     }
+    return redirect()->route('painel');
+}
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-
-    private function delete($codmodelo)
-    {
-        try {
-            $modelo = ModeloRepository::excluir($codmodelo);
-            return $modelo;
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
+public
+function show_regras($codmodelo)
+{
+    try {
+        $modelo = Modelo::findOrFail($codmodelo);
+        if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
+            flash('Não existem regras para serem exibidas!!!')->error();
+            return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
+        } else {
+            return redirect()->route('controle_regras_index', [
+                'codorganizacao' => $modelo->codorganizacao,
+                'codprojeto' => $modelo->codprojeto,
+                'codmodelo' => $modelo->codmodelo
+            ]);
         }
+    } catch (\Exception $ex) {
+        $data['mensagem'] = $ex->getMessage();
+        $data['tipo'] = 'error';
+        $data['pagina'] = 'Painel';
+        $data['acao'] = 'merge_checkout';
+        $this->create_log($data);
     }
+    return redirect()->route('painel');
+}
 
-    public function destroy($codprojeto)
-    {
-        try {
+/**
+ * Show the form for editing the specified resource.
+ *
+ * @param  int $id
+ * @return \Illuminate\Http\Response
+ */
+public
+function edit($codmodelo)
+{
+    try {
+        $modelo = Modelo::findOrFail($codmodelo);
+        $dados = Modelo::dados();
+        $projeto = $modelo->projeto;
+        $organizacao = $modelo->organizacao;
+        $dados[0]->valor = $modelo->nome;
+        $dados[1]->valor = $modelo->descricao;
+        $dados[2]->valor = $modelo->tipo;
+        return view('controle_modelos.edit', compact('dados', 'modelo', 'projeto', 'organizacao'));
+    } catch (\Exception $ex) {
+        $data['mensagem'] = $ex->getMessage();
+        $data['tipo'] = 'error';
+        $data['pagina'] = 'Painel';
+        $data['acao'] = 'merge_checkout';
+        $this->create_log($data);
+    }
+    return redirect()->route('painel');
+}
 
-            $modelo = Modelo::findOrFail($codprojeto);
-            $modelo->delete();
-            flash('Operação feita com sucesso!!');
-            if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
-
-                return redirect()->route('todos_modelos');
-            } else {
-                return redirect()->route('controle_modelos_index',
-                    [
-                        'codorganizacao' => $modelo->codorganizacao,
-                        'codprojeto' => $modelo->codprojeto
-                    ]
-                );
-            }
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
+/**
+ * Update the specified resource in storage.
+ *
+ * @param  \Illuminate\Http\Request $request
+ * @param  int $id
+ * @return \Illuminate\Http\Response
+ */
+public
+function update(Request $request, $id)
+{
+    try {
+        $modelo = Modelo::findOrFail($id);
+        $modelo->update($request->all());
+        if (isset($modelo)) {
+            flash('Modelos atualizado com sucesso!!');
+        } else {
+            flash('Modelos não foi atualizado!!');
         }
-        return redirect()->route('painel');
-
+        return redirect()->route('controle_tarefas_index', [
+            'codorganizacao' => $modelo->codorganizacao,
+            'codprojeto' => $modelo->codprojeto,
+            'codmodelo' => $modelo->codmodelo
+        ]);
+    } catch (\Exception $ex) {
+        $data['mensagem'] = $ex->getMessage();
+        $data['tipo'] = 'error';
+        $data['pagina'] = 'Painel';
+        $data['acao'] = 'merge_checkout';
+        $this->create_log($data);
     }
+    return redirect()->route('painel');
+}
+
+/**
+ * Remove the specified resource from storage.
+ *
+ * @param  int $id
+ * @return \Illuminate\Http\Response
+ */
+
+private
+function delete($codmodelo)
+{
+    try {
+        $modelo = ModeloRepository::excluir($codmodelo);
+        return $modelo;
+    } catch (\Exception $ex) {
+        $data['mensagem'] = $ex->getMessage();
+        $data['tipo'] = 'error';
+        $data['pagina'] = 'Painel';
+        $data['acao'] = 'merge_checkout';
+        $this->create_log($data);
+    }
+}
+
+public
+function destroy($codprojeto)
+{
+    try {
+
+        $modelo = Modelo::findOrFail($codprojeto);
+        $modelo->delete();
+        flash('Operação feita com sucesso!!');
+        if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
+
+            return redirect()->route('todos_modelos');
+        } else {
+            return redirect()->route('controle_modelos_index',
+                [
+                    'codorganizacao' => $modelo->codorganizacao,
+                    'codprojeto' => $modelo->codprojeto
+                ]
+            );
+        }
+    } catch (\Exception $ex) {
+        $data['mensagem'] = $ex->getMessage();
+        $data['tipo'] = 'error';
+        $data['pagina'] = 'Painel';
+        $data['acao'] = 'merge_checkout';
+        $this->create_log($data);
+    }
+    return redirect()->route('painel');
+
+}
 }

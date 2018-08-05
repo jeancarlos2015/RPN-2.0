@@ -24,8 +24,8 @@ html, body, #canvas {
 
 #save-button {
     position: fixed;
-    bottom: 50px;
-    left: 200px;
+    bottom: 10%;
+    left: 80%;
     padding: 20px 50px;
     background-color: darkgray;
 }

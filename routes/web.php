@@ -22,6 +22,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
     function () {
 
         Route::post('gravar', 'DadoXmlController@gravar')->name('gravar');
+        Route::get('criacao_modelo_diagramatico/{codmodelo}', 'ModeloController@criacao_modelo_diagramatico')->name('criacao_modelo_diagramatico');
 
 
         Route::resource('controle_organizacoes', 'OrganizacaoController');
