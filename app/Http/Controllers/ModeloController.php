@@ -89,7 +89,7 @@ class ModeloController extends Controller
         return view('controle_modelos.create', compact('dados', 'organizacao', 'projeto'));
     }
 
-    public function criacao_modelo_diagramatico($codmodelo)
+    public function edicao_modelo_diagramatico($codmodelo)
     {
         $modelo = Modelo::findOrFail($codmodelo);
         $path_modelo = public_path('novo_bpmn/');
@@ -290,16 +290,18 @@ function update(Request $request, $id)
     try {
         $modelo = Modelo::findOrFail($id);
         $modelo->update($request->all());
-        if (isset($modelo)) {
-            flash('Modelos atualizado com sucesso!!');
-        } else {
-            flash('Modelos não foi atualizado!!');
+        if ($modelo->tipo==='diagramatico'){
+            return redirect()->route('edicao_modelo_diagramatico', [
+                'codmodelo' => $modelo->codmodelo
+            ]);
+        }else{
+            return redirect()->route('controle_tarefas_index', [
+                'codorganizacao' => $modelo->codorganizacao,
+                'codprojeto' => $modelo->codprojeto,
+                'codmodelo' => $modelo->codmodelo
+            ]);
         }
-        return redirect()->route('controle_tarefas_index', [
-            'codorganizacao' => $modelo->codorganizacao,
-            'codprojeto' => $modelo->codprojeto,
-            'codmodelo' => $modelo->codmodelo
-        ]);
+
     } catch (\Exception $ex) {
         $data['mensagem'] = $ex->getMessage();
         $data['tipo'] = 'error';

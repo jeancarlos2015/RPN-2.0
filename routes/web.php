@@ -21,8 +21,8 @@ Route::get('/logout', function () {
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
 
-        Route::post('criacao_modelo_diagramatico/gravar', 'DadoXmlController@gravar')->name('gravar');
-        Route::get('criacao_modelo_diagramatico/{codmodelo}', 'ModeloController@criacao_modelo_diagramatico')->name('criacao_modelo_diagramatico');
+        Route::post('edicao_modelo_diagramatico/gravar', 'DadoXmlController@gravar')->name('gravar');
+        Route::get('edicao_modelo_diagramatico/{codmodelo}', 'ModeloController@edicao_modelo_diagramatico')->name('edicao_modelo_diagramatico');
 
 
         Route::resource('controle_organizacoes', 'OrganizacaoController');

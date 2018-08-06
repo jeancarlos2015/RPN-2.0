@@ -12,7 +12,8 @@
                     @if(!empty($rota_edicao))
                         @if($modelo1->tipo==='diagramatico')
 
-                            @include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => 'criacao_modelo_diagramatico'])
+                            {{--@include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => 'edicao_modelo_diagramatico'])--}}
+                            @include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => $rota_edicao])
                         @else
                             @include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => $rota_edicao])
                         @endif
