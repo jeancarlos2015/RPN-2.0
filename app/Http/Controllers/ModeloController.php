@@ -127,7 +127,7 @@ function store(Request $request)
                         'codmodelo' => $modelo->codmodelo
                     ]);
                 } else {
-                    return redirect()->route('criacao_modelo_diagramatico',
+                    return redirect()->route('edicao_modelo_diagramatico',
                         ['codmodelo' => $modelo->codmodelo]);
                 }
             } else {

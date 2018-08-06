@@ -1,13 +1,5 @@
 <?php
 
-//Route::resource('controle_xml', 'DadoXmlController');
-
-Route::post('/getmsg','AjaxController@index');
-
-Route::get('ajax',function(){
-    return view('teste.message');
-});
-
 Auth::routes();
 
 Route::get('/', function () {
