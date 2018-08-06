@@ -8,7 +8,11 @@
                     'rota' => 'painel'
     ])
 
-    @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
+    @if(!empty($organizacao))
+        @if(Auth::user()->email===$organizacao->usuario->email)
+            @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
+        @endif
+    @endif
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
                     'organizacoes' => $organizacoes,

@@ -18,7 +18,7 @@ class ProjetoController extends Controller
         try {
             $organizacao = Organizacao::findOrFail($codorganizacao);
             $projetos = ProjetoRepository::listar_por_organizacao($codorganizacao);
-            $titulos = Projeto::titulos();
+            $titulos = Projeto::titulos_da_tabela();
             $tipo = 'projeto';
             $log = LogRepository::log();
             return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos', 'tipo', 'log'));
@@ -36,7 +36,7 @@ class ProjetoController extends Controller
     {
         try {
             $projetos = ProjetoRepository::listar();
-            $titulos = Projeto::titulos();
+            $titulos = Projeto::titulos_da_tabela();
             $tipo = 'projeto';
             $log = LogRepository::log();
             return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo', 'log'));

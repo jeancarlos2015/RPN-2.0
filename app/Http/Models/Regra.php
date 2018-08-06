@@ -3,6 +3,7 @@
 namespace App\Http\Models;
 
 use App\Http\Util\Dado;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -77,6 +78,7 @@ class Regra extends Model
             'Tarefa 1',
             'Operador',
             'Tarefa 2',
+            'Responsavel',
             'Ações',
         ];
     }
@@ -120,7 +122,7 @@ class Regra extends Model
         $atributos = self::atributos();
         $dados = self::dados_objeto();
         $titulos = self::titulos();
-        for ($indice = 0; $indice < 4; $indice++) {
+        for ($indice = 0; $indice < 7; $indice++) {
             if ($indice < 4) {
                 $dados[$indice]->campo = $campos[$indice];
                 $dados[$indice]->atributo = $atributos[$indice];
@@ -151,5 +153,10 @@ class Regra extends Model
     public function organizacao()
     {
         return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
+    }
+
+    public function usuario()
+    {
+        return $this->hasOne(User::class, 'codusuario', 'codusuario');
     }
 }

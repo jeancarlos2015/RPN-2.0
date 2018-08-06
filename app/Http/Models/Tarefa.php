@@ -3,6 +3,7 @@
 namespace App\Http\Models;
 
 use App\Http\Util\Dado;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -54,6 +55,7 @@ class Tarefa extends Model
             'ID',
             'Nome',
             'Descrição',
+            'Responsavel',
             'Ações'
         ];
     }
@@ -88,7 +90,7 @@ class Tarefa extends Model
     public static function dados_objeto()
     {
         $dado = array();
-        for ($indice = 0; $indice < 4; $indice++) {
+        for ($indice = 0; $indice < 5; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
@@ -101,7 +103,7 @@ class Tarefa extends Model
         $atributos = self::atributos();
         $dados = self::dados_objeto();
         $titulos = self::titulos();
-        for ($indice = 0; $indice < 4; $indice++) {
+        for ($indice = 0; $indice < 5; $indice++) {
             if ($indice < 2) {
                 $dados[$indice]->campo = $campos[$indice];
                 $dados[$indice]->atributo = $atributos[$indice];
@@ -139,5 +141,10 @@ class Tarefa extends Model
         static::deleting(function ($tarefa) { // before delete() method call this
             $tarefa->regras()->delete();
         });
+    }
+
+    public function usuario()
+    {
+        return $this->hasOne(User::class, 'codusuario', 'codusuario');
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Branch extends Model
 {
+    protected $connection = 'pgsql';
     protected $primaryKey = 'codbranch';
     protected $table = 'branchs';
     protected $fillable = [

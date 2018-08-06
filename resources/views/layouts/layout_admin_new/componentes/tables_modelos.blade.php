@@ -6,22 +6,28 @@
             <td>{!! $modelo1->nome !!}</td>
             <td>{!! $modelo1->descricao !!}</td>
             <td>{!! $modelo1->tipo !!}</td>
+            <td>{!! $modelo1->usuario->name !!}</td>
             <td>
+                @if(Auth::user()->email===$modelo1->usuario->email)
+                    @if(!empty($rota_edicao))
+                        @if($modelo1->tipo==='diagramatico')
 
-                @if(!empty($rota_edicao))
-                    @if($modelo1->tipo==='diagramatico')
+                            @include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => 'criacao_modelo_diagramatico'])
+                        @else
+                            @include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => $rota_edicao])
+                        @endif
 
-                        @include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => 'criacao_modelo_diagramatico'])
-                    @else
-                        @include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => $rota_edicao])
                     @endif
-
-                @endif
-                @if(!empty($rota_exclusao))
-                    @include('componentes.form_delete',['id' => $modelo1->codmodelo, 'rota' => $rota_exclusao])
-                @endif
-                @if(!empty($rota_exibicao))
-                    @include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                    @if(!empty($rota_exclusao))
+                        @include('componentes.form_delete',['id' => $modelo1->codmodelo, 'rota' => $rota_exclusao])
+                    @endif
+                    @if(!empty($rota_exibicao))
+                        @include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                    @endif
+                @else
+                    @if(!empty($rota_exibicao))
+                        @include('componentes.link',['id' => $modelo1->codmodelo, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                    @endif
                 @endif
             </td>
         </tr>

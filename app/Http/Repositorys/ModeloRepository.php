@@ -20,16 +20,19 @@ class ModeloRepository extends Repository
     public static function listar()
     {
 
-        return Modelo::all()->where('codusuario', Auth::user()->codusuario);
+        return Modelo::whereCodusuario(Auth::user()->codusuario)
+            ->orWhere('visibilidade', '=', 'true')
+            ->get();
 
     }
 
     public static function listar_modelo_por_projeto_organizacao($codorganizacao, $codprojeto)
     {
-        return Modelo::all()
-            ->where('codusuario', '=', Auth::user()->codusuario)
+        return Modelo::whereCodusuario(Auth::user()->codusuario)
             ->where('codorganizacao', '=', $codorganizacao)
-            ->where('codprojeto', '=', $codprojeto);
+            ->where('codprojeto', '=', $codprojeto)
+            ->orWhere('visibilidade', '=', 'true')
+            ->get();
     }
 
     public static function count()

@@ -20,7 +20,9 @@ class RegraRepository extends Repository
     public static function listar()
     {
 
-        return Regra::all()->where('codusuario', Auth::user()->codusuario);
+        return Regra::whereCodusuario(Auth::user()->codusuario)
+            ->orWhere('visibilidade', '=', 'true')
+            ->get();
 
     }
 
@@ -29,11 +31,12 @@ class RegraRepository extends Repository
         $codorganizacao = $dado['codorganizacao'];
         $codprojeto = $dado['codprojeto'];
         $codmodelo = $dado['codmodelo'];
-        return Regra::all()
-            ->where('codusuario', '=', Auth::user()->codusuario)
+        return Regra::whereCodusuario(Auth::user()->codusuario)
             ->where('codmodelo', '=', $codmodelo)
             ->where('codprojeto', '=', $codprojeto)
-            ->where('codorganizacao', '=', $codorganizacao);
+            ->where('codorganizacao', '=', $codorganizacao)
+            ->orWhere('visibilidade', '=', 'true')
+            ->get();
 
 
     }

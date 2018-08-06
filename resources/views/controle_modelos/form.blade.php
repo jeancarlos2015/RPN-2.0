@@ -2,9 +2,19 @@
 @for($indice=0;$indice<$MAX;$indice++)
     <div class="form-group">
         @if(($dados[$indice]->campo!=="Ações") && !isset($dados[$indice]->value))
-            <label>{!! $dados[$indice]->campo !!}</label>
-            <input name="{!! $dados[$indice]->atributo !!}" class="form-control"
-                   placeholder="{!! $dados[$indice]->campo !!}" value="{!! $dados[$indice]->valor !!}" required>
+
+            @if($dados[$indice]->campo!=='Visibilidade')
+                <label>{!! $dados[$indice]->campo !!}</label>
+                <input type="{!! $dados[$indice]->type !!}" class="form-control"
+                       name="{!! $dados[$indice]->atributo !!}" placeholder="{!! $dados[$indice]->campo !!}"
+                       value="{!! $dados[$indice]->valor !!}" required>
+            @else
+                <input type="{!! $dados[$indice]->type !!}"
+                       name="{!! $dados[$indice]->atributo !!}" placeholder="{!! $dados[$indice]->campo !!}"
+                       value="{!! $dados[$indice]->valor !!}" title="Ao clicar neste ítem todos os usuários poderão manipulá-lo" required>
+                <label>{!! $dados[$indice]->campo !!}</label>
+            @endif
+
         @endif
     </div>
 @endfor
@@ -34,10 +44,6 @@
         <input type="radio" name="tipo" value="declarativo">Modelo Declarativo
     </div>
 @endif
-<div class="form-group">
-    <input id="checkbox-signup" type="checkbox" checked="checked" name="visibilidade">
-    <label class="control-label" for="checkbox-signup">Visível para outros usuários</label>
-</div>
 
 @if(!empty($codorganizacao))
     <input type="hidden" name="codorganizacao" class="form-control"
@@ -49,5 +55,20 @@
            value="{!! $codprojeto !!}">
 @endif
 
+<div class="form-group">
+    <label class="control-label" for="visibilidade">Deseja tornar este registro visível para todos os usuários?</label>
+    <div class="controls">
+        <input name="visibilidade" type="hidden" value="false">
+        <label class="switch-light switch-candy">
+            <input type="checkbox" name="visibilidade"
+                   value="true" {!! !empty($modelo->visibilidade) ? ($modelo->visibilidade ? 'checked' : '') : '' !!}>
+            <span>
+                <span>Não <i class='fa fa-thumbs-down'></i></span>
+                <span>Sim <i class='fa fa-thumbs-up'></i></span>
+            <a></a>
+          </span>
+        </label>
+    </div>
+</div>
 
 <button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>

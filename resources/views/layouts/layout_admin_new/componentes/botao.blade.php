@@ -1,3 +1,4 @@
+
 @if(!empty($tipo))
     @switch($tipo)
         @case ('organizacao')

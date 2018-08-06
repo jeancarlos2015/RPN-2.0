@@ -20,16 +20,18 @@ class ProjetoRepository extends Repository
     public static function listar()
     {
 
-        return Projeto::all()
-            ->where('codusuario', '=', Auth::user()->codusuario);
+        return Projeto::whereCodusuario(Auth::user()->codusuario)
+            ->orWhere('visibilidade', '=', 'true')
+            ->get();
 
     }
 
     public static function listar_por_organizacao($codorganizacao)
     {
-        return Projeto::all()
-            ->where('codusuario', '=', Auth::user()->codusuario)
-            ->where('codorganizacao', '=', $codorganizacao);
+        return Projeto::whereCodusuario(Auth::user()->codusuario)
+            ->where('codorganizacao', '=', $codorganizacao)
+            ->orWhere('visibilidade', '=', 'true')
+            ->get();
 
     }
 

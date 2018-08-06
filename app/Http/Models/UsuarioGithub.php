@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UsuarioGithub extends Model
 {
-
+    protected $connection = 'pgsql';
     protected $primaryKey = 'codusuariogithub';
     protected $table = 'usuarios_github';
     protected $fillable = [

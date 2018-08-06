@@ -18,8 +18,9 @@ class OrganizacaoRepository extends Repository
 
     public static function listar()
     {
-        return Organizacao::all()
-            ->where('codusuario', '=', Auth::user()->codusuario);
+        return Organizacao::whereCodusuario(Auth::user()->codusuario)
+            ->orWhere('visibilidade', '=', 'true')
+            ->get();
     }
 
 
@@ -70,8 +71,9 @@ class OrganizacaoRepository extends Repository
         }
     }
 
-    public static function organizacao_existe($nome_da_organizacao){
+    public static function organizacao_existe($nome_da_organizacao)
+    {
         $organizacoes = self::listar();
-        return $organizacoes->where('nome', $nome_da_organizacao)->count()>0;
+        return $organizacoes->where('nome', $nome_da_organizacao)->count() > 0;
     }
 }

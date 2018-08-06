@@ -3,10 +3,12 @@
 namespace App\Http\Models;
 
 use App\Http\Util\Dado;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Documentacao extends Model
 {
+    protected $connection = 'pgsql';
     protected $primaryKey = 'coddocumentacao';
     protected $table = 'documentacoes';
     protected $fillable = [
@@ -31,6 +33,7 @@ class Documentacao extends Model
             'Código',
             'Nome',
             'Descrição',
+            'Responsavel',
             'Ações'
         ];
     }
@@ -59,7 +62,7 @@ class Documentacao extends Model
     public static function dados_objeto()
     {
         $dado = array();
-        for ($indice = 0; $indice < 4; $indice++) {
+        for ($indice = 0; $indice < 5; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
@@ -72,7 +75,7 @@ class Documentacao extends Model
         $atributos = self::atributos();
         $dados = self::dados_objeto();
         $titulos = self::titulos();
-        for ($indice = 0; $indice < 4; $indice++) {
+        for ($indice = 0; $indice < 5; $indice++) {
             if ($indice < 3) {
                 $dados[$indice]->campo = $campos[$indice];
                 $dados[$indice]->atributo = $atributos[$indice];
@@ -83,4 +86,8 @@ class Documentacao extends Model
         return $dados;
     }
 
+    public function usuario()
+    {
+        return $this->hasOne(User::class, 'codusuario', 'codusuario');
+    }
 }

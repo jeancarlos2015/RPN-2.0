@@ -12,16 +12,24 @@
             @else
                 <td>Foi Removido/Não Informado</td>
             @endif
+            <td>{!! $projeto1->usuario->nome !!}</td>
             <td>
-                @if(!empty($rota_edicao))
-                    @include('componentes.link',['id' => $projeto1->codprojeto, 'rota' => $rota_edicao])
+                @if(Auth::user()->email===$projeto1->usuario->email)
+                    @if(!empty($rota_edicao))
+                        @include('componentes.link',['id' => $projeto1->codprojeto, 'rota' => $rota_edicao])
+                    @endif
+                    @if(!empty($rota_exclusao))
+                        @include('componentes.form_delete',['id' => $projeto1->codprojeto, 'rota' => $rota_exclusao])
+                    @endif
+                    @if(!empty($rota_exibicao))
+                        @include('componentes.link',['id' => $projeto1->codprojeto, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                    @endif
+                @else
+                    @if(!empty($rota_exibicao))
+                        @include('componentes.link',['id' => $projeto1->codprojeto, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                    @endif
                 @endif
-                @if(!empty($rota_exclusao))
-                    @include('componentes.form_delete',['id' => $projeto1->codprojeto, 'rota' => $rota_exclusao])
-                @endif
-                @if(!empty($rota_exibicao))
-                    @include('componentes.link',['id' => $projeto1->codprojeto, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
-                @endif
+
 
             </td>
         </tr>

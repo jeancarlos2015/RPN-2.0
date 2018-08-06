@@ -20,8 +20,9 @@ class TarefaRepository extends Repository
     public static function listar()
     {
 
-        return Tarefa::all()
-            ->where('codusuario', '=', Auth::user()->codusuario);
+        return Tarefa::whereCodusuario(Auth::user()->codusuario)
+            ->orWhere('visibilidade', '=', 'true')
+            ->get();
 
     }
 
@@ -30,11 +31,12 @@ class TarefaRepository extends Repository
         $codorganizacao = $dado['codorganizacao'];
         $codprojeto = $dado['codprojeto'];
         $codmodelo = $dado['codmodelo'];
-        return Tarefa::all()
+        return Tarefa::whereCodusuario(Auth::user()->codusuario)
             ->where('codmodelo', '=', $codmodelo)
             ->where('codprojeto', '=', $codprojeto)
             ->where('codorganizacao', '=', $codorganizacao)
-            ->where('codusuario', '=', Auth::user()->codusuario);
+            ->orWhere('visibilidade', '=', 'true')
+            ->get();
     }
 
     public static function count()

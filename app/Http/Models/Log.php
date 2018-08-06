@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Log extends Model
 {
-
+    protected $connection = 'pgsql';
     protected $primaryKey = 'codlog';
     protected $table = 'logs';
     protected $fillable = [

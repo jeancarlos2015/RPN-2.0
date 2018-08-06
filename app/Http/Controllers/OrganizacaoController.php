@@ -29,7 +29,7 @@ class OrganizacaoController extends Controller
     {
         try {
             $organizacoes = OrganizacaoRepository::listar();
-            $titulos = Organizacao::titulos();
+            $titulos = Organizacao::titulos_da_tabela();
             $campos = Organizacao::campos();
             $tipo = 'organizacao';
             $log = LogRepository::log();

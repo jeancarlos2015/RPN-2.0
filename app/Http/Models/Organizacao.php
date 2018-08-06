@@ -3,6 +3,7 @@
 namespace App\Http\Models;
 
 use App\Http\Util\Dado;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -43,12 +44,13 @@ class Organizacao extends Model
         ];
     }
 
-    public static function titulos()
+    public static function titulos_da_tabela()
     {
         return [
             'ID',
             'Nome',
             'Descrição',
+            'Responsavel',
             'Ações'
         ];
     }
@@ -61,7 +63,14 @@ class Organizacao extends Model
         ];
     }
 
-    public static function atributos()
+    public static function types()
+    {
+        return [
+            'text',
+            'text'
+        ];
+    }
+    public static function atributos_dos_campos()
     {
         return [
 
@@ -72,31 +81,38 @@ class Organizacao extends Model
     }
 
 //Instancia todas as posições de memória que serão exibidas no título
-    public static function dados_objeto()
+    public static function dados_exibidos_no_titulo()
     {
         $dado = array();
-        for ($indice = 0; $indice < 4; $indice++) {
+        for ($indice = 0; $indice < 5; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
     }
 
 //Instancia somente os campos que serão exibidos no formulário e preenche os títulos da listagem
+
     public static function dados()
     {
         $campos = self::campos();
-        $atributos = self::atributos();
-        $dados = self::dados_objeto();
-        $titulos = self::titulos();
-        for ($indice = 0; $indice < 4; $indice++) {
+        $atributos = self::atributos_dos_campos();
+        $dados = self::dados_exibidos_no_titulo();
+        $types = self::types();
+        $titulos = self::titulos_da_tabela();
+        for ($indice = 0; $indice < 5; $indice++) {
             if ($indice < 2) {
                 $dados[$indice]->campo = $campos[$indice];
                 $dados[$indice]->atributo = $atributos[$indice];
+                $dados[$indice]->type = $types[$indice];
             }
             $dados[$indice]->titulo = $titulos[$indice];
 
         }
         return $dados;
+    }
+    public function usuario()
+    {
+        return $this->hasOne(User::class, 'codusuario', 'codusuario');
     }
 
     public function projetos()

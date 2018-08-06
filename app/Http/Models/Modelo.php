@@ -3,6 +3,7 @@
 namespace App\Http\Models;
 
 use App\Http\Util\Dado;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -58,6 +59,7 @@ class Modelo extends Model
             'Nome',
             'Descrição',
             'Tipo',
+            'Responsavel',
             'Ações'
         ];
     }
@@ -66,8 +68,15 @@ class Modelo extends Model
     {
         return [
             'Nome',
-            'Descrição',
-            'Tipo'
+            'Descrição'
+        ];
+    }
+
+    public static function types()
+    {
+        return [
+            'text',
+            'text'
         ];
     }
 
@@ -89,7 +98,7 @@ class Modelo extends Model
     public static function dados_objeto()
     {
         $dado = array();
-        for ($indice = 0; $indice < 5; $indice++) {
+        for ($indice = 0; $indice < 6; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
@@ -102,10 +111,12 @@ class Modelo extends Model
         $atributos = self::atributos();
         $dados = self::dados_objeto();
         $titulos = self::titulos();
-        for ($indice = 0; $indice < 5; $indice++) {
-            if ($indice < 3) {
+        $types = self::types();
+        for ($indice = 0; $indice < 6; $indice++) {
+            if ($indice < 2) {
                 $dados[$indice]->campo = $campos[$indice];
                 $dados[$indice]->atributo = $atributos[$indice];
+                $dados[$indice]->type = $types[$indice];
             }
             $dados[$indice]->titulo = $titulos[$indice];
 
@@ -176,5 +187,10 @@ class Modelo extends Model
         ";
         return $data;
 
+    }
+
+    public function usuario()
+    {
+        return $this->hasOne(User::class, 'codusuario', 'codusuario');
     }
 }

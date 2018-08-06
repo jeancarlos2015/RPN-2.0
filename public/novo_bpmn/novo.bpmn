@@ -1,75 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_141dzwv" targetNamespace="http://bpmn.io/schema/bpmn">
-  <bpmn:collaboration id="Collaboration_017e93w">
-    <bpmn:participant id="Participant_1bh4z1d" name="Piscina" processRef="Process_1" />
-    <bpmn:participant id="Participant_1t50esy" name="Aquário" processRef="Process_058qpnp" />
-    <bpmn:messageFlow id="MessageFlow_0g4tz28" sourceRef="Task_0dftbrg" targetRef="Task_0zvpg04" />
-  </bpmn:collaboration>
+
+        <?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_141dzwv" targetNamespace="http://bpmn.io/schema/bpmn">
   <bpmn:process id="Process_1" isExecutable="false">
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>SequenceFlow_0zifoqh</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:task id="Task_0dftbrg">
-      <bpmn:incoming>SequenceFlow_0zifoqh</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0ahkd3r</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="SequenceFlow_0zifoqh" sourceRef="StartEvent_1" targetRef="Task_0dftbrg" />
-    <bpmn:task id="Task_1db57s2">
-      <bpmn:incoming>SequenceFlow_0ahkd3r</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0riqa5b</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="SequenceFlow_0ahkd3r" sourceRef="Task_0dftbrg" targetRef="Task_1db57s2" />
-    <bpmn:endEvent id="EndEvent_19g5dgb">
-      <bpmn:incoming>SequenceFlow_0riqa5b</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0riqa5b" sourceRef="Task_1db57s2" targetRef="EndEvent_19g5dgb" />
-  </bpmn:process>
-  <bpmn:process id="Process_058qpnp">
-    <bpmn:task id="Task_0zvpg04" />
+    <bpmn:startEvent id="StartEvent_1" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_017e93w">
-      <bpmndi:BPMNShape id="Participant_1bh4z1d_di" bpmnElement="Participant_1bh4z1d">
-        <dc:Bounds x="-55" y="-65" width="600" height="250" />
-      </bpmndi:BPMNShape>
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="7" y="54" width="36" height="36" />
+        <dc:Bounds x="173" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Participant_1t50esy_di" bpmnElement="Participant_1t50esy">
-        <dc:Bounds x="-55" y="254" width="600" height="250" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_0dftbrg_di" bpmnElement="Task_0dftbrg">
-        <dc:Bounds x="109.87989203778676" y="32" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0zifoqh_di" bpmnElement="SequenceFlow_0zifoqh">
-        <di:waypoint x="43" y="72" />
-        <di:waypoint x="110" y="72" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_1db57s2_di" bpmnElement="Task_1db57s2">
-        <dc:Bounds x="256.87989203778676" y="32" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0ahkd3r_di" bpmnElement="SequenceFlow_0ahkd3r">
-        <di:waypoint x="210" y="72" />
-        <di:waypoint x="257" y="72" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_19g5dgb_di" bpmnElement="EndEvent_19g5dgb">
-        <dc:Bounds x="445.87989203778676" y="45.07962213225372" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0riqa5b_di" bpmnElement="SequenceFlow_0riqa5b">
-        <di:waypoint x="357" y="72" />
-        <di:waypoint x="401" y="72" />
-        <di:waypoint x="401" y="63" />
-        <di:waypoint x="446" y="63" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_0zvpg04_di" bpmnElement="Task_0zvpg04">
-        <dc:Bounds x="95.87989203778676" y="338.0796221322537" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="MessageFlow_0g4tz28_di" bpmnElement="MessageFlow_0g4tz28">
-        <di:waypoint x="160" y="112" />
-        <di:waypoint x="160" y="225" />
-        <di:waypoint x="146" y="225" />
-        <di:waypoint x="146" y="338" />
-      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
+        
