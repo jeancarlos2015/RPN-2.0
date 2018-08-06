@@ -12,7 +12,7 @@
             @else
                 <td>Foi Removido/Não Informado</td>
             @endif
-            <td>{!! $projeto1->usuario->nome !!}</td>
+            <td>{!! $projeto1->usuario->name !!}</td>
             <td>
                 @if(Auth::user()->email===$projeto1->usuario->email)
                     @if(!empty($rota_edicao))

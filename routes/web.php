@@ -43,7 +43,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('create_github/{codusuario}', 'UsuarioGithubController@create')->name('create_github');
 
 
-        Route::get('controle_projetos_index/{codorganizacao}', 'ProjetoController@index')->name('controle_projetos_index');
+        Route::get('controle_projetos_index/{codorganizacao}/{codusuario}', 'ProjetoController@index')->name('controle_projetos_index');
         Route::get('show_tarefas/{codmodelo}', 'ModeloController@show_tarefas')->name('show_tarefas');
         Route::get('show_regras/{codmodelo}', 'ModeloController@show_regras')->name('show_regras');
 
@@ -55,7 +55,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         Route::get('controle_projetos_create/{codorganizacao}', 'ProjetoController@create')->name('controle_projetos_create');
         Route::get('controle_modelos_create/{codorganizacao}/{codprojeto}', 'ModeloController@create')->name('controle_modelos_create');
-        Route::get('controle_modelos_index/{codorganizacao}/{codprojeto}', 'ModeloController@index')->name('controle_modelos_index');
+        Route::get('controle_modelos_index/{codorganizacao}/{codprojeto}/{codusuario}', 'ModeloController@index')->name('controle_modelos_index');
         Route::get('controle_tarefas_index/{codorganizacao}/{codprojeto}/{codmodelo}', 'TarefaController@index')->name('controle_tarefas_index');
         Route::get('controle_tarefas_create/{codorganizacao}/{codprojeto}/{codmodelo}/{codregra}', 'TarefaController@create')->name('controle_tarefas_create');
         Route::get('controle_regras_create/{codorganizacao}/{codprojeto}/{codmodelo}', 'RegraController@create')->name('controle_regras_create');

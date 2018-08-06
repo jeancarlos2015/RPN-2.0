@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Auth;
 class ModeloController extends Controller
 {
 
-    public function index($codorganizacao, $codprojeto)
+    public function index($codorganizacao, $codprojeto, $codusuario)
     {
         try {
             $projeto = Projeto::findOrFail($codprojeto);
             $organizacao = Organizacao::findOrFail($codorganizacao);
             $titulos = Modelo::titulos();
-            $modelos = ModeloRepository::listar_modelo_por_projeto_organizacao($codorganizacao, $codprojeto);
+            $modelos = ModeloRepository::listar_modelo_por_projeto_organizacao($codorganizacao, $codprojeto, $codusuario);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';

@@ -13,11 +13,11 @@ class ProjetoController extends Controller
 {
 
 
-    public function index($codorganizacao)
+    public function index($codorganizacao, $codusuario)
     {
         try {
             $organizacao = Organizacao::findOrFail($codorganizacao);
-            $projetos = ProjetoRepository::listar_por_organizacao($codorganizacao);
+            $projetos = ProjetoRepository::listar_por_organizacao($codorganizacao, $codusuario);
             $titulos = Projeto::titulos_da_tabela();
             $tipo = 'projeto';
             $log = LogRepository::log();
@@ -100,7 +100,13 @@ class ProjetoController extends Controller
                 $request->request->add(['codusuario' => Auth::user()->codusuario]);
                 $projeto = Projeto::create($request->all());
                 flash('Projeto criado com sucesso!!');
-                return redirect()->route('controle_modelos_index', ['codorganizacao' => $codorganizacao, 'codprojeto' => $projeto->codprojeto]);
+                return redirect()->route('controle_modelos_index',
+                    [
+                        'codorganizacao' => $codorganizacao,
+                        'codprojeto' => $projeto->codprojeto,
+                        'codusuario' => $projeto->codusuario
+                    ]
+                );
             }else{
                 $data['tipo'] = 'existe';
                 $this->create_log($data);
@@ -131,7 +137,12 @@ class ProjetoController extends Controller
     {
         try {
             $projeto = Projeto::findOrFail($codprojeto);
-            return redirect()->route('controle_modelos_index', ['codorganizacao' => $projeto->codorganizacao, 'codprojeto' => $codprojeto]);
+            return redirect()->route('controle_modelos_index',
+                [
+                    'codorganizacao' => $projeto->codorganizacao,
+                    'codprojeto' => $codprojeto,
+                    'codusuario' => $projeto->codusuario
+                ]);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -178,7 +189,12 @@ class ProjetoController extends Controller
     {
         try {
             $projeto = ProjetoRepository::atualizar($request, $codprojeto);
-            return redirect()->route('controle_modelos_index', ['codorganizacao' => $projeto->codorganizacao, 'codprojeto' => $codprojeto]);
+            return redirect()->route('controle_modelos_index',
+                [
+                    'codorganizacao' => $projeto->codorganizacao,
+                    'codprojeto' => $codprojeto,
+                    'codusuario' => $projeto->codusuario
+                ]);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -198,7 +214,8 @@ class ProjetoController extends Controller
             ProjetoRepository::excluir($codprojeto);
             flash('Operação feita com sucesso!!');
             return redirect()->route('controle_projetos_index', [
-                'codorganizacao' => $projeto->codorganizacao
+                'codorganizacao' => $projeto->codorganizacao,
+                'codusuario' => $projeto->codusuario
             ]);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();

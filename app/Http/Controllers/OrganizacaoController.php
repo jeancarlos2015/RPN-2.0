@@ -162,7 +162,12 @@ class OrganizacaoController extends Controller
                     flash('Organização não foi criada!!');
                 }
 
-                return redirect()->route('controle_projetos_index', ['codorganizacao' => $organizacao->codorganizacao]);
+                return redirect()->route('controle_projetos_index',
+                    [
+                        'codorganizacao' => $organizacao->codorganizacao,
+                        'codusuario' => $organizacao->codusuario
+                    ]
+                );
             }else{
                 $data['tipo'] = 'existe';
                 $this->create_log($data);
@@ -182,7 +187,13 @@ class OrganizacaoController extends Controller
 
     public function show($codorganizacao)
     {
-        return redirect()->route('controle_projetos_index', ['codorganizacao' => $codorganizacao]);
+        $organizacao = Organizacao::findOrFail($codorganizacao);
+        return redirect()->route('controle_projetos_index',
+            [
+                'codorganizacao' => $codorganizacao,
+                'codusuario' => $organizacao->codusuario
+            ]
+        );
     }
 
 
