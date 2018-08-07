@@ -260,12 +260,15 @@ function edit($codmodelo)
 {
     try {
         $modelo = Modelo::findOrFail($codmodelo);
+
         $dados = Modelo::dados();
         $projeto = $modelo->projeto;
         $organizacao = $modelo->organizacao;
+
         $dados[0]->valor = $modelo->nome;
         $dados[1]->valor = $modelo->descricao;
         $dados[2]->valor = $modelo->tipo;
+
         return view('controle_modelos.edit', compact('dados', 'modelo', 'projeto', 'organizacao'));
     } catch (\Exception $ex) {
         $data['mensagem'] = $ex->getMessage();

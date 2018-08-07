@@ -10,7 +10,7 @@
                 <div class="media">
                     <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($modelo1->usuario->email) }}" alt="" width="100">
                     <div class="media-body">
-                        <strong>{!!  $modelo1->nome !!}</strong> - 
+                        <strong>{!!  $modelo1->nome !!}</strong> -
                         <strong>{!!  $modelo1->tipo !!}</strong>
                         <div class="text-muted smaller">Código do Modelo: {!! $modelo1->codmodelo !!}</div>
                         <div class="text-muted smaller">Responsável: {!! $modelo1->usuario->name !!}</div>
