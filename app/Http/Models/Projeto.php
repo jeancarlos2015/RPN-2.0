@@ -51,10 +51,10 @@ class Projeto extends Model
     public static function titulos_da_tabela()
     {
         return [
-            'ID',
-            'Nome',
-            'Descrição',
-            'Organização',
+//            'ID',
+//            'Nome',
+//            'Descrição',
+//            'Organização',
             'Responsavel',
             'Ações'
         ];
@@ -87,7 +87,7 @@ class Projeto extends Model
     public static function dados_exibidos_no_titulo()
     {
         $dado = array();
-        for ($indice = 0; $indice < 6; $indice++) {
+        for ($indice = 0; $indice < 2; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
@@ -102,7 +102,7 @@ class Projeto extends Model
         $dados = self::dados_exibidos_no_titulo();
         $types = self::types();
         $titulos = self::titulos_da_tabela();
-        for ($indice = 0; $indice < 6; $indice++) {
+        for ($indice = 0; $indice < 2; $indice++) {
             if ($indice < 2) {
                 $dados[$indice]->campo = $campos[$indice];
                 $dados[$indice]->atributo = $atributos[$indice];

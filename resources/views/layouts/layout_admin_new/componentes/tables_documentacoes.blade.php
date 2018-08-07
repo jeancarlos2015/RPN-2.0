@@ -6,7 +6,15 @@
             <td>{!! $documentacao->coddocumentacao !!}</td>
             <td>{!! $documentacao->nome !!}</td>
             <td>{!! $documentacao->descricao !!}</td>
-            <td>{!! $documentacao->usuario->nome !!}</td>
+            <div class="media">
+                <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($documentacao->usuario->email) }}" alt="" width="30">
+                <div class="media-body">
+                    <strong>{!! $documentacao->usuario->name !!}</strong>
+                    <div class="text-muted smaller">Código da Documentação: {!! $documentacao->coddocumentacao !!}</div>
+                    <div class="text-muted smaller">Nome da Documentação: {!! $documentacao->nome !!} </div>
+                    <div class="text-muted smaller">Descrição da Documentação: {!! $documentacao->descricao !!}</div>
+                </div>
+            </div>
             <td>
                 @if(Auth::user()->email===$documentacao->usuario->email)
                     @if(!empty($rota_edicao))

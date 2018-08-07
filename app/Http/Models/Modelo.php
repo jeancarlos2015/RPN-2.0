@@ -55,10 +55,6 @@ class Modelo extends Model
     public static function titulos()
     {
         return [
-            'ID',
-            'Nome',
-            'Descrição',
-            'Tipo',
             'Responsavel',
             'Ações'
         ];
@@ -98,7 +94,7 @@ class Modelo extends Model
     public static function dados_objeto()
     {
         $dado = array();
-        for ($indice = 0; $indice < 6; $indice++) {
+        for ($indice = 0; $indice < 2; $indice++) {
             $dado[$indice] = new Dado();
         }
         return $dado;
@@ -112,7 +108,7 @@ class Modelo extends Model
         $dados = self::dados_objeto();
         $titulos = self::titulos();
         $types = self::types();
-        for ($indice = 0; $indice < 6; $indice++) {
+        for ($indice = 0; $indice < 2; $indice++) {
             if ($indice < 2) {
                 $dados[$indice]->campo = $campos[$indice];
                 $dados[$indice]->atributo = $atributos[$indice];
