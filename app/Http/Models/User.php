@@ -66,11 +66,13 @@ class User extends Authenticatable
         return $this->hasOne(UsuarioGithub::class, 'codusuario', 'codusuario');
     }
 
-    public function usuario_github(){
+    public function usuario_github()
+    {
         return Crypt::decrypt($this->github->usuario_github);
     }
 
-    public function usuario_senha(){
+    public function usuario_senha()
+    {
         return Crypt::decrypt($this->github->senha_github);
     }
 
@@ -87,10 +89,11 @@ class User extends Authenticatable
     public static function titulos()
     {
         return [
-            'Nome',
-            'Email',
-            'Tipo',
-            'Senha',
+//            'Nome',
+//            'Email',
+//            'Tipo',
+//            'Senha',
+            'Usuário',
             'Ações'
         ];
     }
@@ -133,12 +136,13 @@ class User extends Authenticatable
         $atributos = self::atributos();
         $dados = self::dados_objeto();
         $titulos = self::titulos();
-        for ($indice = 0; $indice < 5; $indice++) {
-            if ($indice < 4) {
-                $dados[$indice]->campo = $campos[$indice];
-                $dados[$indice]->atributo = $atributos[$indice];
+        for ($indice = 0; $indice < 4; $indice++) {
+            if ($indice < 2) {
+
+                $dados[$indice]->titulo = $titulos[$indice];
             }
-            $dados[$indice]->titulo = $titulos[$indice];
+            $dados[$indice]->campo = $campos[$indice];
+            $dados[$indice]->atributo = $atributos[$indice];
 
         }
         return $dados;
