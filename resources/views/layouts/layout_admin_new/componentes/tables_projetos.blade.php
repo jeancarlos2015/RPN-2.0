@@ -14,11 +14,11 @@
             {{--@endif--}}
             <td>
                 <div class="media">
-                    <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($projeto1->usuario->email) }}" alt="" width="30">
+                    <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($projeto1->usuario->email) }}" alt="" width="100">
                     <div class="media-body">
-                        <strong>{!! $projeto1->usuario->name !!}</strong>
+                        <strong>{!!  $projeto1->nome !!}</strong>
                         <div class="text-muted smaller">Código da Projeto: {!! $projeto1->codprojeto !!}</div>
-                        <div class="text-muted smaller">Nome da Projeto: {!! $projeto1->nome !!} </div>
+                        <div class="text-muted smaller">Responsável: {!! $projeto1->usuario->name !!}</div>
                         <div class="text-muted smaller">Descrição da Projeto: {!! $projeto1->descricao !!}</div>
                     </div>
                 </div>

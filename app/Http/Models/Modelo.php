@@ -55,7 +55,7 @@ class Modelo extends Model
     public static function titulos()
     {
         return [
-            'Responsavel',
+            'Modelos',
             'Ações'
         ];
     }

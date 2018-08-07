@@ -55,7 +55,7 @@ class Projeto extends Model
 //            'Nome',
 //            'Descrição',
 //            'Organização',
-            'Responsavel',
+            'Projetos',
             'Ações'
         ];
     }

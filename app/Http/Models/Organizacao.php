@@ -50,7 +50,7 @@ class Organizacao extends Model
 //            'ID',
 //            'Nome',
 //            'Descrição',
-            'Responsavel',
+            'Organizações',
             'Ações'
         ];
     }
