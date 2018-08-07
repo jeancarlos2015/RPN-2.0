@@ -1,3 +1,4 @@
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="{!! asset('vendor/jquery/jquery.min.js') !!}"></script>
 <script src="{!! asset('vendor/bootstrap/js/bootstrap.bundle.min.js') !!}"></script>
 <!-- Page level plugin JavaScript-->
@@ -22,3 +23,4 @@
     });
 
 </script>
+

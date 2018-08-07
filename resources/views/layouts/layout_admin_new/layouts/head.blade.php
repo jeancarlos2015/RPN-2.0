@@ -18,4 +18,5 @@
     <!-- Custom styles for this template_basico-->
     <link href="{!! asset('css/sb-admin.css') !!}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" />
+
 </head>

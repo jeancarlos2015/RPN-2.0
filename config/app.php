@@ -164,6 +164,7 @@ return [
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         Diegoalvarezb\Versioner\VersionerProvider::class,
         GrahamCampbell\GitHub\GitHubServiceProvider::class,
+        Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
     ],
 
     /*
@@ -223,6 +224,7 @@ return [
         'InputGroup' => Bootstrapper\Facades\InputGroup::class,
 
         'GitHub' => GrahamCampbell\GitHub\Facades\GitHub::class,
+        'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
     ],
 
 ];
