@@ -9,9 +9,10 @@
     ])
     @if(!empty($organizacao))
 
-            @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
+        @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
 
     @endif
+
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
                     'projetos' => $projetos,

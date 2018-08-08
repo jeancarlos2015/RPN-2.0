@@ -2,7 +2,8 @@
     @if(!empty(Auth::user()->organizacao))
         <li class="nav-item">
             <a class="nav-link">
-                Organização: {{ Auth::user()->organizacao->nome }} <span class="sr-only"></span>
+                <p class="fa fa-database"> Organização: {{ Auth::user()->organizacao->nome }} </p>
+                 <span class="sr-only"></span>
             </a>
         </li>
     @endif
