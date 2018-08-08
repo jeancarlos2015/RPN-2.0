@@ -19,22 +19,27 @@ class ProjetoRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email!=='jeancarlospenas25@gmail.com'){
-            return Projeto::whereCodusuario(Auth::user()->codusuario)
-                ->orWhere('visibilidade', 'true')
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+            $result =  Projeto::all();
+            return $result;
+        } else if (!empty(Auth::user()->organizacao)) {
+            $organizacao = Auth::user()->organizacao;
+            return Projeto::whereCodorganizacao($organizacao->codorganizacao)
+                ->where('visibilidade', 'true')
                 ->get();
         }
-        return Projeto::all();
+        return collect(array());
+
     }
 
     public static function listar_por_organizacao($codorganizacao)
     {
-        if(Auth::user()->email==='jeancarlospenas25@gmail.com'){
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             return Projeto::whereCodorganizacao($codorganizacao)
                 ->get();
         }
         return Projeto::whereCodorganizacao($codorganizacao)
-            ->orwhere('visibilidade','true')
+            ->orwhere('visibilidade', 'true')
             ->get();
     }
 

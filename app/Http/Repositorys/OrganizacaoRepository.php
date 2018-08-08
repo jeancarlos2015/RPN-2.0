@@ -18,9 +18,10 @@ class OrganizacaoRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email=='jeancarlospenas25@gmail.com'){
+        if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
             return Organizacao::all();
         }
+
         return collect(array());
     }
 

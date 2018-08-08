@@ -53,8 +53,7 @@ class OrganizacaoController extends Controller
                 'todos_projetos',
                 'controle_organizacoes.index',
             ];
-        }
-        if (!empty(Auth::user()->organizacao)){
+        }else if (!empty(Auth::user()->organizacao)){
             return [
                 'todos_modelos',
                 'todas_tarefas',
@@ -77,7 +76,7 @@ class OrganizacaoController extends Controller
                 'Organizações'
             ];
         }
-        if (!empty(Auth::user()->organizacao)) {
+        else if (!empty(Auth::user()->organizacao)) {
             return [
                 'Modelos',
                 'Tarefas',
@@ -105,7 +104,7 @@ class OrganizacaoController extends Controller
                 $qt_organizacoes
             ];
         }
-        if (!empty(Auth::user()->organizacao)) {
+        else if (!empty(Auth::user()->organizacao)) {
             return [
                 $qt_modelos,
                 $qt_tarefas,
