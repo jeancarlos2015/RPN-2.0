@@ -19,24 +19,23 @@ class ProjetoRepository extends Repository
 
     public static function listar()
     {
-        if (!empty(Auth::user()->organizacao)) {
-            $codorganizacao = Auth::user()->organizacao->codorganizacao;
-            return Projeto::whereCodorganizacao($codorganizacao)
-                ->where('codusuario', Auth::user()->codusuario)
+        if (Auth::user()->email!=='jeancarlospenas25@gmail.com'){
+            return Projeto::whereCodusuario(Auth::user()->codusuario)
                 ->orWhere('visibilidade', 'true')
                 ->get();
         }
-        return Projeto::whereCodusuario(Auth::user()->codusuario)
-            ->orWhere('visibilidade', 'true')
-            ->get();
+        return Projeto::all();
     }
 
     public static function listar_por_organizacao($codorganizacao)
     {
+        if(Auth::user()->email==='jeancarlospenas25@gmail.com'){
+            return Projeto::whereCodorganizacao($codorganizacao)
+                ->get();
+        }
         return Projeto::whereCodorganizacao($codorganizacao)
-            ->where('codusuario', Auth::user()->codusuario)
+            ->orwhere('visibilidade','true')
             ->get();
-
     }
 
     public static function count()
