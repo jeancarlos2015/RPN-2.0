@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Organizacao;
 use App\Http\Repositorys\LogRepository;
+use App\Http\Repositorys\OrganizacaoRepository;
 use App\User;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 
 class UserController extends Controller
 {
@@ -180,7 +183,8 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         try {
             $user->delete();
-            flash('Operação feita com sucesso!!');
+            $data['tipo'] = 'success';
+            $this->create_log($data);
             LogRepository::criar(
                 "Usuário Excluído Com sucesso",
                 "Rota De Exclusão de Usuário",
@@ -195,5 +199,35 @@ class UserController extends Controller
             $this->create_log($data);
         }
         return redirect()->route('painel');
+    }
+
+    public function vincular_usuario_organizacao(Request $request)
+    {
+        $codusuario = $request->codusuario;
+        $codorganizacao = $request->codorganizacao;
+        try {
+            $usuario = User::findOrFail($codusuario);
+            $organizacao = Organizacao::findOrFail($codorganizacao);
+            $usuario->codorganizacao = $organizacao->codorganizacao;
+            $usuario->update();
+            $data['tipo'] = 'success';
+            $this->create_log($data);
+
+        } catch (Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        }
+        return redirect()->route('vinculo_usuario_organizacao');
+
+    }
+
+    public function vinculo_usuario_organizacao()
+    {
+        $organizacoes = OrganizacaoRepository::listar();
+        $usuarios = User::all();
+        return view('vinculo_usuario_organizacao.vinculo_usuario_organizacao', compact('organizacoes', 'usuarios'));
     }
 }

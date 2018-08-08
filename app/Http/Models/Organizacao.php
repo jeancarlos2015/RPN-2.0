@@ -26,13 +26,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Organizacao extends Model
 {
-    protected $connection = 'banco';
+    protected $connection = 'pgsql';
     protected $primaryKey = 'codorganizacao';
     protected $table = 'organizacoes';
     protected $fillable = [
         'nome',
         'descricao',
-        'codusuario',
         'visibilidade'
     ];
 
@@ -110,9 +109,9 @@ class Organizacao extends Model
         }
         return $dados;
     }
-    public function usuario()
+    public function usuarios()
     {
-        return $this->hasOne(User::class, 'codusuario', 'codusuario');
+        return $this->hasMany(User::class, 'codorganizacao', 'codorganizacao');
     }
 
     public function projetos()

@@ -18,9 +18,10 @@ class OrganizacaoRepository extends Repository
 
     public static function listar()
     {
-        return Organizacao::whereCodusuario(Auth::user()->codusuario)
-            ->orWhere('visibilidade', '=', 'true')
-            ->get();
+        if (Auth::user()->email=='jeancarlospenas25@gmail.com'){
+            return Organizacao::all();
+        }
+        return collect(array());
     }
 
 
@@ -58,7 +59,6 @@ class OrganizacaoRepository extends Repository
     {
         $doc = Organizacao::findOrFail($codorganizacao);
         $value = $doc->delete();
-        flash('Organização excluida com sucesso!!!');
         self::limpar_cache();
         return $value;
     }

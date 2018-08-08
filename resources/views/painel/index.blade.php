@@ -7,6 +7,8 @@
     'sub_titulo' => ''
 
     ])
+
     @includeIf('layouts.layout_admin_new.componentes.cards')
+
 
 @endsection

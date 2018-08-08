@@ -45,23 +45,40 @@ class OrganizacaoController extends Controller
 
     private function rotas()
     {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+            return [
+                'todos_modelos',
+                'todas_tarefas',
+                'todas_regras',
+                'todos_projetos',
+                'controle_organizacoes.index',
+            ];
+        }
         return [
             'todos_modelos',
             'todas_tarefas',
             'todas_regras',
-            'todos_projetos',
-            'controle_organizacoes.index',
+            'todos_projetos'
         ];
+
     }
 
     private function titulos()
     {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+            return [
+                'Modelos',
+                'Tarefas',
+                'Regras',
+                'Projetos',
+                'Organizações'
+            ];
+        }
         return [
             'Modelos',
             'Tarefas',
             'Regras',
-            'Projetos',
-            'Organizações'
+            'Projetos'
         ];
     }
 
@@ -72,20 +89,27 @@ class OrganizacaoController extends Controller
         $qt_modelos = ModeloRepository::count();
         $qt_tarefas = TarefaRepository::count();
         $qt_regras = RegraRepository::count();
-        $qt_funcionalidades = 6;
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+
+            return [
+                $qt_modelos,
+                $qt_tarefas,
+                $qt_regras,
+                $qt_projetos,
+                $qt_organizacoes
+            ];
+        }
         return [
             $qt_modelos,
             $qt_tarefas,
             $qt_regras,
-            $qt_projetos,
-            $qt_organizacoes
+            $qt_projetos
         ];
     }
 
     public function painel()
     {
-        
-        
+
 
         try {
 
@@ -147,15 +171,17 @@ class OrganizacaoController extends Controller
     public function store(Request $request)
     {
         try {
+
             $erros = \Validator::make($request->all(), Organizacao::validacao());
             if ($erros->fails()) {
                 return redirect()->route('controle_organizacoes.create')
                     ->withErrors($erros)
                     ->withInput();
             }
-            if(!OrganizacaoRepository::organizacao_existe($request->nome)){
-                $request->request->add(['codusuario' => Auth::user()->codusuario]);
+            if (!OrganizacaoRepository::organizacao_existe($request->nome)) {
+
                 $organizacao = Organizacao::create($request->all());
+
                 if (isset($organizacao)) {
                     flash('Organização criada com sucesso!!');
                 } else {
@@ -165,10 +191,10 @@ class OrganizacaoController extends Controller
                 return redirect()->route('controle_projetos_index',
                     [
                         'codorganizacao' => $organizacao->codorganizacao,
-                        'codusuario' => $organizacao->codusuario
+                        'codusuario' => Auth::user()->codusuario
                     ]
                 );
-            }else{
+            } else {
                 $data['tipo'] = 'existe';
                 $this->create_log($data);
                 return redirect()->route('controle_organizacoes.create');
@@ -187,11 +213,9 @@ class OrganizacaoController extends Controller
 
     public function show($codorganizacao)
     {
-        $organizacao = Organizacao::findOrFail($codorganizacao);
         return redirect()->route('controle_projetos_index',
             [
-                'codorganizacao' => $codorganizacao,
-                'codusuario' => $organizacao->codusuario
+                'codorganizacao' => $codorganizacao
             ]
         );
     }

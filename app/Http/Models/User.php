@@ -39,7 +39,7 @@ class User extends Authenticatable
     protected $primaryKey = 'codusuario';
     protected $table = 'users';
     protected $fillable = [
-        'name', 'email', 'password', 'type'
+        'name', 'email', 'password', 'type', 'codorganizacao'
     ];
 
     protected $hidden = [
@@ -59,6 +59,11 @@ class User extends Authenticatable
     public function organizacoes()
     {
         return $this->belongsTo(Organizacao::class, 'codusuario', 'codusuario');
+    }
+
+    public function organizacao()
+    {
+        return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
 
     public function github()
