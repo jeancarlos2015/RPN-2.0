@@ -54,12 +54,15 @@ class OrganizacaoController extends Controller
                 'controle_organizacoes.index',
             ];
         }
-        return [
-            'todos_modelos',
-            'todas_tarefas',
-            'todas_regras',
-            'todos_projetos'
-        ];
+        if (!empty(Auth::user()->organizacao)){
+            return [
+                'todos_modelos',
+                'todas_tarefas',
+                'todas_regras',
+                'todos_projetos'
+            ];
+        }
+        return [];
 
     }
 
@@ -74,12 +77,15 @@ class OrganizacaoController extends Controller
                 'Organizações'
             ];
         }
-        return [
-            'Modelos',
-            'Tarefas',
-            'Regras',
-            'Projetos'
-        ];
+        if (!empty(Auth::user()->organizacao)) {
+            return [
+                'Modelos',
+                'Tarefas',
+                'Regras',
+                'Projetos'
+            ];
+        }
+        return [];
     }
 
     private function quantidades()
@@ -99,12 +105,15 @@ class OrganizacaoController extends Controller
                 $qt_organizacoes
             ];
         }
-        return [
-            $qt_modelos,
-            $qt_tarefas,
-            $qt_regras,
-            $qt_projetos
-        ];
+        if (!empty(Auth::user()->organizacao)) {
+            return [
+                $qt_modelos,
+                $qt_tarefas,
+                $qt_regras,
+                $qt_projetos
+            ];
+        }
+        return 0;
     }
 
     public function painel()
@@ -119,6 +128,11 @@ class OrganizacaoController extends Controller
             $titulos = $this->titulos();
             $rotas = $this->rotas();
             $quantidades = $this->quantidades();
+            if (count($rotas)==0){
+                $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma organização!!";
+                $data['tipo'] = 'success';
+                $this->create_log($data);
+            }
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';

@@ -20,11 +20,15 @@ class Controller extends BaseController
     protected function create_log($data)
     {
         if ($data['tipo'] === 'success') {
-            flash('A operação feita com sucesso!!!');
-        }else if($data['tipo']==='existe'){
+            if (!empty($data['mensagem'])) {
+                flash($data['mensagem'])->warning();
+            } else {
+                flash('A operação feita com sucesso!!!');
+            }
+
+        } else if ($data['tipo'] === 'existe') {
             flash('Este registro já existe')->warning();
-        }
-        else{
+        } else {
             $codigo = LogRepository::criar(
                 $data['mensagem'],
                 $data['tipo'],
@@ -38,7 +42,7 @@ class Controller extends BaseController
 
             return $codigo;
         }
-        
+
     }
 
     protected function validar($data)
