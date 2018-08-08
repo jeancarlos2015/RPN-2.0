@@ -204,8 +204,7 @@ class OrganizacaoController extends Controller
 
                 return redirect()->route('controle_projetos_index',
                     [
-                        'codorganizacao' => $organizacao->codorganizacao,
-                        'codusuario' => Auth::user()->codusuario
+                        'codorganizacao' => $organizacao->codorganizacao
                     ]
                 );
             } else {

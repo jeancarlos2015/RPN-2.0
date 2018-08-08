@@ -82,7 +82,7 @@
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3"
                    data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-cogs"></i>
-                    <span class="nav-link-text">Commit & Push</span>
+                    <span class="nav-link-text">Salvar Alterações</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents3">
                     <li>
@@ -93,7 +93,7 @@
                                   placeholder="Commit Message"></textarea>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-secondary form-control">Commit & Push</button>
+                                <button type="submit" class="btn btn-secondary form-control">Salvar Alterações</button>
                             </div>
 
                         </form>
@@ -106,7 +106,7 @@
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents10"
                    data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-cogs"></i>
-                    <span class="nav-link-text">Merge</span>
+                    <span class="nav-link-text">Juntar Ramificação</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents10">
                     <li>
@@ -118,8 +118,6 @@
                                     @foreach(Auth::user()->branchs as $branch)
                                         @if(Auth::user()->github->branch_atual !== $branch->branch)
 
-                                            {{--<input type="radio" name="branch" value="{{$branch->branch}}"--}}
-                                            {{--class=""> {{$branch->branch}}<br>--}}
                                             <div class="form-check btn-dark">
                                                 <input type="radio" class="form-check-input"
                                                        id="materialUnchecked{{$branch->codbranch}}" name="branch"
@@ -148,7 +146,7 @@
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents11"
                    data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-cogs"></i>
-                    <span class="nav-link-text">Checkout</span>
+                    <span class="nav-link-text">Trocar Ramificação</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents11">
                     <li>
@@ -160,8 +158,6 @@
                                     @foreach(Auth::user()->branchs as $branch)
                                         @if(Auth::user()->github->branch_atual !== $branch->branch)
 
-                                            {{--<input type="radio" name="branch" value="{{$branch->branch}}"--}}
-                                            {{--class=""> {{$branch->branch}}<br>--}}
                                             <div class="form-check btn-dark">
                                                 <input type="radio" class="form-check-input"
                                                        id="materialUnchecked{{$branch->codbranch}}" name="branch"
@@ -208,7 +204,7 @@
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents7"
                    data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-cogs"></i>
-                    <span class="nav-link-text">Create Branch</span>
+                    <span class="nav-link-text">Criar Ramificação</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents7">
                     <li>
@@ -218,7 +214,7 @@
                                 <input type="text" name="branch" placeholder="Branch">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-secondary form-control">Create</button>
+                                <button type="submit" class="btn btn-secondary form-control">Criar</button>
                             </div>
                         </form>
                     </li>
@@ -231,7 +227,7 @@
                    data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-cogs"></i>
 
-                    <label for="sel1"><span class="nav-link-text">Delete Branch</span></label>
+                    <label for="sel1"><span class="nav-link-text">Excluir Ramificação</span></label>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents8">
                     <li>
@@ -277,7 +273,7 @@
 
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-secondary form-control">Delete Branch</button>
+                                <button type="submit" class="btn btn-secondary form-control">Excluir Ramificação</button>
                             </div>
                         </form>
                     </li>

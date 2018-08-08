@@ -37,9 +37,10 @@ class ProjetoController extends Controller
         try {
             $projetos = ProjetoRepository::listar();
             $titulos = Projeto::titulos_da_tabela();
+            $organizacao = Auth::user()->organizacao;
             $tipo = 'projeto';
             $log = LogRepository::log();
-            return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo', 'log'));
+            return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo', 'log','organizacao'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -66,13 +67,14 @@ class ProjetoController extends Controller
     {
         try {
             $dados = Projeto::dados();
-            if (!$this->exists($codorganizacao)) {
-                $organizacao = Organizacao::findOrFail($codorganizacao);
-            } else {
-                $organizacao = Organizacao::create(['nome' => 'novo', 'descricao' => 'novo']);
-            }
 
-            return view('controle_projetos.create', compact('dados', 'organizacao'));
+                if (!$this->exists($codorganizacao)) {
+                    $organizacao = Organizacao::findOrFail($codorganizacao);
+                } else {
+                    $organizacao = Organizacao::create(['nome' => 'novo', 'descricao' => 'novo']);
+                }
+                return view('controle_projetos.create', compact('dados', 'organizacao'));
+
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -87,8 +89,8 @@ class ProjetoController extends Controller
     public function store(Request $request)
     {
         try {
-            $codorganizacao = $request->codorganizacao;
             $erros = \Validator::make($request->all(), Projeto::validacao());
+            $codorganizacao = $request->codorganizacao;
             if ($erros->fails()) {
                 return redirect()->route('controle_projeto_create', [
                     'codorganizacao' => $codorganizacao,
@@ -96,7 +98,7 @@ class ProjetoController extends Controller
                     ->withErrors($erros)
                     ->withInput();
             }
-            if(!ProjetoRepository::projeto_existe($request->nome)){
+            if (!ProjetoRepository::projeto_existe($request->nome)) {
                 $request->request->add(['codusuario' => Auth::user()->codusuario]);
                 $projeto = Projeto::create($request->all());
                 flash('Projeto criado com sucesso!!');
@@ -107,16 +109,16 @@ class ProjetoController extends Controller
                         'codusuario' => $projeto->codusuario
                     ]
                 );
-            }else{
+            } else {
                 $data['tipo'] = 'existe';
                 $this->create_log($data);
                 return redirect()->route('controle_projetos_create',
                     [
-                        'codorganizacao' =>  $codorganizacao
+                        'codorganizacao' => $codorganizacao
                     ]
                 );
             }
-            
+
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';

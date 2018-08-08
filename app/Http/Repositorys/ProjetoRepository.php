@@ -35,7 +35,6 @@ class ProjetoRepository extends Repository
     {
         return Projeto::whereCodorganizacao($codorganizacao)
             ->where('codusuario', Auth::user()->codusuario)
-            ->orwhere('visibilidade', 'true')
             ->get();
 
     }
