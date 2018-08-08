@@ -15,7 +15,8 @@ class Documentacao extends Model
         'nome',
         'descricao',
         'link',
-        'visibilidade'
+        'visibilidade',
+        'codusuario'
     ];
 
     public static function validacao()
@@ -30,10 +31,10 @@ class Documentacao extends Model
     public static function titulos()
     {
         return [
-            'Código',
-            'Nome',
-            'Descrição',
-            'Responsavel',
+//            'Código',
+//            'Nome',
+//            'Descrição',
+            'Usuário',
             'Ações'
         ];
     }
@@ -75,12 +76,13 @@ class Documentacao extends Model
         $atributos = self::atributos();
         $dados = self::dados_objeto();
         $titulos = self::titulos();
-        for ($indice = 0; $indice < 5; $indice++) {
-            if ($indice < 3) {
-                $dados[$indice]->campo = $campos[$indice];
-                $dados[$indice]->atributo = $atributos[$indice];
+        for ($indice = 0; $indice < 3; $indice++) {
+            if ($indice < 2) {
+
+                $dados[$indice]->titulo = $titulos[$indice];
             }
-            $dados[$indice]->titulo = $titulos[$indice];
+            $dados[$indice]->campo = $campos[$indice];
+            $dados[$indice]->atributo = $atributos[$indice];
 
         }
         return $dados;

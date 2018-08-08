@@ -20,12 +20,12 @@
 @endfor
 
 <div class="form-group">
-    <label class="control-label" for="votou">Deseja tornar este registro visível para todos os usuários?</label>
+    <label class="control-label" for="visibilidade">Deseja tornar este registro visível para todos os usuários?</label>
     <div class="controls">
-        <input name="votou" type="hidden" value="0">
+        <input name="visibilidade" type="hidden" value="false">
         <label class="switch-light switch-candy">
-            <input type="checkbox" name="votou"
-                   value="1" {!! !empty($documentacao->visibilidade) ? ($documentacao->visibilidade ? 'checked' : '') : '' !!}>
+            <input type="checkbox" name="visibilidade"
+                   value="true" {!! !empty($documentacao->visibilidade) ? ($documentacao->visibilidade ? 'checked' : '') : '' !!}>
             <span>
                 <span>Não <i class='fa fa-thumbs-down'></i></span>
                 <span>Sim <i class='fa fa-thumbs-up'></i></span>

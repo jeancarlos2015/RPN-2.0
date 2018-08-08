@@ -41,6 +41,7 @@ class DocumentacaoRepository extends Repository
 
     public static function incluir(Request $request)
     {
+
         $documentacao = Documentacao::create($request->all());
         
         return $documentacao;

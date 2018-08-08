@@ -15,6 +15,7 @@ class CreateDocumentacoesTable extends Migration
     {
         Schema::create('documentacoes', function (Blueprint $table) {
             $table->increments('coddocumentacao');
+            $table->bigInteger('codusuario');
             $table->boolean('visibilidade');
             $table->string('nome');
             $table->string('descricao');
