@@ -13,11 +13,11 @@ class ProjetoController extends Controller
 {
 
 
-    public function index($codorganizacao, $codusuario)
+    public function index($codorganizacao)
     {
         try {
             $organizacao = Organizacao::findOrFail($codorganizacao);
-            $projetos = ProjetoRepository::listar_por_organizacao($codorganizacao, $codusuario);
+            $projetos = ProjetoRepository::listar_por_organizacao($codorganizacao);
             $titulos = Projeto::titulos_da_tabela();
             $tipo = 'projeto';
             $log = LogRepository::log();

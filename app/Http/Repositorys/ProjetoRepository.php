@@ -19,17 +19,23 @@ class ProjetoRepository extends Repository
 
     public static function listar()
     {
-
+        if (!empty(Auth::user()->organizacao)) {
+            $codorganizacao = Auth::user()->organizacao->codorganizacao;
+            return Projeto::whereCodorganizacao($codorganizacao)
+                ->where('codusuario', Auth::user()->codusuario)
+                ->orWhere('visibilidade', 'true')
+                ->get();
+        }
         return Projeto::whereCodusuario(Auth::user()->codusuario)
-            ->orWhere('visibilidade', '=', 'true')
+            ->orWhere('visibilidade', 'true')
             ->get();
-
     }
 
-    public static function listar_por_organizacao($codorganizacao, $codusuario)
+    public static function listar_por_organizacao($codorganizacao)
     {
-        return Projeto::whereCodusuario($codusuario)
-            ->where('codorganizacao', '=', $codorganizacao)
+        return Projeto::whereCodorganizacao($codorganizacao)
+            ->where('codusuario', Auth::user()->codusuario)
+            ->orwhere('visibilidade', 'true')
             ->get();
 
     }
@@ -72,8 +78,9 @@ class ProjetoRepository extends Repository
         return $value;
     }
 
-    public static function projeto_existe($nome_do_projeto){
+    public static function projeto_existe($nome_do_projeto)
+    {
         $projetos = self::listar();
-        return $projetos->where('nome', $nome_do_projeto)->count()>0;
+        return $projetos->where('nome', $nome_do_projeto)->count() > 0;
     }
 }

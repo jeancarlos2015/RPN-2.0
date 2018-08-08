@@ -7,21 +7,17 @@
             {{--<td>{!! $organizacao1->descricao !!}</td>--}}
             <td>
                 <div class="media">
-                    <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($organizacao1->usuario->email) }}" alt="" width="100">
                     <div class="media-body">
                         <strong>{!!  $organizacao1->nome !!}</strong>
                         <div class="text-muted smaller">Código da Organização: {!! $organizacao1->codorganizacao !!}</div>
-                        <div class="text-muted smaller">Responsável: {!! $organizacao1->usuario->name !!}</div>
+                        <div class="text-muted smaller">Participações: {!! count($organizacao1->usuarios) !!}</div>
                         <div class="text-muted smaller">Descrição da Organização: {!! $organizacao1->descricao !!}</div>
                     </div>
                 </div>
             </td>
             <td>
-                @if(Auth::user()->email!==$organizacao1->usuario->email)
-                    @if(!empty($rota_exibicao))
-                        @include('componentes.link',['id' => $organizacao1->codorganizacao, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
-                    @endif
-                @else
+                @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
+
                     @if(!empty($rota_edicao))
                         @include('componentes.link',['id' => $organizacao1->codorganizacao, 'rota' => $rota_edicao])
                     @endif

@@ -30,6 +30,10 @@ class AuthServiceProvider extends ServiceProvider
                 return $user->email==='jeancarlospenas25@gmail.com';
         });
 
+        Gate::define('acesso', function ($user){
+            return !empty($user->organizacao) || $user->email==='jeancarlospenas25@gmail.com';
+        });
+
         Gate::define('edit-user', function($userAuthenticated,$targetUser){
             return $userAuthenticated->id == $targetUser->id;
         });
