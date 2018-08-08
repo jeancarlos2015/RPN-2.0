@@ -144,37 +144,57 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        try {
-            if ($request->password !== $request->password_confirm) {
-                flash('Senha não confirmada!!')->error();
-                return redirect()->route('controle_usuarios.edit', ['id' => $id]);
-            }
-            $user = User::findOrFail($id);
-            $user_novo = $this->update_user($user, $request->all());
-            LogRepository::criar(
-                "Usuário Atualizado Com sucesso",
-                "Rota De Atualização de Usuário",
-                'controle_usuarios.edit',
-                'update');
-            if (isset($user_novo)) {
-                flash('Usuário Atualizado com sucesso!!');
-            } else {
-                flash('Usuário não foi Atualizada!!');
-            }
-            if (\Auth::user()->type === 'administrador') {
-                return redirect()->route('controle_usuarios.index');
-            } else {
-                return redirect()->route('controle_usuarios.edit', ['id' => $user->codusuario]);
+        if (!empty($request->desvincular)) {
+            try {
+                if($request->desvincular==='true'){
+                    $user = User::findOrFail($id);
+                    $user->codorganizacao = null;
+                    $user->update();
+                }
+                $data['tipo'] = 'success';
+                $this->create_log($data);
+                return redirect()->route('controle_usuarios.edit', [$id]);
+            } catch (Exception $ex) {
+                $data['mensagem'] = $ex->getMessage();
+                $data['tipo'] = 'error';
+                $data['pagina'] = 'Painel';
+                $data['acao'] = 'merge_checkout';
+                $this->create_log($data);
+                return redirect()->route('controle_usuarios.edit', [$id]);
             }
 
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
+        } else {
+            try {
+                if ($request->password !== $request->password_confirm) {
+                    flash('Senha não confirmada!!')->error();
+                    return redirect()->route('controle_usuarios.edit', ['id' => $id]);
+                }
+                $user = User::findOrFail($id);
+                $user_novo = $this->update_user($user, $request->all());
+                LogRepository::criar(
+                    "Usuário Atualizado Com sucesso",
+                    "Rota De Atualização de Usuário",
+                    'controle_usuarios.edit',
+                    'update');
+                $data['tipo'] = 'success';
+                $this->create_log($data);
+                if (\Auth::user()->type === 'administrador') {
+                    return redirect()->route('controle_usuarios.index');
+                } else {
+                    return redirect()->route('controle_usuarios.edit', ['id' => $user->codusuario]);
+                }
+
+            } catch (\Exception $ex) {
+                $data['mensagem'] = $ex->getMessage();
+                $data['tipo'] = 'error';
+                $data['pagina'] = 'Painel';
+                $data['acao'] = 'merge_checkout';
+                $this->create_log($data);
+            }
+            return redirect()->route('painel');
         }
-        return redirect()->route('painel');
+
+
     }
 
 
@@ -228,6 +248,9 @@ class UserController extends Controller
     {
         $organizacoes = OrganizacaoRepository::listar();
         $usuarios = User::all();
-        return view('vinculo_usuario_organizacao.vinculo_usuario_organizacao', compact('organizacoes', 'usuarios'));
+        $titulos = User::titulos();
+
+        $tipo = 'usuario';
+        return view('vinculo_usuario_organizacao.vinculo_usuario_organizacao', compact('organizacoes', 'usuarios', 'titulos', 'tipo'));
     }
 }
