@@ -1,4 +1,13 @@
 <ul class="navbar-nav ml-auto">
+    @if(!empty(Auth::user()->email==='jeancarlospenas25@gmail.com'))
+        <li class="nav-item">
+            <a class="nav-link">
+                <p class="fa fa-user"> Administrador do Sistema </p>
+                <span class="sr-only"></span>
+            </a>
+        </li>
+    @endif
+
     @if(!empty(Auth::user()->organizacao))
         <li class="nav-item">
             <a class="nav-link">
@@ -10,6 +19,7 @@
 
 
     @if(!empty(Auth::user()->organizacao) || Auth::user()->email==='jeancarlospenas25@gmail.com')
+
         <div class="dropdown">
             <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
