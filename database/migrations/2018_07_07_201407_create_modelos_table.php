@@ -15,6 +15,7 @@ class CreateModelosTable extends Migration
     {
         Schema::connection('banco')->create('modelos', function (Blueprint $table) {
             $table->bigIncrements('codmodelo')->unsigned();
+            $table->bigInteger('codregra')->nullable();
             $table->string('nome');
             $table->string('descricao');
             $table->string('tipo');

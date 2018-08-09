@@ -100,13 +100,11 @@ class GitController extends Controller
 
         return view('controle_versao.index', compact('branch_atual', 'funcionalidades'));
     }
-
-    public function selecionar_repositorio($repositorio_atual, $default_branch)
-    {
+    private function selecionar_repositorio_como_administrador($repositorio_atual, $default_branch){
         try {
-            
+
             GitSistemaRepository::selecionar_repositorio($default_branch, $repositorio_atual);
-            
+
             $data['tipo'] = 'success';
             $this->create_log($data);
         } catch (\Exception $ex) {
@@ -123,6 +121,50 @@ class GitController extends Controller
             $this->create_log($data);
 
         }
+    }
+    private function selecionar_repositorio_usuario($repositorio_atual, $default_branch){
+        try {
+
+            GitSistemaRepository::selecionar_repositorio($default_branch, $repositorio_atual);
+            $branch_rascunho = [
+                'branch' => 'rascnho',
+                'descricao' => 'rascunho',
+                'codusuario' => Auth::user()->codusuario
+            ];
+            $branch_original = [
+                'branch' => 'original',
+                'descricao' => 'original',
+                'codusuario' => Auth::user()->codusuario
+            ];
+
+            BranchsRepository::incluir($branch_rascunho);
+            BranchsRepository::incluir($branch_original);
+            GitSistemaRepository::merge_checkout('checkout', 'rascunho');
+            $data['tipo'] = 'success';
+            $this->create_log($data);
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error!';
+            $data['pagina'] = 'controle_versao.init';
+            $data['acao'] = 'selecionar_repositorio';
+            $this->create_log($data);
+        } catch (ApiLimitExceedException $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error!';
+            $data['pagina'] = 'controle_versao.init';
+            $data['acao'] = 'selecionar_repositorio';
+            $this->create_log($data);
+
+        }
+    }
+    public function selecionar_repositorio($repositorio_atual, $default_branch)
+    {
+        if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
+            $this->selecionar_repositorio_como_administrador($repositorio_atual, $default_branch);
+        }else{
+            $this->selecionar_repositorio_usuario($repositorio_atual, $default_branch);
+        }
+
         return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
     }
 
@@ -277,9 +319,7 @@ class GitController extends Controller
         return redirect()->route('painel');
     }
 
-
-    public function merge_checkout(Request $request)
-    {
+    private function merge_checkout_administrador(Request $request){
         try {
             $validate = [
                 'branch',
@@ -311,6 +351,54 @@ class GitController extends Controller
             $this->create_log($data);
         }
         return redirect()->route('painel');
+    }
+    private function merge_checkout_usuario(Request $request){
+        try {
+            $validate = [
+                'branch',
+                'tipo'
+            ];
+            $erros = \Validator::make($request->all(), $validate);
+            if ($erros->fails()) {
+                return redirect()->route('painel')
+                    ->withErrors($erros)
+                    ->withInput();
+            } else {
+                if ($request->branch!=='master'){
+                    GitSistemaRepository::merge_checkout($request->tipo, $request->branch);
+                    $data['tipo'] = 'success';
+                    $this->create_log($data);
+                }else{
+                    $data['mensagem'] = 'Este usuário não pode mecher na versão oficial do projeto';
+                    $data['tipo'] = 'success';
+                    $this->create_log($data);
+                }
+
+
+            }
+
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        } catch (ApiLimitExceedException $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        }
+        return redirect()->route('painel');
+    }
+    public function merge_checkout(Request $request)
+    {
+        if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
+            $this->merge_checkout_administrador($request);
+        }else{
+            $this->merge_checkout_usuario($request);
+        }
     }
 
 

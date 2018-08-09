@@ -26,7 +26,7 @@
 
                 ]) !!}"
                        style="display: inline-block">
-                        <input type="image" src="{!! asset('img/delete.png') !!}" alt="Submit" width="20" title="Remover Repositório">
+                        <input type="image" src="{!! asset('img/delete.png') !!}" alt="Submit" width="20" title="Remover Base/Repositório">
                     </a>
                 </div>
                 
