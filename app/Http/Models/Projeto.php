@@ -130,16 +130,6 @@ class Projeto extends Model
     }
 
 
-    public function regras()
-    {
-        return $this->belongsTo(Regra::class, 'codprojeto', 'codprojeto');
-    }
-
-    public function tarefas()
-    {
-        return $this->belongsTo(Tarefa::class, 'codprojeto', 'codprojeto');
-    }
-
     protected static function boot()
     {
         parent::boot();
@@ -148,13 +138,6 @@ class Projeto extends Model
             $modelo->modelos()->delete();
         });
 
-        static::deleting(function ($tarefa) { // before delete() method call this
-            $tarefa->tarefas()->delete();
-        });
-
-        static::deleting(function ($regra) { // before delete() method call this
-            $regra->regras()->delete();
-        });
     }
 
 

@@ -59,7 +59,7 @@ namespace App\Http\Models{
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Http\Models\ModeloBpmn[] $modelos
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Http\Models\Regra[] $regras
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Http\Models\Tarefa[] $tarefas
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Http\Models\ObjetoDeFluxo[] $tarefas
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereDescricao($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereId($value)
@@ -117,7 +117,7 @@ namespace App\Http\Models{
 
 namespace App\Http\Models{
 /**
- * App\Http\Models\Tarefa
+ * App\Http\Models\ObjetoDeFluxo
  *
  * @property int $id
  * @property string $nome
@@ -125,12 +125,12 @@ namespace App\Http\Models{
  * @property int $projeto_id
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereDescricao($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereNome($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereProjetoId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Tarefa whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ObjetoDeFluxo whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ObjetoDeFluxo whereDescricao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ObjetoDeFluxo whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ObjetoDeFluxo whereNome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ObjetoDeFluxo whereProjetoId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ObjetoDeFluxo whereUpdatedAt($value)
  */
 	class Tarefa extends \Eloquent {}
 }

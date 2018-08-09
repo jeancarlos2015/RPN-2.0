@@ -36,7 +36,7 @@
                      {{--'projeto_id' => $projeto->codprojeto,--}}
                        {{--'modelo_id' => $modelo->codmodelo--}}
                 {{--]--}}
-           {{--) !!}">Nova Tarefa</a>--}}
+           {{--) !!}">Nova ObjetoDeFluxo</a>--}}
         @if(count($tarefas)>1)
 
             {{--<a class="btn btn-dark form-control"--}}

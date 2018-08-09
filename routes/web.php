@@ -19,15 +19,11 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         Route::resource('controle_organizacoes', 'OrganizacaoController')
             ->middleware('can:acesso');
-        Route::resource('controle_tarefas', 'TarefaController')
-            ->middleware('can:acesso');
+
         Route::resource('controle_projetos', 'ProjetoController')
             ->middleware('can:acesso');
         Route::resource('controle_modelos', 'ModeloController')
             ->middleware('can:acesso');
-        Route::resource('controle_regras', 'RegraController')
-            ->middleware('can:acesso');
-
 
         Route::resource('controle_usuarios', 'UserController')
             ->middleware('can:admin');
@@ -62,24 +58,13 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('controle_projetos_index')
             ->middleware('can:acesso');
 
-        Route::get('show_tarefas/modelo/{codmodelo}', 'ModeloController@show_tarefas')
-            ->name('show_tarefas')
-            ->middleware('can:acesso');
-        Route::get('show_regras/modelo/{codmodelo}', 'ModeloController@show_regras')
-            ->name('show_regras')
-            ->middleware('can:acesso');
+
 
         Route::get('todos_modelos', 'ModeloController@todos_modelos')
             ->name('todos_modelos')
             ->middleware('can:acesso');
         Route::get('todos_projetos', 'ProjetoController@todos_projetos')
             ->name('todos_projetos')
-            ->middleware('can:acesso');
-        Route::get('todas_tarefas', 'TarefaController@todas_tarefas')
-            ->name('todas_tarefas')
-            ->middleware('can:acesso');
-        Route::get('todas_regras', 'RegraController@todas_regras')
-            ->name('todas_regras')
             ->middleware('can:acesso');
 
 
@@ -93,18 +78,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('controle_modelos_index/organizacao/{codorganizacao}/projeto/{codprojeto}/usuario/{codusuario}', 'ModeloController@index')
             ->name('controle_modelos_index')
             ->middleware('can:acesso');;
-        Route::get('controle_tarefas_index/organizacao/{codorganizacao}/projeto/{codprojeto}/modelo/{codmodelo}', 'TarefaController@index')
-            ->name('controle_tarefas_index')
-            ->middleware('can:acesso');
-        Route::get('controle_tarefas_create/organizacao{codorganizacao}/projeto/{codprojeto}/modelo/{codmodelo}/regra/{codregra}', 'TarefaController@create')
-            ->name('controle_tarefas_create')
-            ->middleware('can:acesso');
-        Route::get('controle_regras_create/organizacao/{codorganizacao}/projeto/{codprojeto}/modelo/{codmodelo}', 'RegraController@create')
-            ->name('controle_regras_create')
-            ->middleware('can:acesso');
-        Route::get('controle_regras_index/organizacao/{codorganizacao}/projeto/{codprojeto}/modelo/{codmodelo}', 'RegraController@index')
-            ->name('controle_regras_index')
-            ->middleware('can:acesso');
+
+
         Route::post('escolhe_modelo', 'ModeloController@escolhe_modelo')
             ->name('escolhe_modelo')
             ->middleware('can:acesso');

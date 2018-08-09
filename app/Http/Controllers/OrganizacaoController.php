@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\Organizacao;
-use App\Http\Models\Projeto;
-use App\Http\Models\Regra;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\ModeloRepository;
 use App\Http\Repositorys\OrganizacaoRepository;
 use App\Http\Repositorys\ProjetoRepository;
-use App\Http\Repositorys\RegraRepository;
-use App\Http\Repositorys\TarefaRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,16 +44,12 @@ class OrganizacaoController extends Controller
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             return [
                 'todos_modelos',
-                'todas_tarefas',
-                'todas_regras',
                 'todos_projetos',
                 'controle_organizacoes.index',
             ];
-        }else if (!empty(Auth::user()->organizacao)){
+        } else if (!empty(Auth::user()->organizacao)) {
             return [
                 'todos_modelos',
-                'todas_tarefas',
-                'todas_regras',
                 'todos_projetos'
             ];
         }
@@ -70,17 +62,12 @@ class OrganizacaoController extends Controller
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             return [
                 'Modelos',
-                'Tarefas',
-                'Regras',
                 'Projetos',
                 'Organizações'
             ];
-        }
-        else if (!empty(Auth::user()->organizacao)) {
+        } else if (!empty(Auth::user()->organizacao)) {
             return [
                 'Modelos',
-                'Tarefas',
-                'Regras',
                 'Projetos'
             ];
         }
@@ -92,23 +79,16 @@ class OrganizacaoController extends Controller
         $qt_organizacoes = OrganizacaoRepository::count();
         $qt_projetos = ProjetoRepository::count();
         $qt_modelos = ModeloRepository::count();
-        $qt_tarefas = TarefaRepository::count();
-        $qt_regras = RegraRepository::count();
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
 
             return [
                 $qt_modelos,
-                $qt_tarefas,
-                $qt_regras,
                 $qt_projetos,
                 $qt_organizacoes
             ];
-        }
-        else if (!empty(Auth::user()->organizacao)) {
+        } else if (!empty(Auth::user()->organizacao)) {
             return [
                 $qt_modelos,
-                $qt_tarefas,
-                $qt_regras,
                 $qt_projetos
             ];
         }
@@ -127,7 +107,7 @@ class OrganizacaoController extends Controller
             $titulos = $this->titulos();
             $rotas = $this->rotas();
             $quantidades = $this->quantidades();
-            if (count($rotas)==0){
+            if (count($rotas) == 0) {
                 $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma organização!!";
                 $data['tipo'] = 'success';
                 $this->create_log($data);
@@ -142,36 +122,6 @@ class OrganizacaoController extends Controller
         return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo', 'log'));
     }
 
-
-    public function create_nome(Request $request)
-    {
-        try {
-            $regras = RegraRepository::listar();
-            $tarefas = TarefaRepository::listar();
-            $nova_regra = null;
-            $projeto = null;
-            if (!empty($regras) && !empty($tarefas)) {
-                $projeto = Projeto::create($request->all());
-                $nova_regra = new Regra();
-                return view('controle_organizacoes.create_regras', compact('projeto', 'regras', 'operadores', 'tarefas', 'nova_regra'));
-            }
-
-            return view('controle_organizacoes.create_nome', compact('projeto'));
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-    }
-
-    public function create_regras(Request $request)
-    {
-
-        return view('controle_organizacoes.create_regras', compact('projeto', 'regras', 'operadores', 'tarefas', 'nova_regra'));
-
-    }
 
 
     public function create()

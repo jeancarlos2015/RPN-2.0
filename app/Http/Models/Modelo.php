@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Http\Models\Organizacao $organizacao
  * @property-read \App\Http\Models\Projeto $projeto
  * @property-read \App\Http\Models\Regra $regras
- * @property-read \App\Http\Models\Tarefa $tarefas
+ * @property-read \App\Http\Models\ObjetoDeFluxo $tarefas
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodmodelo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodorganizacao($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodprojeto($value)
@@ -134,11 +134,6 @@ class Modelo extends Model
         return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
     }
 
-    public function regras()
-    {
-        return $this->belongsTo(Regra::class, 'codmodelo', 'codmodelo');
-    }
-
     public static function validacao()
     {
         return [
@@ -148,23 +143,12 @@ class Modelo extends Model
         ];
     }
 
-    public function tarefas()
-    {
-        return $this->belongsTo(Tarefa::class, 'codmodelo', 'codmodelo');
-    }
 
     protected static function boot()
     {
         parent::boot();
 
 
-        static::deleting(function ($tarefa) { // before delete() method call this
-            $tarefa->tarefas()->delete();
-        });
-
-        static::deleting(function ($regra) { // before delete() method call this
-            $regra->regras()->delete();
-        });
     }
 
     public static function get_modelo_default()

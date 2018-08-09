@@ -121,11 +121,7 @@ class ModeloController extends Controller
                     ]);
                     $modelo = Modelo::create($request->all());
                     if ($modelo->tipo === 'declarativo') {
-                        return redirect()->route('controle_regras_index', [
-                            'codorganizacao' => $codorganizacao,
-                            'codprojeto' => $codprojeto,
-                            'codmodelo' => $modelo->codmodelo
-                        ]);
+
                     } else {
                         return redirect()->route('edicao_modelo_diagramatico',
                             ['codmodelo' => $modelo->codmodelo]);
@@ -209,31 +205,6 @@ class ModeloController extends Controller
                 return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
             } else {
                 return redirect()->route('controle_tarefas_index', [
-                    'codorganizacao' => $modelo->codorganizacao,
-                    'codprojeto' => $modelo->codprojeto,
-                    'codmodelo' => $modelo->codmodelo
-                ]);
-            }
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
-    }
-
-    public
-    function show_regras($codmodelo)
-    {
-        try {
-            $modelo = Modelo::findOrFail($codmodelo);
-            if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
-                flash('Não existem regras para serem exibidas!!!')->error();
-                return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
-            } else {
-                return redirect()->route('controle_regras_index', [
                     'codorganizacao' => $modelo->codorganizacao,
                     'codprojeto' => $modelo->codprojeto,
                     'codmodelo' => $modelo->codmodelo

@@ -1,7 +1,7 @@
-@extends('layouts.layout_admin_new.layouts.main')
+{{--@extends('layouts.layout_admin_new.layouts.main')--}}
 
-@section('content')
-    {!! csrf_field() !!}
+{{--@section('content')--}}
+    {{--{!! csrf_field() !!}--}}
     {{--@includeIf('layouts.layout_admin_new.componentes.breadcrumb',[--}}
                       {{--'titulo' => 'Painel',--}}
                     {{--'sub_titulo' => 'Regras',--}}
@@ -16,5 +16,5 @@
                     {{--'nome_botao' => 'Novo',--}}
                     {{--'titulo' =>'Regras'--}}
     {{--])--}}
-    <h3>Página em desenvolvimento</h3>
-@endsection
+    {{--<h3>Página em desenvolvimento</h3>--}}
+{{--@endsection--}}
