@@ -132,6 +132,7 @@ class GitSistemaRepository
 
     public static function create_branch_remote($branch)
     {
+
         $client = new Client();
         $github = Auth::user()->github;
 
@@ -139,7 +140,12 @@ class GitSistemaRepository
 
         $usuario_git = Auth::user()->usuario_github();
         $client->authenticate($usuario_git, Auth::user()->usuario_senha());
-        $branchs = $client->repo()->branches($usuario_git, $repositorio, $github->branch_atual);
+        if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
+            $branchs = $client->repo()->branches($usuario_git, $repositorio, $github->branch_atual);
+        }else{
+            $branchs = $client->repo()->branches($usuario_git, $repositorio, 'master');
+        }
+
         $sha = $branchs['commit']['sha'];
         $http_Client = $client->getHttpClient();
         $url = 'https://api.github.com/repos/' . $usuario_git . '/' . $repositorio . '/git/refs';
