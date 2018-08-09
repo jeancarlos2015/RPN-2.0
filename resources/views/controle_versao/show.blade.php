@@ -12,7 +12,7 @@
 
 
         <div class="form-group">
-            <label>Nome Do Repositório</label>
+            <label>Nome Da Base</label>
             <input type="text" class="form-control" value="{!! $repositorio['name'] !!}" disabled>
         </div>
 
@@ -22,7 +22,7 @@
         </div>
 
         <div class="form-group">
-            <label>Git Do Repositório</label>
+            <label>Git Do Base/Repositório</label>
             <input type="text" class="form-control" value="{!! $repositorio['git_url'] !!}" disabled>
         </div>
 

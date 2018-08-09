@@ -11,7 +11,7 @@
     @if(!empty(Auth::user()->organizacao))
         <li class="nav-item">
             <a class="nav-link">
-                <p class="fa fa-database"> Organização: {{ Auth::user()->organizacao->nome }} </p>
+                <p class="fa fa-database"> Repositório: {{ Auth::user()->organizacao->nome }} </p>
                  <span class="sr-only"></span>
             </a>
         </li>
@@ -29,11 +29,10 @@
                 <a class="dropdown-item" href="{!! route('painel') !!}">Painel</a>
                 <a class="dropdown-item" href="{!! route('index_logs') !!}">Logs do Sistema</a>
                 @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
-                    <a class="dropdown-item" href="{!! route('index_init') !!}">Repositórios</a>
+                    <a class="dropdown-item" href="{!! route('index_init') !!}">Bases</a>
                 @endif
                 <a class="dropdown-item" href="{!! route('controle_documentacoes.index') !!}">Documentação do
                     Sistema</a>
-
             </div>
         </div>
         @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
@@ -43,19 +42,19 @@
             <li class="nav-item">
                 <a class="nav-link">
 
-                    Usuário Github: {{ Auth::user()->usuario_github() }} <span class="sr-only"></span>
+                    {{--Usuário Github: {{ Auth::user()->usuario_github() }} <span class="sr-only"></span>--}}
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link">
-                    Branch Atual: {{ Auth::user()->github->branch_atual }} <span class="sr-only"></span>
+                    Ramificação : {{ Auth::user()->github->branch_atual }} <span class="sr-only"></span>
                 </a>
             </li>
 
 
             <li class="nav-item">
                 <a class="nav-link">
-                    Repositório Atual: {{ Auth::user()->github->repositorio_atual }} <span class="sr-only"></span>
+                    Base: {{ Auth::user()->github->repositorio_atual }} <span class="sr-only"></span>
                 </a>
             </li>
         @endif
