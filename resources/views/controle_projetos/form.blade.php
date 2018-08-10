@@ -18,9 +18,9 @@
         @endif
     </div>
 @endfor
-@if(!empty($codorganizacao))
-    <input type="hidden" name="codorganizacao" class="form-control"
-           value="{!! $codorganizacao !!}">
+@if(!empty($codrepositorio))
+    <input type="hidden" name="codrepositorio" class="form-control"
+           value="{!! $codrepositorio !!}">
 @endif
 <div class="form-group">
     <label class="control-label" for="visibilidade">Deseja tornar este registro visível para todos os usuários?</label>

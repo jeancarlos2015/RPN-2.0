@@ -5,7 +5,7 @@
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                     'titulo' => 'Painel',
                     'sub_titulo' => 'Edição do Modelo',
-                    'rota' => 'controle_organizacoes.index'
+                    'rota' => 'controle_repositorios.index'
     ])
 
     <form action="{!! route('controle_modelos.update',['id' => $modelo->codmodelo]) !!}" method="post">
@@ -15,7 +15,7 @@
     'acao' => 'Atualizar e Proseguir',
     'dados' => $dados,
     'MAX' => 2,
-    'organizacao_id' => $organizacao->codorganizacao,
+    'organizacao_id' => $repositorio->codrepositorio,
     'projeto_id' => $projeto->codprojeto
     ]
     )

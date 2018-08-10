@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Organizacao;
+use App\Http\Models\Repositorio;
 use App\Http\Models\Projeto;
 use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\ProjetoRepository;
@@ -13,15 +13,15 @@ class ProjetoController extends Controller
 {
 
 
-    public function index($codorganizacao)
+    public function index($codrepositorio)
     {
         try {
-            $organizacao = Organizacao::findOrFail($codorganizacao);
-            $projetos = ProjetoRepository::listar_por_organizacao($codorganizacao);
+            $repositorio = Repositorio::findOrFail($codrepositorio);
+            $projetos = ProjetoRepository::listar_por_repositorio($codrepositorio);
             $titulos = Projeto::titulos_da_tabela();
             $tipo = 'projeto';
             $log = LogRepository::log();
-            return view('controle_projetos.index', compact('organizacao', 'projetos', 'titulos', 'tipo', 'log'));
+            return view('controle_projetos.index', compact('repositorio', 'projetos', 'titulos', 'tipo', 'log'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -37,10 +37,10 @@ class ProjetoController extends Controller
         try {
             $projetos = ProjetoRepository::listar();
             $titulos = Projeto::titulos_da_tabela();
-            $organizacao = Auth::user()->organizacao;
+            $repositorio = Auth::user()->repositorio;
             $tipo = 'projeto';
             $log = LogRepository::log();
-            return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo', 'log','organizacao'));
+            return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo', 'log','repositorio'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -56,24 +56,24 @@ class ProjetoController extends Controller
      *
      * @return bool
      */
-    private function exists($codorganizacao)
+    private function exists($codrepositorio)
     {
-        $organizacao = (new Organizacao)->where('codorganizacao', '=', $codorganizacao)->first();
-        return $organizacao === null;
+        $repositorio = (new Repositorio)->where('codrepositorio', '=', $codrepositorio)->first();
+        return $repositorio === null;
 
     }
 
-    public function create($codorganizacao)
+    public function create($codrepositorio)
     {
         try {
             $dados = Projeto::dados();
 
-                if (!$this->exists($codorganizacao)) {
-                    $organizacao = Organizacao::findOrFail($codorganizacao);
+                if (!$this->exists($codrepositorio)) {
+                    $repositorio = Repositorio::findOrFail($codrepositorio);
                 } else {
-                    $organizacao = Organizacao::create(['nome' => 'novo', 'descricao' => 'novo']);
+                    $repositorio = Repositorio::create(['nome' => 'novo', 'descricao' => 'novo']);
                 }
-                return view('controle_projetos.create', compact('dados', 'organizacao'));
+                return view('controle_projetos.create', compact('dados', 'repositorio'));
 
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -90,10 +90,10 @@ class ProjetoController extends Controller
     {
         try {
             $erros = \Validator::make($request->all(), Projeto::validacao());
-            $codorganizacao = $request->codorganizacao;
+            $codrepositorio = $request->codrepositorio;
             if ($erros->fails()) {
                 return redirect()->route('controle_projeto_create', [
-                    'codorganizacao' => $codorganizacao,
+                    'codrepositorio' => $codrepositorio,
                 ])
                     ->withErrors($erros)
                     ->withInput();
@@ -104,7 +104,7 @@ class ProjetoController extends Controller
                 flash('Projeto criado com sucesso!!');
                 return redirect()->route('controle_modelos_index',
                     [
-                        'codorganizacao' => $codorganizacao,
+                        'codrepositorio' => $codrepositorio,
                         'codprojeto' => $projeto->codprojeto,
                         'codusuario' => $projeto->codusuario
                     ]
@@ -114,7 +114,7 @@ class ProjetoController extends Controller
                 $this->create_log($data);
                 return redirect()->route('controle_projetos_create',
                     [
-                        'codorganizacao' => $codorganizacao
+                        'codrepositorio' => $codrepositorio
                     ]
                 );
             }
@@ -141,7 +141,7 @@ class ProjetoController extends Controller
             $projeto = Projeto::findOrFail($codprojeto);
             return redirect()->route('controle_modelos_index',
                 [
-                    'codorganizacao' => $projeto->codorganizacao,
+                    'codrepositorio' => $projeto->codrepositorio,
                     'codprojeto' => $codprojeto,
                     'codusuario' => $projeto->codusuario
                 ]);
@@ -166,10 +166,10 @@ class ProjetoController extends Controller
         try {
             $projeto = Projeto::findOrFail($id);
             $dados = Projeto::dados();
-            $organizacao = $projeto->organizacao;
+            $repositorio = $projeto->repositorio;
             $dados[0]->valor = $projeto->nome;
             $dados[1]->valor = $projeto->descricao;
-            return view('controle_projetos.edit', compact('dados', 'projeto', 'organizacao'));
+            return view('controle_projetos.edit', compact('dados', 'projeto', 'repositorio'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -193,7 +193,7 @@ class ProjetoController extends Controller
             $projeto = ProjetoRepository::atualizar($request, $codprojeto);
             return redirect()->route('controle_modelos_index',
                 [
-                    'codorganizacao' => $projeto->codorganizacao,
+                    'codrepositorio' => $projeto->codrepositorio,
                     'codprojeto' => $codprojeto,
                     'codusuario' => $projeto->codusuario
                 ]);
@@ -216,7 +216,7 @@ class ProjetoController extends Controller
             ProjetoRepository::excluir($codprojeto);
             flash('Operação feita com sucesso!!');
             return redirect()->route('controle_projetos_index', [
-                'codorganizacao' => $projeto->codorganizacao,
+                'codrepositorio' => $projeto->codrepositorio,
                 'codusuario' => $projeto->codusuario
             ]);
         } catch (\Exception $ex) {

@@ -7,8 +7,8 @@
 
             <div class="form-group">
                 <div class="card-header dark-text-white"><strong>Dados Da Organização</strong></div>
-                @if(!empty($organizacao))
-                    <span>Organização: <strong style="margin-left: 50px"> {{$organizacao->nome}}</strong></span>
+                @if(!empty($repositorio))
+                    <span>Organização: <strong style="margin-left: 50px"> {{$repositorio->nome}}</strong></span>
                 @endif
 
                 @if(!empty($projeto))

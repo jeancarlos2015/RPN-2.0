@@ -14,7 +14,7 @@
     'acao' => 'Salvar e Proseguir',
     'dados' => $dados,
     'MAX' => 2,
-    'codorganizacao' => $organizacao->codorganizacao,
+    'codrepositorio' => $repositorio->codrepositorio,
     'codprojeto' => $projeto->codprojeto
     ])
     </form>

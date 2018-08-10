@@ -4,7 +4,7 @@ namespace App\Http\Repositorys;
 
 
 use App\Http\Models\Documentacao;
-use App\Http\Models\Organizacao;
+use App\Http\Models\Repositorio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -13,7 +13,7 @@ class DocumentacaoRepository extends Repository
 
     public function __construct()
     {
-        $this->setModel(Organizacao::class);
+        $this->setModel(Repositorio::class);
     }
 
     public static function listar()
@@ -29,9 +29,9 @@ class DocumentacaoRepository extends Repository
 
     public static function atualizar(Request $request, $coddocumentacao)
     {
-        $organizacao = Documentacao::findOrFail($coddocumentacao);
-        $organizacao->update($request->all());
-        return $organizacao;
+        $repositorio = Documentacao::findOrFail($coddocumentacao);
+        $repositorio->update($request->all());
+        return $repositorio;
     }
 
     public static function limpar_cache()

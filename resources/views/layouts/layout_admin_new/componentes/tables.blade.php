@@ -34,14 +34,14 @@
                     @includeIf('layouts.layout_admin_new.componentes.tables_projetos')
                     @break;
 
-                    @case('organizacao')
-                    @includeIf('layouts.layout_admin_new.componentes.tables_organizacoes')
+                    @case('repositorio')
+                    @includeIf('layouts.layout_admin_new.componentes.tables_repositorios')
                     @break;
                     @case('usuario')
                     @includeIf('layouts.layout_admin_new.componentes.tables_usuarios')
                     @break;
-                    @case('repositorio')
-                    @includeIf('layouts.layout_admin_new.componentes.tables_repositorios')
+                    @case('repositorio_github')
+                    @includeIf('layouts.layout_admin_new.componentes.tables_repositorios_github')
                     @break;
                     @case('log')
                     @includeIf('layouts.layout_admin_new.componentes.tables_logs')

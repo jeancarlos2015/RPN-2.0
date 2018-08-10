@@ -5,12 +5,12 @@
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                    'titulo' => 'Painel',
                    'rota' => 'painel',
-                   'sub_titulo' => 'Nova Organização'
+                   'sub_titulo' => 'Novo Repositório'
    ])
 
-    <form action="{!! route('controle_organizacoes.store') !!}" method="post">
+    <form action="{!! route('controle_repositorios.store') !!}" method="post">
         {{ method_field('POST')}}
-        @includeIf('controle_organizacoes.form',
+        @includeIf('controle_repositorios.form',
         [
         'acao' => 'Salvar e Proseguir',
         'dados' => $dados,

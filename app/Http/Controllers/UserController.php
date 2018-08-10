@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Organizacao;
+use App\Http\Models\Repositorio;
 use App\Http\Repositorys\LogRepository;
-use App\Http\Repositorys\OrganizacaoRepository;
+use App\Http\Repositorys\RepositorioRepository;
 use App\User;
 use Illuminate\Http\Request;
 use Mockery\Exception;
@@ -131,8 +131,8 @@ class UserController extends Controller
             $dados[1]->valor = $usuario->email;
             $dados[2]->valor = $usuario->password;
             $usuarios = User::all();
-            $organizacoes = OrganizacaoRepository::all();
-            return view('controle_usuario.edit', compact('dados', 'usuario','usuarios','organizacoes'));
+            $repositorios = RepositorioRepository::all();
+            return view('controle_usuario.edit', compact('dados', 'usuario','usuarios','repositorios'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -150,7 +150,7 @@ class UserController extends Controller
             try {
                 if($request->desvincular==='true'){
                     $user = User::findOrFail($id);
-                    $user->codorganizacao = null;
+                    $user->codrepositorio = null;
                     $user->update();
                 }
                 $data['tipo'] = 'success';
@@ -223,14 +223,14 @@ class UserController extends Controller
         return redirect()->route('painel');
     }
 
-    public function vincular_usuario_organizacao(Request $request)
+    public function vincular_usuario_repositorio(Request $request)
     {
         $codusuario = $request->codusuario;
-        $codorganizacao = $request->codorganizacao;
+        $codrepositorio = $request->codrepositorio;
         try {
             $usuario = User::findOrFail($codusuario);
-            $organizacao = Organizacao::findOrFail($codorganizacao);
-            $usuario->codorganizacao = $organizacao->codorganizacao;
+            $repositorio = Repositorio::findOrFail($codrepositorio);
+            $usuario->codrepositorio = $repositorio->codrepositorio;
             $usuario->update();
             $data['tipo'] = 'success';
             $this->create_log($data);
@@ -246,13 +246,13 @@ class UserController extends Controller
         return redirect()->route('controle_usuarios.edit',['id' => $codusuario]);
     }
 
-    public function vinculo_usuario_organizacao()
+    public function vinculo_usuario_repositorio()
     {
-        $organizacoes = OrganizacaoRepository::listar();
+        $repositorios = RepositorioRepository::listar();
         $usuarios = User::all();
         $titulos = User::titulos();
 
         $tipo = 'usuario';
-        return view('vinculo_usuario_organizacao.vinculo_usuario_organizacao', compact('organizacoes', 'usuarios', 'titulos', 'tipo'));
+        return view('vinculo_usuario_repositorio.vinculo_usuario_repositorio', compact('repositorios', 'usuarios', 'titulos', 'tipo'));
     }
 }

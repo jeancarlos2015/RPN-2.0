@@ -16,8 +16,8 @@
                         @else
                             <div class="text-muted smaller">Tipo: Padrão</div>
                         @endif
-                        @if(!empty($usuario->organizacao))
-                            <div class="text-muted smaller">Repositório: {!! $usuario->organizacao->nome !!}</div>
+                        @if(!empty($usuario->repositorio))
+                            <div class="text-muted smaller">Repositório: {!! $usuario->repositorio->nome !!}</div>
                         @else
                             <div class="text-muted smaller">Repositório: Nenhuma</div>
                         @endif
@@ -35,7 +35,7 @@
                     @include('componentes.link',['id' => $usuario->codusuario, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
                 @endif
 
-                @if(!empty($usuario->organizacao))
+                @if(!empty($usuario->repositorio))
                     @includeIf('componentes.form_desvincular',['id' => $usuario->codusuario])
                 @endif
             </td>

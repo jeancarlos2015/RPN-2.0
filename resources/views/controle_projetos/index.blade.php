@@ -7,7 +7,7 @@
                     'sub_titulo' => 'Projetos',
                     'rota' => 'painel'
     ])
-    @if(!empty($organizacao))
+    @if(!empty($repositorio))
 
         @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
 

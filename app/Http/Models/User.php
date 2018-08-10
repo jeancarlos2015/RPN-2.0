@@ -4,7 +4,7 @@ namespace App;
 
 use App\Http\Models\Branch;
 use App\Http\Models\Log;
-use App\Http\Models\Organizacao;
+use App\Http\Models\Repositorio;
 use App\Http\Models\UsuarioGithub;
 use App\Http\Util\Dado;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Crypt;
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read \App\Http\Models\Organizacao $organizacoes
+ * @property-read \App\Http\Models\Repositorio $repositorios
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCodusuario($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)
@@ -39,7 +39,7 @@ class User extends Authenticatable
     protected $primaryKey = 'codusuario';
     protected $table = 'users';
     protected $fillable = [
-        'name', 'email', 'password', 'type', 'codorganizacao'
+        'name', 'email', 'password', 'type', 'codrepositorio'
     ];
 
     protected $hidden = [
@@ -56,14 +56,14 @@ class User extends Authenticatable
         ];
     }
 
-    public function organizacoes()
+    public function repositorios()
     {
-        return $this->belongsTo(Organizacao::class, 'codusuario', 'codusuario');
+        return $this->belongsTo(Repositorio::class, 'codusuario', 'codusuario');
     }
 
-    public function organizacao()
+    public function repositorio()
     {
-        return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
+        return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
     }
 
     public function github()

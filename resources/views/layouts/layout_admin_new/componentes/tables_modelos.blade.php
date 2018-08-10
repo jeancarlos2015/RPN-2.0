@@ -10,11 +10,12 @@
                 <div class="media">
                     <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($modelo1->usuario->email) }}" alt="" width="100">
                     <div class="media-body">
-                        <strong>{!!  $modelo1->nome !!}</strong> -
-                        <strong>{!!  $modelo1->tipo !!}</strong>
-                        <div class="text-muted smaller">Código do Modelo: {!! $modelo1->codmodelo !!}</div>
+                        <strong>Modelo - {!!  $modelo1->nome !!}</strong>
                         <div class="text-muted smaller">Responsável: {!! $modelo1->usuario->name !!}</div>
                         <div class="text-muted smaller">Descrição do Modelo: {!! $modelo1->descricao !!}</div>
+                        <div class="text-muted smaller">Tipo: {!! $modelo1->tipo !!}</div>
+                        <div class="text-muted smaller">Projeto: {!! $modelo1->projeto->nome !!}</div>
+                        <div class="text-muted smaller">Repositório: {!! $modelo1->repositorio->nome !!}</div>
                     </div>
                 </div>
             </td>

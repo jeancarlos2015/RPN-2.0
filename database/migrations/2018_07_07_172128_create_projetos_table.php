@@ -18,10 +18,10 @@ class CreateProjetosTable extends Migration
             $table->string('nome');
             $table->string('descricao');
             $table->boolean('visibilidade');
-            $table->bigInteger('codorganizacao');
+            $table->bigInteger('codrepositorio');
             $table->bigInteger('codusuario');
 
-//            $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
+//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
 //            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });

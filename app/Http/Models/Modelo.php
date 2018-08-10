@@ -15,11 +15,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $tipo
  * @property string $xml_modelo
  * @property int $codprojeto
- * @property int $codorganizacao
+ * @property int $codrepositorio
  * @property int $codusuario
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property-read \App\Http\Models\Organizacao $organizacao
+ * @property-read \App\Http\Models\Repositorio $repositorio
  * @property-read \App\Http\Models\Projeto $projeto
  * @property-read \App\Http\Models\Regra $regras
  * @property-read \App\Http\Models\ObjetoDeFluxo $tarefas
@@ -46,7 +46,7 @@ class Modelo extends Model
         'tipo',
         'xml_modelo',
         'codprojeto',
-        'codorganizacao',
+        'codrepositorio',
         'codusuario',
         'visibilidade'
     ];
@@ -83,7 +83,7 @@ class Modelo extends Model
             'descricao',
             'tipo',
             'codprojeto',
-            'codorganizacao',
+            'codrepositorio',
             'xml_modelo'
 
         ];
@@ -129,9 +129,9 @@ class Modelo extends Model
         return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
     }
 
-    public function organizacao()
+    public function repositorio()
     {
-        return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
+        return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
     }
 
     public static function validacao()

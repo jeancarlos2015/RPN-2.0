@@ -25,7 +25,7 @@
         <input name="visibilidade" type="hidden" value="false">
         <label class="switch-light switch-candy">
             <input type="checkbox" name="visibilidade"
-                   value="true" {!! !empty($organizacao->visibilidade) ? ($organizacao->visibilidade ? 'checked' : '') : '' !!}>
+                   value="true" {!! !empty($repositorio->visibilidade) ? ($repositorio->visibilidade ? 'checked' : '') : '' !!}>
             <span>
                 <span>Não <i class='fa fa-thumbs-down'></i></span>
                 <span>Sim <i class='fa fa-thumbs-up'></i></span>

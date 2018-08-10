@@ -4,7 +4,7 @@
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                     'titulo' => 'Painel',
-                    'sub_titulo' => 'Organizacoes',
+                    'sub_titulo' => 'Repositórios',
                     'rota' => 'painel'
     ])
 
@@ -15,13 +15,13 @@
 
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
-                    'organizacoes' => $organizacoes,
-                    'rota_edicao' => 'controle_organizacoes.edit',
-                    'rota_exclusao' => 'controle_organizacoes.destroy',
-                    'rota_cricao' => 'controle_organizacoes.create',
-                    'rota_exibicao' => 'controle_organizacoes.show',
+                    'repositorios' => $repositorios,
+                    'rota_edicao' => 'controle_repositorios.edit',
+                    'rota_exclusao' => 'controle_repositorios.destroy',
+                    'rota_cricao' => 'controle_repositorios.create',
+                    'rota_exibicao' => 'controle_repositorios.show',
                     'nome_botao' => 'Novo',
-                    'titulo' =>'Organizações'
+                    'titulo' =>'Repositórios'
 
     ])
 

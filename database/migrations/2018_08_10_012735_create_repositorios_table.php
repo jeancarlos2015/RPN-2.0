@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateOrganizacoesTable extends Migration
+class CreateRepositoriosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateOrganizacoesTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizacoes', function (Blueprint $table) {
-            $table->bigIncrements('codorganizacao');
+        Schema::create('repositorios', function (Blueprint $table) {
+            $table->bigIncrements('codrepositorio');
             $table->string('nome');
             $table->string('descricao');
             $table->boolean('visibilidade');
@@ -30,6 +30,6 @@ class CreateOrganizacoesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizacoes');
+        Schema::dropIfExists('repositorios');
     }
 }

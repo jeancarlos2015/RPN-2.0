@@ -7,7 +7,8 @@
             @if(!empty($funcionalidades))
                 <div class="mr-5">{!! $funcionalidades[$indice]->titulo !!}</div>
             @else
-                <div class="mr-5">{!! $quantidades[$index] !!} - {!! $titulos[$index] !!}</div>
+                <div class="mr-5">{!! $titulos[$index] !!}</div>
+                <div class="mr-5">Quantidade: {!! $quantidades[$index] !!}</div>
             @endif
 
         </div>

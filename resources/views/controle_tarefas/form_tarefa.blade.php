@@ -23,9 +23,9 @@
 
         {{--<input type="hidden" name="tarefa1.descricao" value="Nenhum">--}}
         {{--<input type="hidden" name="tarefa2.descricao" value="Nenhum">--}}
-        {{--@if(!empty($organizacao))--}}
-            {{--<input type="hidden" name="codorganizacao" class="form-control"--}}
-                   {{--value="{!! $organizacao->codorganizacao !!}">--}}
+        {{--@if(!empty($repositorio))--}}
+            {{--<input type="hidden" name="codrepositorio" class="form-control"--}}
+                   {{--value="{!! $repositorio->codrepositorio !!}">--}}
         {{--@endif--}}
 
         {{--@if(!empty($projeto))--}}

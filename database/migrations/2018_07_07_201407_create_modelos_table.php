@@ -22,11 +22,11 @@ class CreateModelosTable extends Migration
             $table->longText('xml_modelo');
             $table->boolean('visibilidade');
             $table->bigInteger('codprojeto');
-            $table->bigInteger('codorganizacao');
+            $table->bigInteger('codrepositorio');
             $table->bigInteger('codusuario');
 
 //            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-//            $table->foreign('codorganizacao')->references('codorganizacao')->on('organizacoes');
+//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
 //            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });

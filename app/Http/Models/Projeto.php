@@ -12,12 +12,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $codprojeto
  * @property string $nome
  * @property string $descricao
- * @property int $codorganizacao
+ * @property int $codrepositorio
  * @property int $codusuario
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \App\Http\Models\Modelo $modelos
- * @property-read \App\Http\Models\Organizacao $organizacao
+ * @property-read \App\Http\Models\Repositorio $repositorio
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCodorganizacao($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCodprojeto($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCodusuario($value)
@@ -35,7 +35,7 @@ class Projeto extends Model
     protected $fillable = [
         'nome',
         'descricao',
-        'codorganizacao',
+        'codrepositorio',
         'codusuario',
         'visibilidade'
     ];
@@ -119,14 +119,14 @@ class Projeto extends Model
         return $this->hasOne(User::class, 'codusuario', 'codusuario');
     }
 
-    public function organizacao()
+    public function repositorio()
     {
-        return $this->hasOne(Organizacao::class, 'codorganizacao', 'codorganizacao');
+        return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
     }
 
     public function modelos()
     {
-        return $this->belongsTo(Modelo::class, 'codprojeto', 'codprojeto');
+        return $this->hasMany(Modelo::class, 'codprojeto', 'codprojeto');
     }
 
 

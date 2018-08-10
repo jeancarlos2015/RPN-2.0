@@ -28,10 +28,10 @@ class ModeloRepository extends Repository
 
     }
 
-    public static function listar_modelo_por_projeto_organizacao($codorganizacao, $codprojeto, $codusuario)
+    public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
     {
         return Modelo::whereCodusuario($codusuario)
-            ->where('codorganizacao', '=', $codorganizacao)
+            ->where('codrepositorio', '=', $codrepositorio)
             ->where('codprojeto', '=', $codprojeto)
             ->get();
     }

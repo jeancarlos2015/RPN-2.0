@@ -17,7 +17,7 @@
         {{--'MAX' => 2,--}}
         {{--'codprojeto' => $projeto->codprojeto,--}}
         {{--'codmodelo' => $modelo->codmodelo,--}}
-        {{--'codorganizacao' => $organizacao->codorganizacao--}}
+        {{--'codrepositorio' => $repositorio->codrepositorio--}}
         {{--]--}}
         {{--)--}}
     {{--</form>--}}

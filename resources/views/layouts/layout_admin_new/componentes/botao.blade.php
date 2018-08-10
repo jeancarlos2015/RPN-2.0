@@ -1,16 +1,16 @@
 
 @if(!empty($tipo))
     @switch($tipo)
-        @case ('organizacao')
+        @case ('repositorio')
         <a class="btn btn-dark form-control"
-           href="{!! route('controle_organizacoes.create') !!}">Nova Organização</a>
+           href="{!! route('controle_repositorios.create') !!}">Novo Repositório</a>
         @break;
 
         @case ('modelo')
         <a class="btn btn-dark form-control"
            href="{!! route('controle_modelos_create',[
 
-                        'organizacao_id' => $organizacao->codorganizacao,
+                        'organizacao_id' => $repositorio->codrepositorio,
                         'projeto_id' => $projeto->codprojeto
 
                         ]) !!}">Novo Modelo</a>
@@ -20,7 +20,7 @@
         <a class="btn btn-dark form-control"
            href="{!! route('controle_regras_create',
                 [
-                'organizacao_id' => $organizacao->codorganizacao,
+                'organizacao_id' => $repositorio->codrepositorio,
                      'projeto_id' => $projeto->codprojeto,
                        'modelo_id' => $modelo->codmodelo
                 ]
@@ -32,7 +32,7 @@
         {{--<a class="btn btn-dark form-control"--}}
            {{--href="{!! route('controle_tarefas_create',--}}
                 {{--[--}}
-                {{--'organizacao_id' => $organizacao->codorganizacao,--}}
+                {{--'organizacao_id' => $repositorio->codrepositorio,--}}
                      {{--'projeto_id' => $projeto->codprojeto,--}}
                        {{--'modelo_id' => $modelo->codmodelo--}}
                 {{--]--}}
@@ -42,7 +42,7 @@
             {{--<a class="btn btn-dark form-control"--}}
                {{--href="{!! route('controle_regras_create',--}}
                 {{--[--}}
-                {{--'organizacao_id' => $organizacao->codorganizacao,--}}
+                {{--'organizacao_id' => $repositorio->codrepositorio,--}}
                      {{--'projeto_id' => $projeto->codprojeto,--}}
                        {{--'modelo_id' => $modelo->codmodelo--}}
                 {{--]--}}
@@ -59,7 +59,7 @@
 
         @case ('projeto')
         <a class="btn btn-dark form-control"
-           href="{!! route('controle_projetos_create',['organizacao_id' => $organizacao->codorganizacao]) !!}">Novo
+           href="{!! route('controle_projetos_create',['organizacao_id' => $repositorio->codrepositorio]) !!}">Novo
             Projeto</a>
         @break;
         @case ('documentacao')
