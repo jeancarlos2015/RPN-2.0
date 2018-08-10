@@ -5,7 +5,7 @@
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
       'titulo' => 'Painel',
-    'sub_titulo' => 'Novo Projeto',
+    'sub_titulo' => 'Repositório/'.$repositorio->nome.'/Novo Projeto',
     'rota' => 'painel'
     ])
     <form action="{!! route('controle_projetos.store') !!}" method="post">
@@ -17,4 +17,5 @@
     'codrepositorio' => $repositorio->codrepositorio
     ]
     )
+    </form>
 @endsection

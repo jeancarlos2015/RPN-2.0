@@ -5,7 +5,7 @@
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                    'titulo' => 'Painel',
                    'rota' => 'painel',
-                   'sub_titulo' => 'Modelos'
+                   'sub_titulo' => 'Todos Modelos / Modelos'
    ])
 
     @includeIf('layouts.layout_admin_new.componentes.tables',[

@@ -6,7 +6,7 @@
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                     'titulo' => 'Painel',
                     'rota' => 'painel',
-                    'sub_titulo' => 'Projetos/'.$projeto->nome.'/Modelos'
+                    'sub_titulo' => 'Repositório/'.$repositorio->nome.'Projetos/'.$projeto->nome.'/Modelos'
     ])
     @if(!empty($repositorio))
             @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])

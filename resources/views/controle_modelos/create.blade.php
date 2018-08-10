@@ -6,7 +6,10 @@
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                    'titulo' => 'Painel',
                    'rota' => 'painel',
-                   'sub_titulo' => 'Modelos'
+                   'sub_titulo' =>
+                   'Repositório/'.$repositorio->nome.
+                   'Projeto/'.$projeto->nome.
+                   '/Modelos/Novo Modelo'
    ])
     <form action="{!! route('controle_modelos.store') !!}" method="post">
     @includeIf('controle_modelos.form',

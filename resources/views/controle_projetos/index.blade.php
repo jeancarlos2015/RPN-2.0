@@ -4,7 +4,7 @@
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                       'titulo' => 'Painel',
-                    'sub_titulo' => 'Projetos',
+                    'sub_titulo' => 'Repositório/'.$repositorio->nome.'/Projetos',
                     'rota' => 'painel'
     ])
     @if(!empty($repositorio))
