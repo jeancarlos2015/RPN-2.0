@@ -3,15 +3,7 @@
 
     @foreach($usuarios as $usuario)
         <tr>
-            {{--<td>{!! $usuario->name !!}</td>--}}
-            {{--<td>{!! $usuario->email !!}</td>--}}
-            {{--@if(!empty($usuario->type))--}}
-            {{--<td>{!! $usuario->type !!}</td>--}}
-            {{--@else--}}
-            {{--<td>padrao</td>--}}
-            {{--@endif--}}
 
-            {{--<td>{!! $usuario->password !!}</td>--}}
             <td>
                 <div class="media">
                     <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($usuario->email) }}" alt=""
@@ -23,6 +15,11 @@
                             <div class="text-muted smaller">Tipo: {!! $usuario->type !!}</div>
                         @else
                             <div class="text-muted smaller">Tipo: Padrão</div>
+                        @endif
+                        @if(!empty($usuario->organizacao))
+                            <div class="text-muted smaller">Repositório: {!! $usuario->organizacao->nome !!}</div>
+                        @else
+                            <div class="text-muted smaller">Repositório: Nenhuma</div>
                         @endif
                     </div>
                 </div>
@@ -36,6 +33,10 @@
                 @endif
                 @if(!empty($rota_exibicao))
                     @include('componentes.link',['id' => $usuario->codusuario, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                @endif
+
+                @if(!empty($usuario->organizacao))
+                    @includeIf('componentes.form_desvincular',['id' => $usuario->codusuario])
                 @endif
             </td>
         </tr>

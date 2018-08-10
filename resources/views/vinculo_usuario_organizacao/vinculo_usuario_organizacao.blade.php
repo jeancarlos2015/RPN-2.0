@@ -8,10 +8,7 @@
                     'rota' => 'painel'
     ])
 
-    <form action="{!! route('vincular_usuario_organizacao') !!}" method="post">
-        @csrf
-        @includeIf('vinculo_usuario_organizacao.form',['acao' => 'Criar Usuário'])
-    </form>
+
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                        'titulos' => $titulos,
                        'usuarios' => $usuarios,

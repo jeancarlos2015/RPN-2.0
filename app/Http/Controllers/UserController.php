@@ -130,7 +130,9 @@ class UserController extends Controller
             $dados[0]->valor = $usuario->name;
             $dados[1]->valor = $usuario->email;
             $dados[2]->valor = $usuario->password;
-            return view('controle_usuario.edit', compact('dados', 'usuario'));
+            $usuarios = User::all();
+            $organizacoes = OrganizacaoRepository::all();
+            return view('controle_usuario.edit', compact('dados', 'usuario','usuarios','organizacoes'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -153,7 +155,7 @@ class UserController extends Controller
                 }
                 $data['tipo'] = 'success';
                 $this->create_log($data);
-                return redirect()->route('controle_usuarios.edit', [$id]);
+                return redirect()->route('painel');
             } catch (Exception $ex) {
                 $data['mensagem'] = $ex->getMessage();
                 $data['tipo'] = 'error';
@@ -240,8 +242,8 @@ class UserController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-        return redirect()->route('vinculo_usuario_organizacao');
 
+        return redirect()->route('controle_usuarios.edit',['id' => $codusuario]);
     }
 
     public function vinculo_usuario_organizacao()

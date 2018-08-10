@@ -9,8 +9,12 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>RPN - Repositório de Processos de Negócios</title>
+
+    {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">--}}
+
     <!-- Bootstrap core CSS-->
     <link href="{!! asset('vendor/bootstrap/css/bootstrap.min.css') !!}" rel="stylesheet">
+
     <link href="{!! asset('vendor/font-awesome/css/font-awesome.min.css') !!}" rel="stylesheet" type="text/css">
     <!-- Custom fonts for this template_basico-->
     <!-- Page level plugin CSS-->
