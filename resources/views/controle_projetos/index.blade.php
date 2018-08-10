@@ -2,15 +2,25 @@
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
-                      'titulo' => 'Painel',
-                    'sub_titulo' => 'Repositório/'.$repositorio->nome.'/Projetos',
-                    'rota' => 'painel'
-    ])
     @if(!empty($repositorio))
+        @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+                          'titulo' => 'Painel',
+
+                        'sub_titulo' => 'Painel/Repositório/'.$repositorio->nome.'/Projetos',
+                        'rota' => 'painel'
+        ])
+
 
         @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
 
+
+@else
+        @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+                          'titulo' => 'Painel',
+
+                        'sub_titulo' => 'Painel/Todos Projetos',
+                        'rota' => 'painel'
+        ])
     @endif
 
     @includeIf('layouts.layout_admin_new.componentes.tables',[

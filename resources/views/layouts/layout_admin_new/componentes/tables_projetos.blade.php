@@ -14,17 +14,21 @@
             {{--@endif--}}
             @if(!empty($projeto1->usuario))
                 <td>
-                    <div class="media">
-                        <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($projeto1->usuario->email) }}"
-                             alt="" width="100">
-                        <div class="media-body">
-                            <strong>Projeto - {!!  $projeto1->nome !!}</strong>
-                            <div class="text-muted smaller">Responsável: {!! $projeto1->usuario->name !!}</div>
-                            <div class="text-muted smaller">Descrição do Projeto: {!! $projeto1->descricao !!}</div>
-                            <div class="text-muted smaller">Repositório: {!! $projeto1->repositorio->nome !!}</div>
-                            <div class="text-muted smaller">Modelos: {!! count($projeto1->modelos) !!}</div>
+                    <a href="{!! route($rota_exibicao,[$projeto1->codprojeto]) !!}">
+                        <div class="media">
+
+                            <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($projeto1->usuario->email) }}"
+                                 alt="" width="100">
+                            <div class="media-body">
+                                <strong>Projeto - {!!  $projeto1->nome !!}</strong>
+                                <div class="text-muted smaller">Responsável: {!! $projeto1->usuario->name !!}</div>
+                                <div class="text-muted smaller">Descrição do Projeto: {!! $projeto1->descricao !!}</div>
+                                <div class="text-muted smaller">Repositório: {!! $projeto1->repositorio->nome !!}</div>
+                                <div class="text-muted smaller">Modelos: {!! count($projeto1->modelos) !!}</div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
+
                 </td>
 
                 <td>
