@@ -37,7 +37,8 @@ class Projeto extends Model
         'descricao',
         'codrepositorio',
         'codusuario',
-        'visibilidade'
+        'visibilidade',
+        'publico'
     ];
 
     public static function validacao()

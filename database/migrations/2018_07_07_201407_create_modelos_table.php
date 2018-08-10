@@ -21,6 +21,7 @@ class CreateModelosTable extends Migration
             $table->string('tipo');
             $table->longText('xml_modelo');
             $table->boolean('visibilidade');
+            $table->boolean('publico');
             $table->bigInteger('codprojeto');
             $table->bigInteger('codrepositorio');
             $table->bigInteger('codusuario');

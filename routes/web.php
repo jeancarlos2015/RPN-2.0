@@ -2,6 +2,14 @@
 
 Auth::routes();
 
+Route::get('/repositorios_publicos', function () {
+    $repositorios_publicos = \App\Http\Repositorys\RepositorioRepository::listar_repositorios_publicos();
+    $titulos = \App\http\Models\Repositorio::titulos_da_tabela();
+    $tipo = 'repositorio_publico';
+//    dd($repositorios_publicos);
+    return view('repositorios_publicos', compact('repositorios_publicos','tipo','titulos'));
+})->name('repositorios_publicos');
+
 Route::get('/', function () {
     return view('inicio');
 })->name('/');

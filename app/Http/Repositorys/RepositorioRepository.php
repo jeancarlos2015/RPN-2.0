@@ -24,7 +24,11 @@ class RepositorioRepository extends Repository
 
         return collect(array());
     }
-
+    public static function listar_repositorios_publicos()
+    {
+        return Repositorio::wherePublico(true)
+            ->get();
+    }
 
     public static function count()
     {

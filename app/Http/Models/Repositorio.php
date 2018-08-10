@@ -14,7 +14,8 @@ class Repositorio extends Model
     protected $fillable = [
         'nome',
         'descricao',
-        'visibilidade'
+        'visibilidade',
+        'publico'
     ];
 
     public static function validacao()

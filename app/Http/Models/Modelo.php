@@ -48,7 +48,8 @@ class Modelo extends Model
         'codprojeto',
         'codrepositorio',
         'codusuario',
-        'visibilidade'
+        'visibilidade',
+        'publico'
     ];
 
 

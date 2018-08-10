@@ -18,6 +18,7 @@ class CreateRepositoriosTable extends Migration
             $table->string('nome');
             $table->string('descricao');
             $table->boolean('visibilidade');
+            $table->boolean('publico');
 //            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });

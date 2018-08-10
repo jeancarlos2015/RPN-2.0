@@ -35,5 +35,20 @@
     </div>
 </div>
 
+<div class="form-group">
+    <label class="control-label" for="publico">Deseja publicar este repositório no site?</label>
+    <div class="controls">
+        <input name="publico" type="hidden" value="false">
+        <label class="switch-light switch-candy">
+            <input type="checkbox" name="publico"
+                   value="true" {!! !empty($repositorio->publico) ? ($repositorio->publico ? 'checked' : '') : '' !!}>
+            <span>
+                <span>Não <i class='fa fa-thumbs-down'></i></span>
+                <span>Sim <i class='fa fa-thumbs-up'></i></span>
+            <a></a>
+          </span>
+        </label>
+    </div>
+</div>
 <button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>
 
