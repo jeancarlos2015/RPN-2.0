@@ -126,7 +126,7 @@ class Projeto extends Model
 
     public function modelos()
     {
-        return $this->belongsTo(Modelo::class, 'codprojeto', 'codprojeto');
+        return $this->hasMany(Modelo::class, 'codprojeto', 'codprojeto');
     }
 
 

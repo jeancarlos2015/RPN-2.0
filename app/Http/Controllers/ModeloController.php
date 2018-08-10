@@ -322,6 +322,7 @@ class ModeloController extends Controller
             } else {
                 return redirect()->route('controle_modelos_index',
                     [
+
                         'codrepositorio' => $modelo->codrepositorio,
                         'codprojeto' => $modelo->codprojeto
                     ]
