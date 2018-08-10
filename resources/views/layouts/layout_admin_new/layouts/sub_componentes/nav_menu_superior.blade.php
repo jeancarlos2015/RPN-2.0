@@ -8,17 +8,17 @@
         </li>
     @endif
 
-    @if(!empty(Auth::user()->organizacao))
+    @if(!empty(Auth::user()->repositorio))
         <li class="nav-item">
             <a class="nav-link">
-                <p class="fa fa-database"> Repositório: {{ Auth::user()->organizacao->nome }} </p>
+                <p class="fa fa-database"> Repositório: {{ Auth::user()->repositorio->nome }} </p>
                  <span class="sr-only"></span>
             </a>
         </li>
     @endif
 
 
-    @if(!empty(Auth::user()->organizacao) || Auth::user()->email==='jeancarlospenas25@gmail.com')
+    @if(!empty(Auth::user()->repositorio) || Auth::user()->email==='jeancarlospenas25@gmail.com')
 
         <div class="dropdown">
             <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"

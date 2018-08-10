@@ -7,8 +7,8 @@
 
             {{--<td>{!! $projeto1->nome !!}</td>--}}
             {{--<td>{!! $projeto1->descricao !!}</td>--}}
-            {{--@if(!empty($projeto1->organizacao->nome))--}}
-            {{--<td>{!! $projeto1->organizacao->nome !!}</td>--}}
+            {{--@if(!empty($projeto1->repositorio->nome))--}}
+            {{--<td>{!! $projeto1->repositorio->nome !!}</td>--}}
             {{--@else--}}
             {{--<td>Foi Removido/Não Informado</td>--}}
             {{--@endif--}}

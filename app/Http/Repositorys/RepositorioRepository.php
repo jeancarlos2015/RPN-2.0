@@ -3,23 +3,23 @@
 namespace App\Http\Repositorys;
 
 
-use App\Http\Models\Organizacao;
+use App\Http\Models\Repositorio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
-class OrganizacaoRepository extends Repository
+class RepositorioRepository extends Repository
 {
 
     public function __construct()
     {
-        $this->setModel(Organizacao::class);
+        $this->setModel(Repositorio::class);
     }
 
     public static function listar()
     {
         if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
-            return Organizacao::all();
+            return Repositorio::all();
         }
 
         return collect(array());
@@ -31,9 +31,9 @@ class OrganizacaoRepository extends Repository
         return collect(self::listar())->count();
     }
 
-    public static function atualizar(Request $request, $codorganizacao)
+    public static function atualizar(Request $request, $codrepositorio)
     {
-        $value = Organizacao::findOrFail($codorganizacao);
+        $value = Repositorio::findOrFail($codrepositorio);
         $value->update($request->all());
         self::limpar_cache();
         return $value;
@@ -46,19 +46,19 @@ class OrganizacaoRepository extends Repository
 
     public static function incluir(Request $request)
     {
-        $value = Organizacao::create($request->all());
+        $value = Repositorio::create($request->all());
         self::limpar_cache();
         return $value;
     }
 
-    public static function findOrFail($codorganizacao)
+    public static function findOrFail($codrepositorio)
     {
 
     }
 
-    public static function excluir($codorganizacao)
+    public static function excluir($codrepositorio)
     {
-        $doc = Organizacao::findOrFail($codorganizacao);
+        $doc = Repositorio::findOrFail($codrepositorio);
         $value = $doc->delete();
         self::limpar_cache();
         return $value;
@@ -66,15 +66,15 @@ class OrganizacaoRepository extends Repository
 
     public static function excluir_todos()
     {
-        $organizacoes = Organizacao::all();
-        foreach ($organizacoes as $organizacao) {
+        $repositorios = Repositorio::all();
+        foreach ($repositorios as $organizacao) {
             $organizacao->delete();
         }
     }
 
     public static function organizacao_existe($nome_da_organizacao)
     {
-        $organizacoes = self::listar();
-        return $organizacoes->where('nome', $nome_da_organizacao)->count() > 0;
+        $repositorios = self::listar();
+        return $repositorios->where('nome', $nome_da_organizacao)->count() > 0;
     }
 }

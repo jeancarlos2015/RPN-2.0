@@ -8,9 +8,9 @@
                    'sub_titulo' => 'Nova Organização'
    ])
 
-    <form action="{!! route('controle_organizacoes.store') !!}" method="post">
+    <form action="{!! route('controle_repositorios') !!}" method="post">
         {{ method_field('POST')}}
-        @includeIf('controle_organizacoes.form',
+        @includeIf('controle_repositorios.form',
         [
         'acao' => 'Salvar e Proseguir',
         'dados' => $dados,

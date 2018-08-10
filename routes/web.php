@@ -17,7 +17,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('edicao_modelo_diagramatico/{codmodelo}', 'ModeloController@edicao_modelo_diagramatico')->name('edicao_modelo_diagramatico');
 
 
-        Route::resource('controle_organizacoes', 'OrganizacaoController')
+        Route::resource('controle_repositorios', 'RepositorioController')
             ->middleware('can:acesso');
 
         Route::resource('controle_projetos', 'ProjetoController')
@@ -28,12 +28,12 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_usuarios', 'UserController')
             ->middleware('can:admin');
         Route::get('controle_usuarios_edit/{codusuario}', 'UserController@edit')->name('controle_usuarios_edit');
-        Route::post('vincular_usuario_organizacao', 'UserController@vincular_usuario_organizacao')
-            ->name('vincular_usuario_organizacao')
+        Route::post('vincular_usuario_repositorio', 'UserController@vincular_usuario_repositorio')
+            ->name('vincular_usuario_repositorio')
             ->middleware('can:admin');
 
-        Route::get('vinculo_usuario_organizacao', 'UserController@vinculo_usuario_organizacao')
-            ->name('vinculo_usuario_organizacao')
+        Route::get('vinculo_usuario_repositorio', 'UserController@vinculo_usuario_repositorio')
+            ->name('vinculo_usuario_repositorio')
             ->middleware('can:admin');
 
 
@@ -54,7 +54,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
 
-        Route::get('controle_projetos_index/organizacao{codorganizacao}', 'ProjetoController@index')
+        Route::get('controle_projetos_index/repositorio{codrepositorio}', 'ProjetoController@index')
             ->name('controle_projetos_index')
             ->middleware('can:acesso');
 
@@ -67,14 +67,14 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
 
-        Route::get('controle_projetos_create/{codorganizacao}', 'ProjetoController@create')
+        Route::get('controle_projetos_create/{codrepositorio}', 'ProjetoController@create')
             ->name('controle_projetos_create')
             ->middleware('can:acesso');
 
-        Route::get('controle_modelos_create/organizacao/{codorganizacao}/projeto/{codprojeto}', 'ModeloController@create')
+        Route::get('controle_modelos_create/repositorio/{codrepositorio}/projeto/{codprojeto}', 'ModeloController@create')
             ->name('controle_modelos_create')
             ->middleware('can:acesso');
-        Route::get('controle_modelos_index/organizacao/{codorganizacao}/projeto/{codprojeto}/usuario/{codusuario}', 'ModeloController@index')
+        Route::get('controle_modelos_index/repositorio/{codrepositorio}/projeto/{codprojeto}/usuario/{codusuario}', 'ModeloController@index')
             ->name('controle_modelos_index')
             ->middleware('can:acesso');;
 
@@ -109,6 +109,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         Route::get('pagina_inicializacao_repositorio', 'GitController@pagina_inicializacao_repositorio')->name('pagina_inicializacao_repositorio');
 
-        Route::get('painel', 'OrganizacaoController@painel')->name('painel');
+        Route::get('painel', 'RepositorioController@painel')->name('painel');
 
     });

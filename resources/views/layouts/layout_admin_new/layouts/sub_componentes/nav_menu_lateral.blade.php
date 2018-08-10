@@ -1,5 +1,5 @@
 <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-    @if(!empty(Auth::user()->organizacao) || Auth::user()->email==='jeancarlospenas25@gmail.com')
+    @if(!empty(Auth::user()->repositorio) || Auth::user()->email==='jeancarlospenas25@gmail.com')
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents1">
                 <i class="fa fa-fw fa-list"></i>
@@ -16,8 +16,8 @@
                 </li>
                 @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
                     <li>
-                        <a href="{!! route('controle_organizacoes.index') !!}"><i
-                                    class="fa fa-fw fa-pencil"></i>Organizações</a>
+                        <a href="{!! route('controle_repositorios.index') !!}"><i
+                                    class="fa fa-fw fa-pencil"></i>Repositórios</a>
                     </li>
                 @endif
                 {{--<li>--}}
@@ -49,7 +49,7 @@
                             Usuário</a>
                     </li>
                     <li>
-                        <a href="{!! route('vinculo_usuario_organizacao') !!}"><i class="fa fa-fw fa-pencil"></i>Vínculos
+                        <a href="{!! route('vinculo_usuario_repositorio') !!}"><i class="fa fa-fw fa-pencil"></i>Vínculos
                             de Usuários</a>
                     </li>
                     <li>

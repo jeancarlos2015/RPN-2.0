@@ -21,9 +21,9 @@
     {{--</div>--}}
 {{--@endfor--}}
 
-{{--@if(!empty($organizacao))--}}
-    {{--<input type="hidden" name="codorganizacao" class="form-control"--}}
-           {{--value="{!! $organizacao->codorganizacao !!}">--}}
+{{--@if(!empty($repositorio))--}}
+    {{--<input type="hidden" name="codrepositorio" class="form-control"--}}
+           {{--value="{!! $repositorio->codrepositorio !!}">--}}
 {{--@endif--}}
 
 {{--@if(!empty($projeto))--}}

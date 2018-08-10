@@ -1,4 +1,4 @@
-{{--{!! dd($dado->organizacao->nome ) !!}--}}
+{{--{!! dd($dado->repositorio->nome ) !!}--}}
 
 <td>{!! $dado->id !!}</td>
 <td>{!! $dado->nome !!}</td>

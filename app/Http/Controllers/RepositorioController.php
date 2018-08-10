@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Organizacao;
+use App\http\Models\Repositorio;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\ModeloRepository;
-use App\Http\Repositorys\OrganizacaoRepository;
 use App\Http\Repositorys\ProjetoRepository;
+use App\Http\Repositorys\RepositorioRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class OrganizacaoController extends Controller
+class RepositorioController extends Controller
 {
 
 
@@ -24,12 +24,12 @@ class OrganizacaoController extends Controller
     public function index()
     {
         try {
-            $organizacoes = OrganizacaoRepository::listar();
-            $titulos = Organizacao::titulos_da_tabela();
-            $campos = Organizacao::campos();
-            $tipo = 'organizacao';
+            $repositorios = RepositorioRepository::listar();
+            $titulos = Repositorio::titulos_da_tabela();
+            $campos = Repositorio::campos();
+            $tipo = 'repositorio';
             $log = LogRepository::log();
-            return view('controle_organizacoes.index', compact('organizacoes', 'titulos', 'campos', 'tipo', 'log'));
+            return view('controle_repositorios.index', compact('repositorios', 'titulos', 'campos', 'tipo', 'log'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -45,9 +45,9 @@ class OrganizacaoController extends Controller
             return [
                 'todos_modelos',
                 'todos_projetos',
-                'controle_organizacoes.index',
+                'controle_repositorios.index',
             ];
-        } else if (!empty(Auth::user()->organizacao)) {
+        } else if (!empty(Auth::user()->repositorio)) {
             return [
                 'todos_modelos',
                 'todos_projetos'
@@ -65,7 +65,7 @@ class OrganizacaoController extends Controller
                 'Projetos',
                 'Organizações'
             ];
-        } else if (!empty(Auth::user()->organizacao)) {
+        } else if (!empty(Auth::user()->repositorio)) {
             return [
                 'Modelos',
                 'Projetos'
@@ -76,7 +76,7 @@ class OrganizacaoController extends Controller
 
     private function quantidades()
     {
-        $qt_organizacoes = OrganizacaoRepository::count();
+        $qt_organizacoes = RepositorioRepository::count();
         $qt_projetos = ProjetoRepository::count();
         $qt_modelos = ModeloRepository::count();
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
@@ -86,7 +86,7 @@ class OrganizacaoController extends Controller
                 $qt_projetos,
                 $qt_organizacoes
             ];
-        } else if (!empty(Auth::user()->organizacao)) {
+        } else if (!empty(Auth::user()->repositorio)) {
             return [
                 $qt_modelos,
                 $qt_projetos
@@ -126,8 +126,8 @@ class OrganizacaoController extends Controller
 
     public function create()
     {
-        $dados = Organizacao::dados();
-        return view('controle_organizacoes.create', compact('dados'));
+        $dados = Repositorio::dados();
+        return view('controle_repositorios.create', compact('dados'));
     }
 
 
@@ -135,15 +135,15 @@ class OrganizacaoController extends Controller
     {
         try {
 
-            $erros = \Validator::make($request->all(), Organizacao::validacao());
+            $erros = \Validator::make($request->all(), Repositorio::validacao());
             if ($erros->fails()) {
-                return redirect()->route('controle_organizacoes.create')
+                return redirect()->route('controle_repositorios.create')
                     ->withErrors($erros)
                     ->withInput();
             }
-            if (!OrganizacaoRepository::organizacao_existe($request->nome)) {
+            if (!RepositorioRepository::organizacao_existe($request->nome)) {
 
-                $organizacao = Organizacao::create($request->all());
+                $organizacao = Repositorio::create($request->all());
 
                 if (isset($organizacao)) {
                     flash('Organização criada com sucesso!!');
@@ -153,13 +153,13 @@ class OrganizacaoController extends Controller
 
                 return redirect()->route('controle_projetos_index',
                     [
-                        'codorganizacao' => $organizacao->codorganizacao
+                        'codrepositorio' => $organizacao->codrepositorio
                     ]
                 );
             } else {
                 $data['tipo'] = 'existe';
                 $this->create_log($data);
-                return redirect()->route('controle_organizacoes.create');
+                return redirect()->route('controle_repositorios.create');
             }
 
         } catch (\Exception $ex) {
@@ -173,11 +173,11 @@ class OrganizacaoController extends Controller
     }
 
 
-    public function show($codorganizacao)
+    public function show($codrepositorio)
     {
         return redirect()->route('controle_projetos_index',
             [
-                'codorganizacao' => $codorganizacao
+                'codrepositorio' => $codrepositorio
             ]
         );
     }
@@ -186,11 +186,11 @@ class OrganizacaoController extends Controller
     public function edit($id)
     {
         try {
-            $organizacao = Organizacao::findOrFail($id);
-            $dados = Organizacao::dados();
+            $organizacao = Repositorio::findOrFail($id);
+            $dados = Repositorio::dados();
             $dados[0]->valor = $organizacao->nome;
             $dados[1]->valor = $organizacao->descricao;
-            return view('controle_organizacoes.edit', compact('dados', 'organizacao'));
+            return view('controle_repositorios.edit', compact('dados', 'repositorio'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -202,17 +202,17 @@ class OrganizacaoController extends Controller
     }
 
 
-    public function update(Request $request, $codorganizacao)
+    public function update(Request $request, $codrepositorio)
     {
         try {
-            $organizacao = OrganizacaoRepository::atualizar($request, $codorganizacao);
+            $organizacao = RepositorioRepository::atualizar($request, $codrepositorio);
             if (isset($organizacao)) {
                 flash('Organização Atualizada com sucesso!!');
             } else {
                 flash('Organização não foi Atualizada!!');
             }
 
-            return redirect()->route('controle_organizacoes.index');
+            return redirect()->route('controle_repositorios.index');
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -224,13 +224,13 @@ class OrganizacaoController extends Controller
     }
 
 
-    public function destroy($codorganizacao)
+    public function destroy($codrepositorio)
     {
         try {
-            OrganizacaoRepository::excluir($codorganizacao);
+            RepositorioRepository::excluir($codrepositorio);
 
             flash('Operação feita com sucesso!!');
-            return response()->redirectToRoute('controle_organizacoes.index');
+            return response()->redirectToRoute('controle_repositorios.index');
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';

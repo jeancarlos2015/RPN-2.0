@@ -5,12 +5,12 @@
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                     'titulo' => 'Painel',
                     'sub_titulo' => 'Organizacoes',
-                    'rota' => 'controle_organizacoes.index'
+                    'rota' => 'controle_repositorios.index'
     ])
 
-    <form action="{!! route('controle_organizacoes.update',[$organizacao->codorganizacao]) !!}" method="POST">
+    <form action="{!! route('controle_repositorios',[$repositorio->codrepositorio]) !!}" method="POST">
     {{ method_field('PUT')}}
-    @includeIf('controle_organizacoes.form',['acao' => 'Atualizar e Proseguir','dados' => $dados,'MAX' => 2])
+    @includeIf('controle_repositorios.form',['acao' => 'Atualizar e Proseguir','dados' => $dados,'MAX' => 2])
     </form>
 
 @endsection

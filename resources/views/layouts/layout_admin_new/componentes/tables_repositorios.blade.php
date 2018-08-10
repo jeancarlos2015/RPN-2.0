@@ -1,38 +1,32 @@
 @if(!empty($repositorios))
     <tbody>
-
-    @foreach($repositorios as $repositorio)
+    @foreach($repositorios as $organizacao1)
         <tr>
-            <td>{!! $repositorio['name'] !!}</td>
-            <td>{!! $repositorio['full_name'] !!}</td>
+            {{--<td>{!! $organizacao1->codrepositorio !!}</td>--}}
+            {{--<td>{!! $organizacao1->nome !!}</td>--}}
+            {{--<td>{!! $organizacao1->descricao !!}</td>--}}
             <td>
-                <div class="form-group">
-                    <a href="{!!$repositorio["html_url"] !!}"><img src="{!! asset('img/olho.png') !!} "
-                                                                   style="width: 20px" title="Visualizar"></a>
-                </div>
-                <div class="form-group">
-                    <a href="{!!route('selecionar_repositorio',[
-                'repositorio_atual' => $repositorio['name'],
-                'default_branch' => $repositorio['default_branch']
-
-                ]) !!}"
-                       style="display: inline-block">
-                        <input type="image" src="{!! asset('img/select.png') !!}" alt="Submit" width="20"
-                               title="Selecionar">
-                    </a>
-                </div>
-                @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
-                    <div class="form-group">
-                        <a href="{!!route('delete_repository',[
-                'repositorio_atual' => $repositorio['name'],
-                'default_branch' => $repositorio['default_branch']
-
-                ]) !!}"
-                           style="display: inline-block">
-                            <input type="image" src="{!! asset('img/delete.png') !!}" alt="Submit" width="20"
-                                   title="Remover Base/Repositório">
-                        </a>
+                <div class="media">
+                    <div class="media-body">
+                        <strong>{!!  $organizacao1->nome !!}</strong>
+                        <div class="text-muted smaller">Código da Organização: {!! $organizacao1->codrepositorio !!}</div>
+                        <div class="text-muted smaller">Participações: {!! count($organizacao1->usuarios) !!}</div>
+                        <div class="text-muted smaller">Descrição da Organização: {!! $organizacao1->descricao !!}</div>
                     </div>
+                </div>
+            </td>
+            <td>
+                @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
+
+                    @if(!empty($rota_edicao))
+                        @include('componentes.link',['id' => $organizacao1->codrepositorio, 'rota' => $rota_edicao])
+                    @endif
+                    @if(!empty($rota_exclusao))
+                        @include('componentes.form_delete',['id' => $organizacao1->codrepositorio, 'rota' => $rota_exclusao])
+                    @endif
+                    @if(!empty($rota_exibicao))
+                        @include('componentes.link',['id' => $organizacao1->codrepositorio, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                    @endif
                 @endif
 
             </td>

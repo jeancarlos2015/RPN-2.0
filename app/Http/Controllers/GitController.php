@@ -63,7 +63,7 @@ class GitController extends Controller
             $branch_atual = 'Em construção';
             $repositorios = GitSistemaRepository::listar_repositorios();
 
-            $tipo = 'repositorio';
+            $tipo = 'repositorio_github';
             $titulos = [
                 'Nome Do Repositório',
                 'Nome Completo Do Repositório',

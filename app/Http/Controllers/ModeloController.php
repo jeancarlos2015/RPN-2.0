@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\Modelo;
-use App\Http\Models\Organizacao;
+use App\Http\Models\Repositorio;
 use App\Http\Models\Projeto;
 use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\ModeloRepository;
@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Auth;
 class ModeloController extends Controller
 {
 
-    public function index($codorganizacao, $codprojeto, $codusuario)
+    public function index($codrepositorio, $codprojeto, $codusuario)
     {
         try {
             $projeto = Projeto::findOrFail($codprojeto);
-            $organizacao = Organizacao::findOrFail($codorganizacao);
+            $organizacao = Repositorio::findOrFail($codrepositorio);
             $titulos = Modelo::titulos();
-            $modelos = ModeloRepository::listar_modelo_por_projeto_organizacao($codorganizacao, $codprojeto, $codusuario);
+            $modelos = ModeloRepository::listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -28,7 +28,7 @@ class ModeloController extends Controller
             $this->create_log($data);
         }
         $tipo = 'modelo';
-        return view('controle_modelos.index', compact('modelos', 'projeto', 'organizacao', 'titulos', 'tipo'));
+        return view('controle_modelos.index', compact('modelos', 'projeto', 'repositorio', 'titulos', 'tipo'));
     }
 
     public function todos_modelos()
@@ -59,10 +59,10 @@ class ModeloController extends Controller
         $dado['nome'] = $request->nome;
         $dado['descricao'] = $request->descricao;
         $dado['codprojeto'] = $request->codprojeto;
-        $dado['codorganizacao'] = $request->codorganizacao;
+        $dado['codrepositorio'] = $request->codrepositorio;
         try {
             $projeto = Projeto::findOrFail($request->codprojeto);
-            $organizacao = Organizacao::findOrFail($request->codorganizacao);
+            $organizacao = Repositorio::findOrFail($request->codrepositorio);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -70,14 +70,14 @@ class ModeloController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-        return view('controle_modelos.create', compact('dado', 'projeto', 'organizacao'));
+        return view('controle_modelos.create', compact('dado', 'projeto', 'repositorio'));
     }
 
-    public function create($codorganizacao, $codprojeto)
+    public function create($codrepositorio, $codprojeto)
     {
         try {
             $projeto = Projeto::findOrFail($codprojeto);
-            $organizacao = Organizacao::findOrFail($codorganizacao);
+            $organizacao = Repositorio::findOrFail($codrepositorio);
             $dados = Modelo::dados();
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -86,7 +86,7 @@ class ModeloController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-        return view('controle_modelos.create', compact('dados', 'organizacao', 'projeto'));
+        return view('controle_modelos.create', compact('dados', 'repositorio', 'projeto'));
     }
 
     public function edicao_modelo_diagramatico($codmodelo)
@@ -102,13 +102,13 @@ class ModeloController extends Controller
         return view('controle_modelos.modeler', compact('modelo'));
     }
 
-//$codorganizacao, $codprojeto, $codmodelo
+//$codrepositorio, $codprojeto, $codmodelo
     public
     function store(Request $request)
     {
         try {
             $codprojeto = $request->codprojeto;
-            $codorganizacao = $request->codorganizacao;
+            $codrepositorio = $request->codrepositorio;
             $data['all'] = $request->all();
             $data['validacao'] = Modelo::validacao();
             if (!$this->exists_errors($data)) {
@@ -116,7 +116,7 @@ class ModeloController extends Controller
                     $request->request->add([
                         'xml_modelo' => Modelo::get_modelo_default(),
                         'codprojeto' => $codprojeto,
-                        'codorganizacao' => $codorganizacao,
+                        'codrepositorio' => $codrepositorio,
                         'codusuario' => Auth::user()->codusuario
                     ]);
                     $modelo = Modelo::create($request->all());
@@ -130,7 +130,7 @@ class ModeloController extends Controller
                     $data['tipo'] = 'existe';
                     $this->create_log($data);
                     return redirect()->route('controle_modelos_create', [
-                        'codorganizacao' => $codorganizacao,
+                        'codrepositorio' => $codrepositorio,
                         'codprojeto' => $codprojeto
                     ]);
                 }
@@ -138,7 +138,7 @@ class ModeloController extends Controller
             }
             $erros = $this->get_errors($data);
             return redirect()->route('controle_modelos_create', [
-                'codorganizacao' => $codorganizacao,
+                'codrepositorio' => $codrepositorio,
                 'codprojeto' => $codprojeto
             ])
                 ->withErrors($erros)
@@ -166,12 +166,12 @@ class ModeloController extends Controller
         try {
             $modelo = Modelo::findOrFail($codmodelo);
             $projeto = $modelo->projeto;
-            $organizacao = $modelo->organizacao;
+            $organizacao = $modelo->repositorio;
             if ($modelo->tipo === 'declarativo') {
                 return view('controle_modelos.form_declarativo', compact(
                     'modelo',
                     'projeto',
-                    'organizacao'
+                    'repositorio'
                 ));
             } else {
                 $path_modelo = public_path('novo_bpmn/');
@@ -200,12 +200,12 @@ class ModeloController extends Controller
     {
         try {
             $modelo = Modelo::findOrFail($codmodelo);
-            if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
+            if (empty($modelo->codprojeto) || empty($modelo->codrepositorio)) {
                 flash('Não existem tarefas para serem exibidas!!!')->error();
                 return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
             } else {
                 return redirect()->route('controle_tarefas_index', [
-                    'codorganizacao' => $modelo->codorganizacao,
+                    'codrepositorio' => $modelo->codrepositorio,
                     'codprojeto' => $modelo->codprojeto,
                     'codmodelo' => $modelo->codmodelo
                 ]);
@@ -234,13 +234,13 @@ class ModeloController extends Controller
 
             $dados = Modelo::dados();
             $projeto = $modelo->projeto;
-            $organizacao = $modelo->organizacao;
+            $organizacao = $modelo->repositorio;
 
             $dados[0]->valor = $modelo->nome;
             $dados[1]->valor = $modelo->descricao;
             $dados[2]->valor = $modelo->tipo;
 
-            return view('controle_modelos.edit', compact('dados', 'modelo', 'projeto', 'organizacao'));
+            return view('controle_modelos.edit', compact('dados', 'modelo', 'projeto', 'repositorio'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -270,7 +270,7 @@ class ModeloController extends Controller
                 ]);
             } else {
                 return redirect()->route('controle_tarefas_index', [
-                    'codorganizacao' => $modelo->codorganizacao,
+                    'codrepositorio' => $modelo->codrepositorio,
                     'codprojeto' => $modelo->codprojeto,
                     'codmodelo' => $modelo->codmodelo
                 ]);
@@ -316,13 +316,13 @@ class ModeloController extends Controller
             $modelo = Modelo::findOrFail($codprojeto);
             $modelo->delete();
             flash('Operação feita com sucesso!!');
-            if (empty($modelo->codprojeto) || empty($modelo->codorganizacao)) {
+            if (empty($modelo->codprojeto) || empty($modelo->codrepositorio)) {
 
                 return redirect()->route('todos_modelos');
             } else {
                 return redirect()->route('controle_modelos_index',
                     [
-                        'codorganizacao' => $modelo->codorganizacao,
+                        'codrepositorio' => $modelo->codrepositorio,
                         'codprojeto' => $modelo->codprojeto
                     ]
                 );

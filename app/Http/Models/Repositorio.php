@@ -1,34 +1,16 @@
 <?php
 
-namespace App\Http\Models;
+namespace App\http\Models;
 
 use App\Http\Util\Dado;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * App\Http\Models\Organizacao
- *
- * @property int $codorganizacao
- * @property string $nome
- * @property string $descricao
- * @property int $codusuario
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property-read \App\Http\Models\Projeto $projetos
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereCodorganizacao($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereCodusuario($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereDescricao($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereNome($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Organizacao whereUpdatedAt($value)
- * @mixin \Eloquent
- */
-class Organizacao extends Model
+class Repositorio extends Model
 {
     protected $connection = 'pgsql';
-    protected $primaryKey = 'codorganizacao';
-    protected $table = 'organizacoes';
+    protected $primaryKey = 'codrepositorio';
+    protected $table = 'repositorios';
     protected $fillable = [
         'nome',
         'descricao',
@@ -49,7 +31,7 @@ class Organizacao extends Model
 //            'ID',
 //            'Nome',
 //            'Descrição',
-            'Organizações',
+            'Repositórios',
             'Ações'
         ];
     }
@@ -69,6 +51,7 @@ class Organizacao extends Model
             'text'
         ];
     }
+
     public static function atributos_dos_campos()
     {
         return [
@@ -109,19 +92,20 @@ class Organizacao extends Model
         }
         return $dados;
     }
+
     public function usuarios()
     {
-        return $this->hasMany(User::class, 'codorganizacao', 'codorganizacao');
+        return $this->hasMany(User::class, 'codrepositorio', 'codrepositorio');
     }
 
     public function projetos()
     {
-        return $this->belongsTo(Projeto::class, 'codorganizacao', 'codorganizacao');
+        return $this->belongsTo(Projeto::class, 'codrepositorio', 'codrepositorio');
     }
 
     public function modelos()
     {
-        return $this->belongsTo(Modelo::class, 'codorganizacao', 'codorganizacao');
+        return $this->belongsTo(Modelo::class, 'codrepositorio', 'codrepositorio');
     }
 
 
