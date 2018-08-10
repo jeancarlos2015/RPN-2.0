@@ -6,15 +6,12 @@
         @endforeach
     </select>
 </div>
-
 <div class="form-group">
-    <label>Usuários</label>
-    <select class="selectpicker form-control" name="codusuario">
-        @foreach($usuarios as $usuario)
-            <option value="{!! $usuario->codusuario !!}">{!! $usuario->name !!}</option>
-        @endforeach
-    </select>
+
+        <input type="text" value="{!! $usuario->name !!}" class="form-control" disabled />
 
 </div>
+
+<input type="hidden" value="{!! $usuario->codusuario !!}" name="codusuario"/>
 
 <button type="submit" class="btn btn-dark form-control">Vincular Usuário</button>

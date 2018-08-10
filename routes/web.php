@@ -27,12 +27,12 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         Route::resource('controle_usuarios', 'UserController')
             ->middleware('can:admin');
-
+        Route::get('controle_usuarios_edit/{codusuario}', 'UserController@edit')->name('controle_usuarios_edit');
         Route::post('vincular_usuario_organizacao', 'UserController@vincular_usuario_organizacao')
             ->name('vincular_usuario_organizacao')
             ->middleware('can:admin');
 
-   Route::get('vinculo_usuario_organizacao', 'UserController@vinculo_usuario_organizacao')
+        Route::get('vinculo_usuario_organizacao', 'UserController@vinculo_usuario_organizacao')
             ->name('vinculo_usuario_organizacao')
             ->middleware('can:admin');
 
@@ -57,7 +57,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('controle_projetos_index/organizacao{codorganizacao}', 'ProjetoController@index')
             ->name('controle_projetos_index')
             ->middleware('can:acesso');
-
 
 
         Route::get('todos_modelos', 'ModeloController@todos_modelos')
