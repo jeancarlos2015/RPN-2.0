@@ -23,8 +23,8 @@ class ProjetoRepository extends Repository
             $result =  Projeto::all();
             return $result;
         } else if (!empty(Auth::user()->repositorio)) {
-            $organizacao = Auth::user()->repositorio;
-            return Projeto::whereCodorganizacao($organizacao->codrepositorio)
+            $repositorio = Auth::user()->repositorio;
+            return Projeto::where('codrepositorio',$repositorio->codrepositorio)
                 ->where('visibilidade', 'true')
                 ->get();
         }
@@ -32,13 +32,13 @@ class ProjetoRepository extends Repository
 
     }
 
-    public static function listar_por_organizacao($codrepositorio)
+    public static function listar_por_repositorio($codrepositorio)
     {
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
-            return Projeto::whereCodorganizacao($codrepositorio)
+            return Projeto::where('codrepositorio',$codrepositorio)
                 ->get();
         }
-        return Projeto::whereCodorganizacao($codrepositorio)
+        return Projeto::where('codrepositorio',$codrepositorio)
             ->orwhere('visibilidade', 'true')
             ->get();
     }

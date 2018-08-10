@@ -17,7 +17,7 @@ class ModeloController extends Controller
     {
         try {
             $projeto = Projeto::findOrFail($codprojeto);
-            $organizacao = Repositorio::findOrFail($codrepositorio);
+            $repositorio = Repositorio::findOrFail($codrepositorio);
             $titulos = Modelo::titulos();
             $modelos = ModeloRepository::listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario);
         } catch (\Exception $ex) {
@@ -62,7 +62,7 @@ class ModeloController extends Controller
         $dado['codrepositorio'] = $request->codrepositorio;
         try {
             $projeto = Projeto::findOrFail($request->codprojeto);
-            $organizacao = Repositorio::findOrFail($request->codrepositorio);
+            $repositorio = Repositorio::findOrFail($request->codrepositorio);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -77,7 +77,7 @@ class ModeloController extends Controller
     {
         try {
             $projeto = Projeto::findOrFail($codprojeto);
-            $organizacao = Repositorio::findOrFail($codrepositorio);
+            $repositorio = Repositorio::findOrFail($codrepositorio);
             $dados = Modelo::dados();
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -166,7 +166,7 @@ class ModeloController extends Controller
         try {
             $modelo = Modelo::findOrFail($codmodelo);
             $projeto = $modelo->projeto;
-            $organizacao = $modelo->repositorio;
+            $repositorio = $modelo->repositorio;
             if ($modelo->tipo === 'declarativo') {
                 return view('controle_modelos.form_declarativo', compact(
                     'modelo',
@@ -234,7 +234,7 @@ class ModeloController extends Controller
 
             $dados = Modelo::dados();
             $projeto = $modelo->projeto;
-            $organizacao = $modelo->repositorio;
+            $repositorio = $modelo->repositorio;
 
             $dados[0]->valor = $modelo->nome;
             $dados[1]->valor = $modelo->descricao;

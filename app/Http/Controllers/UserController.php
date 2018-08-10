@@ -229,8 +229,8 @@ class UserController extends Controller
         $codrepositorio = $request->codrepositorio;
         try {
             $usuario = User::findOrFail($codusuario);
-            $organizacao = Repositorio::findOrFail($codrepositorio);
-            $usuario->codrepositorio = $organizacao->codrepositorio;
+            $repositorio = Repositorio::findOrFail($codrepositorio);
+            $usuario->codrepositorio = $repositorio->codrepositorio;
             $usuario->update();
             $data['tipo'] = 'success';
             $this->create_log($data);

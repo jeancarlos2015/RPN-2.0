@@ -10,7 +10,7 @@
         <div class="card-header">
             <h4><strong>Vinculação De Usuários</strong></h4>
         </div>
-        <form action="{!! route('vincular_usuario_organizacao') !!}" method="post">
+        <form action="{!! route('vincular_usuario_repositorio') !!}" method="post">
             {{ method_field('POST')}}
             @csrf
             @includeIf('vinculo_usuario_repositorio.form',[

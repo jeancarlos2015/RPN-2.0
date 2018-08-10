@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $codusuario
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property-read \App\Http\Models\Repositorio $organizacao
+ * @property-read \App\Http\Models\Repositorio $repositorio
  * @property-read \App\Http\Models\Projeto $projeto
  * @property-read \App\Http\Models\Regra $regras
  * @property-read \App\Http\Models\ObjetoDeFluxo $tarefas

@@ -100,12 +100,12 @@ class Repositorio extends Model
 
     public function projetos()
     {
-        return $this->belongsTo(Projeto::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasMany(Projeto::class, 'codrepositorio', 'codrepositorio');
     }
 
     public function modelos()
     {
-        return $this->belongsTo(Modelo::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasMany(Modelo::class, 'codrepositorio', 'codrepositorio');
     }
 
 

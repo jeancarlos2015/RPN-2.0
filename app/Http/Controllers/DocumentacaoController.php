@@ -92,8 +92,8 @@ class DocumentacaoController extends Controller
     public function update(Request $request, $coddocumentacao)
     {
         try {
-            $organizacao = DocumentacaoRepository::atualizar($request, $coddocumentacao);
-            if (isset($organizacao)) {
+            $repositorio = DocumentacaoRepository::atualizar($request, $coddocumentacao);
+            if (isset($repositorio)) {
                 flash('Documentação Atualizada com sucesso!!');
             } else {
                 flash('Documentação não foi Atualizada!!');

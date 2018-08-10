@@ -16,8 +16,8 @@ class ProjetoController extends Controller
     public function index($codrepositorio)
     {
         try {
-            $organizacao = Repositorio::findOrFail($codrepositorio);
-            $projetos = ProjetoRepository::listar_por_organizacao($codrepositorio);
+            $repositorio = Repositorio::findOrFail($codrepositorio);
+            $projetos = ProjetoRepository::listar_por_repositorio($codrepositorio);
             $titulos = Projeto::titulos_da_tabela();
             $tipo = 'projeto';
             $log = LogRepository::log();
@@ -37,7 +37,7 @@ class ProjetoController extends Controller
         try {
             $projetos = ProjetoRepository::listar();
             $titulos = Projeto::titulos_da_tabela();
-            $organizacao = Auth::user()->repositorio;
+            $repositorio = Auth::user()->repositorio;
             $tipo = 'projeto';
             $log = LogRepository::log();
             return view('controle_projetos.index', compact('projetos', 'titulos', 'tipo', 'log','repositorio'));
@@ -58,8 +58,8 @@ class ProjetoController extends Controller
      */
     private function exists($codrepositorio)
     {
-        $organizacao = (new Repositorio)->where('codrepositorio', '=', $codrepositorio)->first();
-        return $organizacao === null;
+        $repositorio = (new Repositorio)->where('codrepositorio', '=', $codrepositorio)->first();
+        return $repositorio === null;
 
     }
 
@@ -69,9 +69,9 @@ class ProjetoController extends Controller
             $dados = Projeto::dados();
 
                 if (!$this->exists($codrepositorio)) {
-                    $organizacao = Repositorio::findOrFail($codrepositorio);
+                    $repositorio = Repositorio::findOrFail($codrepositorio);
                 } else {
-                    $organizacao = Repositorio::create(['nome' => 'novo', 'descricao' => 'novo']);
+                    $repositorio = Repositorio::create(['nome' => 'novo', 'descricao' => 'novo']);
                 }
                 return view('controle_projetos.create', compact('dados', 'repositorio'));
 
@@ -166,7 +166,7 @@ class ProjetoController extends Controller
         try {
             $projeto = Projeto::findOrFail($id);
             $dados = Projeto::dados();
-            $organizacao = $projeto->repositorio;
+            $repositorio = $projeto->repositorio;
             $dados[0]->valor = $projeto->nome;
             $dados[1]->valor = $projeto->descricao;
             return view('controle_projetos.edit', compact('dados', 'projeto', 'repositorio'));

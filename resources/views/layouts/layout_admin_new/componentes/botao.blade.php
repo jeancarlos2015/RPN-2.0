@@ -3,7 +3,7 @@
     @switch($tipo)
         @case ('repositorio')
         <a class="btn btn-dark form-control"
-           href="{!! route('controle_repositorios') !!}">Nova Organização</a>
+           href="{!! route('controle_repositorios.create') !!}">Novo Repositório</a>
         @break;
 
         @case ('modelo')

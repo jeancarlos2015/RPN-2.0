@@ -61,14 +61,14 @@ class RepositorioController extends Controller
     {
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             return [
-                'Modelos',
-                'Projetos',
-                'Organizações'
+                'Todos os Modelos',
+                'Todos os Projetos',
+                'Todos os Repositórios'
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
-                'Modelos',
-                'Projetos'
+                'Todos os Modelos',
+                'Todos os Projetos'
             ];
         }
         return [];
@@ -108,7 +108,7 @@ class RepositorioController extends Controller
             $rotas = $this->rotas();
             $quantidades = $this->quantidades();
             if (count($rotas) == 0) {
-                $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma organização!!";
+                $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma repositório!!";
                 $data['tipo'] = 'success';
                 $this->create_log($data);
             }
@@ -121,7 +121,6 @@ class RepositorioController extends Controller
         }
         return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo', 'log'));
     }
-
 
 
     public function create()
@@ -141,11 +140,11 @@ class RepositorioController extends Controller
                     ->withErrors($erros)
                     ->withInput();
             }
-            if (!RepositorioRepository::organizacao_existe($request->nome)) {
+            if (!RepositorioRepository::repositorio_existe($request->nome)) {
 
-                $organizacao = Repositorio::create($request->all());
+                $repositorio = Repositorio::create($request->all());
 
-                if (isset($organizacao)) {
+                if (isset($repositorio)) {
                     flash('Organização criada com sucesso!!');
                 } else {
                     flash('Organização não foi criada!!');
@@ -153,7 +152,7 @@ class RepositorioController extends Controller
 
                 return redirect()->route('controle_projetos_index',
                     [
-                        'codrepositorio' => $organizacao->codrepositorio
+                        'codrepositorio' => $repositorio->codrepositorio
                     ]
                 );
             } else {
@@ -186,10 +185,10 @@ class RepositorioController extends Controller
     public function edit($id)
     {
         try {
-            $organizacao = Repositorio::findOrFail($id);
+            $repositorio = Repositorio::findOrFail($id);
             $dados = Repositorio::dados();
-            $dados[0]->valor = $organizacao->nome;
-            $dados[1]->valor = $organizacao->descricao;
+            $dados[0]->valor = $repositorio->nome;
+            $dados[1]->valor = $repositorio->descricao;
             return view('controle_repositorios.edit', compact('dados', 'repositorio'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -205,8 +204,8 @@ class RepositorioController extends Controller
     public function update(Request $request, $codrepositorio)
     {
         try {
-            $organizacao = RepositorioRepository::atualizar($request, $codrepositorio);
-            if (isset($organizacao)) {
+            $repositorio = RepositorioRepository::atualizar($request, $codrepositorio);
+            if (isset($repositorio)) {
                 flash('Organização Atualizada com sucesso!!');
             } else {
                 flash('Organização não foi Atualizada!!');

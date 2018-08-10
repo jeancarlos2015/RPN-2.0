@@ -4,7 +4,7 @@
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                     'titulo' => 'Painel',
-                    'sub_titulo' => 'Organizacoes',
+                    'sub_titulo' => 'Repositórios',
                     'rota' => 'controle_repositorios.index'
     ])
 

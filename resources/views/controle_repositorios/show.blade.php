@@ -4,9 +4,9 @@
     {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                     'titulo' => 'Painel',
-                    'sub_titulo' => 'Organizacoes',
+                    'sub_titulo' => 'Repositórios',
                     'rota' => 'painel'
     ])
 
-    <h3>Visualização da organização</h3>
+    <h3>Visualização do Repositório</h3>
 @endsection

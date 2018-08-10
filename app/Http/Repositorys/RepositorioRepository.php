@@ -41,7 +41,7 @@ class RepositorioRepository extends Repository
 
     public static function limpar_cache()
     {
-        Cache::forget('listar_organizacoes');
+        Cache::forget('listar_repositorios');
     }
 
     public static function incluir(Request $request)
@@ -67,14 +67,14 @@ class RepositorioRepository extends Repository
     public static function excluir_todos()
     {
         $repositorios = Repositorio::all();
-        foreach ($repositorios as $organizacao) {
-            $organizacao->delete();
+        foreach ($repositorios as $repositorio) {
+            $repositorio->delete();
         }
     }
 
-    public static function organizacao_existe($nome_da_organizacao)
+    public static function repositorio_existe($nome_do_repositorio)
     {
         $repositorios = self::listar();
-        return $repositorios->where('nome', $nome_da_organizacao)->count() > 0;
+        return $repositorios->where('nome', $nome_do_repositorio)->count() > 0;
     }
 }

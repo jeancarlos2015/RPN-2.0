@@ -29,9 +29,9 @@ class DocumentacaoRepository extends Repository
 
     public static function atualizar(Request $request, $coddocumentacao)
     {
-        $organizacao = Documentacao::findOrFail($coddocumentacao);
-        $organizacao->update($request->all());
-        return $organizacao;
+        $repositorio = Documentacao::findOrFail($coddocumentacao);
+        $repositorio->update($request->all());
+        return $repositorio;
     }
 
     public static function limpar_cache()

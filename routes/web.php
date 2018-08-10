@@ -54,7 +54,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
 
-        Route::get('controle_projetos_index/repositorio{codrepositorio}', 'ProjetoController@index')
+        Route::get('controle_projetos_index/repositorio/{codrepositorio}', 'ProjetoController@index')
             ->name('controle_projetos_index')
             ->middleware('can:acesso');
 
