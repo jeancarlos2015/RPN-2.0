@@ -155,7 +155,7 @@ class UserController extends Controller
                 }
                 $data['tipo'] = 'success';
                 $this->create_log($data);
-                return redirect()->route('painel');
+                return redirect()->route('vinculo_usuario_repositorio');
             } catch (Exception $ex) {
                 $data['mensagem'] = $ex->getMessage();
                 $data['tipo'] = 'error';
