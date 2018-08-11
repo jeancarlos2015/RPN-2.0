@@ -12,7 +12,7 @@
                    'rota' => 'controle_repositorios.index'
     ])
 
-    <form action="{!! route('controle_modelos_diagramaticos',['id' => $modelo->codmodelodiagramatico]) !!}" method="post">
+    <form action="{!! route('controle_modelos_diagramaticos.update',['id' => $modelo->codmodelodiagramatico]) !!}" method="post">
         {{ method_field('PUT')}}
         @includeIf('controle_modelos_diagramaticos.form',
         [

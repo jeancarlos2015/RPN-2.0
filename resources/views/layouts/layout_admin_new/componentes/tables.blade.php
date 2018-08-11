@@ -26,7 +26,7 @@
                     @includeIf('layouts.layout_admin_new.componentes.tables_tarefas')
                     @break;
 
-                    @case('modelo')
+                    @case('modelo_diagramatico')
                     @includeIf('layouts.layout_admin_new.componentes.tables_modelos')
                     @break;
 

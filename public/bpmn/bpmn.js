@@ -83,10 +83,3 @@ function openDiagram(bpmnXML) {
 // load external diagram file via AJAX and open it
 $.get(diagramUrl, openDiagram, 'text');
 
-// // wire save button
-// $('#save-button').click(exportDiagram);
-// $('#save-button2').click(exportDiagram);
-// $('#save-button3').click(exportDiagram);
-//
-
-

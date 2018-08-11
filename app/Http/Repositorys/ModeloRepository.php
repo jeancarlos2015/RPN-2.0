@@ -32,7 +32,7 @@ class ModeloRepository extends Repository
     {
         return ModeloDiagramatico::whereCodrepositorio($codrepositorio)
             ->where('codprojeto', '=', $codprojeto)
-            ->Where('visibilidade','true')
+            ->Where('visibilidade','=','true')
             ->get();
     }
 
