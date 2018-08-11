@@ -21,10 +21,15 @@ Route::get('/logout', function () {
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
 
-        Route::post('edicao_modelo_diagramatico/gravar', 'ModeloDiagramaticoController@gravar')->name('gravar');
-        Route::get('edicao_modelo_diagramatico/{codmodelo}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')->name('edicao_modelo_diagramatico');
+        Route::post('edicao_modelo_diagramatico/gravar', 'ModeloDiagramaticoController@gravar')
+            ->name('gravar')
+        ->middleware('can:acesso');
 
-
+        Route::get('edicao_modelo_diagramatico/{codmodelo}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')
+            ->name('edicao_modelo_diagramatico')
+            ->middleware('can:acesso');
+        Route::resource('controle_objetos_fluxos','ObjetoFluxoController')
+            ->middleware('can:acesso');
 
         Route::resource('controle_repositorios', 'RepositorioController')
             ->middleware('can:acesso');
@@ -36,7 +41,10 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         Route::resource('controle_usuarios', 'UserController')
             ->middleware('can:admin');
-        Route::get('controle_usuarios_edit/{codusuario}', 'UserController@edit')->name('controle_usuarios_edit');
+
+        Route::get('controle_usuarios_edit/{codusuario}', 'UserController@edit')
+            ->name('controle_usuarios_edit');
+
         Route::post('vincular_usuario_repositorio', 'UserController@vincular_usuario_repositorio')
             ->name('vincular_usuario_repositorio')
             ->middleware('can:admin');

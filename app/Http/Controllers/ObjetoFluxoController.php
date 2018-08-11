@@ -14,7 +14,10 @@ class ObjetoFluxoController extends Controller
      */
     public function index()
     {
-        //
+        $objetos_fluxos = ObjetoFluxo::all();
+        dd($objetos_fluxos);
+        $tipo = 'objetofluxo';
+        return view('controle_modelos_declarativos.controle_objetos_fluxo.index',compact('objetos_fluxos','tipo'));
     }
 
     /**
