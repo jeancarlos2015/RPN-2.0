@@ -8,7 +8,7 @@
 
         @case ('modelo')
         <a class="btn btn-dark form-control"
-           href="{!! route('controle_modelos_create',[
+           href="{!! route('controle_modelos_diagramaticos_create',[
 
                         'organizacao_id' => $repositorio->codrepositorio,
                         'projeto_id' => $projeto->codprojeto
@@ -22,7 +22,7 @@
                 [
                 'organizacao_id' => $repositorio->codrepositorio,
                      'projeto_id' => $projeto->codprojeto,
-                       'modelo_id' => $modelo->codmodelo
+                       'modelo_id' => $modelo->codmodelodiagramatico
                 ]
            ) !!}">Nova Regra</a>
 
@@ -34,7 +34,7 @@
                 {{--[--}}
                 {{--'organizacao_id' => $repositorio->codrepositorio,--}}
                      {{--'projeto_id' => $projeto->codprojeto,--}}
-                       {{--'modelo_id' => $modelo->codmodelo--}}
+                       {{--'modelo_id' => $modelo->codmodelodiagramatico--}}
                 {{--]--}}
            {{--) !!}">Nova ObjetoDeFluxo</a>--}}
         @if(count($tarefas)>1)
@@ -44,7 +44,7 @@
                 {{--[--}}
                 {{--'organizacao_id' => $repositorio->codrepositorio,--}}
                      {{--'projeto_id' => $projeto->codprojeto,--}}
-                       {{--'modelo_id' => $modelo->codmodelo--}}
+                       {{--'modelo_id' => $modelo->codmodelodiagramatico--}}
                 {{--]--}}
            {{--) !!}">Nova Regra</a>--}}
             <br>

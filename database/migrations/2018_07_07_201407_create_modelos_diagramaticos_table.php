@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModelosTable extends Migration
+class CreateModelosDiagramaticosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateModelosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('banco')->create('modelos', function (Blueprint $table) {
-            $table->bigIncrements('codmodelo')->unsigned();
-            $table->bigInteger('codregra')->nullable();
+        Schema::connection('banco')->create('modelos_diagramaticos', function (Blueprint $table) {
+            $table->bigIncrements('codmodelodiagramatico')->unsigned();
             $table->string('nome');
             $table->string('descricao');
             $table->string('tipo');

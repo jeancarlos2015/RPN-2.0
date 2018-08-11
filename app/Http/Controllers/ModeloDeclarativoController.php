@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Modelo;
+use App\ModeloDeclarativo;
 use Illuminate\Http\Request;
-use Psy\Util\Json;
 
-class DadoXmlController extends Controller
+class ModeloDeclarativoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,37 +24,27 @@ class DadoXmlController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return string
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-
-    }
-
-    public function gravar(Request $request)
-    {
-        $codmodelo = $request->codmodelo;
-        $xml = $request->strXml;
-        $modelo = Modelo::findOrFail($codmodelo);
-        $modelo->xml_modelo = $xml."\n";
-        $result = $modelo->update();
-        return \Response::json($result);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  \App\ModeloDeclarativo  $modeloDeclarativo
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ModeloDeclarativo $modeloDeclarativo)
     {
         //
     }
@@ -63,10 +52,10 @@ class DadoXmlController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  \App\ModeloDeclarativo  $modeloDeclarativo
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ModeloDeclarativo $modeloDeclarativo)
     {
         //
     }
@@ -74,11 +63,11 @@ class DadoXmlController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ModeloDeclarativo  $modeloDeclarativo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ModeloDeclarativo $modeloDeclarativo)
     {
         //
     }
@@ -86,10 +75,10 @@ class DadoXmlController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  \App\ModeloDeclarativo  $modeloDeclarativo
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ModeloDeclarativo $modeloDeclarativo)
     {
         //
     }

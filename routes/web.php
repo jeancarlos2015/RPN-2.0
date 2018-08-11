@@ -21,8 +21,8 @@ Route::get('/logout', function () {
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
 
-        Route::post('edicao_modelo_diagramatico/gravar', 'DadoXmlController@gravar')->name('gravar');
-        Route::get('edicao_modelo_diagramatico/{codmodelo}', 'ModeloController@edicao_modelo_diagramatico')->name('edicao_modelo_diagramatico');
+        Route::post('edicao_modelo_diagramatico/gravar', 'ModeloDiagramaticoController@gravar')->name('gravar');
+        Route::get('edicao_modelo_diagramatico/{codmodelodiagramatico}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')->name('edicao_modelo_diagramatico');
 
 
         Route::resource('controle_repositorios', 'RepositorioController')
@@ -30,7 +30,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         Route::resource('controle_projetos', 'ProjetoController')
             ->middleware('can:acesso');
-        Route::resource('controle_modelos', 'ModeloController')
+        Route::resource('controle_modelos_diagramaticos', 'ModeloDiagramaticoController')
             ->middleware('can:acesso');
 
         Route::resource('controle_usuarios', 'UserController')
@@ -67,7 +67,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
 
-        Route::get('todos_modelos', 'ModeloController@todos_modelos')
+        Route::get('todos_modelos', 'ModeloDiagramaticoController@todos_modelos')
             ->name('todos_modelos')
             ->middleware('can:acesso');
         Route::get('todos_projetos', 'ProjetoController@todos_projetos')
@@ -79,15 +79,15 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('controle_projetos_create')
             ->middleware('can:acesso');
 
-        Route::get('controle_modelos_create/repositorio/{codrepositorio}/projeto/{codprojeto}', 'ModeloController@create')
-            ->name('controle_modelos_create')
+        Route::get('controle_modelos_diagramaticos_create/repositorio/{codrepositorio}/projeto/{codprojeto}', 'ModeloDiagramaticoController@create')
+            ->name('controle_modelos_diagramaticos_create')
             ->middleware('can:acesso');
-        Route::get('controle_modelos_index/repositorio/{codrepositorio}/projeto/{codprojeto}/usuario/{codusuario}', 'ModeloController@index')
-            ->name('controle_modelos_index')
+        Route::get('controle_modelos_diagramaticos_index/repositorio/{codrepositorio}/projeto/{codprojeto}/usuario/{codusuario}', 'ModeloDiagramaticoController@index')
+            ->name('controle_modelos_diagramaticos_index')
             ->middleware('can:acesso');;
 
 
-        Route::post('escolhe_modelo', 'ModeloController@escolhe_modelo')
+        Route::post('escolhe_modelo', 'ModeloDiagramaticoController@escolhe_modelo')
             ->name('escolhe_modelo')
             ->middleware('can:acesso');
 

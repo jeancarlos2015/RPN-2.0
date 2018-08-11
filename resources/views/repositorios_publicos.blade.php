@@ -62,7 +62,7 @@
                                                         {{--<div class="text-muted smaller">Repositório: {!! $repositorio->nome !!}</div>--}}
                                                         {{--<div class="text-muted smaller">Usuários: {!! count($repositorio->usuarios) !!}</div>--}}
                                                         {{--<div class="text-muted smaller">Projetos: {!! count($repositorio->projetos) !!}</div>--}}
-                                                        {{--<div class="text-muted smaller">Modelos: {!! count($repositorio->modelos) !!}</div>--}}
+                                                        {{--<div class="text-muted smaller">Modelos: {!! count($repositorio->modelos_diagramaticos) !!}</div>--}}
                                                     {{--</div>--}}
                                                 {{--</div>--}}
                                             {{--</a>--}}

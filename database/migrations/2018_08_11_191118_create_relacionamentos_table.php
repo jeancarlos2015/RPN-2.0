@@ -13,12 +13,18 @@ class CreateRelacionamentosTable extends Migration
      */
     public function up()
     {
-        Schema::create('relacionamentos', function (Blueprint $table) {
+        Schema::connection('banco')->create('relacionamentos', function (Blueprint $table) {
             $table->increments('codrelacionamento');
-            $table->bigInteger('codregra');
+            $table->bigInteger('codorganizacao');
+            $table->bigInteger('codprojeto');
+            $table->bigInteger('codmodelodeclarativo');
+            $table->bigInteger('codusuario');
             $table->string('nome');
             $table->string('descricao');
             $table->string('tipo');
+            $table->boolean('visivel_projeto')->default('false');
+            $table->boolean('visivel_repositorio')->default('false');
+            $table->boolean('visivel_modelo_declarativo')->default('false');
             $table->timestamps();
         });
     }

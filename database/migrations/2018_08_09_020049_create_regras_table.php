@@ -13,12 +13,25 @@ class CreateRegrasTable extends Migration
      */
     public function up()
     {
-        Schema::create('regras', function (Blueprint $table) {
+        Schema::connection('banco')->create('regras', function (Blueprint $table) {
             $table->increments('codregra');
-            $table->string('nome');
-            $table->bigInteger('codobjetofluxo');
+
             $table->bigInteger('codrelacionamento');
+            $table->bigInteger('codobjetofluxo');
+
+            $table->bigInteger('codrepositorio');
+            $table->bigInteger('codusuario');
+            $table->bigInteger('codprojeto');
+            $table->bigInteger('codmodelodeclarativo');
+
             $table->bigInteger('codoutraregra')->nullable();
+
+
+            $table->string('nome');
+
+            $table->boolean('visivel_projeto')->default('false');
+            $table->boolean('visivel_repositorio')->default('false');
+            $table->boolean('visivel_modelo_declarativo')->default('false');
             $table->timestamps();
         });
     }

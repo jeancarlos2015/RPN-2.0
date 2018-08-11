@@ -14,10 +14,10 @@
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
                     'modelos' => $modelos,
-                    'rota_edicao' => 'controle_modelos.edit',
-                    'rota_exclusao' => 'controle_modelos.destroy',
-                    'rota_cricao' => 'controle_modelos.create',
-                    'rota_exibicao' => 'controle_modelos.show',
+                    'rota_edicao' => 'controle_modelos_diagramaticos.edit',
+                    'rota_exclusao' => 'controle_modelos_diagramaticos.destroy',
+                    'rota_cricao' => 'controle_modelos_diagramaticos.create',
+                    'rota_exibicao' => 'controle_modelos_diagramaticos.show',
                     'nome_botao' => 'Novo',
                     'titulo' =>'Modelos'
     ])

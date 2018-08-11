@@ -3,7 +3,7 @@
 namespace App\Http\Models;
 
 use App\Http\Util\Dado;
-use App\Http\Models\Modelo;
+use App\Http\Models\ModeloDiagramatico;
 use App\Http\Models\Repositorio;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $codusuario
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property-read \App\Http\Models\Modelo $modelos
+ * @property-read \App\Http\Models\ModeloDiagramatico $modelos
  * @property-read \App\Http\Models\Repositorio $repositorio
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCodorganizacao($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCodprojeto($value)
@@ -127,9 +127,9 @@ class Projeto extends Model
         return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
     }
 
-    public function modelos()
+    public function modelos_diagramaticos()
     {
-        return $this->hasMany(Modelo::class, 'codprojeto', 'codprojeto');
+        return $this->hasMany(ModeloDiagramatico::class, 'codprojeto', 'codprojeto');
     }
 
 
@@ -138,7 +138,7 @@ class Projeto extends Model
         parent::boot();
 
         static::deleting(function ($modelo) { // before delete() method call this
-            $modelo->modelos()->delete();
+            $modelo->modelos_diagramaticos()->delete();
         });
 
     }

@@ -5,7 +5,7 @@ namespace App\http\Models;
 use App\Http\Util\Dado;
 use App\User;
 use App\Http\Models\Projeto;
-use App\Http\Models\Modelo;
+use App\Http\Models\ModeloDiagramatico;
 use Illuminate\Database\Eloquent\Model;
 
 class Repositorio extends Model
@@ -106,9 +106,9 @@ class Repositorio extends Model
         return $this->hasMany(Projeto::class, 'codrepositorio', 'codrepositorio');
     }
 
-    public function modelos()
+    public function modelos_diagramaticos()
     {
-        return $this->hasMany(Modelo::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasMany(ModeloDiagramatico::class, 'codrepositorio', 'codrepositorio');
     }
 
 
@@ -120,7 +120,7 @@ class Repositorio extends Model
         });
 
         static::deleting(function ($modelo) { // before delete() method call this
-            $modelo->modelos()->delete();
+            $modelo->modelos_diagramaticos()->delete();
         });
 
 

@@ -7,7 +7,7 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Http\Models\Modelo
+ * App\Http\Models\ModeloDiagramatico
  *
  * @property int $codmodelo
  * @property string $nome
@@ -23,33 +23,33 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Http\Models\Projeto $projeto
  * @property-read \App\Http\Models\Regra $regras
  * @property-read \App\Http\Models\ObjetoDeFluxo $tarefas
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodmodelo($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodorganizacao($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodprojeto($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCodusuario($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereDescricao($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereNome($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereTipo($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Modelo whereXmlModelo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ModeloDiagramatico whereCodmodelo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ModeloDiagramatico whereCodorganizacao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ModeloDiagramatico whereCodprojeto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ModeloDiagramatico whereCodusuario($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ModeloDiagramatico whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ModeloDiagramatico whereDescricao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ModeloDiagramatico whereNome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ModeloDiagramatico whereTipo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ModeloDiagramatico whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\ModeloDiagramatico whereXmlModelo($value)
  * @mixin \Eloquent
  */
-class Modelo extends Model
+class ModeloDiagramatico extends Model
 {
     protected $connection = 'banco';
-    protected $primaryKey = 'codmodelo';
-    protected $table = 'modelos';
+    protected $primaryKey = 'codmodelodiagramatico';
+    protected $table = 'modelos_diagramaticos';
     protected $fillable = [
         'nome',
         'descricao',
-        'tipo',
         'xml_modelo',
         'codprojeto',
         'codrepositorio',
         'codusuario',
         'visibilidade',
-        'publico'
+        'publico',
+        'tipo'
     ];
 
 

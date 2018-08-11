@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Modelo;
+use App\Http\Models\ModeloDiagramatico;
 use App\Http\Models\Repositorio;
 use App\Http\Models\Projeto;
 use App\Http\Repositorys\LogRepository;
@@ -10,7 +10,7 @@ use App\Http\Repositorys\ModeloRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ModeloController extends Controller
+class ModeloDiagramaticoController extends Controller
 {
 
     public function index($codrepositorio, $codprojeto, $codusuario)
@@ -18,7 +18,7 @@ class ModeloController extends Controller
         try {
             $projeto = Projeto::findOrFail($codprojeto);
             $repositorio = Repositorio::findOrFail($codrepositorio);
-            $titulos = Modelo::titulos();
+            $titulos = ModeloDiagramatico::titulos();
             $modelos = ModeloRepository::listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -28,14 +28,14 @@ class ModeloController extends Controller
             $this->create_log($data);
         }
         $tipo = 'modelo';
-        return view('controle_modelos.index', compact('modelos', 'projeto', 'repositorio', 'titulos', 'tipo'));
+        return view('controle_modelos_diagramaticos.index', compact('modelos', 'projeto', 'repositorio', 'titulos', 'tipo'));
     }
 
     public function todos_modelos()
     {
         try {
             $modelos = ModeloRepository::listar();
-            $titulos = Modelo::titulos();
+            $titulos = ModeloDiagramatico::titulos();
             $tipo = 'modelo';
             $log = LogRepository::log();
         } catch (\Exception $ex) {
@@ -45,7 +45,7 @@ class ModeloController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-        return view('controle_modelos.index_todos_modelos', compact('modelos', 'titulos', 'tipo', 'log'));
+        return view('controle_modelos_diagramaticos.index_todos_modelos', compact('modelos', 'titulos', 'tipo', 'log'));
     }
 
     /**
@@ -70,7 +70,7 @@ class ModeloController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-        return view('controle_modelos.create', compact('dado', 'projeto', 'repositorio'));
+        return view('controle_modelos_diagramaticos.create', compact('dado', 'projeto', 'repositorio'));
     }
 
     public function create($codrepositorio, $codprojeto)
@@ -78,7 +78,7 @@ class ModeloController extends Controller
         try {
             $projeto = Projeto::findOrFail($codprojeto);
             $repositorio = Repositorio::findOrFail($codrepositorio);
-            $dados = Modelo::dados();
+            $dados = ModeloDiagramatico::dados();
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -86,12 +86,12 @@ class ModeloController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-        return view('controle_modelos.create', compact('dados', 'repositorio', 'projeto'));
+        return view('controle_modelos_diagramaticos.create', compact('dados', 'repositorio', 'projeto'));
     }
 
     public function edicao_modelo_diagramatico($codmodelo)
     {
-        $modelo = Modelo::findOrFail($codmodelo);
+        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
         $path_modelo = public_path('novo_bpmn/');
         if (!file_exists($path_modelo)) {
             mkdir($path_modelo, 777);
@@ -99,7 +99,7 @@ class ModeloController extends Controller
         $file = $path_modelo . 'novo.bpmn';
         file_put_contents($file, $modelo->xml_modelo);
         sleep(2);
-        return view('controle_modelos.modeler', compact('modelo'));
+        return view('controle_modelos_diagramaticos.modeler', compact('modelo'));
     }
 
 //$codrepositorio, $codprojeto, $codmodelo
@@ -110,26 +110,26 @@ class ModeloController extends Controller
             $codprojeto = $request->codprojeto;
             $codrepositorio = $request->codrepositorio;
             $data['all'] = $request->all();
-            $data['validacao'] = Modelo::validacao();
+            $data['validacao'] = ModeloDiagramatico::validacao();
             if (!$this->exists_errors($data)) {
                 if (!ModeloRepository::modelo_existe($request->nome)) {
                     $request->request->add([
-                        'xml_modelo' => Modelo::get_modelo_default(),
+                        'xml_modelo' => ModeloDiagramatico::get_modelo_default(),
                         'codprojeto' => $codprojeto,
                         'codrepositorio' => $codrepositorio,
                         'codusuario' => Auth::user()->codusuario
                     ]);
-                    $modelo = Modelo::create($request->all());
+                    $modelo = ModeloDiagramatico::create($request->all());
                     if ($modelo->tipo === 'declarativo') {
 
                     } else {
                         return redirect()->route('edicao_modelo_diagramatico',
-                            ['codmodelo' => $modelo->codmodelo]);
+                            ['codmodelodiagramatico' => $modelo->codmodelodiagramatico]);
                     }
                 } else {
                     $data['tipo'] = 'existe';
                     $this->create_log($data);
-                    return redirect()->route('controle_modelos_create', [
+                    return redirect()->route('controle_modelos_diagramaticos_create', [
                         'codrepositorio' => $codrepositorio,
                         'codprojeto' => $codprojeto
                     ]);
@@ -137,7 +137,7 @@ class ModeloController extends Controller
 
             }
             $erros = $this->get_errors($data);
-            return redirect()->route('controle_modelos_create', [
+            return redirect()->route('controle_modelos_diagramaticos_create', [
                 'codrepositorio' => $codrepositorio,
                 'codprojeto' => $codprojeto
             ])
@@ -151,7 +151,7 @@ class ModeloController extends Controller
             $this->create_log($data);
         }
 
-        return view('controle_modelos.modeler', compact('modelo'));
+        return view('controle_modelos_diagramaticos.modeler', compact('modelo'));
     }
 
     /**
@@ -164,11 +164,11 @@ class ModeloController extends Controller
     function show($codmodelo)
     {
         try {
-            $modelo = Modelo::findOrFail($codmodelo);
+            $modelo = ModeloDiagramatico::findOrFail($codmodelo);
             $projeto = $modelo->projeto;
             $repositorio = $modelo->repositorio;
             if ($modelo->tipo === 'declarativo') {
-                return view('controle_modelos.form_declarativo', compact(
+                return view('controle_modelos_diagramaticos.form_declarativo', compact(
                     'modelo',
                     'projeto',
                     'repositorio'
@@ -181,7 +181,7 @@ class ModeloController extends Controller
                 $file = $path_modelo . 'novo.bpmn';
                 file_put_contents($file, $modelo->xml_modelo);
                 sleep(2);
-                return view('controle_modelos.visualizar_modelo', compact('modelo'));
+                return view('controle_modelos_diagramaticos.visualizar_modelo', compact('modelo'));
             }
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -199,15 +199,15 @@ class ModeloController extends Controller
     function show_tarefas($codmodelo)
     {
         try {
-            $modelo = Modelo::findOrFail($codmodelo);
+            $modelo = ModeloDiagramatico::findOrFail($codmodelo);
             if (empty($modelo->codprojeto) || empty($modelo->codrepositorio)) {
                 flash('Não existem tarefas para serem exibidas!!!')->error();
-                return redirect()->route('controle_modelos.show', ['id' => $codmodelo]);
+                return redirect()->route('controle_modelos_diagramaticos.show', ['id' => $codmodelo]);
             } else {
                 return redirect()->route('controle_tarefas_index', [
                     'codrepositorio' => $modelo->codrepositorio,
                     'codprojeto' => $modelo->codprojeto,
-                    'codmodelo' => $modelo->codmodelo
+                    'codmodelodiagramatico' => $modelo->codmodelodiagramatico
                 ]);
             }
         } catch (\Exception $ex) {
@@ -230,9 +230,9 @@ class ModeloController extends Controller
     function edit($codmodelo)
     {
         try {
-            $modelo = Modelo::findOrFail($codmodelo);
+            $modelo = ModeloDiagramatico::findOrFail($codmodelo);
 
-            $dados = Modelo::dados();
+            $dados = ModeloDiagramatico::dados();
             $projeto = $modelo->projeto;
             $repositorio = $modelo->repositorio;
 
@@ -240,7 +240,7 @@ class ModeloController extends Controller
             $dados[1]->valor = $modelo->descricao;
             $dados[2]->valor = $modelo->tipo;
 
-            return view('controle_modelos.edit', compact('dados', 'modelo', 'projeto', 'repositorio'));
+            return view('controle_modelos_diagramaticos.edit', compact('dados', 'modelo', 'projeto', 'repositorio'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -262,17 +262,17 @@ class ModeloController extends Controller
     function update(Request $request, $id)
     {
         try {
-            $modelo = Modelo::findOrFail($id);
+            $modelo = ModeloDiagramatico::findOrFail($id);
             $modelo->update($request->all());
             if ($modelo->tipo === 'diagramatico') {
                 return redirect()->route('edicao_modelo_diagramatico', [
-                    'codmodelo' => $modelo->codmodelo
+                    'codmodelodiagramatico' => $modelo->codmodelodiagramatico
                 ]);
             } else {
                 return redirect()->route('controle_tarefas_index', [
                     'codrepositorio' => $modelo->codrepositorio,
                     'codprojeto' => $modelo->codprojeto,
-                    'codmodelo' => $modelo->codmodelo
+                    'codmodelodiagramatico' => $modelo->codmodelodiagramatico
                 ]);
             }
 
@@ -313,14 +313,14 @@ class ModeloController extends Controller
     {
         try {
 
-            $modelo = Modelo::findOrFail($codprojeto);
+            $modelo = ModeloDiagramatico::findOrFail($codprojeto);
             $modelo->delete();
             flash('Operação feita com sucesso!!');
             if (empty($modelo->codprojeto) || empty($modelo->codrepositorio)) {
 
                 return redirect()->route('todos_modelos');
             } else {
-                return redirect()->route('controle_modelos_index',
+                return redirect()->route('controle_modelos_diagramaticos_index',
                     [
 
                         'codrepositorio' => $modelo->codrepositorio,
@@ -337,5 +337,15 @@ class ModeloController extends Controller
         }
         return redirect()->route('painel');
 
+    }
+
+    public function gravar(Request $request)
+    {
+        $codmodelo = $request->codmodelodiagramatico;
+        $xml = $request->strXml;
+        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+        $modelo->xml_modelo = $xml."\n";
+        $result = $modelo->update();
+        return \Response::json($result);
     }
 }

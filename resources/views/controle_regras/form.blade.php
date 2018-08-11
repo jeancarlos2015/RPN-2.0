@@ -32,8 +32,8 @@
 {{--@endif--}}
 
 {{--@if(!empty($modelo))--}}
-    {{--<input type="hidden" name="codmodelo" class="form-control"--}}
-           {{--value="{!! $modelo->codmodelo !!}">--}}
+    {{--<input type="hidden" name="codmodelodiagramatico" class="form-control"--}}
+           {{--value="{!! $modelo->codmodelodiagramatico !!}">--}}
 {{--@endif--}}
 
 {{--<div class="form-group">--}}

@@ -13,11 +13,21 @@ class CreateObjetoFluxosTable extends Migration
      */
     public function up()
     {
-        Schema::create('objetos_fluxos', function (Blueprint $table) {
+        Schema::connection('banco')->create('objetos_fluxos', function (Blueprint $table) {
+
             $table->increments('codobjetofluxo');
-            $table->bigInteger('codregra');
+
+            $table->bigInteger('codrepositorio');
+            $table->bigInteger('codusuario');
+            $table->bigInteger('codprojeto');
+            $table->bigInteger('codmodelodeclarativo');
+
             $table->string('nome');
             $table->string('descricao');
+
+            $table->boolean('visivel_projeto')->default('false');
+            $table->boolean('visivel_repositorio')->default('false');
+            $table->boolean('visivel_modelo_declarativo')->default('false');
             $table->string('tipo');
             $table->timestamps();
         });

@@ -3,7 +3,7 @@
 namespace App\Http\Repositorys;
 
 
-use App\Http\Models\Modelo;
+use App\Http\Models\ModeloDiagramatico;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,15 +14,15 @@ class ModeloRepository extends Repository
 
     public function __construct()
     {
-        $this->setModel(Modelo::class);
+        $this->setModel(ModeloDiagramatico::class);
     }
 
     public static function listar()
     {
         if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
-            return Modelo::all();
+            return ModeloDiagramatico::all();
         }
-        return Modelo::whereCodusuario(Auth::user()->codusuario)
+        return ModeloDiagramatico::whereCodusuario(Auth::user()->codusuario)
             ->orWhere('visibilidade', '=', 'true')
             ->get();
 
@@ -30,7 +30,7 @@ class ModeloRepository extends Repository
 
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
     {
-        return Modelo::whereCodrepositorio($codrepositorio)
+        return ModeloDiagramatico::whereCodrepositorio($codrepositorio)
             ->where('codprojeto', '=', $codprojeto)
             ->Where('visibilidade','true')
             ->get();
@@ -43,7 +43,7 @@ class ModeloRepository extends Repository
 
     public static function atualizar(Request $request, $codmodelo)
     {
-        $value = Modelo::findOrFail($codmodelo);
+        $value = ModeloDiagramatico::findOrFail($codmodelo);
         $value->update($request->all());
         self::limpar_cache();
         return $value;
@@ -56,7 +56,7 @@ class ModeloRepository extends Repository
 
     public static function incluir(Request $request)
     {
-        $value = Modelo::create($request->all());
+        $value = ModeloDiagramatico::create($request->all());
         self::limpar_cache();
         return $value;
     }
@@ -65,7 +65,7 @@ class ModeloRepository extends Repository
     {
         $value = null;
         try {
-            $doc = Modelo::findOrFail($codmodelo);
+            $doc = ModeloDiagramatico::findOrFail($codmodelo);
             $value = $doc->delete();
             self::limpar_cache();
         } catch (Exception $e) {

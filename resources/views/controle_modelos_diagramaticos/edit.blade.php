@@ -7,14 +7,14 @@
                    'sub_titulo' =>
                    'Repositório/'.$repositorio->nome.
                    'Projeto/'.$projeto->nome.
-                   'Modelo/'.$modelo->nome.
-                   '/Edição do Modelo',
+                   'ModeloDiagramatico'.$modelo->nome.
+                   'ModeloDiagramatico',
                    'rota' => 'controle_repositorios.index'
     ])
 
-    <form action="{!! route('controle_modelos.update',['id' => $modelo->codmodelo]) !!}" method="post">
+    <form action="{!! route('controle_modelos_diagramaticos',['id' => $modelo->codmodelodiagramatico]) !!}" method="post">
         {{ method_field('PUT')}}
-        @includeIf('controle_modelos.form',
+        @includeIf('controle_modelos_diagramaticos.form',
         [
         'acao' => 'Atualizar e Proseguir',
         'dados' => $dados,

@@ -15,7 +15,7 @@
         {{--'dados' => $dados,--}}
         {{--'MAX' => 4,--}}
         {{--'codprojeto' => $projeto->codprojeto,--}}
-        {{--'codmodelo' => $modelo->codmodelo,--}}
+        {{--'codmodelodiagramatico' => $modelo->codmodelodiagramatico,--}}
         {{--'codrepositorio' => $repositorio->codrepositorio--}}
         {{--]--}}
         {{--)--}}

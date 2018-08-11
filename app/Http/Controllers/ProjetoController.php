@@ -102,7 +102,7 @@ class ProjetoController extends Controller
                 $request->request->add(['codusuario' => Auth::user()->codusuario]);
                 $projeto = Projeto::create($request->all());
                 flash('Projeto criado com sucesso!!');
-                return redirect()->route('controle_modelos_index',
+                return redirect()->route('controle_modelos_diagramaticos_index',
                     [
                         'codrepositorio' => $codrepositorio,
                         'codprojeto' => $projeto->codprojeto,
@@ -139,7 +139,7 @@ class ProjetoController extends Controller
     {
         try {
             $projeto = Projeto::findOrFail($codprojeto);
-            return redirect()->route('controle_modelos_index',
+            return redirect()->route('controle_modelos_diagramaticos_index',
                 [
                     'codrepositorio' => $projeto->codrepositorio,
                     'codprojeto' => $codprojeto,
@@ -191,7 +191,7 @@ class ProjetoController extends Controller
     {
         try {
             $projeto = ProjetoRepository::atualizar($request, $codprojeto);
-            return redirect()->route('controle_modelos_index',
+            return redirect()->route('controle_modelos_diagramaticos_index',
                 [
                     'codrepositorio' => $projeto->codrepositorio,
                     'codprojeto' => $codprojeto,
