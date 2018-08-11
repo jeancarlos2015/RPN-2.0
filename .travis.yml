@@ -20,8 +20,10 @@ script:
   - rm database/banco/database.db
   - touch database/banco/database.db
   - cp .env.travis .env
-  - composer self-update
-  - composer install --no-interaction
+  #- composer self-update
+  #- composer install --no-interaction
+  - composer update
+  - composer install
   - php artisan migrate
 
 deploy:
