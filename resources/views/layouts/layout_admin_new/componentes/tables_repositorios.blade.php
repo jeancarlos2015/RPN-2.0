@@ -19,7 +19,6 @@
                         </div>
                     </div>
                 </a>
-
             </td>
             <td>
                 @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
