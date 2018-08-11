@@ -6,7 +6,7 @@
            href="{!! route('controle_repositorios.create') !!}">Novo Repositório</a>
         @break;
 
-        @case ('modelo')
+        @case ('modelo_diagramatico')
         <a class="btn btn-dark form-control"
            href="{!! route('controle_modelos_diagramaticos_create',[
 

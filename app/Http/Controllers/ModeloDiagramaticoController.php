@@ -27,7 +27,7 @@ class ModeloDiagramaticoController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-        $tipo = 'modelo';
+        $tipo = 'modelo_diagramatico';
         return view('controle_modelos_diagramaticos.index', compact('modelos', 'projeto', 'repositorio', 'titulos', 'tipo'));
     }
 
@@ -195,30 +195,7 @@ class ModeloDiagramaticoController extends Controller
 
     }
 
-    public
-    function show_tarefas($codmodelo)
-    {
-        try {
-            $modelo = ModeloDiagramatico::findOrFail($codmodelo);
-            if (empty($modelo->codprojeto) || empty($modelo->codrepositorio)) {
-                flash('Não existem tarefas para serem exibidas!!!')->error();
-                return redirect()->route('controle_modelos_diagramaticos.show', ['id' => $codmodelo]);
-            } else {
-                return redirect()->route('controle_tarefas_index', [
-                    'codrepositorio' => $modelo->codrepositorio,
-                    'codprojeto' => $modelo->codprojeto,
-                    'codmodelodiagramatico' => $modelo->codmodelodiagramatico
-                ]);
-            }
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('painel');
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -324,7 +301,8 @@ class ModeloDiagramaticoController extends Controller
                     [
 
                         'codrepositorio' => $modelo->codrepositorio,
-                        'codprojeto' => $modelo->codprojeto
+                        'codprojeto' => $modelo->codprojeto,
+                        'codusuario' => Auth::user()->codusuario
                     ]
                 );
             }
@@ -347,5 +325,15 @@ class ModeloDiagramaticoController extends Controller
         $modelo->xml_modelo = $xml."\n";
         $result = $modelo->update();
         return \Response::json($result);
+    }
+
+    public function gravar_xml($xml)
+    {
+//        $codmodelo = $request->codmodelodiagramatico;
+//        $xml = $request->strXml;
+//        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+//        $modelo->xml_modelo = $xml."\n";
+//        $result = $modelo->update();
+        return \Response::json($xml);
     }
 }

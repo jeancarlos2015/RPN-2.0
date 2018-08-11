@@ -7,11 +7,11 @@
                    'titulo' => 'Painel',
                    'rota' => 'painel',
                    'sub_titulo' =>
-                   'Repositório/'.$repositorio->nome.
-                   'Projeto/'.$projeto->nome.
-                   'ModeloDiagramatico'
+                   ' Repositório /'.$repositorio->nome.
+                   '/ Projeto /'.$projeto->nome.
+                   '/ Modelo Diagramatico'
    ])
-    <form action="{!! route('controle_modelos_diagramaticos') !!}" method="post">
+    <form action="{!! route('controle_modelos_diagramaticos.store') !!}" method="post">
     @includeIf('controle_modelos_diagramaticos.form',
     [
     'acao' => 'Salvar e Proseguir',

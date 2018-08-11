@@ -19,31 +19,7 @@
     </div>
 @endfor
 
-@if(!empty($dados[2]->valor))
-    @if($dados[2]->valor == 'declarativo')
-        <div class="form-group">
-            <input type="radio" name="tipo" value="diagramatico"> Modelo Diagramatico
-        </div>
-        <div class="form-group">
-            <input type="radio" name="tipo" value="declarativo" checked>Modelo Declarativo
-        </div>
-
-    @else
-        <div class="form-group">
-            <input type="radio" name="tipo" value="diagramatico" checked> Modelo Diagramatico
-        </div>
-        <div class="form-group">
-            <input type="radio" name="tipo" value="declarativo">Modelo Declarativo
-        </div>
-    @endif
-@else
-    <div class="form-group">
-        <input type="radio" name="tipo" value="diagramatico"> Modelo Diagramatico
-    </div>
-    <div class="form-group">
-        <input type="radio" name="tipo" value="declarativo">Modelo Declarativo
-    </div>
-@endif
+<input type="hidden" value="diagramatico" name="tipo">
 
 @if(!empty($codrepositorio))
     <input type="hidden" name="codrepositorio" class="form-control"

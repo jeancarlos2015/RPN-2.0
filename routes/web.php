@@ -22,7 +22,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
     function () {
 
         Route::post('edicao_modelo_diagramatico/gravar', 'ModeloDiagramaticoController@gravar')->name('gravar');
-        Route::get('edicao_modelo_diagramatico/{codmodelodiagramatico}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')->name('edicao_modelo_diagramatico');
+        Route::get('edicao_modelo_diagramatico/{codmodelo}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')->name('edicao_modelo_diagramatico');
+
 
 
         Route::resource('controle_repositorios', 'RepositorioController')
