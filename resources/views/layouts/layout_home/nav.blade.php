@@ -9,9 +9,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="{{ route('repositorios_publicos') }}">Repositórios Públicos</a>
-                </li>
+                {{--<li class="nav-item">--}}
+                    {{--<a class="nav-link js-scroll-trigger" href="{{ route('repositorios_publicos') }}">Repositórios</a>--}}
+                {{--</li>--}}
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="{{ route('/') }}">Início</a>
                 </li>
