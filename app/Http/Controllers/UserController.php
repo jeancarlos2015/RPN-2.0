@@ -242,7 +242,9 @@ class UserController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-
+        if (!empty($request->vinculo)){
+            return redirect()->route('vinculo_usuario_repositorio');
+        }
         return redirect()->route('controle_usuarios.edit',['id' => $codusuario]);
     }
 

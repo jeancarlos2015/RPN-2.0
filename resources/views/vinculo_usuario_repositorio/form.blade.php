@@ -13,5 +13,5 @@
 </div>
 
 <input type="hidden" value="{!! $usuario->codusuario !!}" name="codusuario"/>
-
+<input type="hidden" value="true" name="vinculo">
 <button type="submit" class="btn btn-dark form-control">Vincular Usuário</button>
