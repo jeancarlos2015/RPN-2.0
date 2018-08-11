@@ -13,9 +13,9 @@
                         <div class="media-body">
                             <strong>{!!  $repositorio1->nome !!}</strong>
                             <div class="text-muted smaller">Repositório: {!! $repositorio1->nome !!}</div>
-                            {{--<div class="text-muted smaller">Usuários: {!! dd($repositorio1->usuarios) !!}</div>--}}
-                            {{--<div class="text-muted smaller">Projetos: {!! dd($repositorio1->projetos) !!}</div>--}}
-                            {{--<div class="text-muted smaller">Modelos: {!! $repositorio1->modelos->count() !!}</div>--}}
+                            <div class="text-muted smaller">Usuários: {!! count($repositorio1->usuarios) !!}</div>
+                            <div class="text-muted smaller">Projetos: {!! count($repositorio1->projetos) !!}</div>
+                            <div class="text-muted smaller">Modelos: {!! $repositorio1->modelos->count() !!}</div>
                         </div>
                     </div>
                 </a>

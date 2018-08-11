@@ -21,7 +21,8 @@
                         'rota_cricao' => 'controle_repositorios.create',
                         'rota_exibicao' => 'controle_repositorios.show',
                         'nome_botao' => 'Novo',
-                        'titulo' =>'Repositórios'
+                        'titulo' =>'Repositórios',
+                        'tipo' => $tipo
 
         ])
     @endif
