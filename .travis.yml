@@ -22,8 +22,8 @@ script:
   - cp .env.travis .env
   #- composer self-update
   #- composer install --no-interaction
-  - composer update
-  - composer install
+  - composer update --no-dev
+  - composer install --no-dev
   - php artisan migrate
 
 deploy:
