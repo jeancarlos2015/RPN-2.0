@@ -36,7 +36,7 @@ class ModeloDiagramaticoController extends Controller
         try {
             $modelos = ModeloRepository::listar();
             $titulos = ModeloDiagramatico::titulos();
-            $tipo = 'modelo';
+            $tipo = 'modelo_diagramatico';
             $log = LogRepository::log();
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
