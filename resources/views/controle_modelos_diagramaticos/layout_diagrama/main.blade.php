@@ -3,7 +3,7 @@
 @includeIf('layouts.layout_admin_new.layouts.head')
 <body>
 @includeIf('controle_modelos_diagramaticos.layout_diagrama.nav')
-@includeIf('controle_modelos_diagramaticos.head_body')
+@includeIf('controle_modelos_diagramaticos.layout_diagrama.head_body')
 
 @yield('content')
 

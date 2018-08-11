@@ -28,6 +28,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('edicao_modelo_diagramatico/{codmodelo}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')
             ->name('edicao_modelo_diagramatico')
             ->middleware('can:acesso');
+
         Route::resource('controle_objetos_fluxos','ObjetoFluxoController')
             ->middleware('can:acesso');
 
