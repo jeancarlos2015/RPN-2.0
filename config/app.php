@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'localhost'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'America/Sao_Paulo',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -159,12 +159,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
-        Bootstrapper\BootstrapperL5ServiceProvider::class,
-        Prettus\Repository\Providers\RepositoryServiceProvider::class,
-        Diegoalvarezb\Versioner\VersionerProvider::class,
-        GrahamCampbell\GitHub\GitHubServiceProvider::class,
-        Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
+
     ],
 
     /*
@@ -214,17 +209,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-
-
-        'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
-
-
-        'Table' => Bootstrapper\Facades\Table::class,
-        'Button' => Bootstrapper\Facades\Button::class,
-        'InputGroup' => Bootstrapper\Facades\InputGroup::class,
-
-        'GitHub' => GrahamCampbell\GitHub\Facades\GitHub::class,
-        'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
     ],
 
 ];

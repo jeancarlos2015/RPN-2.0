@@ -1,7 +1,7 @@
 @extends('layouts.layout_admin_new.layouts.main')
 
 @section('content')
-    @if(count($repositorios)>0)
+
         @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                         'titulo' => 'Painel',
                         'sub_titulo' => 'Repositórios',
@@ -25,5 +25,5 @@
                         'tipo' => $tipo
 
         ])
-    @endif
+
 @endsection

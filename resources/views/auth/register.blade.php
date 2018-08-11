@@ -20,7 +20,6 @@
                                     </span>
                                 @endif
                         </div>
-
                         <div class="form-group">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="Email" required>
 

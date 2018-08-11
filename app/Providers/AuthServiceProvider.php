@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -27,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('admin', function ($user){
-                return $user->email==='jeancarlospenas25@gmail.com';
+            return $user->email==='jeancarlospenas25@gmail.com';
         });
 
         Gate::define('acesso', function ($user){

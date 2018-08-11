@@ -6,7 +6,7 @@
         @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                           'titulo' => 'Painel',
 
-                        'sub_titulo' => 'Painel/Repositório/'.$repositorio->nome.'/Projetos',
+                        'sub_titulo' => 'Repositório / '.$repositorio->nome.' / Projetos',
                         'rota' => 'painel'
         ])
 

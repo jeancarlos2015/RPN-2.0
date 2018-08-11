@@ -30,9 +30,9 @@ class ModeloRepository extends Repository
 
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
     {
-        return Modelo::whereCodusuario($codusuario)
-            ->where('codrepositorio', '=', $codrepositorio)
+        return Modelo::whereCodrepositorio($codrepositorio)
             ->where('codprojeto', '=', $codprojeto)
+            ->Where('visibilidade','true')
             ->get();
     }
 
