@@ -25,7 +25,6 @@ class RepositorioController extends Controller
     {
         try {
             $repositorios = RepositorioRepository::listar();
-//            dd($repositorios[0]->modelos->count());
             $titulos = Repositorio::titulos_da_tabela();
             $campos = Repositorio::campos();
             $tipo = 'repositorio';

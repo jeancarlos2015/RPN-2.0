@@ -33,10 +33,10 @@ class Projeto extends Model
     protected $primaryKey = 'codprojeto';
     protected $table = 'projetos';
     protected $fillable = [
-        'nome',
-        'descricao',
         'codrepositorio',
         'codusuario',
+        'nome',
+        'descricao',
         'visibilidade',
         'publico'
     ];

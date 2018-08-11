@@ -21,7 +21,6 @@ class RepositorioRepository extends Repository
         if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
             return Repositorio::all();
         }
-
         return collect(array());
     }
     public static function listar_repositorios_publicos()
