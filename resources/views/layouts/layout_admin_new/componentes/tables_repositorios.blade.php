@@ -14,7 +14,7 @@
                             <strong>{!!  $repositorio1->nome !!}</strong>
                             <div class="text-muted smaller">Repositório: {!! $repositorio1->nome !!}</div>
                             <div class="text-muted smaller">Usuários: {!! count($repositorio1->usuarios) !!}</div>
-                            <div class="text-muted smaller">Projetos: {!! count($repositorio1->projetos) !!}</div>
+                            {{--<div class="text-muted smaller">Projetos: {!! count($repositorio1->projetos) !!}</div>--}}
                             <div class="text-muted smaller">Modelos: {!! count($repositorio1->modelos) !!}</div>
                         </div>
                     </div>
