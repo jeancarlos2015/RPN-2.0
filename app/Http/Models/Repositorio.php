@@ -4,6 +4,8 @@ namespace App\http\Models;
 
 use App\Http\Util\Dado;
 use App\User;
+use App\Http\Models\Projeto;
+use App\Http\Models\Modelo;
 use Illuminate\Database\Eloquent\Model;
 
 class Repositorio extends Model
