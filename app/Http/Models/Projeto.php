@@ -3,6 +3,8 @@
 namespace App\Http\Models;
 
 use App\Http\Util\Dado;
+use App\Http\Models\Modelo;
+use App\Http\Models\Repositorio;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
