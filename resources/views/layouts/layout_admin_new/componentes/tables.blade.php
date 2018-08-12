@@ -18,8 +18,8 @@
                 @includeIf('layouts.layout_admin_new.componentes.tables_titulos')
                 </tfoot>
                 @switch($tipo)
-                    @case('regra')
-                    @includeIf('layouts.layout_admin_new.componentes.tables_regras')
+                    @case('objetofluxo')
+                    @includeIf('layouts.layout_admin_new.componentes.tables_objetos_fluxos')
                     @break
 
                     @case('tarefa')
@@ -29,7 +29,6 @@
                     @case('modelo_diagramatico')
                     @includeIf('layouts.layout_admin_new.componentes.tables_modelos')
                     @break;
-
                     @case('projeto')
                     @includeIf('layouts.layout_admin_new.componentes.tables_projetos')
                     @break;

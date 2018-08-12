@@ -1,71 +1,68 @@
-
 @if(!empty($tipo))
     @switch($tipo)
         @case ('repositorio')
-        <a class="btn btn-dark form-control"
-           href="{!! route('controle_repositorios.create') !!}">Novo Repositório</a>
+        <div class="form-group">
+            <a class="btn btn-dark form-control"
+               href="{!! route('controle_repositorios.create') !!}">Novo Repositório</a>
+        </div>
+
         @break;
 
         @case ('modelo_diagramatico')
-        <a class="btn btn-dark form-control"
-           href="{!! route('controle_modelos_diagramaticos_create',[
+        <div class="form-group">
+            <a class="btn btn-dark form-control"
+               href="{!! route('controle_modelos_diagramaticos_create',[
 
-                        'organizacao_id' => $repositorio->codrepositorio,
-                        'projeto_id' => $projeto->codprojeto
+                        'codrepositorio' => $repositorio->codrepositorio,
+                        'codprojeto' => $projeto->codprojeto
 
-                        ]) !!}">Novo Modelo</a>
-        @break;
-
-        @case ('regra')
-        <a class="btn btn-dark form-control"
-           href="{!! route('controle_regras_create',
-                [
-                'organizacao_id' => $repositorio->codrepositorio,
-                     'projeto_id' => $projeto->codprojeto,
-                       'modelo_id' => $modelo->codmodelodiagramatico
-                ]
-           ) !!}">Nova Regra</a>
+                        ]) !!}">Novo Modelo Diagramático</a>
+        </div>
 
         @break;
+        @case ('modelo_declarativo')
+        <div class="form-group">
+            <a class="btn btn-danger form-control"
+               href="{!! route('controle_modelos_declarativos_create',[
 
-        @case ('tarefa')
-        {{--<a class="btn btn-dark form-control"--}}
-           {{--href="{!! route('controle_tarefas_create',--}}
-                {{--[--}}
-                {{--'organizacao_id' => $repositorio->codrepositorio,--}}
-                     {{--'projeto_id' => $projeto->codprojeto,--}}
-                       {{--'modelo_id' => $modelo->codmodelodiagramatico--}}
-                {{--]--}}
-           {{--) !!}">Nova ObjetoDeFluxo</a>--}}
-        @if(count($tarefas)>1)
+                        'codrepositorio' => $repositorio->codrepositorio,
+                        'codprojeto' => $projeto->codprojeto
 
-            {{--<a class="btn btn-dark form-control"--}}
-               {{--href="{!! route('controle_regras_create',--}}
-                {{--[--}}
-                {{--'organizacao_id' => $repositorio->codrepositorio,--}}
-                     {{--'projeto_id' => $projeto->codprojeto,--}}
-                       {{--'modelo_id' => $modelo->codmodelodiagramatico--}}
-                {{--]--}}
-           {{--) !!}">Nova Regra</a>--}}
-            <br>
-            <br>
-            <br>
-        @endif
-        @break
+                        ]) !!}">Novo Modelo Declarativo</a>
+        </div>
+
+        @break;
+        @case ('objetofluxo')
+        <div class="form-group">
+            <a class="btn btn-dark form-control"
+               href="{!! route('controle_objetos_fluxos.create') !!}">Novo Objeto de Fluxo</a>
+        </div>
+
+
+        @break;
         @case ('usuario')
-        <a class="btn btn-dark form-control"
-           href="{!! route('controle_usuarios.create') !!}">Novo Usuário</a>
+        <div class="form-group">
+            <a class="btn btn-dark form-control"
+               href="{!! route('controle_usuarios.create') !!}">Novo Usuário</a>
+        </div>
+
         @break;
 
         @case ('projeto')
-        <a class="btn btn-dark form-control"
-           href="{!! route('controle_projetos_create',['organizacao_id' => $repositorio->codrepositorio]) !!}">Novo
-            Projeto</a>
+        <div class="form-group">
+            <a class="btn btn-dark form-control"
+               href="{!! route('controle_projetos_create',['organizacao_id' => $repositorio->codrepositorio]) !!}">Novo
+                Projeto</a>
+        </div>
+
         @break;
         @case ('documentacao')
-        <a class="btn btn-dark form-control"
-           href="{!! route('controle_documentacoes.create')!!}">Nova
-            Documentação</a>
+        <div class="form-group">
+            <a class="btn btn-dark form-control"
+               href="{!! route('controle_documentacoes.create')!!}">Nova
+                Documentação</a>
+        </div>
+
         @break;
     @endswitch
 

@@ -48,7 +48,9 @@
                 @endif
 
                 @if(!empty($usuario->repositorio))
-                    @includeIf('componentes.form_desvincular',['id' => $usuario->codusuario])
+                    @includeIf('componentes.form_desvincular',[
+                    'id' => $usuario->codusuario
+                    ])
                 @endif
             </td>
         </tr>

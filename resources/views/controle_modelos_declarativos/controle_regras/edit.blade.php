@@ -8,7 +8,7 @@
                     {{--'rota' => 'todas_regras'--}}
     {{--])--}}
     {{--<form action="{!! route('controle_regras.update',['id' => $regra->codregra]) !!}" method="post">--}}
-        {{--{{ method_field('PUT')}}--}}
+        {{--@method('PUT')--}}
         {{--@includeIf('controle_regras.form',--}}
         {{--[--}}
         {{--'acao' => 'Atualizar',--}}

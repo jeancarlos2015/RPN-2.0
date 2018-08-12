@@ -9,7 +9,7 @@
     {{--])--}}
     {{--<form action="{!! route('controle_regras.store') !!}" method="post">--}}
         {{--{!! csrf_field() !!}--}}
-        {{--{{ method_field('PUT')}}--}}
+        {{--@method('PUT')--}}
         {{--<div class="form-group">--}}
             {{--<div class="row">--}}
 

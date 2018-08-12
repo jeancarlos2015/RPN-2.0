@@ -3,13 +3,14 @@
 namespace App\Http\Repositorys;
 
 
+use App\Http\Models\ModeloDeclarativo;
 use App\Http\Models\ModeloDiagramatico;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
-class ModeloRepository extends Repository
+class ModeloDiagramaticoRepository extends Repository
 {
 
     public function __construct()
@@ -19,8 +20,8 @@ class ModeloRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
-            return ModeloDiagramatico::all();
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+            return collect(ModeloDiagramatico::all());
         }
         return ModeloDiagramatico::whereCodusuario(Auth::user()->codusuario)
             ->orWhere('visibilidade', '=', 'true')
@@ -28,18 +29,18 @@ class ModeloRepository extends Repository
 
     }
 
+
+
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
     {
-        return ModeloDiagramatico::whereCodrepositorio($codrepositorio)
+        return collect(ModeloDiagramatico::whereCodrepositorio($codrepositorio)
             ->where('codprojeto', '=', $codprojeto)
-            ->Where('visibilidade','=','true')
-            ->get();
+            ->Where('visibilidade', '=', 'true')
+            ->get());
     }
 
-    public static function count()
-    {
-        return collect(self::listar())->count();
-    }
+
+
 
     public static function atualizar(Request $request, $codmodelo)
     {
@@ -48,6 +49,7 @@ class ModeloRepository extends Repository
         self::limpar_cache();
         return $value;
     }
+
 
     public static function limpar_cache()
     {
@@ -60,6 +62,7 @@ class ModeloRepository extends Repository
         self::limpar_cache();
         return $value;
     }
+
 
     public static function excluir($codmodelo)
     {
@@ -74,9 +77,15 @@ class ModeloRepository extends Repository
         return $value;
     }
 
-    public static function modelo_existe($nome_do_modelo){
+
+    public static function existe($nome_do_modelo)
+    {
+
         $modelos = self::listar();
-        return $modelos->where('nome', $nome_do_modelo)->count()>0;
+        return $modelos->where('nome', $nome_do_modelo)->count() > 0;
+
     }
+
+
 
 }

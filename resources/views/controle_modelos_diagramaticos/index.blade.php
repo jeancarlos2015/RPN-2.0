@@ -10,6 +10,7 @@
     ])
     @if(!empty($repositorio))
             @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
+            @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => 'modelo_declarativo'])
     @endif
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,

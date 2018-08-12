@@ -11,7 +11,8 @@
             <h4><strong>Vinculação De Usuários</strong></h4>
         </div>
         <form action="{!! route('vincular_usuario_repositorio') !!}" method="post">
-            {{ method_field('POST')}}
+            @method('POST')
+
             @csrf
             @includeIf('vinculo_usuario_repositorio.form',[
             'usuario' => $usuario,
@@ -28,15 +29,14 @@
         <form action="{!! route('controle_usuarios.update',['id' => $usuario->codusuario]) !!}" method="post"
               class="card-body">
             @csrf
-            {{ method_field('PUT')}}
+            @method('PUT')
             @includeIf('controle_usuario.form',
             [
             'acao' => 'Atualizar',
             'usuario' => $usuario,
             'dados' => $dados,
             'codusuario' => $usuario->codusuario
-            ]
-            )
+            ])
         </form>
 
     </div>

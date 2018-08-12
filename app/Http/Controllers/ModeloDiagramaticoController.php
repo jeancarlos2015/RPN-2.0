@@ -6,7 +6,8 @@ use App\Http\Models\ModeloDiagramatico;
 use App\Http\Models\Repositorio;
 use App\Http\Models\Projeto;
 use App\Http\Repositorys\LogRepository;
-use App\Http\Repositorys\ModeloRepository;
+use App\Http\Repositorys\ModeloDeclarativoRepository;
+use App\Http\Repositorys\ModeloDiagramaticoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,11 @@ class ModeloDiagramaticoController extends Controller
             $projeto = Projeto::findOrFail($codprojeto);
             $repositorio = Repositorio::findOrFail($codrepositorio);
             $titulos = ModeloDiagramatico::titulos();
-            $modelos = ModeloRepository::listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario);
+            $modelos_diagramatico = ModeloDiagramaticoRepository::listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario);
+            $modelos_declarativos =ModeloDeclarativoRepository::listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario);
+            $modelos_diagramatico->merge($modelos_declarativos);
+            $modelos = $modelos_diagramatico;
+
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -34,7 +39,8 @@ class ModeloDiagramaticoController extends Controller
     public function todos_modelos()
     {
         try {
-            $modelos = ModeloRepository::listar();
+            $modelos_diagramaticos = ModeloDiagramaticoRepository::listar();
+            $modelos = $modelos_diagramaticos->merge(ModeloDeclarativoRepository::listar());
             $titulos = ModeloDiagramatico::titulos();
             $tipo = 'modelo_diagramatico';
             $log = LogRepository::log();
@@ -112,7 +118,7 @@ class ModeloDiagramaticoController extends Controller
             $data['all'] = $request->all();
             $data['validacao'] = ModeloDiagramatico::validacao();
             if (!$this->exists_errors($data)) {
-                if (!ModeloRepository::modelo_existe($request->nome)) {
+                if (!ModeloDiagramaticoRepository::existe($request->nome)) {
                     $request->request->add([
                         'xml_modelo' => ModeloDiagramatico::get_modelo_default(),
                         'codprojeto' => $codprojeto,
@@ -274,7 +280,7 @@ class ModeloDiagramaticoController extends Controller
     function delete($codmodelo)
     {
         try {
-            $modelo = ModeloRepository::excluir($codmodelo);
+            $modelo = ModeloDiagramaticoRepository::excluir($codmodelo);
             return $modelo;
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -325,15 +331,5 @@ class ModeloDiagramaticoController extends Controller
         $modelo->xml_modelo = $xml."\n";
         $result = $modelo->update();
         return \Response::json($result);
-    }
-
-    public function gravar_xml($xml)
-    {
-//        $codmodelo = $request->codmodelodiagramatico;
-//        $xml = $request->strXml;
-//        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
-//        $modelo->xml_modelo = $xml."\n";
-//        $result = $modelo->update();
-        return \Response::json($xml);
     }
 }

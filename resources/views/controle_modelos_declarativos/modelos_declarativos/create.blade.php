@@ -9,10 +9,10 @@
                    'sub_titulo' =>
                    ' Repositório /'.$repositorio->nome.
                    '/ Projeto /'.$projeto->nome.
-                   '/ Modelo Diagramatico'
+                   '/ Modelo Declarativo'
    ])
-    <form action="{!! route('controle_modelos_diagramaticos.store') !!}" method="post">
-    @includeIf('controle_modelos_diagramaticos.form',
+    <form action="{!! route('controle_modelos_declarativos.store') !!}" method="post">
+    @includeIf('controle_modelos_declarativos.modelos_declarativos.form',
     [
     'acao' => 'Salvar e Proseguir',
     'dados' => $dados,

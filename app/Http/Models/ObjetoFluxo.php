@@ -2,22 +2,45 @@
 
 namespace App\http\Models;
 
+use App\Http\Util\Dado;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class ObjetoFluxo extends Model
 {
+
     protected $connection = "banco";
     protected $primaryKey = 'codobjetofluxo';
     protected $table = 'objetos_fluxos';
     protected $fillable = [
+
         'codrepositorio',
         'codusuario',
+        'codprojeto',
+        'codmodelodeclarativo',
+
+
         'nome',
         'descricao',
-        'visibilidade',
-        'publico'
+        'tipo',
+        'visivel_projeto',
+        'visivel_modelo_declarativo',
+        'visivel_repositorio'
     ];
-
+    public static function tipos(){
+        return [
+            'SUB-PROCESSO',
+            'TAREFA',
+            'GATEWAY EXCLUSIVO',
+            'EVENTO DE ÍNICIO',
+            'EVENTO DE FIM',
+            'DADO DO OBJETO',
+            'REFERÊNCIA DE ARMAZENAMENTO',
+            'PROCESSO',
+            'GATEWAY PARALELO',
+            'EVENTO INTERMEDIÁRIO'
+        ];
+    }
     public static function validacao()
     {
         return [
@@ -33,7 +56,7 @@ class ObjetoFluxo extends Model
 //            'Nome',
 //            'Descrição',
 //            'Organização',
-            'Projetos',
+            'Objetos De Fluxo',
             'Ações'
         ];
     }
@@ -54,6 +77,7 @@ class ObjetoFluxo extends Model
         ];
 
     }
+
     public static function types()
     {
         return [
@@ -61,6 +85,7 @@ class ObjetoFluxo extends Model
             'text'
         ];
     }
+
     //Instancia todas as posições de memória que serão exibidas no título
     public static function dados_exibidos_no_titulo()
     {
@@ -102,20 +127,32 @@ class ObjetoFluxo extends Model
         return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
     }
 
-    public function modelos()
+    public function projeto()
     {
-        return $this->hasMany(ModeloDiagramatico::class, 'codprojeto', 'codprojeto');
+        return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
     }
 
+    public function modelo()
+    {
+        return $this->hasOne(ModeloDeclarativo::class, 'codmodelodeclarativo', 'codmodelodeclarativo');
+    }
+
+    public function regras()
+    {
+        return $this->belongsTo(Regra::class, 'codobjetofluxo', 'codobjetofluxo');
+    }
 
     protected static function boot()
     {
         parent::boot();
 
-        static::deleting(function ($modelo) { // before delete() method call this
-            $modelo->modelos_diagramaticos()->delete();
+        static::deleting(function ($modelo_declarativo) { // before delete() method call this
+            $modelo_declarativo->modelo()->delete();
         });
 
+        static::deleting(function ($regra) { // before delete() method call this
+            $regra->regras()->delete();
+        });
     }
 
 }

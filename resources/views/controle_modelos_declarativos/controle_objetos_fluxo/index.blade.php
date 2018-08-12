@@ -12,8 +12,9 @@
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
                     'regras' => $objetos_fluxos,
-                    'rota_edicao' => 'controle_regras.edit',
-                    'rota_exclusao' => 'controle_regras.destroy',
+                    'rota_edicao' => 'controle_objetos_fluxos.edit',
+                    'rota_exclusao' => 'controle_objetos_fluxos.destroy',
+                    'rota_exibicao' => 'controle_objetos_fluxos.show',
                     'nome_botao' => 'Novo',
                     'titulo' =>'Regras'
     ])

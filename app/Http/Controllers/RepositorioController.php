@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\http\Models\Repositorio;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
-use App\Http\Repositorys\ModeloRepository;
+use App\Http\Repositorys\ModeloDeclarativoRepository;
+use App\Http\Repositorys\ModeloDiagramaticoRepository;
 use App\Http\Repositorys\ProjetoRepository;
 use App\Http\Repositorys\RepositorioRepository;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,7 +80,9 @@ class RepositorioController extends Controller
     {
         $qt_organizacoes = RepositorioRepository::count();
         $qt_projetos = ProjetoRepository::count();
-        $qt_modelos = ModeloRepository::count();
+        $qt_modelos_diagramaticos = ModeloDiagramaticoRepository::listar()->count();
+        $qt_modelos_declarativos =  ModeloDeclarativoRepository::listar()->count();
+        $qt_modelos = $qt_modelos_declarativos + $qt_modelos_diagramaticos;
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
 
             return [
@@ -127,6 +131,31 @@ class RepositorioController extends Controller
     {
         $dados = Repositorio::dados();
         return view('controle_repositorios.create', compact('dados'));
+    }
+
+    public function desvincular_usuario_repositorio(Request $request)
+    {
+
+            try {
+                if ($request->desvincular === 'true') {
+                    $user = User::findOrFail($request->codusuario);
+                    $user->codrepositorio = null;
+                    $user->update();
+                }
+                $data['tipo'] = 'success';
+                $this->create_log($data);
+                return redirect()->route('vinculo_usuario_repositorio');
+            } catch (\Exception $ex) {
+                $data['mensagem'] = $ex->getMessage();
+                $data['tipo'] = 'error';
+                $data['pagina'] = 'Painel';
+                $data['acao'] = 'merge_checkout';
+                $this->create_log($data);
+                return redirect()->route('controle_usuarios.edit', ['id' => $request->codusuario]);
+            }
+
+
+
     }
 
 
@@ -237,6 +266,41 @@ class RepositorioController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
+    }
+
+    public function vinculo_usuario_repositorio()
+    {
+        $repositorios = RepositorioRepository::listar();
+        $usuarios = User::all();
+        $titulos = User::titulos();
+
+        $tipo = 'usuario';
+        return view('vinculo_usuario_repositorio.vinculo_usuario_repositorio', compact('repositorios', 'usuarios', 'titulos', 'tipo'));
+    }
+
+    public function vincular_usuario_repositorio(Request $request)
+    {
+        $codusuario = $request->codusuario;
+        $codrepositorio = $request->codrepositorio;
+        try {
+            $usuario = User::findOrFail($codusuario);
+            $repositorio = Repositorio::findOrFail($codrepositorio);
+            $usuario->codrepositorio = $repositorio->codrepositorio;
+            $usuario->update();
+            $data['tipo'] = 'success';
+            $this->create_log($data);
+
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        }
+        if (!empty($request->vinculo)){
+            return redirect()->route('vinculo_usuario_repositorio');
+        }
+        return redirect()->route('controle_usuarios.edit',['id' => $codusuario]);
     }
 
 }

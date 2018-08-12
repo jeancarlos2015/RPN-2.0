@@ -9,7 +9,7 @@
    ])
 
     <form action="{!! route('controle_repositorios.store') !!}" method="post">
-        {{ method_field('POST')}}
+        @method('POST')
         @includeIf('controle_repositorios.form',
         [
         'acao' => 'Salvar e Proseguir',

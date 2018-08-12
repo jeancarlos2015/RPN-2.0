@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Repositorio;
 use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\RepositorioRepository;
 use App\User;
@@ -132,7 +131,7 @@ class UserController extends Controller
             $dados[2]->valor = $usuario->password;
             $usuarios = User::all();
             $repositorios = RepositorioRepository::all();
-            return view('controle_usuario.edit', compact('dados', 'usuario','usuarios','repositorios'));
+            return view('controle_usuario.edit', compact('dados', 'usuario', 'usuarios', 'repositorios'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -144,58 +143,37 @@ class UserController extends Controller
     }
 
 
+
     public function update(Request $request, $id)
     {
-        if (!empty($request->desvincular)) {
-            try {
-                if($request->desvincular==='true'){
-                    $user = User::findOrFail($id);
-                    $user->codrepositorio = null;
-                    $user->update();
-                }
-                $data['tipo'] = 'success';
-                $this->create_log($data);
-                return redirect()->route('vinculo_usuario_repositorio');
-            } catch (Exception $ex) {
-                $data['mensagem'] = $ex->getMessage();
-                $data['tipo'] = 'error';
-                $data['pagina'] = 'Painel';
-                $data['acao'] = 'merge_checkout';
-                $this->create_log($data);
-                return redirect()->route('controle_usuarios.edit', [$id]);
+        try {
+            if ($request->password !== $request->password_confirm) {
+                flash('Senha não confirmada!!')->error();
+                return redirect()->route('controle_usuarios.edit', ['id' => $id]);
+            }
+            $user = User::findOrFail($id);
+            $user_novo = $this->update_user($user, $request->all());
+            LogRepository::criar(
+                "Usuário Atualizado Com sucesso",
+                "Rota De Atualização de Usuário",
+                'controle_usuarios.edit',
+                'update');
+            $data['tipo'] = 'success';
+            $this->create_log($data);
+            if (\Auth::user()->type === 'administrador') {
+                return redirect()->route('controle_usuarios.index');
+            } else {
+                return redirect()->route('controle_usuarios.edit', ['id' => $user->codusuario]);
             }
 
-        } else {
-            try {
-                if ($request->password !== $request->password_confirm) {
-                    flash('Senha não confirmada!!')->error();
-                    return redirect()->route('controle_usuarios.edit', ['id' => $id]);
-                }
-                $user = User::findOrFail($id);
-                $user_novo = $this->update_user($user, $request->all());
-                LogRepository::criar(
-                    "Usuário Atualizado Com sucesso",
-                    "Rota De Atualização de Usuário",
-                    'controle_usuarios.edit',
-                    'update');
-                $data['tipo'] = 'success';
-                $this->create_log($data);
-                if (\Auth::user()->type === 'administrador') {
-                    return redirect()->route('controle_usuarios.index');
-                } else {
-                    return redirect()->route('controle_usuarios.edit', ['id' => $user->codusuario]);
-                }
-
-            } catch (\Exception $ex) {
-                $data['mensagem'] = $ex->getMessage();
-                $data['tipo'] = 'error';
-                $data['pagina'] = 'Painel';
-                $data['acao'] = 'merge_checkout';
-                $this->create_log($data);
-            }
-            return redirect()->route('painel');
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
         }
-
+        return redirect()->route('painel');
 
     }
 
@@ -223,38 +201,5 @@ class UserController extends Controller
         return redirect()->route('painel');
     }
 
-    public function vincular_usuario_repositorio(Request $request)
-    {
-        $codusuario = $request->codusuario;
-        $codrepositorio = $request->codrepositorio;
-        try {
-            $usuario = User::findOrFail($codusuario);
-            $repositorio = Repositorio::findOrFail($codrepositorio);
-            $usuario->codrepositorio = $repositorio->codrepositorio;
-            $usuario->update();
-            $data['tipo'] = 'success';
-            $this->create_log($data);
 
-        } catch (Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        if (!empty($request->vinculo)){
-            return redirect()->route('vinculo_usuario_repositorio');
-        }
-        return redirect()->route('controle_usuarios.edit',['id' => $codusuario]);
-    }
-
-    public function vinculo_usuario_repositorio()
-    {
-        $repositorios = RepositorioRepository::listar();
-        $usuarios = User::all();
-        $titulos = User::titulos();
-
-        $tipo = 'usuario';
-        return view('vinculo_usuario_repositorio.vinculo_usuario_repositorio', compact('repositorios', 'usuarios', 'titulos', 'tipo'));
-    }
 }

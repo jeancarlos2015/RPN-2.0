@@ -44,9 +44,11 @@ class ModeloDiagramatico extends Model
         'nome',
         'descricao',
         'xml_modelo',
+
         'codprojeto',
         'codrepositorio',
         'codusuario',
+
         'visibilidade',
         'publico',
         'tipo'

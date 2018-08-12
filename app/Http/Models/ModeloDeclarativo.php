@@ -1,23 +1,28 @@
 <?php
 
-namespace App;
+namespace App\Http\Models;
 
+use App\Http\Util\Dado;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class ModeloDeclarativo extends Model
 {
     protected $connection = 'banco';
-    protected $primaryKey = 'codmodelodiagramatico';
-    protected $table = 'modelos_diagramaticos';
+    protected $primaryKey = 'codmodelodeclarativo';
+    protected $table = 'modelo_declarativos';
     protected $fillable = [
         'nome',
         'descricao',
-        'xml_modelo',
+        'tipo',
+
         'codprojeto',
         'codrepositorio',
         'codusuario',
+
         'visibilidade',
-        'publico'
+        'publico',
+
     ];
 
 
@@ -107,8 +112,7 @@ class ModeloDeclarativo extends Model
     {
         return [
             'nome' => 'required',
-            'descricao' => 'required',
-            'tipo' => 'required',
+            'descricao' => 'required'
         ];
     }
 
@@ -119,7 +123,6 @@ class ModeloDeclarativo extends Model
 
 
     }
-
 
 
     public function usuario()

@@ -23,30 +23,43 @@
                 </a>
 
             </td>
-            <td>
-                @if(Auth::user()->email===$modelo1->usuario->email)
-                    @if(!empty($rota_edicao))
-                        @if($modelo1->tipo==='diagramatico')
-
-                            {{--@include('componentes.link',['id' => $modelo1->codmodelodiagramatico, 'rota' => 'edicao_modelo_diagramatico'])--}}
-                            @include('componentes.link',['id' => $modelo1->codmodelodiagramatico, 'rota' => $rota_edicao])
-                        @else
+            @if($modelo1->tipo==='diagramatico')
+                <td>
+                    @if(Auth::user()->email===$modelo1->usuario->email)
+                        @if(!empty($rota_edicao))
                             @include('componentes.link',['id' => $modelo1->codmodelodiagramatico, 'rota' => $rota_edicao])
                         @endif
-
+                        @if(!empty($rota_exclusao))
+                            @include('componentes.form_delete',['id' => $modelo1->codmodelodiagramatico, 'rota' => $rota_exclusao])
+                        @endif
+                        @if(!empty($rota_exibicao))
+                            @include('componentes.link',['id' => $modelo1->codmodelodiagramatico, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                        @endif
+                    @else
+                        @if(!empty($rota_exibicao))
+                            @include('componentes.link',['id' => $modelo1->codmodelodiagramatico, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                        @endif
                     @endif
-                    @if(!empty($rota_exclusao))
-                        @include('componentes.form_delete',['id' => $modelo1->codmodelodiagramatico, 'rota' => $rota_exclusao])
+                </td>
+            @else
+                <td>
+                    @if(Auth::user()->email===$modelo1->usuario->email)
+                        @if(!empty($rota_edicao))
+                            @include('componentes.link',['id' => $modelo1->codmodelodeclarativo, 'rota' => 'controle_modelos_declarativos.edit'])
+                        @endif
+                        @if(!empty($rota_exclusao))
+                            @include('componentes.form_delete',['id' => $modelo1->codmodelodeclarativo, 'rota' => 'controle_modelos_declarativos.destroy'])
+                        @endif
+                        @if(!empty($rota_exibicao))
+                            @include('componentes.link',['id' => $modelo1->codmodelodeclarativo, 'rota' => 'controle_modelos_declarativos.index','nomebotao' => 'Visualizar'])
+                        @endif
+                    @else
+                        @if(!empty($rota_exibicao))
+                            @include('componentes.link',['id' => $modelo1->codmodelodeclarativo, 'rota' => 'controle_modelos_declarativos.show','nomebotao' => 'Visualizar'])
+                        @endif
                     @endif
-                    @if(!empty($rota_exibicao))
-                        @include('componentes.link',['id' => $modelo1->codmodelodiagramatico, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
-                    @endif
-                @else
-                    @if(!empty($rota_exibicao))
-                        @include('componentes.link',['id' => $modelo1->codmodelodiagramatico, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
-                    @endif
-                @endif
-            </td>
+                </td>
+            @endif
         </tr>
     @endforeach
     </tbody>

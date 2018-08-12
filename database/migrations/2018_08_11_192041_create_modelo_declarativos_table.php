@@ -17,12 +17,12 @@ class CreateModeloDeclarativosTable extends Migration
             $table->increments('codmodelodeclarativo');
             $table->bigInteger('codrepositorio');
             $table->bigInteger('codprojeto');
-            $table->bigInteger('codregra');
             $table->bigInteger('codusuario');
             $table->string('nome');
             $table->string('tipo');
             $table->string('descricao');
-
+            $table->boolean('visibilidade');
+            $table->boolean('publico');
             $table->timestamps();
         });
     }

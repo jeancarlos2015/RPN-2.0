@@ -8,7 +8,7 @@
                     'rota' => 'todos_projetos'
     ])
     <form action="{!! route('controle_projetos.update',['id' => $projeto->codprojeto]) !!}" method="post">
-        {{ method_field('PUT')}}
+        @method('PUT')
         @includeIf('controle_projetos.form',
                                         [
                                         'acao' => 'Salvar e Proseguir',
