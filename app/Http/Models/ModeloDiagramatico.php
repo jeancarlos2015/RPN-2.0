@@ -153,8 +153,35 @@ class ModeloDiagramatico extends Model
 
 
     }
+    public static function get_modelo_default($nome_modelo)
+    {
+        $data = "
+        <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<bpmn:definitions xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bpmn=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" id=\"Definitions_1om5q7p\" targetNamespace=\"http://bpmn.io/schema/bpmn\">
+  <bpmn:collaboration id=\"Collaboration_1635u9x\">
+    <bpmn:participant id=\"Participant_1r9kbtn\" name=\"".$nome_modelo."\" processRef=\"Process_1\" />
+  </bpmn:collaboration>
+  <bpmn:process id=\"Process_1\" isExecutable=\"false\">
+    <bpmn:startEvent id=\"StartEvent_1\" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id=\"BPMNDiagram_1\">
+    <bpmndi:BPMNPlane id=\"BPMNPlane_1\" bpmnElement=\"Collaboration_1635u9x\">
+      <bpmndi:BPMNShape id=\"Participant_1r9kbtn_di\" bpmnElement=\"Participant_1r9kbtn\">
+        <dc:Bounds x=\"288\" y=\"118\" width=\"600\" height=\"250\" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id=\"_BPMNShape_StartEvent_2\" bpmnElement=\"StartEvent_1\">
+        <dc:Bounds x=\"344\" y=\"225\" width=\"36\" height=\"36\" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
 
-    public static function get_modelo_default()
+        ";
+        return $data;
+
+    }
+
+    public static function get_modelo_default1()
     {
         $data = "
         <?xml version=\"1.0\" encoding=\"UTF-8\"?>

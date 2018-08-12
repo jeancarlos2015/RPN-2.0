@@ -11,13 +11,15 @@
             @else
                 <input type="{!! $dados[$indice]->type !!}"
                        name="{!! $dados[$indice]->atributo !!}" placeholder="{!! $dados[$indice]->campo !!}"
-                       value="{!! $dados[$indice]->valor !!}" title="Ao clicar neste ítem todos os usuários poderão manipulá-lo" required>
+                       value="{!! $dados[$indice]->valor !!}"
+                       title="Ao clicar neste ítem todos os usuários poderão manipulá-lo" required>
                 <label>{!! $dados[$indice]->campo !!}</label>
             @endif
 
         @endif
     </div>
 @endfor
+
 <div class="form-group">
     <label>Tipo</label>
     <select class="selectpicker form-control" name="tipo">
@@ -26,6 +28,7 @@
         @endforeach
     </select>
 </div>
+
 
 {{--'codrepositorio',--}}
 {{--'codusuario',--}}
@@ -59,7 +62,8 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="visibilidade">Deseja tornar este registro visível em outros Modelos Declarativos?</label>
+    <label class="control-label" for="visibilidade">Deseja tornar este registro visível em outros Modelos
+        Declarativos?</label>
     <div class="controls">
         <input name="visivel_modelo_declarativo" type="hidden" value="false">
         <label class="switch-light switch-candy">

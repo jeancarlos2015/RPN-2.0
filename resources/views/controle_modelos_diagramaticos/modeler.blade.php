@@ -8,3 +8,12 @@
     </div>
 
 @endsection
+
+@section('modo')
+    <li class="nav-item">
+        <a class="nav-link" title="Você está no modo de Edição de modelo. As alterações que você fizer aqui deverão ser salvas.">
+            <p class="fa fa-eye"> Modo De Edição Do Modelo </p>
+            <span class="sr-only"></span>
+        </a>
+    </li>
+@endsection

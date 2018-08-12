@@ -29,3 +29,11 @@ html, body, #canvas {
     padding: 20px 50px;
     background-color: darkgray;
 }
+
+#save-button1 {
+    position: fixed;
+    bottom: 10%;
+    left: 80%;
+    padding: 20px 50px;
+    background-color: darkgray;
+}

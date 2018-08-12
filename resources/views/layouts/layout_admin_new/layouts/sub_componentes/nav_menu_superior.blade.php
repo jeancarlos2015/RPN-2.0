@@ -1,4 +1,7 @@
 <ul class="navbar-nav ml-auto">
+
+    @yield('modo')
+
     @if(!empty(Auth::user()->email==='jeancarlospenas25@gmail.com'))
         <li class="nav-item">
             <a class="nav-link">
@@ -12,7 +15,7 @@
         <li class="nav-item">
             <a class="nav-link">
                 <p class="fa fa-database"> Repositório: {{ Auth::user()->repositorio->nome }} </p>
-                 <span class="sr-only"></span>
+                <span class="sr-only"></span>
             </a>
         </li>
     @endif

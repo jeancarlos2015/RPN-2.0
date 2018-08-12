@@ -120,7 +120,7 @@ class ModeloDiagramaticoController extends Controller
             if (!$this->exists_errors($data)) {
                 if (!ModeloDiagramaticoRepository::existe($request->nome)) {
                     $request->request->add([
-                        'xml_modelo' => ModeloDiagramatico::get_modelo_default(),
+                        'xml_modelo' => ModeloDiagramatico::get_modelo_default($request->nome),
                         'codprojeto' => $codprojeto,
                         'codrepositorio' => $codrepositorio,
                         'codusuario' => Auth::user()->codusuario
