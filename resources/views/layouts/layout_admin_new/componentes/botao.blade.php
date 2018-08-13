@@ -35,7 +35,7 @@
         @case ('objetofluxo')
         <div class="form-group">
             <a class="btn btn-dark form-control"
-               href="{!! route('controle_objetos_fluxos.create',[$modelo_declarativo->codmodelodeclarativo]) !!}">Novo Objeto de Fluxo</a>
+               href="{!! route('controle_objetos_fluxos_create',[$modelo_declarativo->codmodelodeclarativo]) !!}">Novo Objeto de Fluxo</a>
         </div>
 
 

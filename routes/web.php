@@ -25,6 +25,12 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('gravar')
             ->middleware('can:acesso');
 
+
+        Route::get('controle_objeto_fluxo_index/modelo_declarativo/{codmodelodeclarativo}','ObjetoFluxoController@controle_objeto_fluxo_index')
+            ->name('controle_objeto_fluxo_index')
+            ->middleware('can:acesso');
+
+
         Route::get('edicao_modelo_diagramatico/{codmodelo}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')
             ->name('edicao_modelo_diagramatico')
             ->middleware('can:acesso');

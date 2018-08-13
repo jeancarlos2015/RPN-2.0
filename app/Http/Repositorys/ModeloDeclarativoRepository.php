@@ -4,7 +4,7 @@ namespace App\Http\Repositorys;
 
 
 use App\Http\Models\ModeloDeclarativo;
-use App\Http\Models\ModeloDiagramatico;
+use App\http\Models\ObjetoFluxo;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +19,6 @@ class ModeloDeclarativoRepository extends Repository
     }
 
 
-
     public static function listar()
     {
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
@@ -31,17 +30,16 @@ class ModeloDeclarativoRepository extends Repository
 
     }
 
-
+    public static function listar_objetos_fluxo($codmodelodeclarativo)
+    {
+        return ObjetoFluxo::all()
+            ->where('codmodelodeclarativo', '=', $codmodelodeclarativo);
+    }
 
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
     {
-        return collect(ModeloDeclarativo::whereCodrepositorio($codrepositorio)
-            ->where('codprojeto', '=', $codprojeto)
-            ->Where('visibilidade', '=', 'true')
-            ->get());
+        return collect(ModeloDeclarativo::get());
     }
-
-
 
 
     public static function atualizar(Request $request, $codmodelo)
@@ -65,7 +63,6 @@ class ModeloDeclarativoRepository extends Repository
     }
 
 
-
     public static function excluir($codmodelo)
     {
         $value = null;
@@ -78,7 +75,6 @@ class ModeloDeclarativoRepository extends Repository
         }
         return $value;
     }
-
 
 
     public static function existe($nome_do_modelo)

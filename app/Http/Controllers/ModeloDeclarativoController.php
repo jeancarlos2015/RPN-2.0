@@ -57,7 +57,7 @@ class ModeloDeclarativoController extends Controller
             if (!ModeloDeclarativoRepository::existe($request->nome)) {
                 $modelo = ModeloDeclarativo::create($request->all());
 
-                return redirect()->route('controle_objetos_fluxos_create',
+                return redirect()->route('controle_objeto_fluxo_index',
                     [
                         'codmodelodeclarativo' => $modelo->codmodelodeclarativo
                     ]);

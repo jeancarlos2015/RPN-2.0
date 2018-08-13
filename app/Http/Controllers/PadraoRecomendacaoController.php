@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\http\Models\Relacionamento;
+use App\PadraoRecomendacao;
 use Illuminate\Http\Request;
 
-class RelacionamentoController extends Controller
+class PadraoRecomendacaoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class RelacionamentoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\http\Models\Relacionamento  $relacionamento
+     * @param  \App\PadraoRecomendacao  $padraoRecomendacao
      * @return \Illuminate\Http\Response
      */
-    public function show(Relacionamento $relacionamento)
+    public function show(PadraoRecomendacao $padraoRecomendacao)
     {
         //
     }
@@ -52,10 +52,10 @@ class RelacionamentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\http\Models\Relacionamento  $relacionamento
+     * @param  \App\PadraoRecomendacao  $padraoRecomendacao
      * @return \Illuminate\Http\Response
      */
-    public function edit(Relacionamento $relacionamento)
+    public function edit(PadraoRecomendacao $padraoRecomendacao)
     {
         //
     }
@@ -64,10 +64,10 @@ class RelacionamentoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\http\Models\Relacionamento  $relacionamento
+     * @param  \App\PadraoRecomendacao  $padraoRecomendacao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Relacionamento $relacionamento)
+    public function update(Request $request, PadraoRecomendacao $padraoRecomendacao)
     {
         //
     }
@@ -75,11 +75,33 @@ class RelacionamentoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\http\Models\Relacionamento  $relacionamento
+     * @param  \App\PadraoRecomendacao  $padraoRecomendacao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Relacionamento $relacionamento)
+    public function destroy(PadraoRecomendacao $padraoRecomendacao)
     {
         //
     }
+
+    public function padroes_recomendacoes($tipo){
+
+    }
+
+    private function padrao_dependencia_circunstancial(Request $request){
+
+    }
+
+    private function padrao_dependencia_estrita(Request $request){
+
+    }
+
+    private function padrao_nao_coexistencia(Request $request){
+
+    }
+
+    private function padrao_uniao(Request $request){
+
+    }
+
+
 }

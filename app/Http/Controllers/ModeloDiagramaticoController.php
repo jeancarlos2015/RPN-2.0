@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\ModeloDeclarativo;
 use App\Http\Models\ModeloDiagramatico;
 use App\Http\Models\Repositorio;
 use App\Http\Models\Projeto;
@@ -20,11 +21,16 @@ class ModeloDiagramaticoController extends Controller
             $projeto = Projeto::findOrFail($codprojeto);
             $repositorio = Repositorio::findOrFail($codrepositorio);
             $titulos = ModeloDiagramatico::titulos();
-            $modelos_diagramatico = ModeloDiagramaticoRepository::listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario);
-            $modelos_declarativos =ModeloDeclarativoRepository::listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario);
-            $modelos_diagramatico->merge($modelos_declarativos);
-            $modelos = $modelos_diagramatico;
+            $modelos_declarativos = ModeloDeclarativo::all()
+                ->where('codrepositorio','=',$codrepositorio)
+                ->where('codprojeto','=',$codprojeto)
+                ->where('visibilidade','=','true');
 
+            $modelos_diagramaticos = ModeloDiagramatico::all()
+                ->where('codrepositorio','=',$codrepositorio)
+                ->where('codprojeto','=',$codprojeto)
+                ->where('visibilidade','=','true');
+            $modelos = $modelos_declarativos->merge($modelos_diagramaticos);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -246,7 +252,10 @@ class ModeloDiagramaticoController extends Controller
     {
         try {
             $modelo = ModeloDiagramatico::findOrFail($id);
+            $xml_modelo = str_replace($modelo->nome,$request->nome,$modelo->xml_modelo);
+            $modelo->xml_modelo = $xml_modelo;
             $modelo->update($request->all());
+
             if ($modelo->tipo === 'diagramatico') {
                 return redirect()->route('edicao_modelo_diagramatico', [
                     'codmodelodiagramatico' => $modelo->codmodelodiagramatico

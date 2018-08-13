@@ -24,7 +24,7 @@
                                 <div class="text-muted smaller">Responsável: {!! $projeto1->usuario->name !!}</div>
                                 <div class="text-muted smaller">Descrição do Projeto: {!! $projeto1->descricao !!}</div>
                                 <div class="text-muted smaller">Repositório: {!! $projeto1->repositorio->nome !!}</div>
-                                <div class="text-muted smaller">Modelos: {!! count($projeto1->modelos_diagramaticos) !!}</div>
+                                <div class="text-muted smaller">Modelos: {!! count($projeto1->modelos_diagramaticos) + count($projeto1->modelos_declarativos) !!}</div>
                             </div>
                         </div>
                     </a>

@@ -111,7 +111,10 @@ class Repositorio extends Model
         return $this->hasMany(ModeloDiagramatico::class, 'codrepositorio', 'codrepositorio');
     }
 
-
+    public function modelos_declarativos()
+    {
+        return $this->hasMany(ModeloDeclarativo::class, 'codrepositorio', 'codrepositorio');
+    }
     protected static function boot()
     {
         parent::boot();

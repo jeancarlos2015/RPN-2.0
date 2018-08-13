@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\ModeloDeclarativo;
 use App\http\Models\ObjetoFluxo;
+use App\Http\Repositorys\ModeloDeclarativoRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,9 +24,9 @@ class ObjetoFluxoController extends Controller
         return view('controle_modelos_declarativos.controle_objetos_fluxo.index', compact('objetos_fluxos', 'tipo', 'titulos'));
     }
 
-    public function index_objetos_fluxos_do_modelo_declarativo($codmodelodeclarativo)
+    public function controle_objeto_fluxo_index($codmodelodeclarativo)
     {
-        $objetos_fluxos = ObjetoFluxo::all();
+        $objetos_fluxos = ModeloDeclarativoRepository::listar_objetos_fluxo($codmodelodeclarativo);
         $tipo = 'objetofluxo';
         $titulos = ObjetoFluxo::titulos_da_tabela();
         $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
@@ -40,6 +41,7 @@ class ObjetoFluxoController extends Controller
 
     public function create($codmodelodeclarativo)
     {
+
         $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
         $tipo = 'objetofluxo';
         $titulos = ObjetoFluxo::titulos_da_tabela();
@@ -67,7 +69,7 @@ class ObjetoFluxoController extends Controller
                 $objeto_fluxo = ObjetoFluxo::create($request->all());
                 $data['tipo'] = 'success';
                 $this->create_log($data);
-                return redirect()->route('controle_objetos_fluxos_create',
+                return redirect()->route('controle_objeto_fluxo_index',
                     [
                         'codmodelodeclarativo' => $objeto_fluxo->codmodelodeclarativo
                     ]);

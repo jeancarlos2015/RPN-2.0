@@ -132,6 +132,10 @@ class Projeto extends Model
         return $this->hasMany(ModeloDiagramatico::class, 'codprojeto', 'codprojeto');
     }
 
+    public function modelos_declarativos()
+    {
+        return $this->hasMany(ModeloDeclarativo::class, 'codprojeto', 'codprojeto');
+    }
 
     protected static function boot()
     {
