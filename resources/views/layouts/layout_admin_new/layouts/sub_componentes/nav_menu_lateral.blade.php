@@ -32,13 +32,7 @@
                 <li>
                     <a href="{!! route('controle_objetos_fluxos.index') !!}"><i class="fa fa-fw fa-pencil"></i>Modelos Declarativos</a>
                 </li>
-
-
-                <li>
-                    <a href="{!! route('controle_objetos_fluxos.index') !!}"><i class="fa fa-fw fa-pencil"></i>Regras</a>
-                </li>
-
-
+                
             </ul>
         </li>
 
