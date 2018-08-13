@@ -17,6 +17,7 @@ class ModeloDiagramaticoController extends Controller
 
     public function index($codrepositorio, $codprojeto, $codusuario)
     {
+
         try {
             $projeto = Projeto::findOrFail($codprojeto);
             $repositorio = Repositorio::findOrFail($codrepositorio);

@@ -107,7 +107,10 @@ class ModeloDeclarativo extends Model
     {
         return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
     }
-
+    public function objetos_fluxos()
+    {
+        return $this->hasMany(ObjetoFluxo::class, 'codmodelodeclarativo', 'codmodelodeclarativo');
+    }
     public static function validacao()
     {
         return [
