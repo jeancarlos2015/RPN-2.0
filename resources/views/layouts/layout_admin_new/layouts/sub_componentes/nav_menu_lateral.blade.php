@@ -14,6 +14,9 @@
                 <li>
                     <a href="{!! route('todos_modelos') !!}"><i class="fa fa-fw fa-pencil"></i>Modelos</a>
                 </li>
+                <li>
+                    <a href="{!! route('controle_objetos_fluxos.index') !!}"><i class="fa fa-fw fa-pencil"></i>Objetos De Fluxo</a>
+                </li>
                 @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
                     <li>
                         <a href="{!! route('controle_repositorios.index') !!}"><i
@@ -25,14 +28,8 @@
                     <a href="{!! route('todos_projetos') !!}"><i class="fa fa-fw fa-pencil"></i>Projetos</a>
                 </li>
 
-                <li>
-                    <a href="{!! route('controle_objetos_fluxos.index') !!}"><i class="fa fa-fw fa-pencil"></i>Objetos De Fluxo</a>
-                </li>
 
-                <li>
-                    <a href="{!! route('controle_objetos_fluxos.index') !!}"><i class="fa fa-fw fa-pencil"></i>Modelos Declarativos</a>
-                </li>
-                
+
             </ul>
         </li>
 
