@@ -23,3 +23,12 @@
     </form>
 
 @endsection
+
+@section('modo')
+    <li class="nav-item">
+        <a class="nav-link" title="Você está no modo de Edição de modelo. As alterações que você fizer aqui deverão ser salvas.">
+            <p class="fa fa-newspaper"> Modo De Criação Do Modelo Diagramático </p>
+            <span class="sr-only"></span>
+        </a>
+    </li>
+@endsection

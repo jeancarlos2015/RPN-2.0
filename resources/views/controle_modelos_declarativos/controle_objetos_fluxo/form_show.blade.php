@@ -11,3 +11,4 @@
 <div class="form-group">
     <input value="{!! $objeto_fluxo->tipo !!}" class="form-control" disabled/>
 </div>
+

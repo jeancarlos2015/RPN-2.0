@@ -62,6 +62,8 @@ class ModeloDeclarativoController extends Controller
                         'codmodelodeclarativo' => $modelo->codmodelodeclarativo
                     ]);
             }
+            $data['tipo'] = 'existe';
+            $this->create_log($data);
             return redirect()->route('controle_modelos_declarativos_create', [
                 'codrepositorio' => $request->codrepositorio,
                 'codprojeto' => $request->codprojeto

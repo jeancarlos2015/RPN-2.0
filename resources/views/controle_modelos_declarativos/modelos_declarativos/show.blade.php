@@ -6,5 +6,13 @@
                     'titulo' => 'Modelos',
                     'rota' => 'painel'
     ])
-    <h3>Visualização Do Modelo</h3>
+@endsection
+
+@section('modo')
+    <li class="nav-item">
+        <a class="nav-link" title="Modo de Edição de Objeto de Fluxo">
+            <p class="fa fa-dashboard"> Visualização Do Modelo Declarativo</p>
+            <span class="sr-only"></span>
+        </a>
+    </li>
 @endsection

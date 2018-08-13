@@ -23,6 +23,14 @@ class ObjetoFluxoController extends Controller
         return view('controle_modelos_declarativos.controle_objetos_fluxo.index', compact('objetos_fluxos', 'tipo', 'titulos'));
     }
 
+    public function index_objetos_fluxos_do_modelo_declarativo($codmodelodeclarativo)
+    {
+        $objetos_fluxos = ObjetoFluxo::all();
+        $tipo = 'objetofluxo';
+        $titulos = ObjetoFluxo::titulos_da_tabela();
+        $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        return view('controle_modelos_declarativos.controle_objetos_fluxo.index', compact('objetos_fluxos', 'tipo', 'titulos','modelo_declarativo'));
+    }
 
     /**
      * Show the form for creating a new resource.

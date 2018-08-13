@@ -19,3 +19,12 @@
     )
     </form>
 @endsection
+
+@section('modo')
+    <li class="nav-item">
+        <a class="nav-link" title="Modo de Edição de Objeto de Fluxo">
+            <p class="fa fa-dashboard"> Criação do Projeto</p>
+            <span class="sr-only"></span>
+        </a>
+    </li>
+@endsection

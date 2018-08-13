@@ -8,7 +8,9 @@
                     'sub_titulo' => 'Objetos De Fluxo',
                     'rota' => 'painel'
     ])
+    @if(!empty($modelo_declarativo))
     @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
+    @endif
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
                     'regras' => $objetos_fluxos,
@@ -18,4 +20,13 @@
                     'nome_botao' => 'Novo',
                     'titulo' =>'Regras'
     ])
+@endsection
+
+@section('modo')
+    <li class="nav-item">
+        <a class="nav-link" title="Modo de Edição de Objeto de Fluxo">
+            <p class="fa fa-dashboard"> Controle de Objetos de fluxo</p>
+            <span class="sr-only"></span>
+        </a>
+    </li>
 @endsection
