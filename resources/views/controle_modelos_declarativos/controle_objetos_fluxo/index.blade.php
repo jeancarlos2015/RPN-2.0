@@ -18,7 +18,7 @@
                     'rota_exclusao' => 'controle_objetos_fluxos.destroy',
                     'rota_exibicao' => 'controle_objetos_fluxos.show',
                     'nome_botao' => 'Novo',
-                    'titulo' =>'Regras'
+                    'titulo' =>'Objetos de Fluxo'
     ])
 @endsection
 

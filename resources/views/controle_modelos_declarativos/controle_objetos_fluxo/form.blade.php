@@ -93,5 +93,7 @@
         </label>
     </div>
 </div>
+<div class="form-group">
+    <button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>
+</div>
 
-<button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>
