@@ -6,6 +6,7 @@ use App\Http\Util\Dado;
 use App\User;
 use App\Http\Models\Projeto;
 use App\Http\Models\ModeloDiagramatico;
+use App\Http\Models\ModeloDeclarativo;
 use Illuminate\Database\Eloquent\Model;
 
 class Repositorio extends Model
