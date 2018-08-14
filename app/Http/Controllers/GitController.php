@@ -109,12 +109,6 @@ class GitController extends Controller
 
             $data['tipo'] = 'success';
             $this->create_log($data);
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error!';
-            $data['pagina'] = 'controle_versao.init';
-            $data['acao'] = 'selecionar_repositorio';
-            $this->create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error!';
@@ -122,6 +116,12 @@ class GitController extends Controller
             $data['acao'] = 'selecionar_repositorio';
             $this->create_log($data);
 
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error!';
+            $data['pagina'] = 'controle_versao.init';
+            $data['acao'] = 'selecionar_repositorio';
+            $this->create_log($data);
         }
     }
     private function selecionar_repositorio_usuario($repositorio_atual, $default_branch){
@@ -129,7 +129,7 @@ class GitController extends Controller
 
             GitSistemaRepository::selecionar_repositorio($default_branch, $repositorio_atual);
             $branch_rascunho = [
-                'branch' => 'rascnho',
+                'branch' => 'rascunho',
                 'descricao' => 'rascunho',
                 'codusuario' => Auth::user()->codusuario
             ];
@@ -139,16 +139,13 @@ class GitController extends Controller
                 'codusuario' => Auth::user()->codusuario
             ];
 
-            BranchsRepository::incluir($branch_rascunho);
+//            GitSistemaRepository::create_branch_remote('rascunho');
+//            GitSistemaRepository::create_branch_remote('original');
             BranchsRepository::incluir($branch_original);
+            sleep(2);
+            BranchsRepository::incluir($branch_rascunho);
             GitSistemaRepository::merge_checkout('checkout', 'rascunho');
             $data['tipo'] = 'success';
-            $this->create_log($data);
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error!';
-            $data['pagina'] = 'controle_versao.init';
-            $data['acao'] = 'selecionar_repositorio';
             $this->create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -157,6 +154,12 @@ class GitController extends Controller
             $data['acao'] = 'selecionar_repositorio';
             $this->create_log($data);
 
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error!';
+            $data['pagina'] = 'controle_versao.init';
+            $data['acao'] = 'selecionar_repositorio';
+            $this->create_log($data);
         }
     }
     public function selecionar_repositorio($repositorio_atual, $default_branch)
@@ -176,13 +179,13 @@ class GitController extends Controller
             $repositorio = GitSistemaRepository::create_repository($request->nome);
             GitSistemaRepository::atualizar_usuario_github($repositorio);
             return redirect()->route('controle_versao.show', ['nome_repositorio' => $request->nome]);
-        } catch (\Exception $ex) {
+        } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.init';
             $data['acao'] = 'init';
             $this->create_log($data);
-        } catch (ApiLimitExceedException $ex) {
+        } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.init';
@@ -197,13 +200,13 @@ class GitController extends Controller
     {
         try {
             $repositorio = GitSistemaRepository::get_repositorio($nome_repositorio);
-        } catch (\Exception $ex) {
+        } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.show';
             $data['acao'] = 'show';
             $this->create_log($data);
-        } catch (ApiLimitExceedException $ex) {
+        } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.show';
@@ -218,13 +221,13 @@ class GitController extends Controller
     {
         try {
             GitSistemaRepository::delete_repository($repositorio_atual);
-        } catch (\Exception $ex) {
+        } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'delete_repository';
             $this->create_log($data);
-        } catch (ApiLimitExceedException $ex) {
+        } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
@@ -246,13 +249,13 @@ class GitController extends Controller
             BranchsRepository::excluir_branch($request->branch);
             $data['tipo'] = 'success';
             $this->create_log($data);
-        } catch (\Exception $ex) {
+        } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'delete';
             $this->create_log($data);
-        } catch (ApiLimitExceedException $ex) {
+        } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
@@ -273,13 +276,13 @@ class GitController extends Controller
             BranchsRepository::incluir($request->all());
             $data['tipo']='success';
             $this->create_log($data);
-        } catch (\Exception $ex) {
+        } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'create';
             $this->create_log($data);
-        } catch (ApiLimitExceedException $ex) {
+        } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
@@ -304,13 +307,13 @@ class GitController extends Controller
             GitSistemaRepository::pull(Auth::user()->github->branch_atual);
             $data['tipo'] = 'success';
             $this->create_log($data);
-        } catch (\Exception $ex) {
+        } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'pull';
             $this->create_log($data);
-        } catch (ApiLimitExceedException $ex) {
+        } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
@@ -339,13 +342,13 @@ class GitController extends Controller
 
             }
 
-        } catch (\Exception $ex) {
+        } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
-        } catch (ApiLimitExceedException $ex) {
+        } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
@@ -355,6 +358,7 @@ class GitController extends Controller
         return redirect()->route('painel');
     }
     private function merge_checkout_usuario(Request $request){
+
         try {
             $validate = [
                 'branch',
@@ -367,7 +371,9 @@ class GitController extends Controller
                     ->withInput();
             } else {
                 if ($request->branch!=='master'){
+
                     GitSistemaRepository::merge_checkout($request->tipo, $request->branch);
+
                     $data['tipo'] = 'success';
                     $this->create_log($data);
                 }else{
@@ -379,18 +385,19 @@ class GitController extends Controller
 
             }
 
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+            return redirect()->route('painel');
         }
         return redirect()->route('painel');
     }
@@ -401,6 +408,7 @@ class GitController extends Controller
         }else{
             $this->merge_checkout_usuario($request);
         }
+
     }
 
 
@@ -411,14 +419,14 @@ class GitController extends Controller
             GitSistemaRepository::commit($request->commit);
             $data['tipo'] = 'success';
             $this->create_log($data);
-        } catch (\Exception $ex) {
-            $data['tipo'] = 'success';
-            $this->create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'commit';
+            $this->create_log($data);
+        } catch (\Exception $ex) {
+            $data['tipo'] = 'success';
             $this->create_log($data);
         }
         return redirect()->route('painel');

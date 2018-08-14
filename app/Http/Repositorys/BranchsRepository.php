@@ -36,7 +36,7 @@ class BranchsRepository extends Repository
         return $value;
     }
 
-    public static function incluir($data = [])
+    public static function incluir($data)
     {
         return Branch::create($data);
     }
@@ -102,6 +102,7 @@ class BranchsRepository extends Repository
 
     public static function change_branch($branch_atual)
     {
+
         $github_data = Auth::user()->github;
         $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
 
@@ -113,6 +114,7 @@ class BranchsRepository extends Repository
             'branch_atual' => $branch_atual,
             'repositorio_atual' => $user_github->repositorio_atual
         ];
+
         $user_github->update($data);
 
     }

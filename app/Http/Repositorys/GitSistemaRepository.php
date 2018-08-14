@@ -117,19 +117,6 @@ class GitSistemaRepository
 
     }
 
-    private function upload_github_database_not_exists()
-    {
-        $conteudo = $this->ler_arquivo(database_path('banco/database.sqlite'));
-        $this->cria_e_atualiza_arquivos_no_github(null);
-    }
-
-    private function upload_github_database()
-    {
-        $conteudo = $this->ler_arquivo(database_path('banco/database.sqlite'));
-        $this->cria_e_atualiza_arquivos_no_github(null);
-    }
-
-
     public static function create_branch_remote($branch)
     {
 
@@ -247,19 +234,18 @@ class GitSistemaRepository
 
     }
 
-    private
-    function teste_sob_arquivo_serializado()
-    {
-        $client = new Client();
-        $github = Auth::user()->github;
-        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
-        $dado = new Dado();
-        $dado->modelos = $this->ler_arquivo(database_path('banco/modelos/diagram.bpmn'));
-        $dado->banco = $this->ler_arquivo(database_path('banco/database.sqlite'));
-        $serializado = serialize($dado);
-        $this->cria_e_atualiza_arquivos_no_github("database.dat", $serializado, '.dat', 'teste');
-
-    }
+//    private
+//    function teste_sob_arquivo_serializado()
+//    {
+//        $client = new Client();
+//        $github = Auth::user()->github;
+//        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
+//        $dado = new Dado();
+//        $dado->banco = $this->ler_arquivo(database_path('banco/database.sqlite'));
+//        $serializado = serialize($dado);
+//        $this->cria_e_atualiza_arquivos_no_github("database.dat", $serializado, '.dat', 'teste');
+//
+//    }
 
     private
     function get_files_github()
@@ -431,15 +417,7 @@ class GitSistemaRepository
     private
     static function mapeia_todos_arquivos_locais()
     {
-        $arquivos_bpmn = self::mapeia_arquivos_locais(database_path('banco/modelos'));
         $dado = new Dado();
-        $max_bpmn = count($arquivos_bpmn);
-        for ($indice = 1; $indice <= $max_bpmn; $indice++) {
-            $dado->modelo[$indice] = [];
-            $dado->conteudo_modelo[$indice] = [];
-            $dado->modelo[$indice] = $arquivos_bpmn[$indice];
-            $dado->conteudo_modelo[$indice] = self::ler_arquivo(database_path('banco/modelos/') . "/" . $arquivos_bpmn[$indice]);
-        }
         $arquivo__db = self::mapeia_arquivos_locais(database_path('banco'));
         $max_db = count($arquivo__db);
         for ($indice = 1; $indice <= $max_db; $indice++) {
@@ -450,16 +428,6 @@ class GitSistemaRepository
         }
 
         return $dado;
-    }
-
-    public static function apaga_modelos()
-    {
-        $files = self::mapeia_arquivos_locais(database_path('banco/modelos'));
-        if (!empty($files)) {
-            foreach ($files as $file) {
-                unlink(database_path('banco/modelos/') . $file);
-            }
-        }
     }
 
 //$nome = $dado['nome'];
@@ -493,21 +461,6 @@ class GitSistemaRepository
     }
 
 
-    private
-    static function carrega_dados_dos_modelos(Dado $dado, $indice)
-    {
-        $github = Auth::user()->github;
-        $dados['nome'] = $dado->modelo[$indice];
-        $dados['conteudo'] = $dado->conteudo_modelo[$indice];
-        $dados['formato'] = "." . explode('.', $dado->modelo[$indice])[1];;
-        $dados['branch'] = $github->branch_atual;
-        $dados['mensagem'] = $dado->mensagem;
-        $dados['repositorio'] = $github->repositorio_atual;
-        $dados['usuario'] = $github->usuario_github;
-        $dados['email'] = $github->email_github;
-        return $dados;
-    }
-
     public
     static function commit($mensagem)
     {
@@ -520,19 +473,6 @@ class GitSistemaRepository
         //upload do banco
         self::cria_e_atualiza_arquivos_no_github($dados);
 
-
-        if (isset($dado->modelo)) {
-            $max = count($dado->modelo);
-        } else {
-            $max = 0;
-        }
-
-        //upload dos modelos
-        for ($indice = 1; $indice <= $max; $indice++) {
-            $dados1 = self::carrega_dados_dos_modelos($dado, $indice);
-            self::cria_e_atualiza_arquivos_no_github($dados1);
-
-        }
         return $dado;
 
 
@@ -566,19 +506,14 @@ class GitSistemaRepository
         }
     }
 
-    private static function verifica_arquivos($path_banco, $path_modelo)
+    private static function verifica_arquivos($path_banco)
     {
         //obtem o caminho do banco
         $path_banco = database_path('banco');
-        //obtem o caminho dos modelos
-        $path_modelo = database_path('banco/modelos');
-        //obtem o nome do banco
         if (!file_exists($path_banco)) {
-            mkdir($path_modelo, 777);
+            mkdir($path_banco, 777);
         }
-        if (!file_exists($path_modelo)) {
-            mkdir($path_modelo, 777);
-        }
+
     }
 
     public
@@ -589,22 +524,19 @@ class GitSistemaRepository
         //obtem o caminho do banco
         $path_banco = database_path('banco');
         //obtem o caminho dos modelos
-        $path_modelo = database_path('banco/modelos');
-        self::verifica_arquivos($path_banco, $path_modelo);
-        sleep(3);
+        self::verifica_arquivos($path_banco);
+        sleep(2);
         //obtem o nome do banco
 
         $dados = self::get_files_github_pull();
-//        dd($dados);
         if (!empty($dados)) {
             foreach ($dados as $arquivo) {
                 if ($arquivo['name'] === 'database.db') {
                     self::pull_auxiliar($arquivo['name'], $path_banco, $default_branch);
-                } else {
-                    self::pull_auxiliar($arquivo['name'], $path_modelo, $default_branch);
                 }
             }
         }
+
     }
 
 
@@ -623,7 +555,8 @@ class GitSistemaRepository
     {
         BranchsRepository::change_branch($branch_atual);
 
-        sleep(3);
+        sleep(2);
+
         self::pull($branch_atual);
     }
 
@@ -657,6 +590,7 @@ class GitSistemaRepository
     public static function merge_checkout($tipo, $branch)
     {
         if ($tipo === 'checkout') {
+
             self::checkout($branch);
         } elseif ($tipo === 'merge') {
             self::merge($branch);
