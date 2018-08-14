@@ -84,7 +84,6 @@ class GitController extends Controller
             $data['acao'] = 'index';
             $this->create_log($data);
         }
-        dd(null);
         return view('controle_versao.init', compact('tipo', 'branch_atual', 'titulos', 'repositorios'));
     }
 
