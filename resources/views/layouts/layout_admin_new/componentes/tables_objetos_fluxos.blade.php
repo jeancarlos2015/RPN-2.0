@@ -20,6 +20,7 @@
                                 <div class="text-muted smaller">Projeto de origem: {!! $objeto->projeto->nome !!}</div>
                                 <div class="text-muted smaller">Modelo declarativo de
                                     origem: {!! $objeto->modelo->nome !!}</div>
+
                             </div>
                         </div>
                     </a>
