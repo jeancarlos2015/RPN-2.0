@@ -15,6 +15,7 @@
                             <div class="text-muted smaller">Tipo: Administrador</div>
                             @if(!empty($usuario->repositorio))
                                 <div class="text-muted smaller">Repositório: {!! $usuario->repositorio->nome !!}</div>
+
                             @else
                                 <div class="text-muted smaller">Repositório: Nenhuma</div>
                             @endif
@@ -32,6 +33,7 @@
                             @else
                                 <div class="text-muted smaller">Repositório: Nenhuma</div>
                             @endif
+
                         @endif
                     </div>
                 </div>

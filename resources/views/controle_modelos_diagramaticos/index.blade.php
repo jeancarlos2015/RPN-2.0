@@ -1,4 +1,3 @@
-
 @extends('layouts.layout_admin_new.layouts.main')
 
 @section('content')
@@ -9,8 +8,8 @@
                     'sub_titulo' => 'Repositório/'.$repositorio->nome.'Projetos/'.$projeto->nome.'/Modelos'
     ])
     @if(!empty($repositorio))
-            @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
-            @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => 'modelo_declarativo'])
+        @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
+        @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => 'modelo_declarativo'])
     @endif
     @includeIf('layouts.layout_admin_new.componentes.tables',[
                     'titulos' => $titulos,
@@ -22,4 +21,11 @@
                     'nome_botao' => 'Novo',
                     'titulo' =>'Modelos'
     ])
+@endsection
+
+@section('modo')
+    @includeIf('componentes.descricao',[
+            'descricao_titulo_menu' => 'Visualização dos modelos',
+            'nome_titulo_menu' => 'Visualização dos modelos'
+        ])
 @endsection

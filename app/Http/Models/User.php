@@ -61,6 +61,7 @@ class User extends Authenticatable
         return $this->belongsTo(Repositorio::class, 'codusuario', 'codusuario');
     }
 
+
     public function repositorio()
     {
         return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');

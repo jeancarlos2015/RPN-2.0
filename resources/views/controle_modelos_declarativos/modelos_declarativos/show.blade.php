@@ -9,10 +9,8 @@
 @endsection
 
 @section('modo')
-    <li class="nav-item">
-        <a class="nav-link" title="Modo de Edição de Objeto de Fluxo">
-            <p class="fa fa-dashboard"> Visualização Do Modelo Declarativo</p>
-            <span class="sr-only"></span>
-        </a>
-    </li>
+    @includeIf('componentes.descricao',[
+        'descricao_titulo_menu' => 'Modo de Visualização do modelo declarativo',
+        'nome_titulo_menu' => 'Visualização Do Modelo Declarativo'
+    ])
 @endsection
