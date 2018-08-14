@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Repositorys\BranchsRepository;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
+use Github\Exception\ApiLimitExceedException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,6 +61,7 @@ class GitController extends Controller
     public function index_init()
     {
         try {
+
             $branch_atual = 'Em construção';
             $repositorios = GitSistemaRepository::listar_repositorios();
 
@@ -69,19 +71,20 @@ class GitController extends Controller
                 'Nome Completo Do Repositório',
                 'Ações'
             ];
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'controle_versao.init';
-            $data['acao'] = 'index';
-            $this->create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.init';
             $data['acao'] = 'index';
             $this->create_log($data);
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'controle_versao.init';
+            $data['acao'] = 'index';
+            $this->create_log($data);
         }
+        dd(null);
         return view('controle_versao.init', compact('tipo', 'branch_atual', 'titulos', 'repositorios'));
     }
 

@@ -107,7 +107,7 @@
     </div>
 </div>
 <div class="form-group">
-    <button type="submit" class="btn btn-dark form-control">Aplicar Regra</button>
+    <button type="submit" class="btn btn-dark form-control">Criar Regras</button>
 </div>
 
 
