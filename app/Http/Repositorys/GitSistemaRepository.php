@@ -613,6 +613,7 @@ class GitSistemaRepository
 
         $client = new Client();
         $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
+
         return collect($client->currentUser()->repositories());
 
     }
