@@ -3,6 +3,9 @@
 namespace App\http\Models;
 
 use App\Http\Util\Dado;
+use App\Http\Models\Projeto;
+use App\Http\Models\Repositorio;
+use App\Http\Models\ModeloDeclarativo;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -135,11 +138,6 @@ class ObjetoFluxo extends Model
     public function modelo()
     {
         return $this->hasOne(ModeloDeclarativo::class, 'codmodelodeclarativo', 'codmodelodeclarativo');
-    }
-
-    public function regras()
-    {
-        return $this->belongsTo(Regra::class, 'codobjetofluxo', 'codobjetofluxo');
     }
 
     protected static function boot()
