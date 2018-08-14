@@ -2,7 +2,7 @@
 @extends('layouts.layout_admin_new.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
+
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                       'titulo' => 'Painel',
                     'sub_titulo' => 'Repositório / '.$modelo_declarativo->repositorio->nome.
@@ -11,19 +11,11 @@
                                     '/ Novo Objeto de Fluxo / ',
                     'rota' => 'controle_objetos_fluxos.index'
     ])
-    <form action="{!! route('controle_objetos_fluxos.store') !!}" method="post">
-        @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.form',
-        [
-        'acao' => 'Criar Objeto de Fluxo',
-        'dados' => $dados,
-        'MAX' => 2
-        ])
+    <form action="{!! route('controle_padroes_recomendacao.store') !!}" method="post">
+        @method('POST')
+        @csrf
+        @includeIf('controle_modelos_declarativos.controle_regras.form')
     </form>
-<div class="form-group">
-    <a href="{!! route('controle_padrao_create',[$modelo_declarativo->codmodelodeclarativo]) !!}" class="btn btn-dark form-control">
-        >>Seguir para Página de Aplique de Padrões de Recomendação
-    </a>
-</div>
 
 @endsection
 
@@ -31,8 +23,8 @@
 
 @section('modo')
     @includeIf('componentes.descricao',[
-        'descricao_titulo_menu' => 'Modo de Edição de Objeto de Fluxo',
-        'nome_titulo_menu' => 'Controle de Objetos de fluxo'
+        'descricao_titulo_menu' => 'Nesta página você vai aplicar os padrões de recomendação no modelo de clarativo',
+        'nome_titulo_menu' => 'Modo de Criação das Regras'
     ])
 @endsection
 

@@ -44,7 +44,7 @@ class Documentacao extends Model
         return [
             'Nome',
             'Descrição',
-            'Link'
+            'Link da Documentação'
         ];
     }
 

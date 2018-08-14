@@ -1,7 +1,6 @@
 @extends('layouts.layout_admin_new.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
                    'titulo' => 'Painel',
                    'sub_titulo' =>
@@ -14,6 +13,7 @@
 
     <form action="{!! route('controle_modelos_diagramaticos.update',['id' => $modelo->codmodelodiagramatico]) !!}" method="post">
         @method('PUT')
+        @csrf
         @includeIf('controle_modelos_diagramaticos.form',
         [
         'acao' => 'Atualizar e Proseguir',

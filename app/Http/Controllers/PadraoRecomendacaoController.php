@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\ModeloDeclarativo;
+use App\http\Models\ObjetoFluxo;
 use App\PadraoRecomendacao;
 use Illuminate\Http\Request;
 
@@ -22,26 +24,28 @@ class PadraoRecomendacaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($codmodelodeclarativo)
     {
-        //
+        $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        $objetos_fluxos = ObjetoFluxo::all();
+        return view('controle_modelos_declarativos.controle_regras.create', compact('modelo_declarativo','objetos_fluxos'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\PadraoRecomendacao  $padraoRecomendacao
+     * @param  \App\PadraoRecomendacao $padraoRecomendacao
      * @return \Illuminate\Http\Response
      */
     public function show(PadraoRecomendacao $padraoRecomendacao)
@@ -52,7 +56,7 @@ class PadraoRecomendacaoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\PadraoRecomendacao  $padraoRecomendacao
+     * @param  \App\PadraoRecomendacao $padraoRecomendacao
      * @return \Illuminate\Http\Response
      */
     public function edit(PadraoRecomendacao $padraoRecomendacao)
@@ -63,8 +67,8 @@ class PadraoRecomendacaoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\PadraoRecomendacao  $padraoRecomendacao
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\PadraoRecomendacao $padraoRecomendacao
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, PadraoRecomendacao $padraoRecomendacao)
@@ -75,7 +79,7 @@ class PadraoRecomendacaoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\PadraoRecomendacao  $padraoRecomendacao
+     * @param  \App\PadraoRecomendacao $padraoRecomendacao
      * @return \Illuminate\Http\Response
      */
     public function destroy(PadraoRecomendacao $padraoRecomendacao)
@@ -83,23 +87,28 @@ class PadraoRecomendacaoController extends Controller
         //
     }
 
-    public function padroes_recomendacoes($tipo){
+    public function padroes_recomendacoes($tipo)
+    {
 
     }
 
-    private function padrao_dependencia_circunstancial(Request $request){
+    private function padrao_dependencia_circunstancial(Request $request)
+    {
 
     }
 
-    private function padrao_dependencia_estrita(Request $request){
+    private function padrao_dependencia_estrita(Request $request)
+    {
 
     }
 
-    private function padrao_nao_coexistencia(Request $request){
+    private function padrao_nao_coexistencia(Request $request)
+    {
 
     }
 
-    private function padrao_uniao(Request $request){
+    private function padrao_uniao(Request $request)
+    {
 
     }
 

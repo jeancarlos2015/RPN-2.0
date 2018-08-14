@@ -46,7 +46,7 @@
 
 
 <div class="form-group">
-    <label class="control-label" for="visibilidade">Deseja tornar este registro visível em outros Projetos?</label>
+    <label class="control-label" for="visivel_projeto">Deseja tornar este registro visível em outros Projetos?</label>
     <div class="controls">
         <input name="visivel_projeto" type="hidden" value="false">
         <label class="switch-light switch-candy">
@@ -62,7 +62,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="visibilidade">Deseja tornar este registro visível em outros Modelos
+    <label class="control-label" for="visivel_modelo_declarativo">Deseja tornar este registro visível em outros Modelos
         Declarativos?</label>
     <div class="controls">
         <input name="visivel_modelo_declarativo" type="hidden" value="false">
@@ -79,11 +79,11 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="visibilidade">Deseja tornar este registro visível em outros Repositórios?</label>
+    <label class="control-label" for="visivel_repositorio">Deseja tornar este registro visível em outros Repositórios?</label>
     <div class="controls">
-        <input name="visivel_modelo_declarativo" type="hidden" value="false">
+        <input name="visivel_repositorio" type="hidden" value="false">
         <label class="switch-light switch-candy">
-            <input type="checkbox" name="visivel_modelo_declarativo"
+            <input type="checkbox" name="visivel_repositorio"
                    value="true" {!! !empty($objeto_fluxo->visivel_repositorio) ? ($objeto_fluxo->visivel_repositorio ? 'checked' : '') : '' !!}>
             <span>
                 <span>Não <i class='fa fa-thumbs-down'></i></span>
@@ -93,7 +93,9 @@
         </label>
     </div>
 </div>
+
 <div class="form-group">
     <button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>
 </div>
+
 

@@ -1,4 +1,4 @@
-{!! csrf_field() !!}
+
 @for($indice=0;$indice<$MAX;$indice++)
     <div class="form-group">
         @if(($dados[$indice]->campo!=="Ações") && !isset($dados[$indice]->value))

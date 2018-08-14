@@ -15,4 +15,5 @@ class Dado
     public $conteudo_banco;
     public $mensagem;
     public $type;
+    public $rotulo="";
 }

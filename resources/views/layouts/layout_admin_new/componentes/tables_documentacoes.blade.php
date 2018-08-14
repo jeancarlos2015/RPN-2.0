@@ -7,16 +7,19 @@
             {{--<td>{!! $documentacao->nome !!}</td>--}}
             {{--<td>{!! $documentacao->descricao !!}</td>--}}
             <td>
-                <div class="media">
-                    <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($documentacao->usuario->email) }}"
-                         alt="" width="100">
-                    <div class="media-body">
-                        <strong>{!! $documentacao->usuario->name !!}</strong>
-                        <div class="text-muted smaller">Código da Documentação: {!! $documentacao->coddocumentacao !!}</div>
-                        <div class="text-muted smaller">Nome da Documentação: {!! $documentacao->nome !!} </div>
-                        <div class="text-muted smaller">Descrição da Documentação: {!! $documentacao->descricao !!}</div>
+                <a href="{!! $documentacao->link !!}" title="{!! $documentacao->link !!}">
+                    <div class="media">
+                        <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($documentacao->usuario->email) }}"
+                             alt="" width="100">
+                        <div class="media-body">
+                            <strong>{!! $documentacao->usuario->name !!}</strong>
+                            <div class="text-muted smaller">Código da Documentação: {!! $documentacao->coddocumentacao !!}</div>
+                            <div class="text-muted smaller">Nome da Documentação: {!! $documentacao->nome !!} </div>
+                            <div class="text-muted smaller">Descrição da Documentação: {!! $documentacao->descricao !!}</div>
+                        </div>
                     </div>
-                </div>
+                </a>
+
             </td>
 
             <td>
