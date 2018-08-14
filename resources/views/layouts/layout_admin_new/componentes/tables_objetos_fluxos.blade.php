@@ -7,7 +7,7 @@
                     <a href="{!! route($rota_edicao,[$objeto->codobjetofluxo]) !!}">
                         <div class="media">
                             <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($objeto->usuario->email) }}"
-                                 alt="" width="100">
+                                 alt="" width="50">
                             <div class="media-body">
                                 <strong>{!!  $objeto->nome !!}</strong>
                                 <div class="text-muted smaller">Objeto de fluxo: {!! $objeto->nome !!}</div>
