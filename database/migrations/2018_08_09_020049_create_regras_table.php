@@ -15,8 +15,6 @@ class CreateRegrasTable extends Migration
     {
         Schema::connection('banco')->create('regras', function (Blueprint $table) {
             $table->increments('codregra');
-
-            $table->bigInteger('codrelacionamento');
             $table->bigInteger('codobjetofluxo');
 
             $table->bigInteger('codrepositorio');
@@ -28,6 +26,7 @@ class CreateRegrasTable extends Migration
 
 
             $table->string('nome');
+            $table->integer('relacionamento')->default(0);
 
             $table->boolean('visivel_projeto')->default('false');
             $table->boolean('visivel_repositorio')->default('false');
