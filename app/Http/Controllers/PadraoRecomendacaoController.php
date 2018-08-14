@@ -24,11 +24,21 @@ class PadraoRecomendacaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($codmodelodeclarativo)
+    public function create(){}
+    public function create_recomendacao_conjunto($codmodelodeclarativo)
     {
         $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
         $objetos_fluxos = ObjetoFluxo::all();
-        return view('controle_modelos_declarativos.controle_regras.create', compact('modelo_declarativo','objetos_fluxos'));
+        $tipo_operacao = 'conjunto';
+        return view('controle_modelos_declarativos.controle_regras.create', compact('modelo_declarativo','objetos_fluxos','tipo_operacao'));
+    }
+
+    public function create_recomendacao_binario($codmodelodeclarativo)
+    {
+        $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        $objetos_fluxos = ObjetoFluxo::all();
+        $tipo_operacao = 'binario';
+        return view('controle_modelos_declarativos.controle_regras.create', compact('modelo_declarativo','objetos_fluxos','tipo_operacao'));
     }
 
     /**
@@ -39,7 +49,7 @@ class PadraoRecomendacaoController extends Controller
      */
     public function store(Request $request)
     {
-       
+       echo 'PAGINA EM CONSTRUÇÃO';
     }
 
     /**
