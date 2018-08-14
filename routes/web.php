@@ -232,7 +232,5 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('painel');
 
 
-        Route::get('/**',function (){
-            return redirect()->route('painel');
-        });
+
     });
