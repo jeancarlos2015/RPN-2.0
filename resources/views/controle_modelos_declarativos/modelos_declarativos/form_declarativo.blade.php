@@ -2,7 +2,7 @@
 @extends('layouts.layout_admin_new.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
+    @csrf
     @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Modelos'])
     {{--@includeIf('componentes.dados_exibicao')--}}
     <hr>

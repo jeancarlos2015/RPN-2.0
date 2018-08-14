@@ -21,6 +21,16 @@ Route::get('/logout', function () {
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
 
+        Route::resource('controle_padroes_recomendacao','PadraoRecomendacaoController')
+            ->middleware('can:acesso');
+
+        Route::get('controle_padrao_create/modelo_delcarativo/{codmodelodeclarativo}','PadraoRecomendacaoController@create')
+            ->name('controle_padrao_create');
+
+        Route::post('controle_padrao_salvar','PadraoRecomendacaoController@salvar')
+            ->name('controle_padrao_salvar')
+            ->middleware('can:acesso');
+
         Route::post('edicao_modelo_diagramatico/gravar', 'ModeloDiagramaticoController@gravar')
             ->name('gravar')
             ->middleware('can:acesso');

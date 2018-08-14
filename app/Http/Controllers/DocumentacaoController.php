@@ -33,6 +33,7 @@ class DocumentacaoController extends Controller
     public function create()
     {
         $dados = Documentacao::dados();
+        $dados[2]->rotulo = "Exemplo: http://site.seudominio.com";
         return view('controle_documentacao.create', compact('dados'));
     }
 
