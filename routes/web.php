@@ -24,8 +24,13 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_padroes_recomendacao','PadraoRecomendacaoController')
             ->middleware('can:acesso');
 
-        Route::get('controle_padrao_create/modelo_delcarativo/{codmodelodeclarativo}','PadraoRecomendacaoController@create')
-            ->name('controle_padrao_create');
+        Route::get('controle_padrao_create_binario/modelo_delcarativo/{codmodelodeclarativo}','PadraoRecomendacaoController@create_recomendacao_binario')
+            ->name('controle_padrao_create_binario')
+        ->middleware('can:acesso');
+
+        Route::get('controle_padrao_create_conjunto/modelo_delcarativo/{codmodelodeclarativo}','PadraoRecomendacaoController@create_recomendacao_conjunto')
+            ->name('controle_padrao_create_conjunto')
+            ->middleware('can:acesso');
 
         Route::post('controle_padrao_salvar','PadraoRecomendacaoController@salvar')
             ->name('controle_padrao_salvar')
