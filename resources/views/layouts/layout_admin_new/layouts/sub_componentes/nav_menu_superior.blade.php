@@ -1,5 +1,11 @@
 <ul class="navbar-nav ml-auto">
 
+    <li class="nav-item">
+        <a class="nav-link" href="https://docs.google.com/document/d/1wGnEyeuDx6bYlJMeshtWxvQ-lW6dGVK1wLyWWLjmN7o/edit?usp=sharing">
+            <p class="fa fa-lightbulb-o"> Sugestões e Idéias </p>
+            <span class="sr-only"></span>
+        </a>
+    </li>
     @yield('modo')
 
     @if(!empty(Auth::user()->email==='jeancarlospenas25@gmail.com'))
