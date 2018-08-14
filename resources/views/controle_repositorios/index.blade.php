@@ -29,10 +29,8 @@
 @endsection
 
 @section('modo')
-    <li class="nav-item">
-        <a class="nav-link" title="Modo de Edição de Objeto de Fluxo">
-            <p class="fa fa-dashboard"> Repositórios</p>
-            <span class="sr-only"></span>
-        </a>
-    </li>
+    @includeIf('componentes.descricao',[
+        'descricao_titulo_menu' => 'Controle de Repositórios',
+        'nome_titulo_menu' => 'Repositórios'
+    ])
 @endsection

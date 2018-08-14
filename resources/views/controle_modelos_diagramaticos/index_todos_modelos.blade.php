@@ -18,3 +18,10 @@
                     'titulo' =>'Modelos'
     ])
 @endsection
+
+@section('modo')
+    @includeIf('componentes.descricao',[
+            'descricao_titulo_menu' => 'Visualização dos modelos',
+            'nome_titulo_menu' => 'Visualização dos modelos'
+        ])
+@endsection

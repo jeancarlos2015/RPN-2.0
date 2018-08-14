@@ -25,10 +25,8 @@
 @endsection
 
 @section('modo')
-    <li class="nav-item">
-        <a class="nav-link" title="Modo de Edição de Objeto de Fluxo">
-            <p class="fa fa-dashboard"> Criação do Modelo Declarativo</p>
-            <span class="sr-only"></span>
-        </a>
-    </li>
+    @includeIf('componentes.descricao',[
+        'descricao_titulo_menu' => 'Modo de Criação do modelo declarativo',
+        'nome_titulo_menu' => 'Criação do Modelo Declarativo'
+    ])
 @endsection
