@@ -4,6 +4,10 @@ namespace App\Http\Models;
 
 use App\Http\Util\Dado;
 use App\User;
+use App\Http\Models\Projeto;
+use App\Http\Models\Repositorio;
+use App\Http\Models\ObjetoFluxo;
+
 use Illuminate\Database\Eloquent\Model;
 
 class ModeloDeclarativo extends Model
