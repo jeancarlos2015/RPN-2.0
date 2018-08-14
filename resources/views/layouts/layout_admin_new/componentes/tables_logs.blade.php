@@ -11,14 +11,18 @@
             <td>{!! $log->pagina !!}</td>
             <td>{!! $log->acao !!}</td>
             <td>
-                @if(!empty($rota_edicao))
-                    @include('componentes.link',['id' => $log->codlog, 'rota' => $rota_edicao])
-                @endif
-                @if(!empty($rota_exclusao))
-                    @include('componentes.form_delete',['id' => $log->codlog, 'rota' => $rota_exclusao])
-                @endif
-                @if(!empty($rota_exibicao))
-                    @include('componentes.link',['id' => $log->codlog, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
+                    @if(!empty($rota_edicao))
+                        @include('componentes.link',['id' => $log->codlog, 'rota' => $rota_edicao])
+                    @endif
+                    @if(!empty($rota_exclusao))
+                        @include('componentes.form_delete',['id' => $log->codlog, 'rota' => $rota_exclusao])
+                    @endif
+                    @if(!empty($rota_exibicao))
+                        @include('componentes.link',['id' => $log->codlog, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                    @endif
+                @else
+                    Não Permitido
                 @endif
             </td>
         </tr>

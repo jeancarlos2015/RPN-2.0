@@ -32,14 +32,10 @@ class ObjetoFluxo extends Model
     ];
     public static function tipos(){
         return [
-//            'SUB-PROCESSO',
             'TAREFA',
             'GATEWAY EXCLUSIVO',
             'EVENTO DE ÍNICIO',
             'EVENTO DE FIM',
-//            'DADO DO OBJETO',
-//            'REFERÊNCIA DE ARMAZENAMENTO',
-//            'PROCESSO',
             'GATEWAY PARALELO',
             'EVENTO INTERMEDIÁRIO'
         ];
