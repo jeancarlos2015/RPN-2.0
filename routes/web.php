@@ -13,6 +13,10 @@ Route::get('/', function () {
     return view('inicio');
 })->name('/');
 
+Route::get('/home', function () {
+    return view('inicio');
+})->name('/home');
+
 Route::get('/logout', function () {
     return view('inicio');
 })->name('logout');
@@ -20,6 +24,7 @@ Route::get('/logout', function () {
 Route::get('admin/painel',function (){
     return view('inicio');
 });
+
 
 Auth::routes();
 
