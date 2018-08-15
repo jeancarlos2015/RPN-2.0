@@ -3,7 +3,6 @@
 namespace App\Http\Repositorys;
 
 
-use App\Http\Models\ModeloDeclarativo;
 use App\Http\Models\ModeloDiagramatico;
 use Exception;
 use Illuminate\Http\Request;
@@ -30,16 +29,14 @@ class ModeloDiagramaticoRepository extends Repository
     }
 
 
-
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
     {
-        return collect(ModeloDiagramatico::whereCodrepositorio($codrepositorio)
+        return collect(ModeloDiagramatico::
+            where('codrepositorio', '=', $codrepositorio)
             ->where('codprojeto', '=', $codprojeto)
             ->Where('visibilidade', '=', 'true')
             ->get());
     }
-
-
 
 
     public static function atualizar(Request $request, $codmodelo)
@@ -85,7 +82,6 @@ class ModeloDiagramaticoRepository extends Repository
         return $modelos->where('nome', $nome_do_modelo)->count() > 0;
 
     }
-
 
 
 }

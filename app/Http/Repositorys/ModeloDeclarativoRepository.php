@@ -24,7 +24,8 @@ class ModeloDeclarativoRepository extends Repository
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             return collect(ModeloDeclarativo::all());
         }
-        return collect(ModeloDeclarativo::whereCodusuario(Auth::user()->codusuario)
+        return collect(ModeloDeclarativo::
+            where('codusuario','=',Auth::user()->codusuario)
             ->orWhere('visibilidade', '=', 'true')
             ->get());
 
@@ -44,22 +45,13 @@ class ModeloDeclarativoRepository extends Repository
 
     public static function atualizar(Request $request, $codmodelo)
     {
-        $value = ModeloDeclarativo::findOrFail($codmodelo);
-        $value->update($request->all());
-        self::limpar_cache();
+        $value = ModeloDeclarativo::findOrFail($codmodelo)->update($request->all());
         return $value;
-    }
-
-    public static function limpar_cache()
-    {
-        Cache::forget('listar_modelos');
     }
 
     public static function incluir(Request $request)
     {
-        $value = ModeloDeclarativo::create($request->all());
-        self::limpar_cache();
-        return $value;
+        return ModeloDeclarativo::create($request->all());
     }
 
 
@@ -67,9 +59,7 @@ class ModeloDeclarativoRepository extends Repository
     {
         $value = null;
         try {
-            $doc = ModeloDeclarativo::findOrFail($codmodelo);
-            $value = $doc->delete();
-            self::limpar_cache();
+            $value = ModeloDeclarativo::findOrFail($codmodelo)->delete();
         } catch (Exception $e) {
 
         }
@@ -79,10 +69,7 @@ class ModeloDeclarativoRepository extends Repository
 
     public static function existe($nome_do_modelo)
     {
-
-        $modelos = self::listar();
-        return $modelos->where('nome', $nome_do_modelo)->count() > 0;
-
+        return self::listar()->where('nome', $nome_do_modelo)->count() > 0;
     }
 
 }
