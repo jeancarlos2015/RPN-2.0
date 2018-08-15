@@ -21,18 +21,18 @@ Route::get('/logout', function () {
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
 
-        Route::resource('controle_padroes_recomendacao','PadraoRecomendacaoController')
+        Route::resource('controle_padroes_recomendacao', 'PadraoRecomendacaoController')
             ->middleware('can:acesso');
 
-        Route::get('controle_padrao_create_binario/modelo_delcarativo/{codmodelodeclarativo}','PadraoRecomendacaoController@create_recomendacao_binario')
+        Route::get('controle_padrao_create_binario/modelo_delcarativo/{codmodelodeclarativo}', 'PadraoRecomendacaoController@create_recomendacao_binario')
             ->name('controle_padrao_create_binario')
-        ->middleware('can:acesso');
+            ->middleware('can:acesso');
 
-        Route::get('controle_padrao_create_conjunto/modelo_delcarativo/{codmodelodeclarativo}','PadraoRecomendacaoController@create_recomendacao_conjunto')
+        Route::get('controle_padrao_create_conjunto/modelo_delcarativo/{codmodelodeclarativo}', 'PadraoRecomendacaoController@create_recomendacao_conjunto')
             ->name('controle_padrao_create_conjunto')
             ->middleware('can:acesso');
 
-        Route::post('controle_padrao_salvar','PadraoRecomendacaoController@salvar')
+        Route::post('controle_padrao_salvar', 'PadraoRecomendacaoController@salvar')
             ->name('controle_padrao_salvar')
             ->middleware('can:acesso');
 
@@ -41,7 +41,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
 
-        Route::get('controle_objeto_fluxo_index/modelo_declarativo/{codmodelodeclarativo}','ObjetoFluxoController@controle_objeto_fluxo_index')
+        Route::get('controle_objeto_fluxo_index/modelo_declarativo/{codmodelodeclarativo}', 'ObjetoFluxoController@controle_objeto_fluxo_index')
             ->name('controle_objeto_fluxo_index')
             ->middleware('can:acesso');
 
@@ -62,11 +62,11 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_modelos_diagramaticos', 'ModeloDiagramaticoController')
             ->middleware('can:acesso');
 
-        Route::get('controle_modelos_declarativos_create/repositorio/{codrepositorio}/projeto/{codprojeto}','ModeloDeclarativoController@create')
+        Route::get('controle_modelos_declarativos_create/repositorio/{codrepositorio}/projeto/{codprojeto}', 'ModeloDeclarativoController@create')
             ->name('controle_modelos_declarativos')
             ->middleware('can:acesso');
 
-        Route::get('controle_objetos_fluxos_create/modelo/{codmodelodeclarativo}','ObjetoFluxoController@create')
+        Route::get('controle_objetos_fluxos_create/modelo/{codmodelodeclarativo}', 'ObjetoFluxoController@create')
             ->name('controle_objetos_fluxos_create')
             ->middleware('can:acesso');
 
@@ -85,7 +85,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('vincular_usuario_repositorio')
             ->middleware('can:admin');
 
-        Route::post('desvincular_usuario_repositorio','RepositorioController@desvincular_usuario_repositorio')
+        Route::post('desvincular_usuario_repositorio', 'RepositorioController@desvincular_usuario_repositorio')
             ->name('desvincular_usuario_repositorio')
             ->middleware('can:admin');
 
@@ -229,8 +229,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
         Route::get('painel', 'RepositorioController@painel')
-            ->name('painel');
-
-
-
+            ->name('painel')
+            ->middleware('can:acesso');
     });

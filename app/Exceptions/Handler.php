@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
@@ -47,18 +48,31 @@ class Handler extends ExceptionHandler
      * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return $request->expectsJson()
+            ? response()->json(['message' => $exception->getMessage()], 401)
+            : redirect()->guest(route('login'));
+    }
+
     public function render($request, Exception $exception)
     {
 
         if ($exception instanceof ModelNotFoundException) {
             $exception = new NotFoundHttpException($exception->getMessage(), $exception);
         }
+        if ($exception->getStatusCode() == '500') {
 
-        if ($exception->getStatusCode() == '404') {
+            return redirect('/');
+        } else if ($exception->getStatusCode() == '404') {
             if (Auth::check()) {
                 return redirect('/admin/painel');
             }
+            return redirect()->guest(route('login'));
         }
         return parent::render($request, $exception);
     }
+
+
 }
