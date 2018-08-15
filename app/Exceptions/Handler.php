@@ -49,12 +49,7 @@ class Handler extends ExceptionHandler
      * @return \Illuminate\Http\Response
      */
 
-    protected function unauthenticated($request, AuthenticationException $exception)
-    {
-        return $request->expectsJson()
-            ? response()->json(['message' => $exception->getMessage()], 401)
-            : redirect()->guest(route('login'));
-    }
+    
 
     public function render($request, Exception $exception)
     {
@@ -62,15 +57,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ModelNotFoundException) {
             $exception = new NotFoundHttpException($exception->getMessage(), $exception);
         }
-        if ($exception->getStatusCode() == '500') {
 
-            return redirect('/');
-        } else if ($exception->getStatusCode() == '404') {
-            if (Auth::check()) {
-                return redirect('/admin/painel');
-            }
-            return redirect()->guest(route('login'));
-        }
         return parent::render($request, $exception);
     }
 
