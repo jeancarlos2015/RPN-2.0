@@ -1,6 +1,6 @@
-<form action="{!! route('controle_modelos_diagramaticos.update',['id' => $modelo->codmodelodiagramatico]) !!}" method="post">
-    @method('PUT')
+<form action="{!! route('controle_modelos_declarativos.update',['controle_modelos_declarativo' => $modelo->codmodelodiagramatico]) !!}" method="put">
     @csrf
+    @method('PUT')
     @includeIf('controle_modelos_diagramaticos.form',
     [
     'acao' => 'Atualizar e Proseguir',

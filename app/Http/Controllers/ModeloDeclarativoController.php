@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\ModeloDiagramatico;
 use App\Http\Models\Projeto;
 use App\http\Models\Repositorio;
 use App\Http\Repositorys\ModeloDeclarativoRepository;
@@ -12,21 +13,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ModeloDeclarativoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create($codrepositorio, $codprojeto)
     {
         $titulos = ModeloDeclarativo::titulos();
@@ -38,12 +30,6 @@ class ModeloDeclarativoController extends Controller
             compact('titulos', 'dados', 'tipo', 'repositorio', 'projeto'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
 
     public
     function store(Request $request)
@@ -79,46 +65,59 @@ class ModeloDeclarativoController extends Controller
             ->withInput();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ModeloDeclarativo $modeloDeclarativo
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(ModeloDeclarativo $modeloDeclarativo)
     {
-        //
+        dd(null);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ModeloDeclarativo $modeloDeclarativo
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        try {
+            $modelo = ModeloDeclarativo::findOrFail($id);
+
+            $dados = ModeloDeclarativo::dados();
+            $projeto = $modelo->projeto;
+            $repositorio = $modelo->repositorio;
+
+            $dados[0]->valor = $modelo->nome;
+            $dados[1]->valor = $modelo->descricao;
+            $dados[2]->valor = $modelo->tipo;
+
+            return view('controle_modelos_declarativos.modelos_declarativos.edit', compact('dados', 'modelo', 'projeto', 'repositorio'));
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        }
+        return redirect()->route('painel');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\ModeloDeclarativo $modeloDeclarativo
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(Request $request, $codmodelodeclarativo)
     {
-        //
+        dd(null);
+        try {
+
+            $modelo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+            $modelo->update($request->all());
+            return redirect()->route('edicao_modelo_declarativo', [
+                'codmodelodeclarativo' => $modelo->codmodelodeclarativo
+            ]);
+
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        }
+        return redirect()->route('painel');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ModeloDeclarativo $modeloDeclarativo
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         try {

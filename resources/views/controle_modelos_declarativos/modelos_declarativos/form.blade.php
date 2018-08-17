@@ -1,9 +1,5 @@
 @includeIf('controle_modelos_declarativos.modelos_declarativos.componentes.campos')
 
-@includeIf('componentes.botao_sim_nao',[
-'name' => 'visibilidade',
-'pergunta' => 'Deseja tornar este registro visível para todos os usuários?'
-])
 @if(empty($modelo))
     @includeIf('componentes.botao_sim_nao',[
     'name' => 'visibilidade',

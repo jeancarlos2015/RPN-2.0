@@ -256,15 +256,8 @@ class ModeloDiagramaticoController extends Controller
             $xml_modelo = str_replace($modelo->nome,$request->nome,$modelo->xml_modelo);
             $modelo->xml_modelo = $xml_modelo;
             $modelo->update($request->all());
-
             if ($modelo->tipo === 'diagramatico') {
                 return redirect()->route('edicao_modelo_diagramatico', [
-                    'codmodelodiagramatico' => $modelo->codmodelodiagramatico
-                ]);
-            } else {
-                return redirect()->route('controle_tarefas_index', [
-                    'codrepositorio' => $modelo->codrepositorio,
-                    'codprojeto' => $modelo->codprojeto,
                     'codmodelodiagramatico' => $modelo->codmodelodiagramatico
                 ]);
             }

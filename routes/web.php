@@ -50,6 +50,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('edicao_modelo_diagramatico')
             ->middleware('can:acesso');
 
+
+
         Route::resource('controle_objetos_fluxos', 'ObjetoFluxoController')
             ->middleware('can:acesso');
 
@@ -71,6 +73,10 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
         Route::resource('controle_modelos_declarativos', 'ModeloDeclarativoController')
+            ->middleware('can:acesso');
+
+        Route::get('edicao_modelo_declarativo/{codmodelo}', 'ModeloDeclarativoController@edit')
+            ->name('edicao_modelo_declarativo')
             ->middleware('can:acesso');
 
 

@@ -3,10 +3,9 @@
     @includeIf('layouts.admin.componentes.breadcrumb',[
                    'titulo' => 'Painel',
                    'sub_titulo' =>
-                   'Repositório/'.$repositorio->nome.
-                   'Projeto/'.$projeto->nome.
-                   'ModeloDiagramatico'.$modelo->nome.
-                   'ModeloDiagramatico',
+                   '/Repositório/'.$repositorio->nome.
+                   '/Projeto/'.$projeto->nome.
+                   '/Modelo Declarativo/'.$modelo->nome,
                    'rota' => 'controle_repositorios.index'
     ])
     @includeIf('controle_modelos_declarativos.modelos_declarativos.componentes.form_update')
