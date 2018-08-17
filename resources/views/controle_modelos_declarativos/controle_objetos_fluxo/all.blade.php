@@ -1,7 +1,5 @@
 @extends('layouts.admin.layouts.main')
-
 @section('content')
-    {!! csrf_field() !!}
     @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
                     'sub_titulo' => 'Objetos De Fluxo',
@@ -15,7 +13,6 @@
                     'titulo' =>'Regras'
     ])
 @endsection
-
 @section('modo')
     @includeIf('componentes.descricao',[
         'descricao_titulo_menu' => 'Modo de Edição de Objeto de Fluxo',

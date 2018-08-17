@@ -1,6 +1,4 @@
-
 @extends('layouts.admin.layouts.main')
-
 @section('content')
     @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
@@ -11,7 +9,6 @@
     @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.links_padroes_recomendacao')
 
 @endsection
-
 @section('modo')
     @includeIf('componentes.descricao',[
         'descricao_titulo_menu' => 'Modo de Edição de Objeto de Fluxo',

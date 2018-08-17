@@ -1,5 +1,4 @@
 @extends('layouts.admin.layouts.main')
-
 @section('content')
     @if(!empty($repositorio))
         @includeIf('layouts.admin.componentes.breadcrumb',[
@@ -8,12 +7,8 @@
                         'sub_titulo' => 'Repositório / '.$repositorio->nome.' / Projetos',
                         'rota' => 'painel'
         ])
-
-
         @includeIf('layouts.admin.componentes.botao',['tipo' => $tipo])
-
-
-@else
+    @else
         @includeIf('layouts.admin.componentes.breadcrumb',[
                           'titulo' => 'Painel',
 
