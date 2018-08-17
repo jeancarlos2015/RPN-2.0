@@ -7,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    @auth
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-    @endauth
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>RPN - Repositório de Processos de Negócios</title>
 
 {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">--}}
