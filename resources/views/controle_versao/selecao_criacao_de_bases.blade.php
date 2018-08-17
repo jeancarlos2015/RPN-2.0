@@ -1,15 +1,11 @@
 @extends('layouts.admin.layouts.main')
-
 @section('content')
-
     @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
                     'sub_titulo' => 'Versionamento',
                     'rota' => 'painel',
                     'branch_atual' => $branch_atual
     ])
-
-
     @if(!empty($repositorios))
         @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
             @includeIf('controle_versao.componentes.form_criacao')

@@ -1,7 +1,7 @@
 @extends('layouts.admin.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
+
     @includeIf('layouts.admin.componentes.breadcrumb',[
                     'titulo' => 'Painel',
                     'rota' => 'painel',

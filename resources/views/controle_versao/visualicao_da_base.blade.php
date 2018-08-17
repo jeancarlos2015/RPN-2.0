@@ -1,5 +1,4 @@
 @extends('layouts.admin.layouts.main')
-
 @section('content')
     @if(!empty($repositorio))
         @includeIf('layouts.admin.componentes.breadcrumb',[

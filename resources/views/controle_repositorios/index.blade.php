@@ -1,18 +1,11 @@
 @extends('layouts.admin.layouts.main')
-
 @section('content')
-
         @includeIf('layouts.admin.componentes.breadcrumb',[
                         'titulo' => 'Painel',
                         'sub_titulo' => 'Repositórios',
                         'rota' => 'painel'
         ])
-
-
-
         @includeIf('layouts.admin.componentes.botao',['tipo' => $tipo])
-
-
         @includeIf('layouts.admin.componentes.tables',[
                         'titulos' => $titulos,
                         'repositorios' => $repositorios,
@@ -25,9 +18,7 @@
                         'tipo' => $tipo
 
         ])
-
 @endsection
-
 @section('modo')
     @includeIf('componentes.descricao',[
         'descricao_titulo_menu' => 'Controle de Repositórios',

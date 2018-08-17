@@ -1,14 +1,5 @@
 <?php
 
-
-//Route::get('/repositorios_publicos', function () {
-//    $repositorios_publicos = \App\Http\Repositorys\RepositorioRepository::listar_repositorios_publicos();
-//    $titulos = \App\http\Models\Repositorio::titulos_da_tabela();
-//    $tipo = 'repositorio_publico';
-////    dd($repositorios_publicos);
-//    return view('repositorios_publicos', compact('repositorios_publicos','tipo','titulos'));
-//})->name('repositorios_publicos');
-
 Route::get('/', function () {
     return view('inicio');
 })->name('/');
@@ -21,18 +12,14 @@ Route::get('/logout', function () {
     return view('inicio');
 })->name('logout');
 
-Route::get('admin/painel',function (){
+Route::get('admin/painel', function () {
     return view('inicio');
 });
 
-
 Auth::routes();
-
 
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
-
-
 
         Route::resource('controle_padroes_recomendacao', 'PadraoRecomendacaoController')
             ->middleware('can:acesso');

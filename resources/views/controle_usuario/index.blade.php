@@ -1,5 +1,4 @@
 @extends('layouts.admin.layouts.main')
-
 @section('content')
     @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
         @includeIf('layouts.admin.componentes.breadcrumb',[
@@ -8,7 +7,6 @@
                         'rota' => 'painel'
         ])
         @includeIf('layouts.admin.componentes.botao',['tipo' => $tipo])
-        
         @includeIf('layouts.admin.componentes.tables',[
                         'titulos' => $titulos,
                         'usuarios' => $usuarios,
@@ -18,9 +16,7 @@
                         'titulo' =>'Usuarios'
         ])
     @endif
-
 @endsection
-
 @section('modo')
     @includeIf('componentes.descricao',[
         'descricao_titulo_menu' => 'Controle de Usuários',

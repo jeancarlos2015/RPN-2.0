@@ -1,5 +1,4 @@
 @extends('layouts.admin.layouts.main')
-
 @section('content')
     @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
@@ -8,7 +7,6 @@
     ])
     @includeIf('controle_usuario.componente.cards')
 @endsection
-
 @section('modo')
     @includeIf('componentes.descricao',[
         'descricao_titulo_menu' => 'Controle de Usuários',

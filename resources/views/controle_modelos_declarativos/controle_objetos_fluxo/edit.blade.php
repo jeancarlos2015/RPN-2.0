@@ -7,8 +7,8 @@
                     'sub_titulo' => 'Atualizar Objeto de Fluxo',
                     'rota' => 'controle_objetos_fluxos.index'
     ])
-    @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.controle_modelos_declarativos.controle_objetos_fluxo.componentes.form_update')
-    @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.controle_modelos_declarativos.controle_objetos_fluxo.componentes.links_padroes_recomendacao')
+    @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.form_update')
+    @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.links_padroes_recomendacao')
 
 @endsection
 
