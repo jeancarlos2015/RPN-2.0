@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\ModeloDeclarativo;
 use App\Http\Models\ModeloDiagramatico;
-use App\Http\Models\Repositorio;
 use App\Http\Models\Projeto;
+use App\Http\Models\Repositorio;
 use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\ModeloDeclarativoRepository;
 use App\Http\Repositorys\ModeloDiagramaticoRepository;
@@ -23,13 +23,13 @@ class ModeloDiagramaticoController extends Controller
             $repositorio = Repositorio::findOrFail($codrepositorio);
             $titulos = ModeloDiagramatico::titulos();
             $modelos_declarativos = collect(ModeloDeclarativo::all()
-                ->where('codrepositorio','=',$codrepositorio)
-                ->where('codprojeto','=',$codprojeto)
-                ->where('visibilidade','=','true'));
+                ->where('codrepositorio', '=', $codrepositorio)
+                ->where('codprojeto', '=', $codprojeto)
+                ->where('visibilidade', '=', 'true'));
             $modelos_diagramaticos = collect(ModeloDiagramatico::all()
-                ->where('codrepositorio','=',$codrepositorio)
-                ->where('codprojeto','=',$codprojeto)
-                ->where('visibilidade','=','true'));
+                ->where('codrepositorio', '=', $codrepositorio)
+                ->where('codprojeto', '=', $codprojeto)
+                ->where('visibilidade', '=', 'true'));
 
             $modelos = $modelos_declarativos->merge($modelos_diagramaticos);
         } catch (\Exception $ex) {
@@ -58,6 +58,7 @@ class ModeloDiagramaticoController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
+
         return view('controle_modelos_diagramaticos.index_todos_modelos', compact('modelos', 'titulos', 'tipo', 'log'));
     }
 
@@ -120,6 +121,7 @@ class ModeloDiagramaticoController extends Controller
     function store(Request $request)
     {
         try {
+
             $codprojeto = $request->codprojeto;
             $codrepositorio = $request->codrepositorio;
             $data['all'] = $request->all();
@@ -133,12 +135,11 @@ class ModeloDiagramaticoController extends Controller
                         'codusuario' => Auth::user()->codusuario
                     ]);
                     $modelo = ModeloDiagramatico::create($request->all());
-                    if ($modelo->tipo === 'declarativo') {
+                    $data['tipo'] = 'success';
+                    $this->create_log($data);
+                    return redirect()->route('edicao_modelo_diagramatico',
+                        ['codmodelodiagramatico' => $modelo->codmodelodiagramatico]);
 
-                    } else {
-                        return redirect()->route('edicao_modelo_diagramatico',
-                            ['codmodelodiagramatico' => $modelo->codmodelodiagramatico]);
-                    }
                 } else {
                     $data['tipo'] = 'existe';
                     $this->create_log($data);
@@ -209,7 +210,6 @@ class ModeloDiagramaticoController extends Controller
     }
 
 
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -252,8 +252,9 @@ class ModeloDiagramaticoController extends Controller
     function update(Request $request, $id)
     {
         try {
+
             $modelo = ModeloDiagramatico::findOrFail($id);
-            $xml_modelo = str_replace($modelo->nome,$request->nome,$modelo->xml_modelo);
+            $xml_modelo = str_replace($modelo->nome, $request->nome, $modelo->xml_modelo);
             $modelo->xml_modelo = $xml_modelo;
             $modelo->update($request->all());
             if ($modelo->tipo === 'diagramatico') {
@@ -331,7 +332,7 @@ class ModeloDiagramaticoController extends Controller
         $codmodelo = $request->codmodelodiagramatico;
         $xml = $request->strXml;
         $modelo = ModeloDiagramatico::findOrFail($codmodelo);
-        $modelo->xml_modelo = $xml."\n";
+        $modelo->xml_modelo = $xml . "\n";
         $result = $modelo->update();
         return \Response::json($result);
     }
