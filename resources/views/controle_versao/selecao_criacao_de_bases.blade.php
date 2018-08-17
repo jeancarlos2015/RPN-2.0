@@ -12,7 +12,7 @@
 
     @if(!empty($repositorios))
         @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
-            @includeIf('controle_versao.form_criacao')
+            @includeIf('controle_versao.componentes.form_criacao')
             @includeIf('layouts.admin.componentes.tables',[
                                 'titulos' => $titulos,
                                 'repositorios' => $repositorios,

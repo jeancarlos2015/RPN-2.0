@@ -8,6 +8,6 @@
                         'rota' => 'index_painel',
                         'branch_atual' => $repositorio['default_branch']
         ])
-    @includeIf('controle_versao.form_visualizacao')
+    @includeIf('controle_versao.componentes.form_visualizacao')
     @endif
 @endsection
