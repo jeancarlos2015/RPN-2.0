@@ -1,14 +1,11 @@
 
 @extends('layouts.admin.layouts.main')
-
 @section('content')
     @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
                     'sub_titulo' => 'Usuários',
                     'rota' => 'painel'
     ])
-
-
     @includeIf('layouts.admin.componentes.tables',[
                        'titulos' => $titulos,
                        'usuarios' => $usuarios,
@@ -18,12 +15,9 @@
                        'titulo' =>'Usuarios'
        ])
 @endsection
-
 @section('modo')
-    <li class="nav-item">
-        <a class="nav-link" title="Modo de Edição de Objeto de Fluxo">
-            <p class="fa fa-dashboard"> Vinculação e Desvinculação de usuário dos Repositórios</p>
-            <span class="sr-only"></span>
-        </a>
-    </li>
+    @includeIf('componentes.descricao',[
+        'descricao_titulo_menu' => 'Modo de Vinculação e Desvinculação',
+        'nome_titulo_menu' => 'Modo de Vinculação e Desvinculação'
+    ])
 @endsection

@@ -8,12 +8,13 @@
                 'nome' => 'Sugestões e Idéias',
                 'ico' => 'fa fa-lightbulb-o'
             ])
-
-        @includeIf('layouts.admin.layouts.sub_componentes.li_nav',
-           [
-               'nome' => 'Repositório:' .Auth::user()->repositorio->nome,
-               'ico' => 'fa fa-database'
-           ])
+        @if(!empty(Auth::user()->repositorio->nome))
+            @includeIf('layouts.admin.layouts.sub_componentes.li_nav',
+               [
+                   'nome' => 'Repositório:' .Auth::user()->repositorio->nome,
+                   'ico' => 'fa fa-database'
+               ])
+        @endif
     @endif
 
     @yield('modo')
