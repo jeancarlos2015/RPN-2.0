@@ -1,7 +1,8 @@
 <ul class="navbar-nav ml-auto">
 
     <li class="nav-item">
-        <a class="nav-link" href="https://docs.google.com/document/d/1wGnEyeuDx6bYlJMeshtWxvQ-lW6dGVK1wLyWWLjmN7o/edit?usp=sharing">
+        <a class="nav-link"
+           href="https://docs.google.com/document/d/1wGnEyeuDx6bYlJMeshtWxvQ-lW6dGVK1wLyWWLjmN7o/edit?usp=sharing">
             <p class="fa fa-lightbulb-o"> Sugestões e Idéias </p>
             <span class="sr-only"></span>
         </a>
@@ -45,27 +46,23 @@
             </div>
         </div>
         @if(!empty(Auth::user()->github->branch_atual) && !empty(Auth::user()->github->repositorio_atual))
+
             <li class="nav-item">
                 <a class="btn btn-dark" href="{!! route('pull') !!}">Atualizar</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link">
+            @if(Auth::user()->github->branch_atual!=='Nenhum')
+                <li class="nav-item">
+                    <a class="nav-link">
+                        Ramificação : {{ Auth::user()->github->branch_atual }} <span class="sr-only"></span>
+                    </a>
+                </li>
 
-                    {{--Usuário Github: {{ Auth::user()->usuario_github() }} <span class="sr-only"></span>--}}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">
-                    Ramificação : {{ Auth::user()->github->branch_atual }} <span class="sr-only"></span>
-                </a>
-            </li>
-
-
-            <li class="nav-item">
-                <a class="nav-link">
-                    Base: {{ Auth::user()->github->repositorio_atual }} <span class="sr-only"></span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link">
+                        Base: {{ Auth::user()->github->repositorio_atual }} <span class="sr-only"></span>
+                    </a>
+                </li>
+            @endif
         @endif
 
 

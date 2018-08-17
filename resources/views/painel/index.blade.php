@@ -1,7 +1,6 @@
 @extends('layouts.admin.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
     @includeIf('layouts.admin.componentes.breadcrumb',[
     'titulo' => 'Painel',
     'sub_titulo' => ''
@@ -14,10 +13,15 @@
 @endsection
 
 @section('modo')
-    <li class="nav-item">
-        <a class="nav-link" title="Modo de Edição de Objeto de Fluxo">
-            <p class="fa fa-dashboard"> Painel Principal</p>
-            <span class="sr-only"></span>
-        </a>
-    </li>
+    {{--<li class="nav-item">--}}
+        {{--<a class="nav-link" title="Modo de Edição de Objeto de Fluxo">--}}
+            {{--<p class="fa fa-dashboard"> Painel Principal</p>--}}
+            {{--<span class="sr-only"></span>--}}
+        {{--</a>--}}
+    {{--</li>--}}
+
+    @includeIf('componentes.titulo_menu_superior',[
+    'titulo' => 'Painel Principal',
+    'descricao' => 'Painel Principal'
+    ])
 @endsection

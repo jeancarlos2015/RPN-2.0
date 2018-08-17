@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Fachadas\FachadaRepositorio;
 use App\Http\Repositorys\BranchsRepository;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
@@ -84,7 +85,7 @@ class GitController extends Controller
             $data['acao'] = 'index';
             $this->create_log($data);
         }
-        return view('controle_versao.init', compact('tipo', 'branch_atual', 'titulos', 'repositorios'));
+        return view('controle_versao.selecao_criacao_de_bases', compact('tipo', 'branch_atual', 'titulos', 'repositorios'));
     }
 
 
@@ -102,78 +103,31 @@ class GitController extends Controller
 
         return view('controle_versao.index', compact('branch_atual', 'funcionalidades'));
     }
-    private function selecionar_repositorio_como_administrador($repositorio_atual, $default_branch){
-        try {
 
-            GitSistemaRepository::selecionar_repositorio($default_branch, $repositorio_atual);
-
-            $data['tipo'] = 'success';
-            $this->create_log($data);
-        } catch (ApiLimitExceedException $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error!';
-            $data['pagina'] = 'controle_versao.init';
-            $data['acao'] = 'selecionar_repositorio';
-            $this->create_log($data);
-
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error!';
-            $data['pagina'] = 'controle_versao.init';
-            $data['acao'] = 'selecionar_repositorio';
-            $this->create_log($data);
-        }
-    }
-    private function selecionar_repositorio_usuario($repositorio_atual, $default_branch){
-        try {
-
-            GitSistemaRepository::selecionar_repositorio($default_branch, $repositorio_atual);
-            $branch_rascunho = [
-                'branch' => 'rascunho',
-                'descricao' => 'rascunho',
-                'codusuario' => Auth::user()->codusuario
-            ];
-            $branch_original = [
-                'branch' => 'original',
-                'descricao' => 'original',
-                'codusuario' => Auth::user()->codusuario
-            ];
-
-//            GitSistemaRepository::create_branch_remote('rascunho');
-//            GitSistemaRepository::create_branch_remote('original');
-            BranchsRepository::incluir($branch_original);
-            sleep(2);
-            BranchsRepository::incluir($branch_rascunho);
-            GitSistemaRepository::merge_checkout('checkout', 'rascunho');
-            $data['tipo'] = 'success';
-            $this->create_log($data);
-        } catch (ApiLimitExceedException $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error!';
-            $data['pagina'] = 'controle_versao.init';
-            $data['acao'] = 'selecionar_repositorio';
-            $this->create_log($data);
-
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error!';
-            $data['pagina'] = 'controle_versao.init';
-            $data['acao'] = 'selecionar_repositorio';
-            $this->create_log($data);
-        }
-    }
     public function selecionar_repositorio($repositorio_atual, $default_branch)
     {
-        if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
-            $this->selecionar_repositorio_como_administrador($repositorio_atual, $default_branch);
-        }else{
-            $this->selecionar_repositorio_usuario($repositorio_atual, $default_branch);
+        try {
+            $dado['default_branch'] = $default_branch;
+            $dado['repositorio_atual'] = $repositorio_atual;
+            FachadaRepositorio::selecionar_repositorio($dado);
+        } catch (ApiLimitExceedException $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'controle_versao.init';
+            $data['acao'] = 'init';
+            $this->create_log($data);
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'controle_versao.init';
+            $data['acao'] = 'init';
+            $this->create_log($data);
         }
 
         return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
     }
 
-    public function init(Request $request)
+    public function criar_base(Request $request)
     {
         try {
             $repositorio = GitSistemaRepository::create_repository($request->nome);
@@ -274,7 +228,7 @@ class GitController extends Controller
                 'codusuario' => Auth::user()->codusuario
             ]);
             BranchsRepository::incluir($request->all());
-            $data['tipo']='success';
+            $data['tipo'] = 'success';
             $this->create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -324,7 +278,8 @@ class GitController extends Controller
         return redirect()->route('painel');
     }
 
-    private function merge_checkout_administrador(Request $request){
+    private function merge_checkout_administrador(Request $request)
+    {
         try {
             $validate = [
                 'branch',
@@ -357,7 +312,9 @@ class GitController extends Controller
         }
         return redirect()->route('painel');
     }
-    private function merge_checkout_usuario(Request $request){
+
+    private function merge_checkout_usuario(Request $request)
+    {
 
         try {
             $validate = [
@@ -370,13 +327,13 @@ class GitController extends Controller
                     ->withErrors($erros)
                     ->withInput();
             } else {
-                if ($request->branch!=='master'){
+                if ($request->branch !== 'master') {
 
                     GitSistemaRepository::merge_checkout($request->tipo, $request->branch);
 
                     $data['tipo'] = 'success';
                     $this->create_log($data);
-                }else{
+                } else {
                     $data['mensagem'] = 'Este usuário não pode mecher na versão oficial do projeto';
                     $data['tipo'] = 'success';
                     $this->create_log($data);
@@ -401,11 +358,12 @@ class GitController extends Controller
         }
         return redirect()->route('painel');
     }
+
     public function merge_checkout(Request $request)
     {
-        if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             $this->merge_checkout_administrador($request);
-        }else{
+        } else {
             $this->merge_checkout_usuario($request);
         }
 
@@ -415,7 +373,7 @@ class GitController extends Controller
     public function commit(Request $request)
     {
         try {
-            
+
             GitSistemaRepository::commit($request->commit);
             $data['tipo'] = 'success';
             $this->create_log($data);
