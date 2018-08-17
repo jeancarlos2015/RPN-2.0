@@ -172,8 +172,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_versao', 'GitController')
             ->middleware('can:acesso');
 
-        Route::post('init', 'GitController@init')
-            ->name('init')
+        Route::post('criar_base', 'GitController@criar_base')
+            ->name('criar_base')
             ->middleware('can:acesso');
 
         Route::post('create', 'GitController@create')

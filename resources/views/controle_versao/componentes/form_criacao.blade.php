@@ -1,4 +1,4 @@
-<form action="{!! route('init') !!}" method="post">
+<form action="{!! route('criar_base') !!}" method="post">
     @csrf
     <div class="form-group">
         <label>Nome da Base</label>
