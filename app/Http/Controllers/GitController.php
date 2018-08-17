@@ -167,7 +167,7 @@ class GitController extends Controller
             $data['acao'] = 'show';
             $this->create_log($data);
         }
-        return view('controle_versao.show', compact('tipo', 'branch_atual', 'repositorio'));
+        return view('controle_versao.visualicao_da_base', compact('tipo', 'branch_atual', 'repositorio'));
 
     }
 
