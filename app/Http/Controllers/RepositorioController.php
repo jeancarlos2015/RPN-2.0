@@ -7,6 +7,7 @@ use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\ModeloDeclarativoRepository;
 use App\Http\Repositorys\ModeloDiagramaticoRepository;
+use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\ProjetoRepository;
 use App\Http\Repositorys\RepositorioRepository;
 use App\User;
@@ -48,11 +49,13 @@ class RepositorioController extends Controller
                 'todos_modelos',
                 'todos_projetos',
                 'controle_repositorios.index',
+                'controle_objetos_fluxos.index'
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
                 'todos_modelos',
-                'todos_projetos'
+                'todos_projetos',
+                'controle_objetos_fluxos.index'
             ];
         }
         return [];
@@ -65,12 +68,14 @@ class RepositorioController extends Controller
             return [
                 'Todos os Modelos',
                 'Todos os Projetos',
-                'Todos os Repositórios'
+                'Todos os Repositórios',
+                'Todos os Objetos de Fluxos'
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
                 'Todos os Modelos',
-                'Todos os Projetos'
+                'Todos os Projetos',
+                'Todos os Objetos de Fluxos'
             ];
         }
         return [];
@@ -83,17 +88,20 @@ class RepositorioController extends Controller
         $qt_modelos_diagramaticos = ModeloDiagramaticoRepository::listar()->count();
         $qt_modelos_declarativos =  ModeloDeclarativoRepository::listar()->count();
         $qt_modelos = $qt_modelos_declarativos + $qt_modelos_diagramaticos;
+        $qt_objetos_fluxos = ObjetoFluxoRepository::count();
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
 
             return [
                 $qt_modelos,
                 $qt_projetos,
-                $qt_organizacoes
+                $qt_organizacoes,
+                $qt_objetos_fluxos
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
                 $qt_modelos,
-                $qt_projetos
+                $qt_projetos,
+                $qt_objetos_fluxos
             ];
         }
         return 0;
