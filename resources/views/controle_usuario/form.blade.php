@@ -1,5 +1,5 @@
 @if(!empty($usuario))
-    @csrf
+
     <div class="form-group">
         <label>Nome</label>
         <input name="name" class="form-control" placeholder="Nome" value="{!! $usuario->name !!}" required>
@@ -22,8 +22,7 @@
                required>
     </div>
 @else
-    {!! csrf_field() !!}
-    @csrf
+
     <div class="form-group">
         <label>Nome</label>
         <input name="name" class="form-control" placeholder="Nome" value="teste" required>

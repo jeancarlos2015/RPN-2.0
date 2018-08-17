@@ -1,8 +1,8 @@
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+    @includeIf('layouts.admin.componentes.breadcrumb',[
                    'titulo' => 'Painel',
                    'sub_titulo' =>
                    'Repositório/'.$repositorio->nome.
@@ -11,22 +11,7 @@
                    'ModeloDiagramatico',
                    'rota' => 'controle_repositorios.index'
     ])
-
-    <form action="{!! route('controle_modelos_diagramaticos.update',['id' => $modelo->codmodelodiagramatico]) !!}" method="post">
-        @method('PUT')
-        @includeIf('controle_modelos_diagramaticos.form',
-        [
-        'acao' => 'Atualizar e Proseguir',
-        'dados' => $dados,
-        'MAX' => 2,
-        'organizacao_id' => $repositorio->codrepositorio,
-        'projeto_id' => $projeto->codprojeto
-        ]
-        )
-
-    </form>
-
-
+    @includeIf('controle_modelos_diagramaticos.componentes.form_diagramatico_update')
 @endsection
 
 @section('modo')

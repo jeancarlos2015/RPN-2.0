@@ -1,4 +1,4 @@
-{{--@extends('layouts.layout_home.main')--}}
+{{--@extends('layouts.home.main')--}}
 {{--@section('content')--}}
 
     {{--<div class="form-control">--}}

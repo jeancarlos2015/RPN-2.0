@@ -1,16 +1,15 @@
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
     @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
-        {!! csrf_field() !!}
-        @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+        @includeIf('layouts.admin.componentes.breadcrumb',[
                           'titulo' => 'Painel',
                         'sub_titulo' => 'Usuarios',
                         'rota' => 'painel'
         ])
-        @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
+        @includeIf('layouts.admin.componentes.botao',['tipo' => $tipo])
         
-        @includeIf('layouts.layout_admin_new.componentes.tables',[
+        @includeIf('layouts.admin.componentes.tables',[
                         'titulos' => $titulos,
                         'usuarios' => $usuarios,
                         'rota_edicao' => 'controle_usuarios.edit',

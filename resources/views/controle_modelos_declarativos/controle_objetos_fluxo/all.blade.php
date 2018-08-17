@@ -1,13 +1,13 @@
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+    @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
                     'sub_titulo' => 'Objetos De Fluxo',
                     'rota' => 'painel'
     ])
-    @includeIf('layouts.layout_admin_new.componentes.tables',[
+    @includeIf('layouts.admin.componentes.tables',[
                     'titulos' => $titulos,
                     'regras' => $objetos_fluxos,
                     'rota_exibicao' => 'controle_objetos_fluxos.show',

@@ -1,21 +1,10 @@
 
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
-    @csrf
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Modelos'])
+
+    @includeIf('layouts.admin.componentes.breadcrumb',['titulo' => 'Modelos'])
     {{--@includeIf('componentes.dados_exibicao')--}}
-    <hr>
-    <h3>Modelo Declarativo</h3>
-    <hr>
-    <div class="form-group">
-    <a href="{!! route('show_regras',['id' => $modelo->codmodelodiagramatico]) !!}" class="btn btn-warning form-control">Visualizar Regras</a>
-    </div>
-
-    <div class="form-group">
-    <a href="{!! route('show_tarefas',['id' => $modelo->codmodelodiagramatico]) !!}" class="btn btn-dark form-control">Visualizar Tarefas</a>
-    </div>
-
 
 
 @endsection

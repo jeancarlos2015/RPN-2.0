@@ -1,17 +1,17 @@
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+    @includeIf('layouts.admin.componentes.breadcrumb',[
                     'titulo' => 'Painel',
                     'rota' => 'painel',
                     'sub_titulo' => 'Repositório/'.$repositorio->nome.'Projetos/'.$projeto->nome.'/Modelos'
     ])
     @if(!empty($repositorio))
-        @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
-        @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => 'modelo_declarativo'])
+        @includeIf('layouts.admin.componentes.botao',['tipo' => $tipo])
+        @includeIf('layouts.admin.componentes.botao',['tipo' => 'modelo_declarativo'])
     @endif
-    @includeIf('layouts.layout_admin_new.componentes.tables',[
+    @includeIf('layouts.admin.componentes.tables',[
                     'titulos' => $titulos,
                     'modelos' => $modelos,
                     'rota_edicao' => 'controle_modelos_diagramaticos.edit',

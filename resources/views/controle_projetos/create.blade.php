@@ -1,23 +1,14 @@
 
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+
+    @includeIf('layouts.admin.componentes.breadcrumb',[
       'titulo' => 'Painel',
     'sub_titulo' => 'Repositório/'.$repositorio->nome.'/Novo Projeto',
     'rota' => 'painel'
     ])
-    <form action="{!! route('controle_projetos.store') !!}" method="post">
-    @includeIf('controle_projetos.form',
-    [
-    'acao' => 'Salvar e Proseguir',
-    'dados' => $dados,
-    'MAX' => 2,
-    'codrepositorio' => $repositorio->codrepositorio
-    ]
-    )
-    </form>
+    @includeIf('controle_projetos.componentes.form_projeto_create')
 @endsection
 
 @section('modo')
