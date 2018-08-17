@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-@includeIf('layouts.layout_admin_new.layouts.head')
+@includeIf('layouts.admin.layouts.head')
 <body>
 @includeIf('controle_modelos_diagramaticos.layout_diagrama.nav')
 @includeIf('controle_modelos_diagramaticos.layout_diagrama.head_body')

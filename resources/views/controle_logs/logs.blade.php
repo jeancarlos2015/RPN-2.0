@@ -1,11 +1,10 @@
 
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',['titulo' => 'Todos os modelos'])
+    @includeIf('layouts.admin.componentes.breadcrumb',['titulo' => 'Todos os modelos'])
 
-    @includeIf('layouts.layout_admin_new.componentes.tables',[
+    @includeIf('layouts.admin.componentes.tables',[
                     'titulos' => $titulos,
                     'modelos' => $logs,
                     'rota_exclusao' => 'controle_logs.destroy',
@@ -16,10 +15,8 @@
 @endsection
 
 @section('modo')
-    <li class="nav-item">
-        <a class="nav-link" title="Modo de Edição de Objeto de Fluxo">
-            <p class="fa fa-dashboard"> Todos os Logs</p>
-            <span class="sr-only"></span>
-        </a>
-    </li>
+    @includeIf('controle_documentacao.componentes.titulo_menu_superior',[
+    'titulo' => 'Todos os Logs',
+    'descricao' => 'Todos os Logs'
+    ])
 @endsection

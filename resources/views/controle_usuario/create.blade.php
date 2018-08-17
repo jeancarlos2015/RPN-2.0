@@ -1,17 +1,12 @@
-
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+    @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
                     'sub_titulo' => 'Usuários',
                     'rota' => 'painel'
     ])
-
-    <form action="{!! route('controle_usuarios.store') !!}" method="post">
-        @includeIf('controle_usuario.form',['acao' => 'Criar Usuário'])
-    </form>
+    @includeIf('controle_usuario.componente.form_usuario_create')
 @endsection
 
 @section('modo')

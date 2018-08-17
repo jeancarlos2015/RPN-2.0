@@ -1,14 +1,14 @@
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',
+
+    @includeIf('layouts.admin.componentes.breadcrumb',
     [
     'titulo' => 'Todos as documentações'
     ])
 
-    @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
-    @includeIf('layouts.layout_admin_new.componentes.tables',[
+    @includeIf('layouts.admin.componentes.botao',['tipo' => $tipo])
+    @includeIf('layouts.admin.componentes.tables',[
                     'titulos' => $titulos,
                     'documentacoes' => $documentacoes,
                     'rota_edicao' => 'controle_documentacoes.edit',
@@ -24,10 +24,9 @@
 
 
 @section('modo')
-    <li class="nav-item">
-        <a class="nav-link" title="Modo de Edição de Objeto de Fluxo">
-            <p class="fa fa-dashboard"> Visualização da documentação</p>
-            <span class="sr-only"></span>
-        </a>
-    </li>
+
+    @includeIf('controle_documentacao.componentes.titulo_menu_superior',[
+    'titulo' => 'Edição da documentação',
+    'descricao' => 'Visualização da documentação'
+    ])
 @endsection

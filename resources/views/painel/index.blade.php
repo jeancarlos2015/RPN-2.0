@@ -1,14 +1,14 @@
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
     {!! csrf_field() !!}
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+    @includeIf('layouts.admin.componentes.breadcrumb',[
     'titulo' => 'Painel',
     'sub_titulo' => ''
 
     ])
 
-    @includeIf('layouts.layout_admin_new.componentes.cards')
+    @includeIf('layouts.admin.componentes.cards')
 
 
 @endsection

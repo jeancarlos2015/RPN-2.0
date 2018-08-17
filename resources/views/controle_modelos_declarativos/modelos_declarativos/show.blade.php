@@ -1,7 +1,7 @@
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+    @includeIf('layouts.admin.componentes.breadcrumb',[
                     'titulo' => 'Modelos',
                     'rota' => 'painel'
     ])

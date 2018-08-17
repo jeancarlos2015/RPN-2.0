@@ -1,15 +1,15 @@
 
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+    @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
                     'sub_titulo' => 'Usuários',
                     'rota' => 'painel'
     ])
 
 
-    @includeIf('layouts.layout_admin_new.componentes.tables',[
+    @includeIf('layouts.admin.componentes.tables',[
                        'titulos' => $titulos,
                        'usuarios' => $usuarios,
                        'rota_edicao' => 'controle_usuarios.edit',

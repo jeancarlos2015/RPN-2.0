@@ -1,4 +1,4 @@
-@extends('layouts.layout_home.main')
+@extends('layouts.home.main')
 @section('content')
     <div class="mx-auto text-center">
         <h1 class="mx-auto my-0 text-uppercase">RPN</h1>

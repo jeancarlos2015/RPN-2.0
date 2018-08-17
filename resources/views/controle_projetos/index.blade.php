@@ -1,9 +1,8 @@
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
-    {!! csrf_field() !!}
     @if(!empty($repositorio))
-        @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+        @includeIf('layouts.admin.componentes.breadcrumb',[
                           'titulo' => 'Painel',
 
                         'sub_titulo' => 'Repositório / '.$repositorio->nome.' / Projetos',
@@ -11,11 +10,11 @@
         ])
 
 
-        @includeIf('layouts.layout_admin_new.componentes.botao',['tipo' => $tipo])
+        @includeIf('layouts.admin.componentes.botao',['tipo' => $tipo])
 
 
 @else
-        @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+        @includeIf('layouts.admin.componentes.breadcrumb',[
                           'titulo' => 'Painel',
 
                         'sub_titulo' => 'Painel/Todos Projetos',
@@ -23,7 +22,7 @@
         ])
     @endif
 
-    @includeIf('layouts.layout_admin_new.componentes.tables',[
+    @includeIf('layouts.admin.componentes.tables',[
                     'titulos' => $titulos,
                     'projetos' => $projetos,
                     'rota_edicao' => 'controle_projetos.edit',

@@ -1,8 +1,8 @@
-@extends('layouts.layout_admin_new.layouts.main')
+@extends('layouts.admin.layouts.main')
 
 @section('content')
 
-    @includeIf('layouts.layout_admin_new.componentes.breadcrumb',[
+    @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
                     'sub_titulo' => 'Repositório / '.$modelo_declarativo->repositorio->nome.
                                     '/ Projeto / '.$modelo_declarativo->projeto->nome.
@@ -10,19 +10,8 @@
                                     '/ Novo Objeto de Fluxo / ',
                     'rota' => 'controle_objetos_fluxos.index'
     ])
-    <form action="{!! route('controle_padroes_recomendacao.store') !!}" method="post">
-        @method('POST')
-        @csrf
-        @if($tipo_operacao==='conjunto')
-            @includeIf('controle_modelos_declarativos.controle_regras.form_para_conjunto')
-        @elseif($tipo_operacao==='binario')
-            @includeIf('controle_modelos_declarativos.controle_regras.form_para_binario')
-        @endif
-    </form>
-
+    @includeIf('controle_modelos_declarativos.controle_regras.componentes.form_create')
 @endsection
-
-
 
 @section('modo')
     @includeIf('componentes.descricao',[

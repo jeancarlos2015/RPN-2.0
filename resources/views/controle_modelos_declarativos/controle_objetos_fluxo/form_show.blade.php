@@ -1,4 +1,3 @@
-{!! csrf_field() !!}
 
 <div class="form-group">
     <input value="{!! $objeto_fluxo->nome !!}" class="form-control" disabled/>
