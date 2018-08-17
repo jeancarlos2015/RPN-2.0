@@ -213,6 +213,9 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('index_merge_checkout')
             ->middleware('can:acesso');
 
+        Route::resource('controle_regras','RegraController')
+            ->middleware('can:acesso');
+
         Route::get('index_create_delete', 'GitController@index_create_delete')
             ->name('index_create_delete')
             ->middleware('can:acesso');

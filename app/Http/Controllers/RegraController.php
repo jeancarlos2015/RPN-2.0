@@ -14,7 +14,7 @@ class RegraController extends Controller
      */
     public function index()
     {
-        //
+        echo 'Pagina em construção';
     }
 
     /**

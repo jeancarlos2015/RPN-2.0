@@ -49,13 +49,15 @@ class RepositorioController extends Controller
                 'todos_modelos',
                 'todos_projetos',
                 'controle_repositorios.index',
-                'controle_objetos_fluxos.index'
+                'controle_objetos_fluxos.index',
+                'controle_regras.index'
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
                 'todos_modelos',
                 'todos_projetos',
-                'controle_objetos_fluxos.index'
+                'controle_objetos_fluxos.index',
+                'controle_regras.index'
             ];
         }
         return [];
@@ -69,13 +71,15 @@ class RepositorioController extends Controller
                 'Todos os Modelos',
                 'Todos os Projetos',
                 'Todos os Repositórios',
-                'Todos os Objetos de Fluxos'
+                'Todos os Objetos de Fluxos',
+                'Todas as Regras do Modelo Declarativo'
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
                 'Todos os Modelos',
                 'Todos os Projetos',
-                'Todos os Objetos de Fluxos'
+                'Todos os Objetos de Fluxos',
+                'Todas as Regras do Modelo Declarativo'
             ];
         }
         return [];
@@ -95,13 +99,15 @@ class RepositorioController extends Controller
                 $qt_modelos,
                 $qt_projetos,
                 $qt_organizacoes,
-                $qt_objetos_fluxos
+                $qt_objetos_fluxos,
+                0
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
                 $qt_modelos,
                 $qt_projetos,
-                $qt_objetos_fluxos
+                $qt_objetos_fluxos,
+                0
             ];
         }
         return 0;
