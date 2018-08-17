@@ -13,13 +13,6 @@
 @endsection
 
 @section('modo')
-    {{--<li class="nav-item">--}}
-        {{--<a class="nav-link" title="Modo de Edição de Objeto de Fluxo">--}}
-            {{--<p class="fa fa-dashboard"> Painel Principal</p>--}}
-            {{--<span class="sr-only"></span>--}}
-        {{--</a>--}}
-    {{--</li>--}}
-
     @includeIf('componentes.titulo_menu_superior',[
     'titulo' => 'Painel Principal',
     'descricao' => 'Painel Principal'
