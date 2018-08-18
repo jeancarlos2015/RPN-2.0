@@ -20,6 +20,8 @@ Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
+        Route::get('todas_regras','RegraController@all')->name('todas_regras')
+        ->middleware('can:acesso');
 
         Route::resource('controle_padroes_recomendacao', 'PadraoRecomendacaoController')
             ->middleware('can:acesso');
@@ -215,7 +217,9 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         Route::resource('controle_regras','RegraController')
             ->middleware('can:acesso');
-
+        Route::get('controle_regras_index/modelodeclarativo/{codmodelodeclarativo}','RegraController@index')
+            ->name('controle_regras_index')
+            ->middleware('can:acesso');
         Route::get('index_create_delete', 'GitController@index_create_delete')
             ->name('index_create_delete')
             ->middleware('can:acesso');

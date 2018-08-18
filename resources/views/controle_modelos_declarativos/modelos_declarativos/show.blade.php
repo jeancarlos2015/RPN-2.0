@@ -1,15 +1,15 @@
 @extends('layouts.admin.layouts.main')
-
 @section('content')
     @includeIf('layouts.admin.componentes.breadcrumb',[
-                    'titulo' => 'Modelos',
-                    'rota' => 'painel'
-    ])
-@endsection
+    'titulo' => 'Painel',
+    'sub_titulo' => ''
 
+    ])
+    @includeIf('layouts.admin.componentes.cards')
+@endsection
 @section('modo')
-    @includeIf('componentes.descricao',[
-        'descricao_titulo_menu' => 'Modo de Visualização do modelo declarativo',
-        'nome_titulo_menu' => 'Visualização Do Modelo Declarativo'
+    @includeIf('componentes.titulo_menu_superior',[
+    'titulo' => 'Visualização do modelo declarativo',
+    'descricao' => 'Visualização do modelo declarativo'
     ])
 @endsection

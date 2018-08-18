@@ -64,6 +64,11 @@
         </div>
 
         @break;
+        @case ('regra')
+        @if(!empty($modelo_declarativo))
+            @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.links_padroes_recomendacao')
+        @endif
+        @break;
     @endswitch
 
 

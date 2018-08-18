@@ -10,9 +10,19 @@
         @endfor
     @else
         @if(!empty($tipo))
-            @if($tipo === 'versionamento')
+            @if($tipo === 'modelos')
+                @if(!empty($titulos) && !empty($quantidades) && !empty($rotas))
+                    @for($index=0;$index<count($titulos);$index++)
+                        @includeIf('layouts.admin.componentes.card',
 
+                        [
+                                'quantidade' => $quantidades[$index],
+                                'titulo' => $titulos[$index],
+                                'rota' => $rotas[$index]
+                        ])
+                    @endfor
 
+                @endif
             @elseif($tipo === 'painel')
                 {{--{!! dd($titulos, $quantidades, $rotas) !!}--}}
                 @if(!empty($titulos) && !empty($quantidades) && !empty($rotas))

@@ -15,7 +15,7 @@
         </li>
         
         <li>
-            <a href="{!! route('controle_regras.index') !!}"><i class="fa fa-fw fa-pencil"></i>Regras</a>
+            <a href="{!! route('todas_regras') !!}"><i class="fa fa-fw fa-pencil"></i>Regras</a>
         </li>
         <li>
             <a href="{!! route('controle_objetos_fluxos.index') !!}"><i class="fa fa-fw fa-pencil"></i>Objetos De Fluxo</a>

@@ -48,6 +48,9 @@
                     @case('documentacao')
                     @includeIf('layouts.admin.componentes.tables_documentacoes')
                     @break;
+                    @case('regra')
+                    @includeIf('layouts.admin.componentes.tables_regras')
+                    @break;
                 @endswitch
             </table>
         </div>

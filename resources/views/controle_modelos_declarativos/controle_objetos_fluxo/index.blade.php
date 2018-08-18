@@ -1,4 +1,3 @@
-
 @extends('layouts.admin.layouts.main')
 
 @section('content')
@@ -8,7 +7,7 @@
                     'rota' => 'painel'
     ])
     @if(!empty($modelo_declarativo))
-    @includeIf('layouts.admin.componentes.botao',['tipo' => $tipo])
+        @includeIf('layouts.admin.componentes.botao',['tipo' => $tipo])
     @endif
     @includeIf('layouts.admin.componentes.tables',[
                     'titulos' => $titulos,
@@ -19,7 +18,9 @@
                     'nome_botao' => 'Novo',
                     'titulo' =>'Objetos de Fluxo'
     ])
-    @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.links_padroes_recomendacao')
+    @if(!empty($modelo_declarativo))
+        @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.links_padroes_recomendacao')
+    @endif
 @endsection
 
 @section('modo')

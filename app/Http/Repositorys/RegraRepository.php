@@ -20,15 +20,14 @@ class RegraRepository extends Repository
     {
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             return Regra::all();
+        }else{
+            return Regra::
+                where('visivel_modelo_declarativo', '=', 'true')
+                ->orWhere('codusuario', '=', Auth::user()->codusuario)
+                ->get();
         }
-        return collect(array());
     }
 
-    public static function listar_Regras_publicos()
-    {
-        return Regra::wherePublico(true)
-            ->get();
-    }
 
     public static function inclui_se_existe($dados)
     {

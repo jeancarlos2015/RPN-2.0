@@ -179,24 +179,15 @@ class ModeloDiagramaticoController extends Controller
     {
         try {
             $modelo = ModeloDiagramatico::findOrFail($codmodelo);
-            $projeto = $modelo->projeto;
-            $repositorio = $modelo->repositorio;
-            if ($modelo->tipo === 'declarativo') {
-                return view('controle_modelos_diagramaticos.form_declarativo', compact(
-                    'modelo',
-                    'projeto',
-                    'repositorio'
-                ));
-            } else {
-                $path_modelo = public_path('novo_bpmn/');
-                if (!file_exists($path_modelo)) {
-                    mkdir($path_modelo, 777);
-                }
-                $file = $path_modelo . 'novo.bpmn';
-                file_put_contents($file, $modelo->xml_modelo);
-                sleep(2);
-                return view('controle_modelos_diagramaticos.visualizar_modelo', compact('modelo'));
+            $path_modelo = public_path('novo_bpmn/');
+            if (!file_exists($path_modelo)) {
+                mkdir($path_modelo, 777);
             }
+            $file = $path_modelo . 'novo.bpmn';
+            file_put_contents($file, $modelo->xml_modelo);
+            sleep(2);
+            return view('controle_modelos_diagramaticos.visualizar_modelo', compact('modelo'));
+
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';

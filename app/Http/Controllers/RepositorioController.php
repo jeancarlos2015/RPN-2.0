@@ -9,6 +9,7 @@ use App\Http\Repositorys\ModeloDeclarativoRepository;
 use App\Http\Repositorys\ModeloDiagramaticoRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\ProjetoRepository;
+use App\Http\Repositorys\RegraRepository;
 use App\Http\Repositorys\RepositorioRepository;
 use App\User;
 use Illuminate\Http\Request;
@@ -50,14 +51,14 @@ class RepositorioController extends Controller
                 'todos_projetos',
                 'controle_repositorios.index',
                 'controle_objetos_fluxos.index',
-                'controle_regras.index'
+                'todas_regras'
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
                 'todos_modelos',
                 'todos_projetos',
                 'controle_objetos_fluxos.index',
-                'controle_regras.index'
+                'todas_regras'
             ];
         }
         return [];
@@ -72,14 +73,14 @@ class RepositorioController extends Controller
                 'Todos os Projetos',
                 'Todos os Repositórios',
                 'Todos os Objetos de Fluxos',
-                'Todas as Regras do Modelo Declarativo'
+                'Todas as Regras'
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
                 'Todos os Modelos',
                 'Todos os Projetos',
                 'Todos os Objetos de Fluxos',
-                'Todas as Regras do Modelo Declarativo'
+                'Todas as Regras'
             ];
         }
         return [];
@@ -93,6 +94,7 @@ class RepositorioController extends Controller
         $qt_modelos_declarativos =  ModeloDeclarativoRepository::listar()->count();
         $qt_modelos = $qt_modelos_declarativos + $qt_modelos_diagramaticos;
         $qt_objetos_fluxos = ObjetoFluxoRepository::count();
+        $qt_regras = RegraRepository::all()->count();
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
 
             return [
@@ -100,14 +102,14 @@ class RepositorioController extends Controller
                 $qt_projetos,
                 $qt_organizacoes,
                 $qt_objetos_fluxos,
-                0
+                $qt_regras,
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
                 $qt_modelos,
                 $qt_projetos,
                 $qt_objetos_fluxos,
-                0
+                $qt_regras,
             ];
         }
         return 0;

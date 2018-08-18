@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Models\ModeloDeclarativo;
-use App\Http\Models\ModeloDiagramatico;
 use App\Http\Models\Projeto;
 use App\http\Models\Repositorio;
 use App\Http\Repositorys\ModeloDeclarativoRepository;
+use App\Http\Repositorys\ObjetoFluxoRepository;
+use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,61 @@ class ModeloDeclarativoController extends Controller
     public function index()
     {
 
+    }
+
+    private function rotas()
+    {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+            return [
+                'controle_objeto_fluxo_index',
+                'todas_regras'
+            ];
+        } else if (!empty(Auth::user()->repositorio)) {
+            return [
+                'controle_objeto_fluxo_index',
+                'controle_regras_index'
+            ];
+        }
+        return [];
+
+    }
+
+    private function titulos()
+    {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+            return [
+
+                'Objetos de Fluxos',
+                'Regras'
+            ];
+        } else if (!empty(Auth::user()->repositorio)) {
+            return [
+
+                'Objetos de Fluxos',
+                'Regras'
+            ];
+        }
+        return [];
+    }
+
+    private function quantidades()
+    {
+        $qt_objetos_fluxos = ObjetoFluxoRepository::count();
+        $qt_regras = RegraRepository::all()->count();
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+
+            return [
+
+                $qt_objetos_fluxos,
+                $qt_regras,
+            ];
+        } else if (!empty(Auth::user()->repositorio)) {
+            return [
+                $qt_objetos_fluxos,
+                $qt_regras,
+            ];
+        }
+        return 0;
     }
 
     public function create($codrepositorio, $codprojeto)
@@ -66,9 +122,21 @@ class ModeloDeclarativoController extends Controller
     }
 
 
-    public function show(ModeloDeclarativo $modeloDeclarativo)
+    public function show($codmodelodeclarativo)
     {
-        dd(null);
+        $tipo = 'modelos';
+        $titulos = $this->titulos();
+        $rotas = $this->rotas();
+        $quantidades = $this->quantidades();
+        $modelodeclarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        if (count($rotas) == 0) {
+            $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma repositório!!";
+            $data['tipo'] = 'success';
+            $this->create_log($data);
+        }
+
+        return view('controle_modelos_declarativos.modelos_declarativos.show', compact('titulos', 'quantidades', 'rotas', 'tipo','modelodeclarativo'));
+
     }
 
     public function edit($id)
@@ -98,7 +166,7 @@ class ModeloDeclarativoController extends Controller
 
     public function update(Request $request, $codmodelodeclarativo)
     {
-        dd(null);
+
         try {
 
             $modelo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
@@ -126,8 +194,7 @@ class ModeloDeclarativoController extends Controller
             $data['tipo'] = 'success';
             $this->create_log($data);
             return redirect()->route('todos_modelos');
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';

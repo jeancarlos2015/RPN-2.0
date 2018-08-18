@@ -89,7 +89,7 @@ class PadraoRecomendacaoController extends Controller
                     'codprojeto' => $codprojeto,
                     'codmodelodeclarativo' => $codmodelodeclarativo,
                     'codoutraregra' => 0,
-                    'nome' => 'Relacionamento de'. Regra::PADROES[$id_relacionamento]. ' no objeto de fluxo '. $objetofluxo->nome. ' do tipo '. $objetofluxo->tipo ,
+                    'nome' => 'Relacionamento de '. Regra::PADROES[$id_relacionamento]. ' no objeto de fluxo "'. $objetofluxo->nome. '" do tipo '. $objetofluxo->tipo ,
                     'visivel_projeto' => $visivel_projeto,
                     'visivel_repositorio' => $visivel_repositorio,
                     'visivel_modelo_declarativo' => $visivel_modelo_declarativo,
