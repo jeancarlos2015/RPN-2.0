@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Http\Models\Projeto;
 use App\Http\Models\Repositorio;
 use App\Http\Models\ObjetoFluxo;
+use App\Http\Models\ModeloDeclarativo;
 
 class Regra extends Model
 {
