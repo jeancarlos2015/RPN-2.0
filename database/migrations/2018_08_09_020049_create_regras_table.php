@@ -26,6 +26,7 @@ class CreateRegrasTable extends Migration
 
 
             $table->string('nome');
+            $table->string('tipo')->default('regra');
             $table->integer('relacionamento')->default(0);
 
             $table->boolean('visivel_projeto')->default('false');

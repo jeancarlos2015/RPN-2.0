@@ -20,6 +20,7 @@
                     'nome_botao' => 'Novo',
                     'titulo' =>'Modelos'
     ])
+
 @endsection
 
 @section('modo')

@@ -11,13 +11,14 @@ use App\Http\Models\ObjetoFluxo;
 
 class Regra extends Model
 {
-    const PADRADOES = [
+    const PADROES = [
         'INDEPENDENCIA',
         'DEPENDENCIA ESTRITA',
         'DEPENDENCIA CIRCUNSTANCIAL' ,
         'NAO COEXISTENCIA',
         'UNIAO'
     ];
+    protected $connection = 'banco';
     protected $primaryKey = 'codregra';
     protected $table = 'regras';
     protected $fillable = [
@@ -107,9 +108,15 @@ class Regra extends Model
     {
         return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
     }
+
+
     public function objetos_fluxos()
     {
-        return $this->hasMany(ObjetoFluxo::class, 'codmodelodeclarativo', 'codmodelodeclarativo');
+        return $this->hasOne(ObjetoFluxo::class, 'codobjetofluxo', 'codobjetofluxo');
+    }
+
+    public function modelodeclarativo(){
+        return $this->hasOne(ModeloDeclarativo::class, 'codmodelodeclarativo', 'codmodelodeclarativo');
     }
 
     public static function validacao()

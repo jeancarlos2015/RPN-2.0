@@ -9,7 +9,7 @@
                     'rota' => 'controle_objetos_fluxos.index'
     ])
     @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.form_create')
-    @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.links_padroes_recomendacao')
+
 @endsection
 @section('modo')
     @includeIf('componentes.descricao',[

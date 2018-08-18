@@ -24,11 +24,10 @@ class CreateObjetoFluxosTable extends Migration
 
             $table->string('nome');
             $table->string('descricao');
-
+            $table->string('tipo')->default('objeto fluxo');
             $table->boolean('visivel_projeto')->default('false');
             $table->boolean('visivel_repositorio')->default('false');
             $table->boolean('visivel_modelo_declarativo')->default('false');
-            $table->string('tipo');
             $table->timestamps();
         });
     }

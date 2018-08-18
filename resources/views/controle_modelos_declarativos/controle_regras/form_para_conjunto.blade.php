@@ -1,5 +1,5 @@
 @includeIf('controle_modelos_declarativos.controle_regras.componentes.campos',['multi' => 'true'])
-
+@includeIf('controle_modelos_declarativos.controle_regras.componentes.select_padroes_conjunto')
 @if(empty($regra))
 
     @includeIf('controle_modelos_declarativos.controle_regras.componentes.botao_sim_nao',
@@ -42,6 +42,7 @@
     ])
 
 @endif
+
 <div class="form-group">
     <button type="submit" class="btn btn-dark form-control">Criar Regras</button>
 </div>

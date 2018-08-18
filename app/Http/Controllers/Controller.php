@@ -25,7 +25,6 @@ class Controller extends BaseController
             } else {
                 flash('A operação feita com sucesso!!!');
             }
-
         } else if ($data['tipo'] === 'existe') {
             flash('Este registro já existe')->warning();
         } else {

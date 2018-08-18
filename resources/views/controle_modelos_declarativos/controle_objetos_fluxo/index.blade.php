@@ -19,6 +19,7 @@
                     'nome_botao' => 'Novo',
                     'titulo' =>'Objetos de Fluxo'
     ])
+    @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.links_padroes_recomendacao')
 @endsection
 
 @section('modo')
