@@ -1,21 +1,27 @@
 <script src="{!! asset('jquery_select/jquery-1.11.1.min.js') !!}"></script>
 
 
-<div class="row">
-    @includeIf('controle_modelos_declarativos.controle_regras.componentes.select_objetos_fluxo')
+@if(!empty($multi))
+    <div class="row">
+        @includeIf('controle_modelos_declarativos.controle_regras.componentes.select_objetos_fluxo',[
+            'multi' => 'true'
+        ])
 
-    @includeIf('controle_modelos_declarativos.controle_regras.componentes.botoes_select')
+        @includeIf('controle_modelos_declarativos.controle_regras.componentes.botoes_select')
 
-    @includeIf('controle_modelos_declarativos.controle_regras.componentes.select_objetos_fluxo')
-
-
-</div>
-@if(!empty($padrao))
-    @includeIf('controle_modelos_declarativos.controle_regras.componentes.select_padroes_conjunto')
+        @includeIf('controle_modelos_declarativos.controle_regras.componentes.selec_objetos_fluxo_nenhum',[
+            'multi' => 'true'
+        ])
+    </div>
 @else
 
+    <div class="row">
+        @includeIf('controle_modelos_declarativos.controle_regras.componentes.select_objetos_fluxo')
 
-    @includeIf('controle_modelos_declarativos.controle_regras.componentes.select_padroes_binario')
+        @includeIf('controle_modelos_declarativos.controle_regras.componentes.botoes_select')
+
+        @includeIf('controle_modelos_declarativos.controle_regras.componentes.selec_objetos_fluxo_nenhum')
+    </div>
 @endif
 
 {{--'codrepositorio',--}}

@@ -1,6 +1,4 @@
-@includeIf('controle_modelos_declarativos.controle_regras.componentes.campos',[
-'padrao' => 'binario'
-])
+@includeIf('controle_modelos_declarativos.controle_regras.componentes.campos',['multi' => 'true'])
 
 @if(empty($regra))
 
@@ -47,4 +45,5 @@
 <div class="form-group">
     <button type="submit" class="btn btn-dark form-control">Criar Regras</button>
 </div>
+
 @includeIf('controle_modelos_declarativos.controle_regras.componentes.script')

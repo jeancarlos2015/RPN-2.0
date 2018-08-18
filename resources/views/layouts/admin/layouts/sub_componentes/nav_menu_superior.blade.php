@@ -4,7 +4,7 @@
 
         @includeIf('layouts.admin.layouts.sub_componentes.li_nav',
             [
-                'link' => 'https://docs.google.com/document/d/1wGnEyeuDx6bYlJMeshtWxvQ-lW6dGVK1wLyWWLjmN7o/edit?usp=sharing',
+                'link' => 'https://docs.google.com/spreadsheets/d/1knDrNAs0Ql-cSTd1dDfZK9QNlAT_xXlarwl5swHPocQ/edit?usp=sharing',
                 'nome' => 'Sugestões e Idéias',
                 'ico' => 'fa fa-lightbulb-o'
             ])
