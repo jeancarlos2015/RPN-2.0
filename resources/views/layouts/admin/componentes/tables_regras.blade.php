@@ -31,7 +31,6 @@
                                  alt="" width="100">
                             <div class="media-body">
                                 <strong>{!! $regra->usuario->name !!}</strong>
-                                <div class="text-muted smaller">Código da Regra: {!! $regra->codregra !!}</div>
                                 <div class="text-muted smaller">Descrição da Regra: {!! $regra->nome !!}</div>
                                 <div class="text-muted smaller">Modelo
                                     Declarativo:: {!! $regra->modelodeclarativo->nome !!}</div>
