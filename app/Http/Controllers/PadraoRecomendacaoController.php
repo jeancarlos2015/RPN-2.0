@@ -55,35 +55,6 @@ class PadraoRecomendacaoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-//    atributos da regra
-
-//  'codobjetofluxo',
-//'codrepositorio',
-//'codusuario',
-//'codprojeto',
-//'codmodelodeclarativo',
-//'codoutraregra',
-
-//'nome',
-//'visivel_projeto',
-//'visivel_repositorio',
-//'visivel_modelo_declarativo',
-//'relacionamento'
-
-//    Atributos do objeto de fluxo
-//'codrepositorio',
-//'codusuario',
-//'codprojeto',
-//'codmodelodeclarativo',
-//
-//
-//'nome',
-//'descricao',
-//'tipo',
-
-//'visivel_projeto',
-//'visivel_modelo_declarativo',
-//'visivel_repositorio'
     private function salvar($dado)
     {
         if (!empty($dado['id_objetos_fluxos'])){

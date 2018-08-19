@@ -7,12 +7,18 @@
             'multi' => 'true'
         ])
 
-        @includeIf('controle_modelos_declarativos.controle_regras.componentes.botoes_select')
 
+    </div>
+    <div class="row">
+        @includeIf('controle_modelos_declarativos.controle_regras.componentes.botoes_select')
+    </div>
+    <div class="row">
         @includeIf('controle_modelos_declarativos.controle_regras.componentes.selec_objetos_fluxo_nenhum',[
             'multi' => 'true'
         ])
     </div>
+
+
 @else
 
     <div class="row">
