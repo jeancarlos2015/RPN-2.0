@@ -26,8 +26,8 @@
                             @else
                                 <strong>{!!  $usuario->name !!}</strong>
                                 <div class="text-muted smaller">Email: {!! $usuario->email !!}</div>
-                                @if(!empty($usuario->type))
-                                    <div class="text-muted smaller">Tipo: {!! $usuario->type !!}</div>
+                                @if(!empty($usuario->tipo))
+                                    <div class="text-muted smaller">Tipo: {!! $usuario->tipo !!}</div>
                                 @else
                                     <div class="text-muted smaller">Tipo: Padrão</div>
                                 @endif
@@ -49,7 +49,7 @@
                         @include('componentes.link',['id' => $usuario->codusuario, 'rota' => $rota_edicao])
                     @endif
                 @endif
-                @if(($usuario->type!=='Administrador' && Auth::user()->type==='Administrador')|| Auth::user()->email==='jeancarlospenas25@gmail.com')
+                @if(($usuario->tipo!=='Administrador' && Auth::user()->tipo==='Administrador')|| Auth::user()->email==='jeancarlospenas25@gmail.com')
                     @if(!empty($rota_exclusao))
                         @include('componentes.form_delete',['id' => $usuario->codusuario, 'rota' => $rota_exclusao])
                     @endif
@@ -57,7 +57,7 @@
                 @if(!empty($rota_exibicao))
                     @include('componentes.link',['id' => $usuario->codusuario, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
                 @endif
-                @if(Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador')
+                @if(Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
                     @if(!empty($usuario->repositorio))
                         @includeIf('componentes.form_desvincular',[
                         'id' => $usuario->codusuario

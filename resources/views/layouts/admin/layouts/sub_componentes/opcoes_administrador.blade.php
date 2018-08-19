@@ -1,4 +1,4 @@
-@if(Auth::user()->type === 'Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com')
+@if(Auth::user()->tipo === 'Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com')
     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2"
            data-parent="#exampleAccordion">

@@ -21,7 +21,7 @@
                 </a>
             </td>
             <td>
-                @if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador')
+                @if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
 
                     @if(!empty($rota_edicao))
                         @include('componentes.link',['id' => $repositorio1->codrepositorio, 'rota' => $rota_edicao])

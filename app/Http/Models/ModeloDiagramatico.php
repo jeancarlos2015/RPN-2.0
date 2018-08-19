@@ -118,7 +118,7 @@ class ModeloDiagramatico extends Model
             //quantidade do restante dos campos
             if ($indice < 2) {
                 $dados[$indice]->campo = $campos[$indice];
-                $dados[$indice]->type = $types[$indice];
+                $dados[$indice]->tipo = $types[$indice];
                 $dados[$indice]->titulo = $titulos[$indice];
             }
             $dados[$indice]->atributo = $atributos[$indice];

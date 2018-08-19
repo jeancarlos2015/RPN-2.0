@@ -57,7 +57,7 @@
 
 
 @endif
-@if(Auth::user()->type==='administrador')
+@if(Auth::user()->tipo==='administrador')
     <div class="form-group">
         <input type="radio" name="type" value="administrador" checked> Administrador
     </div>
