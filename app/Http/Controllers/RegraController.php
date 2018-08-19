@@ -80,7 +80,7 @@ class RegraController extends Controller
      */
     public function edit($codregra)
     {
-        dd($codregra);
+        dd(null);
         $regra = RegraRepository::findOrFail($codregra);
         return view('controle_regras.edit',compact('regra'));
     }

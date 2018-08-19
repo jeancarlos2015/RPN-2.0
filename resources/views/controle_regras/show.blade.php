@@ -2,12 +2,15 @@
 @section('content')
     @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
-                    'sub_titulo' => 'Repositório/'.$repositorio->nome.'/Projetos/'.$projeto->nome,
+                    'sub_titulo' => 'Repositório/'.
+                    $regra->repositorio->nome.
+                    '/Projetos/'.
+                    $regra->projeto->nome.
+                     '/Modelo/'.$regra->modelodeclarativo->nome.
+                     '/Regra/'.$regra->codregra,
                     'rota' => 'todos_projetos'
     ])
-    @includeIf('controle_regras.componentes.campos_disable',[
-    'MAX' => 2
-    ])
+    @includeIf('controle_regras.componentes.campos_disable')
 @endsection
 @section('modo')
     @includeIf('componentes.descricao',[

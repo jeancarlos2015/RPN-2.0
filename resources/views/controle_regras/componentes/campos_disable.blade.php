@@ -20,6 +20,11 @@
 
             <label>Regra</label>
             <input type="text" value="{!! \App\http\Models\Regra::PADROES[$regra->relacionamento] !!}" disabled class="form-control">
+
+            <label>Objeto de fluxo</label>
+            <input type="text" value="{!! $regra->objetos_fluxos->nome !!}" disabled class="form-control">
+            <label>Tipo</label>
+            <input type="text" value="{!! $regra->objetos_fluxos->tipo !!}" disabled class="form-control">
         </div>
     </div>
 </div>

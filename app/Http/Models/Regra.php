@@ -49,7 +49,7 @@ class Regra extends Model
     public static function campos()
     {
         return [
-            'Nome'
+            'Nome',
         ];
     }
 
