@@ -6,6 +6,7 @@ use App\Http\Models\ModeloDeclarativo;
 use App\http\Models\ObjetoFluxo;
 use App\http\Models\Regra;
 use App\Http\Repositorys\ModeloDeclarativoRepository;
+use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,12 +63,27 @@ class PadraoRecomendacaoController extends Controller
 //'codprojeto',
 //'codmodelodeclarativo',
 //'codoutraregra',
+
 //'nome',
 //'visivel_projeto',
 //'visivel_repositorio',
 //'visivel_modelo_declarativo',
 //'relacionamento'
 
+//    Atributos do objeto de fluxo
+//'codrepositorio',
+//'codusuario',
+//'codprojeto',
+//'codmodelodeclarativo',
+//
+//
+//'nome',
+//'descricao',
+//'tipo',
+
+//'visivel_projeto',
+//'visivel_modelo_declarativo',
+//'visivel_repositorio'
     private function salvar($dado)
     {
         if (!empty($dado['id_objetos_fluxos'])){
@@ -89,15 +105,28 @@ class PadraoRecomendacaoController extends Controller
                     'codprojeto' => $codprojeto,
                     'codmodelodeclarativo' => $codmodelodeclarativo,
                     'codoutraregra' => 0,
-                    'nome' => 'Relacionamento de '. Regra::PADROES[$id_relacionamento]. ' no objeto de fluxo "'. $objetofluxo->nome. '" do tipo '. $objetofluxo->tipo ,
+                    'nome' => 'Regra: '.Regra::PADROES[$id_relacionamento]. ' - '. $objetofluxo->nome,
                     'visivel_projeto' => $visivel_projeto,
                     'visivel_repositorio' => $visivel_repositorio,
                     'visivel_modelo_declarativo' => $visivel_modelo_declarativo,
                     'relacionamento' => $id_relacionamento
                 ];
 
+                $dado_objeto_fluxo = [
+                    'codrepositorio' => $codrepositorio,
+                    'codusuario' => $codusaurio,
+                    'codprojeto' => $codprojeto,
+                    'codmodelodeclarativo' => $codmodelodeclarativo,
+                    'nome' => 'Regra: '.Regra::PADROES[$id_relacionamento]. ' - '. $objetofluxo->nome,
+                    'descricao' => 'Regra',
+                    'tipo' => 'Regra',
+                    'visivel_projeto' => $visivel_projeto,
+                    'visivel_repositorio' => $visivel_repositorio,
+                    'visivel_modelo_declarativo' => $visivel_modelo_declarativo
+                ];
 
                 RegraRepository::inclui_se_existe($dado);
+                ObjetoFluxoRepository::incluir_se_existe($dado_objeto_fluxo);
             }
         }
 
@@ -126,6 +155,7 @@ class PadraoRecomendacaoController extends Controller
             }
         }
     }
+
 
     public function store(Request $request)
     {

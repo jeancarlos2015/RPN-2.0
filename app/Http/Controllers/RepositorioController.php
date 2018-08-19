@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\http\Models\Regra;
 use App\http\Models\Repositorio;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
@@ -94,7 +95,7 @@ class RepositorioController extends Controller
         $qt_modelos_declarativos =  ModeloDeclarativoRepository::listar()->count();
         $qt_modelos = $qt_modelos_declarativos + $qt_modelos_diagramaticos;
         $qt_objetos_fluxos = ObjetoFluxoRepository::count();
-        $qt_regras = RegraRepository::all()->count();
+        $qt_regras = Regra::all()->count();
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
 
             return [

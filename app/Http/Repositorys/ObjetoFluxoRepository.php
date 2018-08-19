@@ -54,11 +54,17 @@ class ObjetoFluxoRepository extends Repository
 
     public static function incluir(Request $request)
     {
+
         $value = ObjetoFluxo::create($request->all());
         self::limpar_cache();
         return $value;
     }
-
+    public static function incluir_se_existe($dado)
+    {
+        if (!self::existe($dado['nome'])){
+            $value = ObjetoFluxo::create($dado);
+        }
+    }
 
     public static function excluir($codobjetofluxo)
     {

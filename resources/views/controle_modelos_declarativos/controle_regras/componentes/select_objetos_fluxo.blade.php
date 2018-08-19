@@ -1,4 +1,4 @@
-<div class="col-5">
+<div class="col-12">
     <div class="subject-info-box-1">
         @if(!empty($multi))
             <select multiple="multiple" id='sbOne' class="form-control" name="sbOne[]">
