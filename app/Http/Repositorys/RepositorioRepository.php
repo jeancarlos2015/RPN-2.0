@@ -19,14 +19,14 @@ class RepositorioRepository extends Repository
     public static function listar()
     {
         if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
-            return Repositorio::all();
+            return collect(Repositorio::all());
         }
         return collect(array());
     }
     public static function listar_repositorios_publicos()
     {
-        return Repositorio::wherePublico(true)
-            ->get();
+        return collect(Repositorio::wherePublico(true)
+            ->get());
     }
 
     public static function count()

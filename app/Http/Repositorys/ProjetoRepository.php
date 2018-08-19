@@ -21,12 +21,12 @@ class ProjetoRepository extends Repository
     {
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             $result =  Projeto::all();
-            return $result;
+            return collect($result);
         } else if (!empty(Auth::user()->repositorio)) {
             $repositorio = Auth::user()->repositorio;
-            return Projeto::where('codrepositorio',$repositorio->codrepositorio)
+            return collect(Projeto::where('codrepositorio',$repositorio->codrepositorio)
                 ->where('visibilidade', 'true')
-                ->get();
+                ->get());
         }
         return collect(array());
 
@@ -35,12 +35,12 @@ class ProjetoRepository extends Repository
     public static function listar_por_repositorio($codrepositorio)
     {
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
-            return Projeto::where('codrepositorio',$codrepositorio)
-                ->get();
+            return collect(Projeto::where('codrepositorio',$codrepositorio)
+                ->get());
         }
-        return Projeto::where('codrepositorio',$codrepositorio)
+        return collect(Projeto::where('codrepositorio',$codrepositorio)
             ->orwhere('visibilidade', 'true')
-            ->get();
+            ->get());
     }
 
     public static function count()

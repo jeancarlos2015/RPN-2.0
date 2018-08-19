@@ -19,12 +19,12 @@ class RegraRepository extends Repository
     public static function listar()
     {
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
-            return Regra::all();
+            return collect(Regra::all());
         }else{
-            return Regra::
+            return collect(Regra::
                 where('visivel_modelo_declarativo', '=', 'true')
                 ->orWhere('codusuario', '=', Auth::user()->codusuario)
-                ->get();
+                ->get());
         }
     }
 
