@@ -21,6 +21,7 @@
                                     Modelo: {!! $regra->modelodeclarativo->descricao !!}</div>
                                 <div class="text-muted smaller">Projeto: {!! $regra->projeto->nome !!}</div>
                                 <div class="text-muted smaller">Repositório: {!! $regra->repositorio->nome !!}</div>
+                                <div class="text-muted smaller">Objetos Fluxos: {!! count($regra->objetos_fluxos) !!}</div>
                             </div>
                         </div>
                     </a>
@@ -39,6 +40,7 @@
                                     Modelo: {!! $regra->modelodeclarativo->descricao !!}</div>
                                 <div class="text-muted smaller">Projeto: {!! $regra->projeto->nome !!}</div>
                                 <div class="text-muted smaller">Repositório: {!! $regra->repositorio->nome !!}</div>
+                                <div class="text-muted smaller">Objetos Fluxos: {!! count($regra->objetos_fluxos) !!}</div>
                             </div>
                         </div>
                     </a>

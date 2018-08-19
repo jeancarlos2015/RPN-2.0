@@ -19,12 +19,16 @@
             <input type="text" value="{!! $regra->usuario->name !!}" disabled class="form-control">
 
             <label>Regra</label>
-            <input type="text" value="{!! \App\http\Models\Regra::PADROES[$regra->relacionamento] !!}" disabled class="form-control">
-
-            <label>Objeto de fluxo</label>
-            <input type="text" value="{!! $regra->objetos_fluxos->nome !!}" disabled class="form-control">
-            <label>Tipo</label>
-            <input type="text" value="{!! $regra->objetos_fluxos->tipo !!}" disabled class="form-control">
+            <input type="text" value="{!! \App\http\Models\Regra::PADROES[$regra->relacionamento] !!}" disabled
+                   class="form-control">
+        </div>
+    </div>
+    <div class="card-header">Objetos Fluxos Pertencente a Regra</div>
+    <div class="card-body">
+        <div class="form-group form-control">
+            @foreach($regra->objetos_fluxos as $objeto)
+                <input type="text" value="{!! $objeto->nome !!}" class="form-control" disabled>
+            @endforeach
         </div>
     </div>
 </div>
