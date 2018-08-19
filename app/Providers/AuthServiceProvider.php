@@ -26,11 +26,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('admin', function ($user){
-            return $user->email==='jeancarlospenas25@gmail.com';
+            return $user->email==='jeancarlospenas25@gmail.com' || $user->tipo==='Administrador';
         });
 
         Gate::define('acesso', function ($user){
-            return isset($user->repositorio->nome) || $user->email==='jeancarlospenas25@gmail.com';
+            return isset($user->repositorio->nome) || $user->email==='jeancarlospenas25@gmail.com' || $user->tipo==='Administrador';
         });
 
         Gate::define('edit-user', function($userAuthenticated,$targetUser){

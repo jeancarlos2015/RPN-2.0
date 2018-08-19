@@ -1,6 +1,6 @@
 <ul class="navbar-nav ml-auto">
 
-    @if(!empty(Auth::user()->repositorio) || Auth::user()->email==='jeancarlospenas25@gmail.com')
+    @if(!empty(Auth::user()->repositorio) || Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
 
         @includeIf('layouts.admin.layouts.sub_componentes.li_nav',
             [
@@ -28,7 +28,7 @@
     @endif
 
 
-    @if(!empty(Auth::user()->repositorio) || Auth::user()->email==='jeancarlospenas25@gmail.com')
+    @if(!empty(Auth::user()->repositorio) || Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
         @includeIf('layouts.admin.layouts.sub_componentes.dropdown')
         @includeIf('layouts.admin.layouts.sub_componentes.status_github')
         @includeIf('layouts.admin.layouts.sub_componentes.dropdown_alerta')

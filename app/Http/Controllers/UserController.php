@@ -59,7 +59,7 @@ class UserController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'type' => $data['type'],
+            'tipo' => $data['tipo'],
             'password' => \Hash::make($data['password']),
         ]);
     }
@@ -70,7 +70,7 @@ class UserController extends Controller
             [
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'type' => $data['type'],
+                'tipo' => $data['tipo'],
                 'password' => \Hash::make($data['password']),
             ]
         );
@@ -79,9 +79,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
-            if ($request->tipo==='Administrador'){
+            if ($request->tipo==='Administrador' && \Auth::user()->email!=='jeancarlospenas@gmail.com' ){
                 $data['tipo'] = 'success';
                 $data['mensagem'] = 'Você não possui permissão !!!';
+                $this->create($data);
                 return redirect()->route('painel');
             }
             if ($request->password !== $request->password_confirm) {
@@ -95,6 +96,7 @@ class UserController extends Controller
                     ->withInput();
             }
             $user = $this->create_user($request->all());
+//            $user = User::create($request->all());
             LogRepository::criar(
                 "Usuário Criado Com sucesso",
                 "Rota De Criação de usuário",
@@ -162,16 +164,23 @@ class UserController extends Controller
                 return redirect()->route('controle_usuarios.edit', ['id' => $id]);
             }
             $user = User::findOrFail($id);
-            dd($user,$request);
+            $user->tipo = $request->tipo;
+            $user->email = $request->email;
+            $user->password = $request->password;
+            $user->name = $request->name;
+//            dd($user,$request);
 
-            $user_novo = $this->update_user($user, $request->all());
-            LogRepository::criar(
-                "Usuário Atualizado Com sucesso",
-                "Rota De Atualização de Usuário",
-                'controle_usuarios.edit',
-                'update');
-            $data['tipo'] = 'success';
-            $this->create_log($data);
+//            $user_novo = $this->update_user($user, $request->all());
+//            LogRepository::criar(
+//                "Usuário Atualizado Com sucesso",
+//                "Rota De Atualização de Usuário",
+//                'controle_usuarios.edit',
+//                'update');
+            if ($user->update()){
+                $data['tipo'] = 'success';
+                $this->create_log($data);
+            }
+
             if (\Auth::user()->tipo === 'administrador') {
                 return redirect()->route('controle_usuarios.index');
             } else {
@@ -193,7 +202,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        if ($user->tipo!=='Administrador' || $user->email==='jeancarlospenas25@gmail.com'){
+        if ($user->tipo==='Administrador' || $user->email==='jeancarlospenas25@gmail.com'){
             $data['tipo'] = 'success';
             $data['mensagem'] = 'Você não possui permissão !!!';
             $this->create_log($data);

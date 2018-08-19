@@ -1,6 +1,6 @@
 @extends('layouts.admin.layouts.main')
 @section('content')
-    @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
+    @if(Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
         @includeIf('layouts.admin.componentes.breadcrumb',[
                           'titulo' => 'Painel',
                         'sub_titulo' => 'Usuarios',
