@@ -17,9 +17,7 @@ class RegraController extends Controller
      */
     public function index($codmodelodeclarativo)
     {
-        $regras = Regra::
-            where('codmodelodeclarativo', '=', $codmodelodeclarativo)
-            ->get();
+        $regras = RegraRepository::listar();
         $tipo = 'regra';
         $titulos = Regra::titulos();
         $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
@@ -80,9 +78,11 @@ class RegraController extends Controller
      * @param  \App\http\Models\Regra $regra
      * @return \Illuminate\Http\Response
      */
-    public function edit(Regra $regra)
+    public function edit($codregra)
     {
-        echo 'Pagina em construção';
+        dd($codregra);
+        $regra = RegraRepository::findOrFail($codregra);
+        return view('controle_regras.edit',compact('regra'));
     }
 
     /**

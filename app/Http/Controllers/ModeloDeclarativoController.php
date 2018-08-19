@@ -25,7 +25,7 @@ class ModeloDeclarativoController extends Controller
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             return [
                 'controle_objeto_fluxo_index',
-                'todas_regras'
+                'controle_regras_index'
             ];
         } else if (!empty(Auth::user()->repositorio)) {
             return [
@@ -58,7 +58,7 @@ class ModeloDeclarativoController extends Controller
     private function quantidades()
     {
         $qt_objetos_fluxos = ObjetoFluxoRepository::count();
-        $qt_regras = RegraRepository::all()->count();
+        $qt_regras = RegraRepository::listar()->count();
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
 
             return [

@@ -2,10 +2,18 @@
 @section('content')
     @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
-                    'sub_titulo' => 'Repositório/'.$repositorio->nome.'/Projetos/'.$projeto->nome,
-                    'rota' => 'todos_projetos'
+                    'sub_titulo' =>
+                    'Repositório/'.
+                    $regra->repositorio->nome.
+                    '/Projetos/'.
+                    $regra->projeto->nome.
+                    '/Modelo/'.
+                    $regra->modelodeclarativo->nome.
+                    '/Regra/'.
+                    $regra->codregra,
+                    'rota' => 'painel'
     ])
-    @includeIf('controle_projetos.componentes.form_projeto_update')
+    @includeIf('controle_regras.form')
 @endsection
 @section('modo')
     @includeIf('componentes.descricao',[

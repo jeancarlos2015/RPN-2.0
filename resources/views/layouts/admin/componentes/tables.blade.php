@@ -21,11 +21,6 @@
                     @case('objetofluxo')
                     @includeIf('layouts.admin.componentes.tables_objetos_fluxos')
                     @break
-
-                    @case('tarefa')
-                    @includeIf('layouts.admin.componentes.tables_tarefas')
-                    @break;
-
                     @case('modelo_diagramatico')
                     @includeIf('layouts.admin.componentes.tables_modelos')
                     @break;

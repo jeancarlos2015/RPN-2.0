@@ -4,7 +4,7 @@
         <input name="{!! $name !!}" type="hidden" value="false">
         <label class="switch-light switch-candy">
             <input type="checkbox" name="{!! $name !!}"
-                   value="true" {!! !empty($visivel) ? ($visivel ? 'checked' : '') : '' !!}>
+                   value="true" {!! isset($visivel) ? ($visivel ? 'checked' : '') : '' !!}>
             <span>
                 <span>Não <i class='fa fa-thumbs-down'></i></span>
                 <span>Sim <i class='fa fa-thumbs-up'></i></span>

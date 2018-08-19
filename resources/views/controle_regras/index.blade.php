@@ -34,7 +34,7 @@
                     'projetos' => $regras,
                     'rota_edicao' => 'controle_regras.edit',
                     'rota_exclusao' => 'controle_regras.destroy',
-                    'rota_cricao' => 'controle_regras.create',
+                    'rota_criacao' => 'controle_regras.create',
                     'rota_exibicao' => 'controle_regras.show',
                     'nome_botao' => 'Novo',
                     'botao' => 'Novo',

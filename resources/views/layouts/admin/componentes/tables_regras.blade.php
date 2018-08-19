@@ -7,7 +7,7 @@
             {{--<td>{!! $regra->nome !!}</td>--}}
             {{--<td>{!! $regra->descricao !!}</td>--}}
             <td>
-                @if(!empty($rota_edicao))
+                @if(!empty($rota_exibicao))
                     <a href="{!! route($rota_exibicao,[$regra->codregra]) !!}">
                         <div class="media">
                             <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($regra->usuario->email) }}"
@@ -44,25 +44,25 @@
                     </a>
                 @endif
 
-
             </td>
 
             <td>
                 @if(Auth::user()->email===$regra->usuario->email)
                     @if(!empty($rota_edicao))
-                        @include('componentes.link',['id' => $regra->coddocumentacao, 'rota' => $rota_edicao])
+                        @include('componentes.link',['id' => $regra->codregra, 'rota' => $rota_edicao])
                     @endif
 
                     @if(!empty($rota_exclusao))
-                        @include('componentes.form_delete',['id' => $regra->coddocumentacao, 'rota' => $rota_exclusao])
+                        @include('componentes.form_delete',['id' => $regra->codregra, 'rota' => $rota_exclusao])
                     @endif
                     @if(!empty($rota_exibicao))
-                        @include('componentes.link',
-                        [
-                        'id' => $regra->coddocumentacao,
-                        'rota' => $rota_exibicao
-                        ]
-                        )
+                            @include('componentes.link',
+                            [
+                            'id' => $regra->codregra,
+                            'rota' => $rota_exibicao,
+                            'nomebotao' => 'Visualizar'
+                            ]
+                            )
                     @endif
                 @else
                     @if(!empty($rota_exibicao))
@@ -74,9 +74,8 @@
                         ]
                         )
                     @endif
+
                 @endif
-
-
             </td>
         </tr>
     @endforeach

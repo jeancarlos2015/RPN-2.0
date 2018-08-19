@@ -47,19 +47,11 @@ class RegraRepository extends Repository
     {
         $value = Regra::findOrFail($codRegra);
         $value->update($request->all());
-        self::limpar_cache();
         return $value;
     }
-
-    public static function limpar_cache()
-    {
-        Cache::forget('listar_Regras');
-    }
-
     public static function incluir(Request $request)
     {
         $value = Regra::create($request->all());
-        self::limpar_cache();
         return $value;
     }
 
@@ -72,7 +64,6 @@ class RegraRepository extends Repository
     {
         $doc = Regra::findOrFail($codRegra);
         $value = $doc->delete();
-        self::limpar_cache();
         return $value;
     }
 
