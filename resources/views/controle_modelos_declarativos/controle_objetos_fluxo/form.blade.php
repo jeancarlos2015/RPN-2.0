@@ -2,6 +2,11 @@
 
 @if(empty($objeto_fluxo))
     @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.botao_sim_nao',[
+    'pergunta' => 'Deseja tornar este registro visível em outros Repositórios?',
+    'name' => 'visivel_repositorio'
+    ])
+
+    @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.botao_sim_nao',[
     'pergunta' => 'Deseja tornar este registro visível em outros Projetos?',
     'name' => 'visivel_projeto'
     ])
@@ -12,6 +17,11 @@
     'name' => 'visivel_modelo_declarativo'
     ])
 @else
+    @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.botao_sim_nao',[
+    'pergunta' => 'Deseja tornar este registro visível em outros Repositórios?',
+    'name' => 'visivel_repositorio',
+    'visivel' => $objeto_fluxo->visivel_repositorio
+    ])
     @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.botao_sim_nao',[
     'pergunta' => 'Deseja tornar este registro visível em outros Projetos?',
     'name' => 'visivel_projeto',

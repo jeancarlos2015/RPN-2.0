@@ -44,6 +44,6 @@
 @endif
 
 <div class="form-group">
-    <button type="submit" class="btn btn-dark form-control">Criar Regras</button>
+    <button type="submit" class="btn btn-dark form-control">Criar Regra</button>
 </div>
 @includeIf('controle_modelos_declarativos.controle_regras.componentes.script')

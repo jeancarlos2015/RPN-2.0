@@ -57,8 +57,9 @@ class PadraoRecomendacaoController extends Controller
 
     private function salvar($dado)
     {
-        if (!empty($dado['id_objetos_fluxos'])){
-            $id_objetos_fluxos = $dado['id_objetos_fluxos'];
+        if (!empty($dado['id_objetos_fluxos1']) && !empty($dado['id_objetos_fluxos2'])){
+            $id_objetos_fluxos1 = $dado['id_objetos_fluxos1'];
+            $id_objetos_fluxos2 = $dado['id_objetos_fluxos2'];
             $codrepositorio = $dado['codrepositorio'];
             $codmodelodeclarativo = $dado['codmodelodeclarativo'];
             $codprojeto = $dado['codprojeto'];
@@ -67,38 +68,34 @@ class PadraoRecomendacaoController extends Controller
             $visivel_projeto = $dado['visivel_projeto'];
             $visivel_repositorio = $dado['visivel_repositorio'];
             $visivel_modelo_declarativo = $dado['visivel_modelo_declarativo'];
-            for ($id_objeto = 0; $id_objeto < count($id_objetos_fluxos); $id_objeto++) {
-                $objetofluxo = ObjetoFluxo::findOrFail($id_objetos_fluxos[$id_objeto]);
-                $dado = [
-                    'codobjetofluxo' => $id_objetos_fluxos[$id_objeto],
-                    'codrepositorio' => $codrepositorio,
-                    'codusuario' => $codusaurio,
-                    'codprojeto' => $codprojeto,
-                    'codmodelodeclarativo' => $codmodelodeclarativo,
-                    'codoutraregra' => 0,
-                    'nome' => 'Regra: '.Regra::PADROES[$id_relacionamento]. ' - '. $objetofluxo->nome,
-                    'visivel_projeto' => $visivel_projeto,
-                    'visivel_repositorio' => $visivel_repositorio,
-                    'visivel_modelo_declarativo' => $visivel_modelo_declarativo,
-                    'relacionamento' => $id_relacionamento
-                ];
-
-                $dado_objeto_fluxo = [
-                    'codrepositorio' => $codrepositorio,
-                    'codusuario' => $codusaurio,
-                    'codprojeto' => $codprojeto,
-                    'codmodelodeclarativo' => $codmodelodeclarativo,
-                    'nome' => 'Regra: '.Regra::PADROES[$id_relacionamento]. ' - '. $objetofluxo->nome,
-                    'descricao' => 'Regra',
-                    'tipo' => 'Regra',
-                    'visivel_projeto' => $visivel_projeto,
-                    'visivel_repositorio' => $visivel_repositorio,
-                    'visivel_modelo_declarativo' => $visivel_modelo_declarativo
-                ];
-
-                RegraRepository::inclui_se_existe($dado);
-                ObjetoFluxoRepository::incluir_se_existe($dado_objeto_fluxo);
+            $nome = $dado['nome'];
+            $dado = [
+                'codrepositorio' => $codrepositorio,
+                'codusuario' => $codusaurio,
+                'codprojeto' => $codprojeto,
+                'codmodelodeclarativo' => $codmodelodeclarativo,
+                'codoutraregra' => 0,
+                'nome' => $nome,
+                'tipo' => Regra::PADROES[$id_relacionamento],
+                'visivel_projeto' => $visivel_projeto,
+                'descricao' => Regra::PADROES[$id_relacionamento],
+                'visivel_repositorio' => $visivel_repositorio,
+                'visivel_modelo_declarativo' => $visivel_modelo_declarativo,
+                'relacionamento' => $id_relacionamento
+            ];
+            $regra  = RegraRepository::inclui_se_existe($dado);
+            ObjetoFluxoRepository::incluir_se_existe($dado);
+            for ($id_objeto = 0; $id_objeto < count($id_objetos_fluxos1); $id_objeto++) {
+                if (!empty($regra)){
+                    $objetofluxo1 = ObjetoFluxo::findOrFail($id_objetos_fluxos1[$id_objeto]);
+                    $objetofluxo2 = ObjetoFluxo::findOrFail($id_objetos_fluxos2[$id_objeto]);
+                    $objetofluxo1->codregra = $regra->codregra;
+                    $objetofluxo2->codregra = $regra->codregra;
+                    $objetofluxo1->update();
+                    $objetofluxo2->update();
+                }
             }
+
         }
 
     }
@@ -144,12 +141,15 @@ class PadraoRecomendacaoController extends Controller
         $dado['visivel_projeto'] = $request->visivel_projeto;
         $dado['visivel_repositorio'] = $request->visivel_repositorio;
         $dado['visivel_modelo_declarativo'] = $request->visivel_modelo_declarativo;
-        $dado['id_objetos_fluxos'] = $request->sbOne;
-        $this->salvar($dado);
-        $dado['id_objetos_fluxos'] = $request->sbTwo;
-        $this->salvar($dado);
-        $data['tipo'] = 'success';
-        $this->create_log($data);
+        $dado['id_objetos_fluxos1'] = $request->sbOne;
+        $dado['id_objetos_fluxos2'] = $request->sbTwo;
+        $dado['nome'] = $request->nome;
+        if (count($request->sbOne)==count($request->sbTwo)){
+            $this->salvar($dado);
+            $data['tipo'] = 'success';
+            $this->create_log($data);
+        }
+
         return redirect()->route('controle_padrao_create_conjunto', [
             'codmodelodeclarativo' => $codmodelodeclarativo
         ]);

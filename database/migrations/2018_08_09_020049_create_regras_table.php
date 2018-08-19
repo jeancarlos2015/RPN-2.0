@@ -15,7 +15,6 @@ class CreateRegrasTable extends Migration
     {
         Schema::connection('banco')->create('regras', function (Blueprint $table) {
             $table->increments('codregra');
-            $table->bigInteger('codobjetofluxo');
 
             $table->bigInteger('codrepositorio');
             $table->bigInteger('codusuario');

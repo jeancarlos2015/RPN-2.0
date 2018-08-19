@@ -3,9 +3,6 @@
 namespace App\http\Models;
 
 use App\Http\Util\Dado;
-use App\Http\Models\Projeto;
-use App\Http\Models\Repositorio;
-use App\Http\Models\ModeloDeclarativo;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,8 +18,7 @@ class ObjetoFluxo extends Model
         'codusuario',
         'codprojeto',
         'codmodelodeclarativo',
-
-
+        'codregra',
         'nome',
         'descricao',
         'tipo',
@@ -30,7 +26,9 @@ class ObjetoFluxo extends Model
         'visivel_modelo_declarativo',
         'visivel_repositorio'
     ];
-    public static function tipos(){
+
+    public static function tipos()
+    {
         return [
             'TAREFA',
             'GATEWAY EXCLUSIVO',
@@ -40,6 +38,7 @@ class ObjetoFluxo extends Model
             'EVENTO INTERMEDIÁRIO'
         ];
     }
+
     public static function validacao()
     {
         return [
@@ -136,13 +135,15 @@ class ObjetoFluxo extends Model
         return $this->hasOne(ModeloDeclarativo::class, 'codmodelodeclarativo', 'codmodelodeclarativo');
     }
 
+    public function regra()
+    {
+        return $this->hasOne(Regra::class, 'codregra', 'codregra');
+    }
+
     protected static function boot()
     {
         parent::boot();
 
-        static::deleting(function ($modelo_declarativo) { // before delete() method call this
-            $modelo_declarativo->modelo()->delete();
-        });
 
         static::deleting(function ($regra) { // before delete() method call this
             $regra->regras()->delete();

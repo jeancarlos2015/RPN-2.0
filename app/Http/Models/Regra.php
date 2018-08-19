@@ -23,13 +23,13 @@ class Regra extends Model
     protected $primaryKey = 'codregra';
     protected $table = 'regras';
     protected $fillable = [
-        'codobjetofluxo',
         'codrepositorio',
         'codusuario',
         'codprojeto',
         'codmodelodeclarativo',
         'codoutraregra',
         'nome',
+        'tipo',
         'visivel_projeto',
         'visivel_repositorio',
         'visivel_modelo_declarativo',
@@ -91,9 +91,9 @@ class Regra extends Model
             //quantidade do restante dos campos
             if ($indice < 1) {
                 $dados[$indice]->atributo = $atributos[$indice];
+                $dados[$indice]->campo = $campos[$indice];
+                $dados[$indice]->type = $types[$indice];
             }
-            $dados[$indice]->campo = $campos[$indice];
-            $dados[$indice]->type = $types[$indice];
             $dados[$indice]->titulo = $titulos[$indice];
         }
         return $dados;
@@ -113,7 +113,7 @@ class Regra extends Model
 
     public function objetos_fluxos()
     {
-        return $this->hasOne(ObjetoFluxo::class, 'codobjetofluxo', 'codobjetofluxo');
+        return $this->hasMany(ObjetoFluxo::class, 'codregra', 'codregra');
     }
 
     public function modelodeclarativo(){

@@ -81,9 +81,12 @@ class RegraController extends Controller
     public function edit($codregra)
     {
 //        dd(null);
-//        $regra = RegraRepository::findOrFail($codregra);
-//        return view('controle_regras.edit',compact('regra'));
-        echo 'Página em construção';
+        $regra = Regra::findOrFail($codregra);
+        $titulos = Regra::titulos();
+        $dados = Regra::dados();
+        $dados[0]->valor = $regra->nome;
+        return view('controle_regras.edit',compact('regra','titulos','dados'));
+//        echo 'Página em construção';
     }
 
     /**
@@ -93,9 +96,26 @@ class RegraController extends Controller
      * @param  \App\http\Models\Regra $regra
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Regra $regra)
+    public function update(Request $request, $codregra)
     {
-        echo 'Pagina em construção';
+
+        try{
+            $regra = Regra::findOrFail($codregra);
+            $regra->nome = $request->nome;
+            $regra->visivel_projeto = $request->visivel_projeto;
+            $regra->visivel_repositorio = $request->visivel_repositorio;
+            $regra->visivel_modelo_declarativo = $request->visivel_modelo_declarativo;
+            $regra->update();
+            $data['tipo'] = 'success';
+            $this->create_log($data);
+        }catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        }
+        return redirect()->route('controle_regras_index',[$regra->codmodelodeclarativo]);
     }
 
     /**
@@ -104,8 +124,21 @@ class RegraController extends Controller
      * @param  \App\http\Models\Regra $regra
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Regra $regra)
+    public function destroy($codregra)
     {
-        echo 'Pagina em construção';
+        $regra = Regra::findOrFail($codregra);
+        try{
+            $regra->delete();
+            $data['tipo'] = 'success';
+            $this->create_log($data);
+        }catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        }
+        return redirect()->route('controle_regras_index',[$regra->codmodelodeclarativo]);
+
     }
 }

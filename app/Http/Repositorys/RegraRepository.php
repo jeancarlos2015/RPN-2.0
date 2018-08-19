@@ -34,8 +34,9 @@ class RegraRepository extends Repository
 
 
         if (!self::existe($dados)) {
-            $regra1 = Regra::create($dados);
+            return Regra::create($dados);
         }
+        return null;
     }
 
     public static function count()
@@ -77,11 +78,9 @@ class RegraRepository extends Repository
 
     public static function existe($dados)
     {
-        $Regras = self::listar();
-        return  $Regras
-                ->where('codobjetofluxo', $dados['codobjetofluxo'])
-                ->where('relacionamento',$dados['relacionamento'])
-                ->count() > 0;
 
+        return  collect(Regra::where('nome','=',$dados['nome'])
+                ->get())
+                ->count() > 0;
     }
 }

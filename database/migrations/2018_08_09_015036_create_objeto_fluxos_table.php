@@ -18,6 +18,7 @@ class CreateObjetoFluxosTable extends Migration
             $table->increments('codobjetofluxo');
 
             $table->bigInteger('codrepositorio');
+            $table->bigInteger('codregra')->nullable();
             $table->bigInteger('codusuario');
             $table->bigInteger('codprojeto');
             $table->bigInteger('codmodelodeclarativo');
