@@ -22,10 +22,10 @@ class ModeloDiagramaticoRepository extends Repository
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             return collect(ModeloDiagramatico::all());
         }
-        return ModeloDiagramatico::
+        return collect(ModeloDiagramatico::
             where('codusuario','=',Auth::user()->codusuario)
-            ->orWhere('visibilidade', '=', 'true')
-            ->get();
+            ->orWhere('visibilidade', '=', true)
+            ->get());
 
     }
 
