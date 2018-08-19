@@ -110,7 +110,7 @@ class Projeto extends Model
             if ($indice < 2) {
                 $dados[$indice]->campo = $campos[$indice];
                 $dados[$indice]->atributo = $atributos[$indice];
-                $dados[$indice]->type = $types[$indice];
+                $dados[$indice]->tipo = $types[$indice];
             }
             $dados[$indice]->titulo = $titulos[$indice];
 

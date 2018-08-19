@@ -3,7 +3,7 @@
 <html lang="en">
 @includeIf('layouts.admin.layouts.head')
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-@includeIf('layouts.admin.layouts.nav')
+@includeIf('menu.nav')
 <div class="content-wrapper">
     @includeIf('layouts.admin.layouts.content')
     @includeIf('layouts.admin.layouts.footer')

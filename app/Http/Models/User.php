@@ -39,7 +39,7 @@ class User extends Authenticatable
     protected $primaryKey = 'codusuario';
     protected $table = 'users';
     protected $fillable = [
-        'name', 'email', 'password', 'type', 'codrepositorio'
+        'name', 'email', 'password', 'tipo', 'codrepositorio'
     ];
 
     protected $hidden = [
@@ -52,7 +52,7 @@ class User extends Authenticatable
             'name' => 'required|max:50',
             'email' => 'required|max:50',
             'password' => 'required|max:50',
-            'type' => 'required'
+            'tipo' => 'required'
         ];
     }
 
@@ -110,7 +110,7 @@ class User extends Authenticatable
             'nome',
             'email',
             'password',
-            'type'
+            'tipo'
         ];
     }
 
@@ -120,7 +120,7 @@ class User extends Authenticatable
             'nome',
             'email',
             'password',
-            'type'
+            'tipo'
         ];
 
     }

@@ -19,7 +19,7 @@ class ProjetoRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
             $result =  Projeto::all();
             return collect($result);
         } else if (!empty(Auth::user()->repositorio)) {
@@ -34,7 +34,7 @@ class ProjetoRepository extends Repository
 
     public static function listar_por_repositorio($codrepositorio)
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
             return collect(Projeto::where('codrepositorio',$codrepositorio)
                 ->get());
         }

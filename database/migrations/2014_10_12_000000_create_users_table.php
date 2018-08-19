@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('codrepositorio')->nullable();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('type')->nullable();
+            $table->string('tipo')->default('Padrao');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

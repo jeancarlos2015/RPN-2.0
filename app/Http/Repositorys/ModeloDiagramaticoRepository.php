@@ -19,7 +19,7 @@ class ModeloDiagramaticoRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador') {
             return collect(ModeloDiagramatico::all());
         }
         return collect(ModeloDiagramatico::

@@ -79,6 +79,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
+            if ($request->tipo==='Administrador'){
+                $data['tipo'] = 'success';
+                $data['mensagem'] = 'Você não possui permissão !!!';
+                return redirect()->route('painel');
+            }
             if ($request->password !== $request->password_confirm) {
                 flash('Senha não confere');
                 return redirect()->route('controle_usuarios.create');
@@ -119,18 +124,17 @@ class UserController extends Controller
 
     public function edit($id)
     {
-
+        if (\Auth::user()->email!=='jeancarlospenas25@gmail.com'){
+            $data['tipo'] = 'success';
+            $data['mensagem'] = 'Você não possui permissão !!!';
+            return redirect()->route('painel');
+        }
         try {
-            $usuario = User::findOrFail($id);
-//            if (\Gate::denies('edit-user', $usuario)) {
-//                abort(403);
-//            }
-            $dados = User::dados();
-            $dados[0]->valor = $usuario->name;
-            $dados[1]->valor = $usuario->email;
-            $dados[2]->valor = $usuario->password;
+
             $usuarios = User::all();
+            $usuario = User::findOrFail($id);
             $repositorios = RepositorioRepository::all();
+            $dados = User::dados();
             return view('controle_usuario.edit', compact('dados', 'usuario', 'usuarios', 'repositorios'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -147,11 +151,19 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
+
+            if (\Auth::user()->email!=='jeancarlospenas25@gmail.com'){
+                $data['tipo'] = 'success';
+                $data['mensagem'] = 'Você não possui permissão !!!';
+                return redirect()->route('painel');
+            }
             if ($request->password !== $request->password_confirm) {
                 flash('Senha não confirmada!!')->error();
                 return redirect()->route('controle_usuarios.edit', ['id' => $id]);
             }
             $user = User::findOrFail($id);
+            dd($user,$request);
+
             $user_novo = $this->update_user($user, $request->all());
             LogRepository::criar(
                 "Usuário Atualizado Com sucesso",
@@ -160,7 +172,7 @@ class UserController extends Controller
                 'update');
             $data['tipo'] = 'success';
             $this->create_log($data);
-            if (\Auth::user()->type === 'administrador') {
+            if (\Auth::user()->tipo === 'administrador') {
                 return redirect()->route('controle_usuarios.index');
             } else {
                 return redirect()->route('controle_usuarios.edit', ['id' => $user->codusuario]);
@@ -181,6 +193,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+        if ($user->tipo!=='Administrador' || $user->email==='jeancarlospenas25@gmail.com'){
+            $data['tipo'] = 'success';
+            $data['mensagem'] = 'Você não possui permissão !!!';
+            $this->create_log($data);
+            return redirect()->route('painel');
+        }
         try {
             $user->delete();
             $data['tipo'] = 'success';

@@ -5,7 +5,7 @@
         @includeIf('layouts.admin.layouts.sub_componentes.li_nav',
             [
                 'link' => 'https://docs.google.com/spreadsheets/d/1knDrNAs0Ql-cSTd1dDfZK9QNlAT_xXlarwl5swHPocQ/edit?usp=sharing',
-                'nome' => 'Sugestões e Idéias',
+                'nome' => 'Sugestões, Idéias e Andamento',
                 'ico' => 'fa fa-lightbulb-o'
             ])
         @if(!empty(Auth::user()->repositorio->nome))
@@ -19,7 +19,7 @@
 
     @yield('modo')
 
-    @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
+    @if(Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador')
         @includeIf('layouts.admin.layouts.sub_componentes.li_nav',
             [
                 'nome' => 'Administrador do Sistema',

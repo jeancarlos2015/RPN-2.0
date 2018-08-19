@@ -46,7 +46,7 @@ class RepositorioController extends Controller
 
     private function rotas()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador') {
             return [
                 'todos_modelos',
                 'todos_projetos',
@@ -54,7 +54,7 @@ class RepositorioController extends Controller
                 'controle_objetos_fluxos.index',
                 'todas_regras'
             ];
-        } else if (!empty(Auth::user()->repositorio)) {
+        } else if (!empty(Auth::user()->repositorio && Auth::user()->type==='Padrao')) {
             return [
                 'todos_modelos',
                 'todos_projetos',
@@ -68,7 +68,7 @@ class RepositorioController extends Controller
 
     private function titulos()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador') {
             return [
                 'Todos os Modelos',
                 'Todos os Projetos',
@@ -76,7 +76,7 @@ class RepositorioController extends Controller
                 'Todos os Objetos de Fluxos',
                 'Todas as Regras'
             ];
-        } else if (!empty(Auth::user()->repositorio)) {
+        } else if (!empty(Auth::user()->repositorio && Auth::user()->type==='Padrao')) {
             return [
                 'Todos os Modelos',
                 'Todos os Projetos',
@@ -96,7 +96,7 @@ class RepositorioController extends Controller
         $qt_modelos = $qt_modelos_declarativos + $qt_modelos_diagramaticos;
         $qt_objetos_fluxos = ObjetoFluxoRepository::count();
         $qt_regras = Regra::all()->count();
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador') {
 
             return [
                 $qt_modelos,
@@ -105,7 +105,7 @@ class RepositorioController extends Controller
                 $qt_objetos_fluxos,
                 $qt_regras,
             ];
-        } else if (!empty(Auth::user()->repositorio)) {
+        } else if (!empty(Auth::user()->repositorio && Auth::user()->type==='Padrao')) {
             return [
                 $qt_modelos,
                 $qt_projetos,

@@ -11,7 +11,7 @@
             <td>{!! $log->pagina !!}</td>
             <td>{!! $log->acao !!}</td>
             <td>
-                @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
+                @if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador')
                     @if(!empty($rota_edicao))
                         @include('componentes.link',['id' => $log->codlog, 'rota' => $rota_edicao])
                     @endif

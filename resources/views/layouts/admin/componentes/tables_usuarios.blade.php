@@ -16,7 +16,8 @@
                                 <div class="text-muted smaller">Email: {!! $usuario->email !!}</div>
                                 <div class="text-muted smaller">Tipo: Administrador</div>
                                 @if(!empty($usuario->repositorio))
-                                    <div class="text-muted smaller">Repositório: {!! $usuario->repositorio->nome !!}</div>
+                                    <div class="text-muted smaller">
+                                        Repositório: {!! $usuario->repositorio->nome !!}</div>
 
                                 @else
                                     <div class="text-muted smaller">Repositório: Nenhuma</div>
@@ -31,7 +32,8 @@
                                     <div class="text-muted smaller">Tipo: Padrão</div>
                                 @endif
                                 @if(!empty($usuario->repositorio))
-                                    <div class="text-muted smaller">Repositório: {!! $usuario->repositorio->nome !!}</div>
+                                    <div class="text-muted smaller">
+                                        Repositório: {!! $usuario->repositorio->nome !!}</div>
                                 @else
                                     <div class="text-muted smaller">Repositório: Nenhuma</div>
                                 @endif
@@ -42,20 +44,25 @@
                 </a>
             </td>
             <td>
-                @if(!empty($rota_edicao))
-                    @include('componentes.link',['id' => $usuario->codusuario, 'rota' => $rota_edicao])
+                @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
+                    @if(!empty($rota_edicao))
+                        @include('componentes.link',['id' => $usuario->codusuario, 'rota' => $rota_edicao])
+                    @endif
                 @endif
-                @if(!empty($rota_exclusao))
-                    @include('componentes.form_delete',['id' => $usuario->codusuario, 'rota' => $rota_exclusao])
+                @if(($usuario->type!=='Administrador' && Auth::user()->type==='Administrador')|| Auth::user()->email==='jeancarlospenas25@gmail.com')
+                    @if(!empty($rota_exclusao))
+                        @include('componentes.form_delete',['id' => $usuario->codusuario, 'rota' => $rota_exclusao])
+                    @endif
                 @endif
                 @if(!empty($rota_exibicao))
                     @include('componentes.link',['id' => $usuario->codusuario, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
                 @endif
-
-                @if(!empty($usuario->repositorio))
-                    @includeIf('componentes.form_desvincular',[
-                    'id' => $usuario->codusuario
-                    ])
+                @if(Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador')
+                    @if(!empty($usuario->repositorio))
+                        @includeIf('componentes.form_desvincular',[
+                        'id' => $usuario->codusuario
+                        ])
+                    @endif
                 @endif
             </td>
         </tr>

@@ -20,7 +20,7 @@ class ObjetoFluxoRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador') {
             return collect(ObjetoFluxo::all());
         }
         return collect(ObjetoFluxo::whereCodusuario(Auth::user()->codusuario)
