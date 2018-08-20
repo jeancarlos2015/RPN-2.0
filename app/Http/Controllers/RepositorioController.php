@@ -290,7 +290,6 @@ class RepositorioController extends Controller
         $repositorios = RepositorioRepository::listar();
         $usuarios = User::all();
         $titulos = User::titulos();
-
         $tipo = 'usuario';
         return view('vinculo_usuario_repositorio.vinculo_usuario_repositorio', compact('repositorios', 'usuarios', 'titulos', 'tipo'));
     }

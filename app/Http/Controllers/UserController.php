@@ -144,16 +144,6 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-
-            if (\Auth::user()->email !== 'jeancarlospenas25@gmail.com') {
-                $data['tipo'] = 'success';
-                $data['mensagem'] = 'Você não possui permissão !!!';
-                return redirect()->route('painel');
-            }
-            if ($request->password !== $request->password_confirm) {
-                flash('Senha não confirmada!!')->error();
-                return redirect()->route('controle_usuarios.edit', ['id' => $id]);
-            }
             $user = User::findOrFail($id);
             $user->tipo = $request->tipo;
             $user->email = $request->email;
@@ -177,7 +167,6 @@ class UserController extends Controller
             $this->create_log($data);
         }
         return redirect()->route('painel');
-
     }
 
     public function edit_vinculo($codusuario)
