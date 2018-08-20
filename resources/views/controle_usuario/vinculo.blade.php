@@ -6,7 +6,7 @@
                     'rota' => 'painel'
     ])
 
-        @includeIf('controle_usuario.componente.vinculacao_usuarios')
+    @includeIf('controle_usuario.componente.vinculacao_usuarios')
 
 @endsection
 @section('modo')

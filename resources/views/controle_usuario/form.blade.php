@@ -14,12 +14,12 @@
         </div>
     @elseif(Auth::user()->tipo==='Administrador' && $usuario->tipo==='Administrador')
         <div class="form-group">
-            <input type="radio" name="tipo" value="Administrador" checked> Administrador<br>
+            <input type="hidden" name="tipo" value="Administrador">
         </div>
     @else
 
         <div class="form-group">
-            <input type="radio" name="tipo" value="Padrao" checked> Padrão<br>
+            <input type="hidden" name="tipo" value="Padrao">
         </div>
     @endif
     <div class="form-group">
