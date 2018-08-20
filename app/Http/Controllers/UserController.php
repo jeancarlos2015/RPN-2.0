@@ -144,6 +144,16 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if ($request->password !== $request->password_confirm) {
+                flash('Senha não confere');
+                return redirect()->route('controle_usuarios.create');
+            }
+            $erros = \Validator::make($request->all(), User::validacao());
+            if ($erros->fails()) {
+                return redirect()->route('controle_usuarios.create')
+                    ->withErrors($erros)
+                    ->withInput();
+            }
             $user = User::findOrFail($id);
             $user->tipo = $request->tipo;
             $user->email = $request->email;

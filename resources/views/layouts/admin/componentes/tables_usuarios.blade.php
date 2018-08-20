@@ -4,7 +4,7 @@
     @foreach($usuarios as $usuario)
         <tr>
             @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
-
+            {{--Descrição--}}
                 <td>
                     <a href="{!! route($rota_edicao,[$usuario->codusuario]) !!}">
                         <div class="media">
@@ -27,8 +27,6 @@
                                     @else
                                         <div class="text-muted smaller">Repositório: Nenhuma</div>
                                     @endif
-
-
                                 </div>
                             @elseif(Auth::user()->email==='jeancarlospenas25@gmail.com')
                                 <div class="media-body">
@@ -49,6 +47,7 @@
                         </div>
                     </a>
                 </td>
+            {{--Ações--}}
                 <td>
 
                     @if(Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
@@ -127,7 +126,7 @@
                         @if(Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
                             @if(!empty($rota_edicao))
                                 @include('componentes.link',['id' => $usuario->codusuario, 'rota' => $rota_edicao])
-
+                                @include('componentes.link',['id' => $usuario->codusuario, 'rota' => 'edit_vinculo','edite_vinculo' => 'true'])
                             @endif
                         @endif
 
