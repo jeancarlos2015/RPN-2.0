@@ -79,12 +79,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
-            if ($request->tipo==='Administrador' && \Auth::user()->email!=='jeancarlospenas@gmail.com' ){
-                $data['tipo'] = 'success';
-                $data['mensagem'] = 'Você não possui permissão !!!';
-                $this->create($data);
-                return redirect()->route('painel');
-            }
             if ($request->password !== $request->password_confirm) {
                 flash('Senha não confere');
                 return redirect()->route('controle_usuarios.create');
@@ -95,21 +89,20 @@ class UserController extends Controller
                     ->withErrors($erros)
                     ->withInput();
             }
-            $user = $this->create_user($request->all());
-//            $user = User::create($request->all());
-//            LogRepository::criar(
-//                "Usuário Criado Com sucesso",
-//                "Rota De Criação de usuário",
-//                'controle_usuarios.create',
-//                'store');
-            if (isset($user)) {
-                $data['tipo'] = 'success';
-                $this->create($data);
-            } else {
-                $data['tipo'] = 'success';
-                $data['mensagem'] = 'Usuário não foi criado !!!';
-                $this->create($data);
+            if (\Auth::user()->email==='jeancarlospenas25@gmail.com'){
+                $user = $this->create_user($request->all());
+            }else{
+                if ($request->tipo==='Administrador'){
+                    $data['tipo'] = 'success';
+                    $data['mensagem'] = 'Usuário não foi criado !!!';
+                    $this->create($data);
+                    return redirect()->route('controle_usuarios.index');
+                }else{
+                    $user = $this->create_user($request->all());
+                }
             }
+            $data['tipo'] = 'success';
+            $this->create($data);
             return redirect()->route('controle_usuarios.index');
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -129,7 +122,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        if (\Auth::user()->email!=='jeancarlospenas25@gmail.com'){
+        if ((\Auth::user()->email!=='jeancarlospenas25@gmail.com') && (\Auth::user()->tipo!=='Administrador')){
             $data['tipo'] = 'success';
             $data['mensagem'] = 'Você não possui permissão !!!';
             return redirect()->route('painel');
