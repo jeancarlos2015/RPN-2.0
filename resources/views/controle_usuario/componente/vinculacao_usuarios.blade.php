@@ -1,6 +1,6 @@
 <div class="card form-group card-box">
     <div class="card-header">
-        <h4><strong>Vinculação De Usuários</strong></h4>
+        <h4><strong>Vinculação De Usuário</strong></h4>
     </div>
     <form action="{!! route('vincular_usuario_repositorio') !!}" method="post">
         @method('POST')

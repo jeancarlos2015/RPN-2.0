@@ -1,5 +1,5 @@
 <div class="card-header">
-    <h4><strong>Edição De Usuários</strong></h4>
+    <h4><strong>Edição De Usuário</strong></h4>
 </div>
 
 <form action="{!! route('controle_usuarios.update',['id' => $usuario->codusuario]) !!}" method="post"

@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositorys\LogRepository;
 use App\Http\Repositorys\RepositorioRepository;
 use App\User;
 use Illuminate\Http\Request;
-use Mockery\Exception;
 
 class UserController extends Controller
 {
@@ -26,12 +24,11 @@ class UserController extends Controller
 
             return view('controle_usuario.index', compact('usuarios', 'tipo', 'titulos'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_usuarios.index',
-                'index');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'index';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -43,12 +40,11 @@ class UserController extends Controller
             $dados = User::dados();
             return view('controle_usuario.create', compact('dados'));
         } catch (\Exception $ex) {
-            $codigo = LogRepository::criar(
-                $ex->getMessage(),
-                'warning',
-                'controle_usuarios.create',
-                'create');
-            flash('Atenção - Log Número ' . $codigo . " Favor consultar no Logs do Sistema")->warning();
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'create';
+            $this->create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -89,15 +85,15 @@ class UserController extends Controller
                     ->withErrors($erros)
                     ->withInput();
             }
-            if (\Auth::user()->email==='jeancarlospenas25@gmail.com'){
+            if (\Auth::user()->email === 'jeancarlospenas25@gmail.com') {
                 $user = $this->create_user($request->all());
-            }else{
-                if ($request->tipo==='Administrador'){
+            } else {
+                if ($request->tipo === 'Administrador') {
                     $data['tipo'] = 'success';
                     $data['mensagem'] = 'Usuário não foi criado !!!';
                     $this->create($data);
                     return redirect()->route('controle_usuarios.index');
-                }else{
+                } else {
                     $user = $this->create_user($request->all());
                 }
             }
@@ -122,7 +118,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        if ((\Auth::user()->email!=='jeancarlospenas25@gmail.com') && (\Auth::user()->tipo!=='Administrador')){
+        if ((\Auth::user()->email !== 'jeancarlospenas25@gmail.com') && (\Auth::user()->tipo !== 'Administrador')) {
             $data['tipo'] = 'success';
             $data['mensagem'] = 'Você não possui permissão !!!';
             return redirect()->route('painel');
@@ -145,12 +141,11 @@ class UserController extends Controller
     }
 
 
-
     public function update(Request $request, $id)
     {
         try {
 
-            if (\Auth::user()->email!=='jeancarlospenas25@gmail.com'){
+            if (\Auth::user()->email !== 'jeancarlospenas25@gmail.com') {
                 $data['tipo'] = 'success';
                 $data['mensagem'] = 'Você não possui permissão !!!';
                 return redirect()->route('painel');
@@ -164,19 +159,10 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->password = $request->password;
             $user->name = $request->name;
-
-
-//            $user_novo = $this->update_user($user, $request->all());
-//            LogRepository::criar(
-//                "Usuário Atualizado Com sucesso",
-//                "Rota De Atualização de Usuário",
-//                'controle_usuarios.edit',
-//                'update');
-            if ($user->update()){
+            if ($user->update()) {
                 $data['tipo'] = 'success';
                 $this->create_log($data);
             }
-//            dd($user,$request);
             if (\Auth::user()->tipo === 'administrador') {
                 return redirect()->route('controle_usuarios.index');
             } else {
@@ -187,24 +173,25 @@ class UserController extends Controller
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
+            $data['acao'] = 'update';
             $this->create_log($data);
         }
         return redirect()->route('painel');
 
     }
 
-    public function edit_vinculo($codusuario){
+    public function edit_vinculo($codusuario)
+    {
         $usuario = User::findOrFail($codusuario);
         $repositorios = RepositorioRepository::all();
-        return view('controle_usuario.vinculo',compact('usuario','repositorios'));
+        return view('controle_usuario.vinculo', compact('usuario', 'repositorios'));
     }
 
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        if (\Auth::user()->email!=='jeancarlospenas25@gmail.com'){
-            if ($user->tipo==='Administrador' || $user->email==='jeancarlospenas25@gmail.com'){
+        if (\Auth::user()->email !== 'jeancarlospenas25@gmail.com') {
+            if ($user->tipo === 'Administrador' || $user->email === 'jeancarlospenas25@gmail.com') {
                 $data['tipo'] = 'success';
                 $data['mensagem'] = 'Você não possui permissão !!!';
                 $this->create_log($data);
@@ -216,11 +203,6 @@ class UserController extends Controller
             $user->delete();
             $data['tipo'] = 'success';
             $this->create_log($data);
-            LogRepository::criar(
-                "Usuário Excluído Com sucesso",
-                "Rota De Exclusão de Usuário",
-                'controle_usuarios.index',
-                'destroy');
             return redirect()->route('controle_usuarios.index');
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();

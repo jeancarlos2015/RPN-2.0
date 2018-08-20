@@ -95,11 +95,11 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::post('desvincular_usuario_repositorio', 'RepositorioController@desvincular_usuario_repositorio')
             ->name('desvincular_usuario_repositorio')
             ->middleware('can:admin');
-
-        Route::get('vinculo_usuario_repositorio', 'RepositorioController@vinculo_usuario_repositorio')
-            ->name('vinculo_usuario_repositorio')
-            ->middleware('can:admin');
-
+//
+//        Route::get('vinculo_usuario_repositorio', 'RepositorioController@vinculo_usuario_repositorio')
+//            ->name('vinculo_usuario_repositorio')
+//            ->middleware('can:admin');
+//
 
         Route::resource('controle_logs', 'LogController')
             ->middleware('can:admin');

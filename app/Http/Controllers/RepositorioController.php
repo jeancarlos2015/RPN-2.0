@@ -285,15 +285,15 @@ class RepositorioController extends Controller
         }
     }
 
-    public function vinculo_usuario_repositorio()
-    {
-        $repositorios = RepositorioRepository::listar();
-        $usuarios = User::all();
-        $titulos = User::titulos();
-
-        $tipo = 'usuario';
-        return view('vinculo_usuario_repositorio.vinculo_usuario_repositorio', compact('repositorios', 'usuarios', 'titulos', 'tipo'));
-    }
+//    public function vinculo_usuario_repositorio()
+//    {
+//        $repositorios = RepositorioRepository::listar();
+//        $usuarios = User::all();
+//        $titulos = User::titulos();
+//
+//        $tipo = 'usuario';
+//        return view('vinculo_usuario_repositorio.vinculo_usuario_repositorio', compact('repositorios', 'usuarios', 'titulos', 'tipo'));
+//    }
 
     public function vincular_usuario_repositorio(Request $request)
     {
