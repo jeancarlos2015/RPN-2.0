@@ -18,10 +18,10 @@
                     <div class="media-body">
                         <strong>{!!  $log->nome !!}</strong>
                         <div class="text-muted smaller">Nome: {!! $log->nome !!}</div>
-                        <div class="text-muted smaller">Descrição: {!! count($log->usuarios) !!}</div>
-                        {{--@if(!empty($log->usuario->name))--}}
-                            {{--<div class="text-muted smaller">Usuário: {!! $log->usuario->name !!}</div>--}}
-                        {{--@endif--}}
+                        <div class="text-muted smaller">Descrição: {!! $log->descricao!!}</div>
+                        @if(!empty($log->usuario->name))
+                            <div class="text-muted smaller">Usuário: {!! $log->usuario->name !!}</div>
+                        @endif
                         <div class="text-muted smaller">Data: {!! $log->created_at !!}</div>
                         <div class="text-muted smaller">Página: {!! $log->pagina !!}</div>
                         <div class="text-muted smaller">Método que disparou o erro: {!! $log->acao !!}</div>
