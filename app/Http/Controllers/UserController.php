@@ -194,6 +194,11 @@ class UserController extends Controller
 
     }
 
+    public function edit_vinculo($codusuario){
+        $usuario = User::findOrFail($codusuario);
+        $repositorios = RepositorioRepository::all();
+        return view('controle_usuario.vinculo',compact('usuario','repositorios'));
+    }
 
     public function destroy($id)
     {

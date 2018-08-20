@@ -18,6 +18,9 @@
                 <a href="{!! route('create_github',['codusuario' => Auth::user()->codusuario]) !!}"><i
                             class="fa fa-fw fa-pencil"></i>Github</a>
             </li>
+
+
+
         @else
             <li>
                 <a href="{!! route('create_github',['codusuario' => Auth::user()->codusuario]) !!}"><i
