@@ -1,34 +1,36 @@
 @if(!empty($usuario))
+    @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
+        <div class="form-group">
+            <label>Nome</label>
+            <input name="name" class="form-control" placeholder="Nome" value="{!! $usuario->name !!}" required>
+        </div>
 
-    <div class="form-group">
-        <label>Nome</label>
-        <input name="name" class="form-control" placeholder="Nome" value="{!! $usuario->name !!}" required>
-    </div>
+        <div class="form-group">
+            <label>Tipo</label><br>
 
-    <div class="form-group">
-        <label>Tipo</label><br>
+            <input type="radio" name="tipo" value="Administrador"> Administrador<br>
+            <input type="radio" name="tipo" value="Padrao" checked> Padrão<br>
 
-        <input type="radio" name="tipo" value="Administrador" checked> Administrador<br>
-        <input type="radio" name="tipo" value="Padrao"> Padrão<br>
+        </div>
 
-    </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input name="email" type="email" class="form-control" placeholder="Email" value="{!! $usuario->email !!}"
+                   required>
+        </div>
 
-    <div class="form-group">
-        <label>Email</label>
-        <input name="email" type="email" class="form-control" placeholder="Email" value="{!! $usuario->email !!}"
-               required>
-    </div>
+        <div class="form-group">
+            <label>Senha</label>
+            <input name="password" type="password" class="form-control" placeholder="Senha" required>
+        </div>
 
-    <div class="form-group">
-        <label>Senha</label>
-        <input name="password" type="password" class="form-control" placeholder="Senha" required>
-    </div>
+        <div class="form-group">
+            <label>Confirmar Senha</label>
+            <input name="password_confirm" type="password" class="form-control" placeholder="Repita Senha"
+                   required>
+        </div>
 
-    <div class="form-group">
-        <label>Confirmar Senha</label>
-        <input name="password_confirm" type="password" class="form-control" placeholder="Repita Senha"
-               required>
-    </div>
+    @endif
 @else
 
     <div class="form-group">
@@ -40,12 +42,21 @@
         <label>Email</label>
         <input name="email" type="email" class="form-control" placeholder="Email" value="teste@gmail.com" required>
     </div>
+    @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
+        <div class="form-group">
+            <label>Tipo</label><br>
 
+            <input type="radio" name="tipo" value="Administrador"> Administrador<br>
+            <input type="radio" name="tipo" value="Padrao" checked> Padrão<br>
+
+        </div>
+    @else
+        <input type="hidden" name="tipo" value="Padrao" checked> Padrão<br>
+    @endif
     <div class="form-group">
         <label>Senha</label>
         <input name="password" type="password" class="form-control" placeholder="Senha" value="senhasenha" required>
     </div>
-
     <div class="form-group">
         <label>Confirmar Senha</label>
         <input name="password_confirm" type="password" class="form-control" placeholder="Repita Senha"
@@ -57,17 +68,5 @@
 
 
 @endif
-@if(Auth::user()->tipo==='Administrador')
-    {{--<div class="form-group">--}}
-        {{--<input type="radio" name="type" value="administrador" checked> Administrador--}}
-    {{--</div>--}}
-    <div class="form-group">
-        <input type="radio" name="tipo" value="padrao" checked>Padrão
-    </div>
-
-@else
-    <input type="hidden" name="tipo" value="padrao">
-@endif
-
 <button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>
 

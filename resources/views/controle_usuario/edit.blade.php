@@ -6,6 +6,7 @@
                     'rota' => 'painel'
     ])
     @includeIf('controle_usuario.componente.cards')
+
 @endsection
 @section('modo')
     @includeIf('componentes.descricao',[

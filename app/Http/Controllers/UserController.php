@@ -97,15 +97,18 @@ class UserController extends Controller
             }
             $user = $this->create_user($request->all());
 //            $user = User::create($request->all());
-            LogRepository::criar(
-                "Usuário Criado Com sucesso",
-                "Rota De Criação de usuário",
-                'controle_usuarios.create',
-                'store');
+//            LogRepository::criar(
+//                "Usuário Criado Com sucesso",
+//                "Rota De Criação de usuário",
+//                'controle_usuarios.create',
+//                'store');
             if (isset($user)) {
-                flash('Usuário criado com sucesso!!');
+                $data['tipo'] = 'success';
+                $this->create($data);
             } else {
-                flash('Usuário não foi criado!!');
+                $data['tipo'] = 'success';
+                $data['mensagem'] = 'Usuário não foi criado !!!';
+                $this->create($data);
             }
             return redirect()->route('controle_usuarios.index');
         } catch (\Exception $ex) {
@@ -168,7 +171,7 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->password = $request->password;
             $user->name = $request->name;
-//            dd($user,$request);
+
 
 //            $user_novo = $this->update_user($user, $request->all());
 //            LogRepository::criar(
@@ -180,7 +183,7 @@ class UserController extends Controller
                 $data['tipo'] = 'success';
                 $this->create_log($data);
             }
-
+//            dd($user,$request);
             if (\Auth::user()->tipo === 'administrador') {
                 return redirect()->route('controle_usuarios.index');
             } else {
@@ -202,12 +205,15 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        if ($user->tipo==='Administrador' || $user->email==='jeancarlospenas25@gmail.com'){
-            $data['tipo'] = 'success';
-            $data['mensagem'] = 'Você não possui permissão !!!';
-            $this->create_log($data);
-            return redirect()->route('painel');
+        if (\Auth::user()->email!=='jeancarlospenas25@gmail.com'){
+            if ($user->tipo==='Administrador' || $user->email==='jeancarlospenas25@gmail.com'){
+                $data['tipo'] = 'success';
+                $data['mensagem'] = 'Você não possui permissão !!!';
+                $this->create_log($data);
+                return redirect()->route('painel');
+            }
         }
+
         try {
             $user->delete();
             $data['tipo'] = 'success';
