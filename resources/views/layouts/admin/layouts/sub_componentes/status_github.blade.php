@@ -3,7 +3,7 @@
     <li class="nav-item">
         <a class="btn btn-dark" href="{!! route('pull') !!}">Atualizar</a>
     </li>
-    @if(Auth::user()->github->branch_atual!=='Nenhum')
+    @if(Auth::user()->github->branch_atual!=='nenhum')
         <li class="nav-item">
             <a class="nav-link">
                 Ramificação : {{ Auth::user()->github->branch_atual }} <span class="sr-only"></span>
