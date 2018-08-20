@@ -6,7 +6,7 @@
             <td>{!! $log->codlog !!}</td>
             <td>{!! $log->nome !!}</td>
             <td>{!! $log->descricao !!}</td>
-            <td>{!! $log->usuario->name !!}</td>
+            {{--<td>{!! $log->usuario->name !!}</td>--}}
             <td>{!! $log->created_at !!}</td>
             <td>{!! $log->pagina !!}</td>
             <td>{!! $log->acao !!}</td>

@@ -32,7 +32,6 @@ class LogController extends Controller
         ];
         $tipo = 'log';
         $logs = LogRepository::listar();
-        dd($logs);
         return view('controle_logs.logs',compact('titulos','logs','tipo'));
     }
 
