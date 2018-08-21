@@ -6,6 +6,11 @@ use App\Http\Util\Dado;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Http\Models\Repositorio;
+use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\Projeto;
+use App\Http\Models\Regra;
+
 class ObjetoFluxo extends Model
 {
 
