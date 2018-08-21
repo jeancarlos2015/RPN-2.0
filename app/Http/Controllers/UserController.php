@@ -157,12 +157,14 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             $user->tipo = $request->tipo;
             $user->email = $request->email;
-            $user->password = $request->password;
+            $user->password = \Hash::make($request->password);
             $user->name = $request->name;
+
             if ($user->update()) {
                 $data['tipo'] = 'success';
                 $this->create_log($data);
             }
+            $result = $user->update();
             if (\Auth::user()->tipo === 'administrador') {
                 return redirect()->route('controle_usuarios.index');
             } else {
