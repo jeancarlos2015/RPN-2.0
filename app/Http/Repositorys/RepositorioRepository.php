@@ -18,7 +18,7 @@ class RepositorioRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador') {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
             return collect(Repositorio::all());
         }
         return collect(array());
