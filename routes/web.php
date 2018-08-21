@@ -20,8 +20,8 @@ Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
-        Route::get('todas_regras','RegraController@all')->name('todas_regras')
-        ->middleware('can:acesso');
+        Route::get('todas_regras', 'RegraController@all')->name('todas_regras')
+            ->middleware('can:acesso');
 
         Route::resource('controle_padroes_recomendacao', 'PadraoRecomendacaoController')
             ->middleware('can:acesso');
@@ -51,7 +51,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('edicao_modelo_diagramatico/{codmodelo}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')
             ->name('edicao_modelo_diagramatico')
             ->middleware('can:acesso');
-
 
 
         Route::resource('controle_objetos_fluxos', 'ObjetoFluxoController')
@@ -215,9 +214,13 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('index_merge_checkout')
             ->middleware('can:acesso');
 
-        Route::resource('controle_regras','RegraController')
+        Route::get('edit_vinculo/{codusuario}', 'UserController@edit_vinculo')
+            ->name('edit_vinculo')
             ->middleware('can:acesso');
-        Route::get('controle_regras_index/modelodeclarativo/{codmodelodeclarativo}','RegraController@index')
+
+        Route::resource('controle_regras', 'RegraController')
+            ->middleware('can:acesso');
+        Route::get('controle_regras_index/modelodeclarativo/{codmodelodeclarativo}', 'RegraController@index')
             ->name('controle_regras_index')
             ->middleware('can:acesso');
         Route::get('index_create_delete', 'GitController@index_create_delete')

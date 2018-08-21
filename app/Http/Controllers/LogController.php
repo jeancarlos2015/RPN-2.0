@@ -21,13 +21,14 @@ class LogController extends Controller
     public function index()
     {
         $titulos = [
-            'código',
-            'Nome',
-            'descricao',
-            'Usuário',
-            'Ocorrência',
-            'Página',
-            'Action',
+//            'código',
+//            'Nome',
+//            'descricao',
+//            'Usuário',
+//            'Ocorrência',
+//            'Página',
+            'Descrição',
+//            'Método',
             'Ações'
         ];
         $tipo = 'log';
