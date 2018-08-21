@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repositorys\RepositorioRepository;
+use App\Mail\EmailCadastroDeUsuario;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailable;
 
 class UserController extends Controller
 {
@@ -87,6 +89,7 @@ class UserController extends Controller
             }
             if (\Auth::user()->email === 'jeancarlospenas25@gmail.com') {
                 $user = $this->create_user($request->all());
+                \Mail::to($user->email)->send(new EmailCadastroDeUsuario());
             } else {
                 if ($request->tipo === 'Administrador') {
                     $data['tipo'] = 'success';
