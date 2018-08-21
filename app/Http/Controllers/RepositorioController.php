@@ -54,7 +54,7 @@ class RepositorioController extends Controller
                 'controle_objetos_fluxos.index',
                 'todas_regras'
             ];
-        } else if (!empty(Auth::user()->repositorio && Auth::user()->type==='Padrao')) {
+        } else if (!empty(Auth::user()->repositorio) && Auth::user()->tipo==='Padrao') {
             return [
                 'todos_modelos',
                 'todos_projetos',
@@ -76,7 +76,7 @@ class RepositorioController extends Controller
                 'Todos os Objetos de Fluxos',
                 'Todas as Regras'
             ];
-        } else if (!empty(Auth::user()->repositorio && Auth::user()->type==='Padrao')) {
+        } else if (!empty(Auth::user()->repositorio) && Auth::user()->tipo==='Padrao') {
             return [
                 'Todos os Modelos',
                 'Todos os Projetos',
@@ -105,7 +105,7 @@ class RepositorioController extends Controller
                 $qt_objetos_fluxos,
                 $qt_regras,
             ];
-        } else if (!empty(Auth::user()->repositorio && Auth::user()->tipo==='Padrao')) {
+        } else if (!empty(Auth::user()->repositorio) && Auth::user()->tipo==='Padrao') {
             return [
                 $qt_modelos,
                 $qt_projetos,
@@ -128,7 +128,7 @@ class RepositorioController extends Controller
             $titulos = $this->titulos();
             $rotas = $this->rotas();
             $quantidades = $this->quantidades();
-            if (count($rotas) == 0) {
+            if (empty(Auth::user()->repositorio)) {
                 $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma repositório!!";
                 $data['tipo'] = 'success';
                 $this->create_log($data);
