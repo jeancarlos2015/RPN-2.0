@@ -128,7 +128,7 @@ class RepositorioController extends Controller
             $titulos = $this->titulos();
             $rotas = $this->rotas();
             $quantidades = $this->quantidades();
-            if (empty(Auth::user()->repositorio)) {
+            if (empty(Auth::user()->repositorio) && Auth::user()->email!=='jeancarlospenas25@gmail.com' && Auth::user()->tipo!=='Administrador') {
                 $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma repositório!!";
                 $data['tipo'] = 'success';
                 $this->create_log($data);

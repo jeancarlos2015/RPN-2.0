@@ -13,13 +13,22 @@
                                 <div class="text-muted smaller">Objeto de fluxo: {!! $objeto->nome !!}</div>
 
                                 <div class="text-muted smaller">Tipo: {!! $objeto->tipo !!}</div>
-                                <div class="text-muted smaller">Responsável: {!! $objeto->usuario->name !!}</div>
+                                @if(!empty($objeto->usuario->name))
+                                    <div class="text-muted smaller">Responsável: {!! $objeto->usuario->name !!}</div>
+                                @endif
                                 <div class="text-muted smaller">Descrição: {!! $objeto->descricao !!}</div>
-                                <div class="text-muted smaller">Repositório de
-                                    origem: {!! $objeto->repositorio->nome !!}</div>
-                                <div class="text-muted smaller">Projeto de origem: {!! $objeto->projeto->nome !!}</div>
-                                <div class="text-muted smaller">Modelo declarativo de
-                                    origem: {!! $objeto->modelo->nome !!}</div>
+                                @if(!empty($objeto->repositorio->nome))
+                                    <div class="text-muted smaller">Repositório de
+                                        origem: {!! $objeto->repositorio->nome !!}</div>
+                                @endif
+                                @if(!empty($objeto->projeto->nome))
+                                    <div class="text-muted smaller">Projeto de
+                                        origem: {!! $objeto->projeto->nome !!}</div>
+                                @endif
+                                @if(!empty($objeto->modelo->nome))
+                                    <div class="text-muted smaller">Modelo declarativo de
+                                        origem: {!! $objeto->modelo->nome !!}</div>
+                                @endif
 
                             </div>
                         </div>
