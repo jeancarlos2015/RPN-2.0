@@ -2,13 +2,14 @@
 
 namespace App\Mail;
 
+use App\http\Models\Repositorio;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EmailCadastroDeUsuario extends Mailable
+class EmailDesvinculacaoUsuario extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -17,9 +18,9 @@ class EmailCadastroDeUsuario extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(Repositorio $repositorio)
     {
-        $this->user = $user;
+        $this->repositorio = $repositorio;
     }
 
     /**
@@ -27,9 +28,9 @@ class EmailCadastroDeUsuario extends Mailable
      *
      * @return $this
      */
-
     public function build()
     {
-        return $this->subject('Usuário '.$this->user->name. ' cadastrado no Sistema pelo '. \Auth::user()->name)->view('mails.email_cadastro_de_usuario');
+        $repositorio = $this->repositorio;
+        return $this->subject('Desvinculação - RPN ')->view('mails.email_desvinculacao_de_usuario',compact('repositorio'));
     }
 }

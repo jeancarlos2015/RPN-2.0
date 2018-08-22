@@ -12,6 +12,7 @@ use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\ProjetoRepository;
 use App\Http\Repositorys\RegraRepository;
 use App\Http\Repositorys\RepositorioRepository;
+use App\Mail\EmailVinculacaoUsuario;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -156,8 +157,10 @@ class RepositorioController extends Controller
             try {
                 if ($request->desvincular === 'true') {
                     $user = User::findOrFail($request->codusuario);
+                    $repositorio = $user->repositorio;
                     $user->codrepositorio = null;
                     $user->update();
+                    \Mail::to($user->email)->send(new EmailVinculacaoUsuario($repositorio));
                 }
                 $data['tipo'] = 'success';
                 $this->create_log($data);
@@ -305,7 +308,7 @@ class RepositorioController extends Controller
             $usuario->update();
             $data['tipo'] = 'success';
             $this->create_log($data);
-
+            \Mail::to($usuario->email)->send(new EmailVinculacaoUsuario($repositorio));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';

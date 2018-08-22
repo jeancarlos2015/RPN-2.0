@@ -8,7 +8,7 @@
 
     </p>
     <p style="line-height: 24px;margin-bottom:15px;">
-        Você foi cadastrado pelo administrador {!! Auth::user()->name !!}, responsável por criar os repositórios usados
+        Você foi desvinculado do repositório {!! $repositorio->nome !!} pelo administrador {!! Auth::user()->name !!}, responsável por criar os repositórios usados pelos usuarios.
         pelos Usuários.
     </p>
     <p style="line-height: 24px; margin-bottom:20px;">
