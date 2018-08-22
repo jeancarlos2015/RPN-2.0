@@ -19,7 +19,6 @@ s
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 
-@yield('codigo_js')
 
 <script>
     $(form).on('submit', function() {
@@ -51,3 +50,4 @@ s
 {{--<!-- (Optional) Latest compiled and minified JavaScript translation files -->--}}
 {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>--}}
 {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>--}}
+@yield('codigo_js')

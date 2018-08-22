@@ -20,8 +20,8 @@
     {{--<!-- Custom fonts for this template_basico-->--}}
     {{--<!-- Page level plugin CSS-->--}}
     {{--<!-- Custom styles for this template_basico-->--}}
-    {{--<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css"/>--}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css"/>
 
-    @yield('codigo_csso')
+    @yield('codigo_css')
 
 </head>
