@@ -1,5 +1,5 @@
 
-    <form action="{!!route($rota,[$id]) !!}" method="post"
+    <form onsubmit="return confirm('Deseja Excluir?');" action="{!!route($rota,[$id]) !!}" method="post"
           style="display: inline-block">
         {!! csrf_field() !!}
         @method('DELETE')

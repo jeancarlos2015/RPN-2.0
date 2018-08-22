@@ -23,3 +23,4 @@
         'nome_titulo_menu' => 'Controle de Usuários'
     ])
 @endsection
+

@@ -9,10 +9,6 @@
 s
 
 
-
-
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 
 <script>
@@ -21,7 +17,24 @@ s
         $('div.alert').delay(30000).slideUp(59);
     });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 
+@yield('codigo_js')
+
+<script>
+    $(form).on('submit', function() {
+        var $this = $(this);    // reference to the current scope
+        dialog.confirm({
+            message: 'Deseja Desvincular Este Usuário?',
+            confirm: function() {
+                $this.off('submit').submit();
+            },
+            cancel: function() {}
+        });
+
+        return false;
+    });
+</script>
 {{--<!-- Page level plugin JavaScript-->--}}
 
 {{--<!-- Page level plugin JavaScript-->--}}
