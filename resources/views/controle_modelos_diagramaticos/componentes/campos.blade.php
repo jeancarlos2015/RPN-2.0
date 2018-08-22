@@ -18,7 +18,7 @@
     </div>
 @endfor
 
-<input type="hidden" value="diagramatico" name="tipo">
+<input type="hidden" value="bpmn" name="tipo">
 
 @if(!empty($codrepositorio))
     <input type="hidden" name="codrepositorio" class="form-control"

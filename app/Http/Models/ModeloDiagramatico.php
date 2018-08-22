@@ -86,7 +86,6 @@ class ModeloDiagramatico extends Model
         return [
             'nome',
             'descricao',
-            'tipo',
             'codprojeto',
             'codrepositorio',
             'xml_modelo'
@@ -143,8 +142,7 @@ class ModeloDiagramatico extends Model
     {
         return [
             'nome' => 'required',
-            'descricao' => 'required',
-            'tipo' => 'required',
+            'descricao' => 'required'
         ];
     }
 

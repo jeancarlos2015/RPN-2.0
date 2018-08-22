@@ -59,7 +59,6 @@ class ModeloDeclarativo extends Model
         return [
             'nome',
             'descricao',
-            'tipo',
             'codprojeto',
             'codrepositorio',
             'xml_modelo'

@@ -17,7 +17,7 @@ class CreateModelosDiagramaticosTable extends Migration
             $table->bigIncrements('codmodelodiagramatico')->unsigned();
             $table->string('nome');
             $table->string('descricao');
-            $table->string('tipo');
+            $table->string('tipo')->default('bpmn');
             $table->longText('xml_modelo');
             $table->boolean('visibilidade');
             $table->boolean('publico');

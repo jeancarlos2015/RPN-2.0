@@ -7,7 +7,7 @@
             {{--<td>{!! $modelo1->descricao !!}</td>--}}
             {{--<td>{!! $modelo1->tipo !!}</td>--}}
             <td>
-                @if($modelo1->tipo==='diagramatico')
+                @if($modelo1->tipo==='bpmn')
                     <a href="{!! route($rota_exibicao,[$modelo1->codmodelodiagramatico]) !!}">
                         <div class="media">
                             <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($modelo1->usuario->email) }}"
@@ -41,7 +41,7 @@
                     </a>
                 @endif
             </td>
-            @if($modelo1->tipo==='diagramatico')
+            @if($modelo1->tipo==='bpmn')
                 <td>
                     @if(Auth::user()->email===$modelo1->usuario->email)
                         @if(!empty($rota_edicao))

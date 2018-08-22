@@ -19,7 +19,7 @@ class CreateModeloDeclarativosTable extends Migration
             $table->bigInteger('codprojeto');
             $table->bigInteger('codusuario');
             $table->string('nome');
-            $table->string('tipo');
+            $table->string('tipo')->default('declarativo');
             $table->string('descricao');
             $table->boolean('visibilidade');
             $table->boolean('publico');
