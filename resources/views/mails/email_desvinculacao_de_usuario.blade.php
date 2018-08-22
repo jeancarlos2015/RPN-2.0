@@ -1,17 +1,14 @@
-@extends('mails.layouts.template_basico.layout)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:v="urn:schemas-microsoft-com:vml">
 
-@section('content')
+@includeIf('mails.layouts.template_basico.head')
 
-    <p style="line-height: 24px; margin-bottom:15px;">
+<body class="respond" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+@includeIf('mails.layouts.template_basico.table2',[
+'atividade' => 'desvinculado',
+'repositorio' => $repositorio
+])
+@includeIf('mails.layouts.template_basico.table3')
+</body>
 
-        Primeiramente,
-
-    </p>
-    <p style="line-height: 24px;margin-bottom:15px;">
-        Você foi desvinculado do repositório {!! $repositorio->nome !!} pelo administrador {!! Auth::user()->name !!}, responsável por criar os repositórios usados pelos usuarios.
-        pelos Usuários.
-    </p>
-    <p style="line-height: 24px; margin-bottom:20px;">
-        Você pode acessar o sistema através do link abaixo:
-    </p>
-@endsection
+</html>

@@ -89,7 +89,7 @@ class UserController extends Controller
             }
             if (\Auth::user()->email === 'jeancarlospenas25@gmail.com') {
                 $user = $this->create_user($request->all());
-                \Mail::to($user->email)->send(new EmailCadastroDeUsuario());
+                \Mail::to($user->email)->send(new EmailCadastroDeUsuario($user));
             } else {
                 if ($request->tipo === 'Administrador') {
                     $data['tipo'] = 'success';

@@ -30,6 +30,7 @@ class EmailCadastroDeUsuario extends Mailable
 
     public function build()
     {
-        return $this->subject('Usuário '.$this->user->name. ' cadastrado no Sistema pelo '. \Auth::user()->name)->view('mails.email_cadastro_de_usuario');
+
+        return $this->subject('Usuário '.$this->user->name. ' cadastrado no Sistema pelo '. \Auth::user()->name)->view('mails.email_cadastro_de_usuario',compact(''));
     }
 }

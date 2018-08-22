@@ -40,7 +40,7 @@ class RepositorioController extends Controller
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
+            $data['acao'] = 'index';
             $this->create_log($data);
         }
     }
@@ -138,7 +138,7 @@ class RepositorioController extends Controller
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
+            $data['acao'] = 'painel';
             $this->create_log($data);
         }
         return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo', 'log'));
@@ -169,7 +169,7 @@ class RepositorioController extends Controller
                 $data['mensagem'] = $ex->getMessage();
                 $data['tipo'] = 'error';
                 $data['pagina'] = 'Painel';
-                $data['acao'] = 'merge_checkout';
+                $data['acao'] = 'desvincular_usuario_repositorio';
                 $this->create_log($data);
                 return redirect()->route('controle_usuarios.edit', ['id' => $request->codusuario]);
             }
@@ -214,7 +214,7 @@ class RepositorioController extends Controller
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
+            $data['acao'] = 'store';
             $this->create_log($data);
         }
         return redirect()->route('painel');
@@ -243,7 +243,7 @@ class RepositorioController extends Controller
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
+            $data['acao'] = 'edit';
             $this->create_log($data);
         }
         return redirect()->route('painel');
@@ -265,7 +265,7 @@ class RepositorioController extends Controller
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
+            $data['acao'] = 'update';
             $this->create_log($data);
         }
         return redirect()->route('painel');
@@ -283,7 +283,7 @@ class RepositorioController extends Controller
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
+            $data['acao'] = 'destroy';
             $this->create_log($data);
         }
     }
@@ -313,7 +313,7 @@ class RepositorioController extends Controller
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
+            $data['acao'] = 'vincular_usuario_repositorio';
             $this->create_log($data);
         }
         if (!empty($request->vinculo)){

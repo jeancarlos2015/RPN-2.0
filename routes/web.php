@@ -16,6 +16,15 @@ Route::get('admin/painel', function () {
     return view('inicio');
 });
 
+Route::get('email/index1',function (){
+return view('mails.email_cadastro_de_usuario');
+});
+Route::get('email/index2',function (){
+    return view('mails.email_desvinculacao_de_usuario');
+});
+Route::get('email/index3',function (){
+    return view('mails.email_vinculacao_de_usuario');
+});
 Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(
