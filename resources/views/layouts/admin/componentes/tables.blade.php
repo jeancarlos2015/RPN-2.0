@@ -23,29 +23,32 @@
                     @break
                     @case('modelo_diagramatico')
                     @includeIf('layouts.admin.componentes.tables_modelos')
-                    @break;
+                    @break
                     @case('projeto')
                     @includeIf('layouts.admin.componentes.tables_projetos')
-                    @break;
+                    @break
 
                     @case('repositorio')
                     @includeIf('layouts.admin.componentes.tables_repositorios')
-                    @break;
+                    @break
                     @case('usuario')
                     @includeIf('layouts.admin.componentes.tables_usuarios')
-                    @break;
+                    @break
                     @case('repositorio_github')
                     @includeIf('layouts.admin.componentes.tables_repositorios_github')
-                    @break;
+                    @break
                     @case('log')
                     @includeIf('layouts.admin.componentes.tables_logs')
-                    @break;
+                    @break
                     @case('documentacao')
                     @includeIf('layouts.admin.componentes.tables_documentacoes')
-                    @break;
+                    @break
                     @case('regra')
                     @includeIf('layouts.admin.componentes.tables_regras')
-                    @break;
+                    @break
+                    @case('publico')
+                    @includeIf('modelos_publicos.tables_modelos')
+                    @break
                 @endswitch
             </table>
         </div>

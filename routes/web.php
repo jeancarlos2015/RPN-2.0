@@ -1,5 +1,27 @@
 <?php
 
+
+Route::get('publico/modelos', function () {
+    $titulos = \App\Http\Models\ModeloDiagramatico::titulos();
+    $modelos = \App\Http\Repositorys\ModeloDiagramaticoRepository::listar_modelos_publicos();
+    $tipo = 'publico';
+    $contador=0;
+    return view('modelos_publicos.index', compact('modelos', 'titulos', 'tipo','contador'));
+})->name('modelos_publicos');
+
+Route::get('publico/modelos/{codmodelo}',function ($codmodelo){
+    $modelo = \App\Http\Models\ModeloDiagramatico::findOrFail($codmodelo);
+    $path_modelo = public_path('novo_bpmn/');
+    if (!file_exists($path_modelo)) {
+        mkdir($path_modelo, 777);
+    }
+    $file = $path_modelo . 'novo.bpmn';
+    file_put_contents($file, $modelo->xml_modelo);
+    sleep(2);
+    return view('modelos_publicos.visualizar_modelo',compact('modelo'));
+})->name('visualizar_modelo_publico');
+
+
 Route::get('/', function () {
     return view('inicio');
 })->name('/');
@@ -16,15 +38,20 @@ Route::get('admin/painel', function () {
     return view('inicio');
 });
 
-Route::get('email/index1',function (){
-return view('mails.email_cadastro_de_usuario');
+Route::get('email/index1', function () {
+    return view('mails.email_cadastro_de_usuario');
 });
-Route::get('email/index2',function (){
+Route::get('email/index2', function () {
     return view('mails.email_desvinculacao_de_usuario');
 });
-Route::get('email/index3',function (){
+Route::get('email/index3', function () {
     return view('mails.email_vinculacao_de_usuario');
 });
+
+
+
+
+
 Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(

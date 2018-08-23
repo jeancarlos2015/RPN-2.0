@@ -26,7 +26,7 @@
                     'rota_exibicao' => 'controle_projetos.show',
                     'nome_botao' => 'Novo',
                     'botao' => 'Novo',
-                    'titulo' => 'Projetos'
+                    'titulo' => 'Projetos - Clique no projeto desejado para gerenciar seus modelos!!'
     ])
 @endsection
 

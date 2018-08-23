@@ -1,9 +1,8 @@
 @extends('layouts.home.main')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <section id="signup" class="signup-section">
+        <div class="container">
             <div class="card text-center">
                 <div class="card-header dark-text-white">{{ trans('auth.Login') }}</div>
 
@@ -13,42 +12,47 @@
 
                         <div class="form-group">
 
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus placeholder="Email">
+                            <input id="email" type="email"
+                                   class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                   name="email" value="{{ old('email') }}" required autofocus
+                                   placeholder="Email">
 
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback">
+                            @if ($errors->has('email'))
+                                <span class="invalid-feedback">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                @endif
+                            @endif
                         </div>
-
 
 
                         <div class="form-group">
 
 
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Senha" required>
+                            <input id="password" type="password"
+                                   class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                   name="password" placeholder="Senha" required>
 
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback">
+                            @if ($errors->has('password'))
+                                <span class="invalid-feedback">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                @endif
+                            @endif
 
                         </div>
 
                         <div class="form-group">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ trans('auth.Remember_Me') }}
-                                    </label>
-                                </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="remember" {{ old('remember') ? 'checked' : '' }}> {{ trans('auth.Remember_Me') }}
+                                </label>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                                <button type="submit" class="btn btn-dark btn-block">
-                                    Entrar
-                                </button>
+                            <button type="submit" class="btn btn-dark btn-block">
+                                Entrar
+                            </button>
 
                         </div>
                         <div class="form-group">
@@ -62,6 +66,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 @endsection
