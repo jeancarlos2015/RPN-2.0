@@ -15,16 +15,16 @@
             <div class="row">
 
 
-                <ul id="myUL" style="display: inline-block; margin-left: 20%">
+                <ul id="myUL"  class="float">
 
                     @foreach($modelos as $modelo1)
-                        <li class="card" style="margin: 2% 0 0 0;">
-                            <div class="card-body text-left">
+                        <li class="float-item">
+                            <div class="card card-body text-left">
                                 <a href="{!! route('visualizar_modelo_publico',[$modelo1->codmodelodiagramatico]) !!}">
                                     <div class="media">
                                         <img class="d-flex mr-3 rounded-circle"
                                              src="{{ Gravatar::src($modelo1->usuario->email) }}"
-                                             alt="" width="100">
+                                             alt="" width="60">
                                         <div class="media-body">
                                             <strong>Modelo - {!!  $modelo1->nome !!}</strong>
                                             <div class="text-muted smaller">
@@ -45,7 +45,7 @@
                                 </a>
                             </div>
                         </li>
-                        @if($contador>2)
+                        @if($contador>3)
                             @break
                         @endif
                         @php
@@ -97,6 +97,27 @@
             background-color: #eee; /* Add a hover effect to all links, except for headers */
         }
 
+
+
+
+        /*------------------------------------manipula a listagem---------------------------------*/
+        .float {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .float:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+        .float-item {
+            float: left;
+            margin-left: 2%;
+            margin-top: 2%;
+        }
+        
     </style>
 
 @endsection
