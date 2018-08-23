@@ -8,17 +8,18 @@
                 <div class="col-md-10 col-lg-8 mx-auto text-center">
 
                     <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-                    <h2 class="text-white mb-5">Modelos BPMN Serão visualizados Aqui</h2>
-                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+                    <h2 class="text-white mb-5">Busca de Modelos BPMN</h2>
+                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Busca por Nome..">
                 </div>
             </div>
             <div class="row">
 
-                <ul id="myUL" style="display: inline-flex;">
+
+                <ul id="myUL" style="display: inline-block; margin-left: 20%">
 
                     @foreach($modelos as $modelo1)
-                        <li class="card" style="margin: 10px">
-                            <div class="card-body text-center">
+                        <li class="card" style="margin: 2% 0 0 0;">
+                            <div class="card-body text-left">
                                 <a href="{!! route('visualizar_modelo_publico',[$modelo1->codmodelodiagramatico]) !!}">
                                     <div class="media">
                                         <img class="d-flex mr-3 rounded-circle"
@@ -35,12 +36,16 @@
                                                 Projeto: {!! $modelo1->projeto->nome !!}</div>
                                             <div class="text-muted smaller">
                                                 Repositório: {!! $modelo1->repositorio->nome !!}</div>
+
+                                            <div class="text-muted smaller">
+                                                Data da Criação: {!! $modelo1->created_at !!}</div>
+                                            
                                         </div>
                                     </div>
                                 </a>
                             </div>
                         </li>
-                        @if($contador>3)
+                        @if($contador>2)
                             @break
                         @endif
                         @php
@@ -49,6 +54,8 @@
                     @endforeach
 
                 </ul>
+
+
             </div>
         </div>
     </section>
