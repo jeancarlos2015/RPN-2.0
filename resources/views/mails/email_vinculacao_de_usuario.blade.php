@@ -5,8 +5,7 @@
 
 <body class="respond" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 @includeIf('mails.layouts.template_basico.table2',[
-'atividade' => 'criado',
-'repositorio' => $repositorio
+'atividade' => 'Vinculado'
 ])
 @includeIf('mails.layouts.template_basico.table3')
 </body>
