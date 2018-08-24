@@ -20,8 +20,11 @@
                                 <div class="text-muted smaller">Descrição do
                                     Modelo: {!! $regra->modelodeclarativo->descricao !!}</div>
                                 <div class="text-muted smaller">Projeto: {!! $regra->projeto->nome !!}</div>
-                                <div class="text-muted smaller">Repositório: {!! $regra->repositorio->nome !!}</div>
-                                <div class="text-muted smaller">Objetos Fluxos: {!! count($regra->objetos_fluxos) !!}</div>
+                                @if(!empty($regra->repositorio->nome ))
+                                    <div class="text-muted smaller">Repositório: {!! $regra->repositorio->nome !!}</div>
+                                @endif
+                                <div class="text-muted smaller">Objetos
+                                    Fluxos: {!! count($regra->objetos_fluxos) !!}</div>
                             </div>
                         </div>
                     </a>
@@ -39,8 +42,11 @@
                                 <div class="text-muted smaller">Descrição do
                                     Modelo: {!! $regra->modelodeclarativo->descricao !!}</div>
                                 <div class="text-muted smaller">Projeto: {!! $regra->projeto->nome !!}</div>
-                                <div class="text-muted smaller">Repositório: {!! $regra->repositorio->nome !!}</div>
-                                <div class="text-muted smaller">Objetos Fluxos: {!! count($regra->objetos_fluxos) !!}</div>
+                                @if(!empty($regra->repositorio->nome ))
+                                    <div class="text-muted smaller">Repositório: {!! $regra->repositorio->nome !!}</div>
+                                @endif
+                                <div class="text-muted smaller">Objetos
+                                    Fluxos: {!! count($regra->objetos_fluxos) !!}</div>
                             </div>
                         </div>
                     </a>
@@ -58,13 +64,13 @@
                         @include('componentes.form_delete',['id' => $regra->codregra, 'rota' => $rota_exclusao])
                     @endif
                     @if(!empty($rota_exibicao))
-                            @include('componentes.link',
-                            [
-                            'id' => $regra->codregra,
-                            'rota' => $rota_exibicao,
-                            'nomebotao' => 'Visualizar'
-                            ]
-                            )
+                        @include('componentes.link',
+                        [
+                        'id' => $regra->codregra,
+                        'rota' => $rota_exibicao,
+                        'nomebotao' => 'Visualizar'
+                        ]
+                        )
                     @endif
                 @else
                     @if(!empty($rota_exibicao))

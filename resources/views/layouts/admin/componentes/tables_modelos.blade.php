@@ -18,7 +18,10 @@
                                 <div class="text-muted smaller">Descrição do Modelo: {!! $modelo1->descricao !!}</div>
                                 <div class="text-muted smaller">Tipo: {!! $modelo1->tipo !!}</div>
                                 <div class="text-muted smaller">Projeto: {!! $modelo1->projeto->nome !!}</div>
-                                <div class="text-muted smaller">Repositório: {!! $modelo1->repositorio->nome !!}</div>
+                                @if(!empty($modelo1->repositorio->nome))
+                                    <div class="text-muted smaller">
+                                        Repositório: {!! $modelo1->repositorio->nome !!}</div>
+                                @endif
                             </div>
                         </div>
                     </a>
@@ -33,7 +36,10 @@
                                 <div class="text-muted smaller">Descrição do Modelo: {!! $modelo1->descricao !!}</div>
                                 <div class="text-muted smaller">Tipo: {!! $modelo1->tipo !!}</div>
                                 <div class="text-muted smaller">Projeto: {!! $modelo1->projeto->nome !!}</div>
-                                <div class="text-muted smaller">Repositório: {!! $modelo1->repositorio->nome !!}</div>
+                                @if(!empty($modelo1->repositorio->nome))
+                                    <div class="text-muted smaller">
+                                        Repositório: {!! $modelo1->repositorio->nome !!}</div>
+                                @endif
                                 <div class="text-muted smaller">Objetos de
                                     fluxo: {!! count($modelo1->objetos_fluxos) !!}</div>
                             </div>

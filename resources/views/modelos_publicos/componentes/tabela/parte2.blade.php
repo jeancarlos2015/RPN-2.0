@@ -31,8 +31,9 @@
                                     <div class="text-muted smaller">
                                         Projeto: {!! $modelo1->projeto->nome !!}</div>
                                     <div class="text-muted smaller">
-                                        Repositório: {!! $modelo1->repositorio->nome !!}</div>
-
+                                        @if(!empty($modelo1->repositorio->nome ))
+                                            Repositório: {!! $modelo1->repositorio->nome !!}</div>
+                                    @endif
                                     <div class="text-muted smaller">
                                         Data da Criação: {!! $modelo1->created_at !!}</div>
 
