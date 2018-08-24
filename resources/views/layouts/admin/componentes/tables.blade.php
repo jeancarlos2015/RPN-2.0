@@ -46,9 +46,7 @@
                     @case('regra')
                     @includeIf('layouts.admin.componentes.tables_regras')
                     @break
-                    @case('publico')
-                    @includeIf('modelos_publicos.tables_modelos')
-                    @break
+
                 @endswitch
             </table>
         </div>
