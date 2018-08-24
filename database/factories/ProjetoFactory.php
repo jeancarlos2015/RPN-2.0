@@ -11,7 +11,7 @@ $factory->define(\App\Http\Models\Projeto::class, function (Faker $faker) {
     return [
         'codrepositorio' => rand(1,50),
         'codusuario' => rand(1,2),
-        'name' => $faker->company,
+        'nome' => $faker->company,
         'descricao' => $faker->sentence,
         'visibilidade' => 'true',
         'publico' => 'true'
