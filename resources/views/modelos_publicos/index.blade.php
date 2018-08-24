@@ -13,11 +13,11 @@
                 </div>
             </div>
             <div class="row">
-@php
-$contador = 0;
-@endphp
+                @php
+                    $contador = 0;
+                @endphp
 
-                <ul id="myUL"  class="float">
+                <ul id="myUL" class="float">
 
                     @foreach($modelos as $modelo1)
                         <li class="float-item">
@@ -41,7 +41,7 @@ $contador = 0;
 
                                             <div class="text-muted smaller">
                                                 Data da Criação: {!! $modelo1->created_at !!}</div>
-                                            
+
                                         </div>
                                     </div>
                                 </a>
@@ -99,14 +99,12 @@ $contador = 0;
             background-color: #eee; /* Add a hover effect to all links, except for headers */
         }
 
-
-
-
         /*------------------------------------manipula a listagem---------------------------------*/
         .float {
             max-width: 1200px;
             margin: 0 auto;
         }
+
         .float:after {
             content: ".";
             display: block;
@@ -114,12 +112,13 @@ $contador = 0;
             clear: both;
             visibility: hidden;
         }
+
         .float-item {
             float: left;
             margin-left: 2%;
             margin-top: 2%;
         }
-        
+
     </style>
 
 @endsection
