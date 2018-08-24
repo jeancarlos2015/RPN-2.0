@@ -19,9 +19,9 @@ $factory->define(\App\Http\Models\ModeloDiagramatico::class, function (Faker $fa
         'nome' => $faker->name,
         'descricao' => 'Nenhum',
         'xml_modelo' => \App\Http\Models\ModeloDiagramatico::get_modelo_default($faker->name),
-        'codprojeto' => 1,
-        'codrepositorio' => 1,
-        'codusuario' => 1,
+        'codprojeto' => rand(1,100),
+        'codrepositorio' => rand(1,100),
+        'codusuario' => rand(1,2),
         'visibilidade' => 'true',
         'publico' => 'true',
         'tipo' => 'bpmn'

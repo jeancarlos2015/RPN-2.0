@@ -17,9 +17,9 @@ $factory->define(\App\Http\Models\ModeloDeclarativo::class, function (Faker $fak
     return [
         'nome' => $faker->sentence,
         'descricao'=> 'Nenhum',
-        'codprojeto' => 1,
-        'codrepositorio' => 1,
-        'codusuario' => 1,
+        'codprojeto' => rand(1,100),
+        'codrepositorio' => rand(1,100),
+        'codusuario' => rand(1,2),
         'visibilidade' => 'true',
         'publico' => 'true'
     ];

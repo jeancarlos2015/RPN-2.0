@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ModeloDeclarativoSeeder extends Seeder
+class ObjetoFluxoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,9 +11,6 @@ class ModeloDeclarativoSeeder extends Seeder
      */
     public function run()
     {
-
-
-        factory(\App\Http\Models\ModeloDeclarativo::class, 300)->create();
-
+        factory(\App\http\Models\ObjetoFluxo::class,100)->create();
     }
 }
