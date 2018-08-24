@@ -31,6 +31,7 @@ class ModeloDiagramaticoRepository extends Repository
     public static function listar_modelos_publicos()
     {
         return collect(ModeloDiagramatico::where('publico','=','true')
+            ->limit(4)
             ->get());
     }
 
