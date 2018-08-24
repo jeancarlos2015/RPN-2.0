@@ -13,7 +13,9 @@
                 </div>
             </div>
             <div class="row">
-
+@php
+$contador = 0;
+@endphp
 
                 <ul id="myUL"  class="float">
 
