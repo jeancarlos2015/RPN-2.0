@@ -16,7 +16,7 @@
                         'codrepositorio' => $repositorio->codrepositorio,
                         'codprojeto' => $projeto->codprojeto
 
-                        ]) !!}">Novo Modelo Diagramático</a>
+                        ]) !!}">Novo Modelo BPMN</a>
         </div>
 
         @break;
