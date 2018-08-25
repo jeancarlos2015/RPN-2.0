@@ -1,4 +1,4 @@
-{{--<script src="{!! asset('jquery_select/jquery-1.11.1.min.js') !!}"></script>--}}
+<script src="{!! asset('jquery_select/jquery-1.11.1.min.js') !!}"></script>
 
 
 @if(!empty($multi))
