@@ -73,11 +73,9 @@ class ModeloDeclarativoRepository extends Repository
         return self::listar()->where('nome', $nome_do_modelo)->count() > 0;
     }
 
-    public static function get_codigos(){
+    public static function listar_modelos(){
         return Cache::remember('listar_codigos_modelos', 2000, function (){
-            return DB::connection('banco')->table('modelos_declarativos')
-                ->select('codmodelodeclarativo')
-                ->get();
+            return ModeloDeclarativo::get();
         });
     }
 

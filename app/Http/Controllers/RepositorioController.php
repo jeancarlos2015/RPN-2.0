@@ -122,7 +122,6 @@ class RepositorioController extends Controller
     public function painel()
     {
 
-
         try {
             GitSistemaRepository::atualizar_todas_branchs();
             $log = LogRepository::log();

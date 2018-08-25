@@ -5,7 +5,7 @@
 
 
 
-    @includeIf('modelos_publicos.componentes.tabela.parte2')
+        @includeIf('modelos_publicos.componentes.tabela.parte2')
 
 
 

@@ -88,11 +88,9 @@ class ProjetoRepository extends Repository
         return $projetos->where('nome', $nome_do_projeto)->count() > 0;
     }
 
-    public static function get_codigos(){
+    public static function listar_projetos(){
         return Cache::remember('listar_codigos_projetos', 2000, function (){
-            return DB::connection('banco')->table('projetos')
-                ->select('codprojeto')
-                ->get();
+            return Projeto::get();
         });
     }
 }

@@ -16,15 +16,13 @@ use Faker\Generator as Faker;
 
 
 $factory->define(\App\http\Models\ObjetoFluxo::class, function (Faker $faker) {
-    $codigos_repositorios = \App\Http\Repositorys\RepositorioRepository::get_codigos();
-    $codigos_usuarios = \App\Http\Repositorys\UserRepository::get_codigos();
-    $codigos_projetos = \App\Http\Repositorys\ProjetoRepository::get_codigos();
-    $codigos_modelos = \App\Http\Repositorys\ModeloDeclarativoRepository::get_codigos();
+    $modelos = \App\Http\Repositorys\ModeloDeclarativoRepository::listar_modelos();
+    $modelo = $modelos[rand(0,count($modelos)-1)];
     return [
-        'codprojeto' => $codigos_projetos[rand(0,49)]->codprojeto ,
-        'codrepositorio' => $codigos_repositorios[rand(0,49)]->codrepositorio ,
-        'codusuario' => $codigos_usuarios[rand(0,49)]->codusuario ,
-        'codmodelodeclarativo' => $codigos_modelos[rand(0,49)]->codmodelodeclarativo ,
+        'codprojeto' => $modelo->codprojeto ,
+        'codrepositorio' => $modelo->codrepositorio ,
+        'codusuario' => $modelo->codusuario ,
+        'codmodelodeclarativo' => $modelo->codmodelodeclarativo ,
         'codregra' => null,
         'nome' => $faker->word,
         'descricao' => $faker->sentence,
