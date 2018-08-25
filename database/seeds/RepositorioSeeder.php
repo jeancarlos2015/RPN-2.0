@@ -11,6 +11,6 @@ class RepositorioSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\http\Models\Repositorio::class,500)->create();
+        factory(\App\http\Models\Repositorio::class,50)->create();
     }
 }

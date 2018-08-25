@@ -11,6 +11,6 @@ class ModeloDiagramaticoSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Http\Models\ModeloDiagramatico::class, 500)->create();
+        factory(\App\Http\Models\ModeloDiagramatico::class, 50)->create();
     }
 }

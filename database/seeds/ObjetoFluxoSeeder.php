@@ -11,6 +11,6 @@ class ObjetoFluxoSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\http\Models\ObjetoFluxo::class,1000)->create();
+        factory(\App\http\Models\ObjetoFluxo::class,50)->create();
     }
 }

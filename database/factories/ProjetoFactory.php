@@ -9,7 +9,7 @@ use Faker\Generator as Faker;
 //'publico'
 $factory->define(\App\Http\Models\Projeto::class, function (Faker $faker) {
     return [
-        'codrepositorio' => rand(1,499),
+        'codrepositorio' => rand(1,49),
         'codusuario' => rand(1,2),
         'nome' => $faker->company,
         'descricao' => $faker->sentence,

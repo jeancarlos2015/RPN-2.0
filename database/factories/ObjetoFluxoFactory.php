@@ -17,10 +17,10 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\http\Models\ObjetoFluxo::class, function (Faker $faker) {
     return [
-        'codrepositorio' => rand(1,499),
+        'codrepositorio' => rand(1,49),
         'codusuario' => rand(1,49),
-        'codprojeto' => rand(1,499),
-        'codmodelodeclarativo' => rand(1,499),
+        'codprojeto' => rand(1,49),
+        'codmodelodeclarativo' => rand(1,49),
         'codregra' => null,
         'nome' => $faker->word,
         'descricao' => $faker->sentence,
