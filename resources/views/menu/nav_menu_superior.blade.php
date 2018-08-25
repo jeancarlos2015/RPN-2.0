@@ -1,6 +1,10 @@
 <ul class="navbar-nav ml-auto">
 
 
+    @yield('boltao_voltar')
+
+
+
     @if(!empty(Auth::user()->repositorio) || Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
 
         @includeIf('layouts.admin.layouts.sub_componentes.li_nav',
