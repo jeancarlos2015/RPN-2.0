@@ -8,8 +8,8 @@ use Faker\Generator as Faker;
 //'visibilidade',
 //'publico'
 $factory->define(\App\Http\Models\Projeto::class, function (Faker $faker) {
-    $codigos_usuarios = \App\Http\Repositorys\UserRepository::listar();
-    $usuario = $codigos_usuarios[rand(0,49)];
+    $usuarios = \App\Http\Repositorys\UserRepository::listar();
+    $usuario = $usuarios[rand(0,count($usuarios)-1)];
     $codrepositorio = $usuario->repositorio->codrepositorio;
     return [
         'codrepositorio' => $codrepositorio ,
