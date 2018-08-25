@@ -127,7 +127,7 @@ class ModeloDiagramaticoController extends Controller
                         'codrepositorio' => $codrepositorio,
                         'codusuario' => Auth::user()->codusuario
                     ]);
-                    $modelo = ModeloDiagramatico::create($request->all());
+                    $modelo = ModeloDiagramaticoRepository::incluir($request);
                     $data['tipo'] = 'success';
                     $this->create_log($data);
                     return redirect()->route('edicao_modelo_diagramatico',

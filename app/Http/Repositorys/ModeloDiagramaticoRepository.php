@@ -59,6 +59,7 @@ class ModeloDiagramaticoRepository extends Repository
     public static function limpar_cache()
     {
         Cache::forget('listar_modelos');
+        Cache::forget('listar_codigos_modelos_publicos');
     }
 
     public static function incluir(Request $request)

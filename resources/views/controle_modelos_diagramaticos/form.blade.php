@@ -8,7 +8,7 @@
     ])
     @includeIf('componentes.botao_sim_nao',[
     'name' => 'publico',
-    'pergunta' => 'Deseja publicar este projeto?',
+    'pergunta' => 'Deseja publicar este modelo?',
     ])
 @else
     @includeIf('componentes.botao_sim_nao',[
