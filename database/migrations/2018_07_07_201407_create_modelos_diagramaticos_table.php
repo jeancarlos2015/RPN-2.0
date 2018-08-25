@@ -25,9 +25,11 @@ class CreateModelosDiagramaticosTable extends Migration
             $table->bigInteger('codrepositorio');
             $table->bigInteger('codusuario');
 
-//            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
+            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+            $table->foreign('codusuario')->references('codusuario')->on('users');
+
+
             $table->timestamps();
         });
     }

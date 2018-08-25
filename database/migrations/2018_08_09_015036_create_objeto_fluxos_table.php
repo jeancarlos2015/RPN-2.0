@@ -29,6 +29,13 @@ class CreateObjetoFluxosTable extends Migration
             $table->boolean('visivel_projeto')->default('false');
             $table->boolean('visivel_repositorio')->default('false');
             $table->boolean('visivel_modelo_declarativo')->default('false');
+
+
+            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+            $table->foreign('codusuario')->references('codusuario')->on('users');
+            $table->foreign('codmodelodeclarativo')->references('codmodelodeclarativo')->on('modelo_declarativos');
+
             $table->timestamps();
         });
     }

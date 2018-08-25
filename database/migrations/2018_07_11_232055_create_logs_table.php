@@ -20,7 +20,8 @@ class CreateLogsTable extends Migration
             $table->bigInteger('codusuario');
             $table->string('acao');
             $table->string('pagina');
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
+
+            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });
     }
