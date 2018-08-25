@@ -18,17 +18,22 @@ class RegraRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->type==='Administrador') {
-            return collect(Regra::all());
-        }else{
-            return collect(Regra::
+        return Cache::remember('listar_regras', 2000, function () {
+            if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->type === 'Administrador') {
+                return collect(Regra::all());
+            } else {
+                return collect(Regra::
                 where('visivel_modelo_declarativo', '=', 'true')
-                ->orWhere('codusuario', '=', Auth::user()->codusuario)
-                ->get());
-        }
+                    ->orWhere('codusuario', '=', Auth::user()->codusuario)
+                    ->get());
+            }
+        });
     }
 
-
+    public static function limpar_cache()
+    {
+        Cache::forget('listar_regras');
+    }
     public static function inclui_se_existe($dados)
     {
 
@@ -44,27 +49,30 @@ class RegraRepository extends Repository
         return collect(self::listar())->count();
     }
 
-    public static function atualizar(Request $request, $codRegra)
+    public static function atualizar(Request $request, $codregra)
     {
-        $value = Regra::findOrFail($codRegra);
-        $value->update($request->all());
-        return $value;
+        $regra = Regra::findOrFail($codregra);
+        $regra->nome = $request->nome;
+        $regra->visivel_projeto = $request->visivel_projeto;
+        $regra->visivel_repositorio = $request->visivel_repositorio;
+        $regra->visivel_modelo_declarativo = $request->visivel_modelo_declarativo;
+        $regra->update();
+        self::limpar_cache();
+        return $regra;
     }
     public static function incluir(Request $request)
     {
         $value = Regra::create($request->all());
+        self::limpar_cache();
         return $value;
     }
 
-    public static function findOrFail($codRegra)
-    {
-
-    }
 
     public static function excluir($codRegra)
     {
         $doc = Regra::findOrFail($codRegra);
         $value = $doc->delete();
+        self::limpar_cache();
         return $value;
     }
 
@@ -74,6 +82,7 @@ class RegraRepository extends Repository
         foreach ($Regras as $Regra) {
             $Regra->delete();
         }
+        self::limpar_cache();
     }
 
     public static function existe($dados)

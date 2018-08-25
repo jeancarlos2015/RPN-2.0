@@ -20,18 +20,20 @@ class ModeloDiagramaticoRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
-            return collect(ModeloDiagramatico::all());
-        }
-        return collect(ModeloDiagramatico::
-            where('codusuario','=',Auth::user()->codusuario)
-            ->orWhere('visibilidade', '=', true)
-            ->get());
+        return Cache::remember('listar_modelos', 2000, function () {
+            if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
+                return collect(ModeloDiagramatico::all());
+            }
+            return collect(ModeloDiagramatico::
+            where('codusuario', '=', Auth::user()->codusuario)
+                ->orWhere('visibilidade', '=', true)
+                ->get());
+        });
 
     }
     public static function listar_modelos_publicos()
     {
-        return Cache::remember('listar_codigos_modelos_publicos', 2000, function () {
+        return Cache::remember('listar_modelos_publicos', 2000, function () {
             return collect(ModeloDiagramatico::where('publico', '=', 'true')
                 ->get());
         });
@@ -39,27 +41,31 @@ class ModeloDiagramaticoRepository extends Repository
 
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
     {
-        return collect(ModeloDiagramatico::
+        return Cache::remember('listar_modelos', 2000, function ($codrepositorio, $codprojeto) {
+            return collect(ModeloDiagramatico::
             where('codrepositorio', '=', $codrepositorio)
-            ->where('codprojeto', '=', $codprojeto)
-            ->Where('visibilidade', '=', 'true')
-            ->get());
+                ->where('codprojeto', '=', $codprojeto)
+                ->Where('visibilidade', '=', 'true')
+                ->get());
+        });
     }
 
 
     public static function atualizar(Request $request, $codmodelo)
     {
-        $value = ModeloDiagramatico::findOrFail($codmodelo);
-        $value->update($request->all());
+        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+        $xml_modelo = str_replace($modelo->nome, $request->nome, $modelo->xml_modelo);
+        $modelo->xml_modelo = $xml_modelo;
+        $modelo->update($request->all());
         self::limpar_cache();
-        return $value;
+        return $modelo;
     }
 
 
     public static function limpar_cache()
     {
         Cache::forget('listar_modelos');
-        Cache::forget('listar_codigos_modelos_publicos');
+        Cache::forget('listar_modelos_publicos');
     }
 
     public static function incluir(Request $request)
@@ -98,6 +104,16 @@ class ModeloDiagramaticoRepository extends Repository
                 ->select('codmodelodiagramatico')
                 ->get();
         });
+    }
+
+    public static function gravar(Request $request){
+        $codmodelo = $request->codmodelodiagramatico;
+        $xml = $request->strXml;
+        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+        $modelo->xml_modelo = $xml . "\n";
+        $result = $modelo->update();
+        self::limpar_cache();
+        return $request;
     }
 
 }

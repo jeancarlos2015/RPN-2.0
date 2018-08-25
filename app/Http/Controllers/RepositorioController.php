@@ -190,7 +190,7 @@ class RepositorioController extends Controller
             }
             if (!RepositorioRepository::repositorio_existe($request->nome)) {
 
-                $repositorio = Repositorio::create($request->all());
+                $repositorio = RepositorioRepository::incluir($request);
 
                 if (isset($repositorio)) {
                     flash('Organização criada com sucesso!!');
@@ -259,7 +259,6 @@ class RepositorioController extends Controller
             } else {
                 flash('Organização não foi Atualizada!!');
             }
-
             return redirect()->route('controle_repositorios.index');
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -276,7 +275,6 @@ class RepositorioController extends Controller
     {
         try {
             RepositorioRepository::excluir($codrepositorio);
-
             flash('Operação feita com sucesso!!');
             return response()->redirectToRoute('controle_repositorios.index');
         } catch (\Exception $ex) {
@@ -302,10 +300,8 @@ class RepositorioController extends Controller
         $codusuario = $request->codusuario;
         $codrepositorio = $request->codrepositorio;
         try {
-            $usuario = User::findOrFail($codusuario);
             $repositorio = Repositorio::findOrFail($codrepositorio);
-            $usuario->codrepositorio = $repositorio->codrepositorio;
-            $usuario->update();
+            $usuario = UserRepository::vincular($codusuario, $codrepositorio);
             $data['tipo'] = 'success';
             $this->create_log($data);
             \Mail::to($usuario->email)->send(new EmailVinculacaoUsuario($repositorio));

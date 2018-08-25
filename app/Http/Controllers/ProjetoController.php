@@ -72,6 +72,7 @@ class ProjetoController extends Controller
                 if (!$this->exists($codrepositorio)) {
                     $repositorio = Repositorio::findOrFail($codrepositorio);
                 } else {
+
                     $repositorio = Repositorio::create(['nome' => 'novo', 'descricao' => 'novo']);
                 }
                 return view('controle_projetos.create', compact('dados', 'repositorio'));
@@ -101,7 +102,7 @@ class ProjetoController extends Controller
             }
             if (!ProjetoRepository::projeto_existe($request->nome)) {
                 $request->request->add(['codusuario' => Auth::user()->codusuario]);
-                $projeto = Projeto::create($request->all());
+                $projeto = ProjetoRepository::incluir($request);
                 flash('Projeto criado com sucesso!!');
                 return redirect()->route('controle_modelos_diagramaticos_index',
                     [

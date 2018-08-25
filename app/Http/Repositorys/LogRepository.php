@@ -5,6 +5,7 @@ namespace App\Http\Repositorys;
 
 use App\Http\Models\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class LogRepository extends Repository
 {
@@ -26,14 +27,20 @@ class LogRepository extends Repository
             'acao' => $acao,
             'created_at' => $date
         ]);
+        self::limpar_cache();
         return $log->codlog;
     }
 
+    public static function limpar_cache()
+    {
+        Cache::forget('listar_logs');
+    }
 
     public static function listar()
     {
-//        return Log::all()->where('codusuario', Auth::user()->codusuario);
-        return collect(Log::all());
+        return Cache::remember('listar_logs', 2000, function () {
+            return collect(Log::all());
+        });
     }
 
     public static function listar_tres_ultimos_logs($qt_logs)

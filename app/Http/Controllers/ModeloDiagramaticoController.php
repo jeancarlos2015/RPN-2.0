@@ -114,7 +114,6 @@ class ModeloDiagramaticoController extends Controller
     function store(Request $request)
     {
         try {
-
             $codprojeto = $request->codprojeto;
             $codrepositorio = $request->codrepositorio;
             $data['all'] = $request->all();
@@ -236,10 +235,7 @@ class ModeloDiagramaticoController extends Controller
     {
         try {
 
-            $modelo = ModeloDiagramatico::findOrFail($id);
-            $xml_modelo = str_replace($modelo->nome, $request->nome, $modelo->xml_modelo);
-            $modelo->xml_modelo = $xml_modelo;
-            $modelo->update($request->all());
+           $modelo = ModeloDiagramaticoRepository::atualizar($request, $id);
             if ($modelo->tipo === 'diagramatico') {
                 return redirect()->route('edicao_modelo_diagramatico', [
                     'codmodelodiagramatico' => $modelo->codmodelodiagramatico
@@ -279,12 +275,11 @@ class ModeloDiagramaticoController extends Controller
     }
 
     public
-    function destroy($codprojeto)
+    function destroy($codmodelo)
     {
         try {
 
-            $modelo = ModeloDiagramatico::findOrFail($codprojeto);
-            $modelo->delete();
+            $modelo = ModeloDiagramaticoRepository::excluir($codmodelo);
             flash('Operação feita com sucesso!!');
             if (empty($modelo->codprojeto) || empty($modelo->codrepositorio)) {
 
@@ -312,11 +307,7 @@ class ModeloDiagramaticoController extends Controller
 
     public function gravar(Request $request)
     {
-        $codmodelo = $request->codmodelodiagramatico;
-        $xml = $request->strXml;
-        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
-        $modelo->xml_modelo = $xml . "\n";
-        $result = $modelo->update();
+        $result = ModeloDiagramaticoRepository::gravar($request);
         return \Response::json($result);
     }
 }

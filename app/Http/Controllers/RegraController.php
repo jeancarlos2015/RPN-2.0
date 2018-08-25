@@ -100,12 +100,7 @@ class RegraController extends Controller
     {
 
         try{
-            $regra = Regra::findOrFail($codregra);
-            $regra->nome = $request->nome;
-            $regra->visivel_projeto = $request->visivel_projeto;
-            $regra->visivel_repositorio = $request->visivel_repositorio;
-            $regra->visivel_modelo_declarativo = $request->visivel_modelo_declarativo;
-            $regra->update();
+            $regra = RegraRepository::atualizar($request, $codregra);
             $data['tipo'] = 'success';
             $this->create_log($data);
         }catch (\Exception $ex) {
@@ -126,9 +121,8 @@ class RegraController extends Controller
      */
     public function destroy($codregra)
     {
-        $regra = Regra::findOrFail($codregra);
         try{
-            $regra->delete();
+            $regra = RegraRepository::excluir($codregra);
             $data['tipo'] = 'success';
             $this->create_log($data);
         }catch (\Exception $ex) {

@@ -35,7 +35,7 @@ class PadraoRecomendacaoController extends Controller
     public function create_recomendacao_conjunto($codmodelodeclarativo)
     {
         $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
-        $objetos_fluxos = ObjetoFluxo::all();
+        $objetos_fluxos = ObjetoFluxoRepository::listar();
         $tipo_operacao = 'conjunto';
         return view('controle_modelos_declarativos.controle_regras.create', compact('modelo_declarativo', 'objetos_fluxos', 'tipo_operacao'));
     }
@@ -43,7 +43,7 @@ class PadraoRecomendacaoController extends Controller
     public function create_recomendacao_binario($codmodelodeclarativo)
     {
         $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
-        $objetos_fluxos = ObjetoFluxo::all();
+        $objetos_fluxos = ObjetoFluxoRepository::listar();
         $tipo_operacao = 'binario';
         return view('controle_modelos_declarativos.controle_regras.create', compact('modelo_declarativo', 'objetos_fluxos', 'tipo_operacao'));
     }

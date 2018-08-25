@@ -97,7 +97,7 @@ class ModeloDeclarativoController extends Controller
         if (!$this->exists_errors($data)) {
             $request->request->add(['codusuario' => Auth::user()->codusuario]);
             if (!ModeloDeclarativoRepository::existe($request->nome)) {
-                $modelo = ModeloDeclarativo::create($request->all());
+                $modelo = ModeloDeclarativoRepository::incluir($request);
                 return redirect()->route('controle_objeto_fluxo_index',
                     [
                         'codmodelodeclarativo' => $modelo->codmodelodeclarativo
@@ -173,8 +173,7 @@ class ModeloDeclarativoController extends Controller
 
         try {
 
-            $modelo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
-            $modelo->update($request->all());
+            $modelo = ModeloDeclarativoRepository::atualizar($request, $codmodelodeclarativo);
             return redirect()->route('edicao_modelo_declarativo', [
                 'codmodelodeclarativo' => $modelo->codmodelodeclarativo
             ]);
@@ -193,8 +192,7 @@ class ModeloDeclarativoController extends Controller
     public function destroy($id)
     {
         try {
-            $modelo = ModeloDeclarativo::findOrFail($id);
-            $modelo->delete();
+            ModeloDeclarativoRepository::excluir($id);
             $data['tipo'] = 'success';
             $this->create_log($data);
             return redirect()->route('todos_modelos');

@@ -24,9 +24,7 @@ class GitSistemaRepository
 
     private static function escrer_arquivo($path, $conteudo)
     {
-
         file_put_contents($path, $conteudo);
-
     }
 
     private static function cria_e_atualiza_arquivos_no_github($dado)
@@ -38,9 +36,6 @@ class GitSistemaRepository
         $branch = $dado['branch'];
         $mensagem = $dado['mensagem'];
         $repositorio = $dado['repositorio'];
-//            $user_name = $dado['usuario'];
-//            $email = $dado['email'];
-
         $client = new Client();
         $github = Auth::user()->github;
         $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
@@ -127,9 +122,9 @@ class GitSistemaRepository
 
         $usuario_git = Auth::user()->usuario_github();
         $client->authenticate($usuario_git, Auth::user()->usuario_senha());
-        if (Auth::user()->email==='jeancarlospenas25@gmail.com'){
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
             $branchs = $client->repo()->branches($usuario_git, $repositorio, $github->branch_atual);
-        }else{
+        } else {
             $branchs = $client->repo()->branches($usuario_git, $repositorio, 'master');
         }
 
@@ -159,35 +154,35 @@ class GitSistemaRepository
         return $http_Client->delete($url)->getStatusCode();
     }
 
-    private
-    function update_branch_teste()
-    {
-        $client = new Client();
-        $github = Auth::user()->github;
-        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
-        $branchs = $client->repo()->branches('jeancarlos2015', 'teste2015');
-//        dd($branchs);
-        $http_Client = $client->getHttpClient();
-
-        $url = 'https://api.github.com/repos/jeancarlos2015/teste2015/git/refs/:ref';
-        $header = [
-            [
-                'Authorization' => 'Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA=='
-            ]
-
-        ];
-
-        $body = '
-        {
-                "ref" : "refs/heads/teste"
-                "sha" : "a84deace201e8f873741cf82b5f999b482b1c91c",
-                "force" : true
-        }
-
-        ';
-
-        dd($client->repository()->merge('jeancarlos2015', 'teste2015', 'master', 'teste'));
-    }
+//    private
+//    function update_branch_teste()
+//    {
+//        $client = new Client();
+//        $github = Auth::user()->github;
+//        $client->authenticate(Auth::user()->usuario_github(), Auth::user()->usuario_senha());
+//        $branchs = $client->repo()->branches('jeancarlos2015', 'teste2015');
+////        dd($branchs);
+//        $http_Client = $client->getHttpClient();
+//
+//        $url = 'https://api.github.com/repos/jeancarlos2015/teste2015/git/refs/:ref';
+//        $header = [
+//            [
+//                'Authorization' => 'Basic amVhbmNhcmxvc3BlbmFzMjVAZ21haWwuY29tOmFzbmFlYjEyM3BldA=='
+//            ]
+//
+//        ];
+//
+//        $body = '
+//        {
+//                "ref" : "refs/heads/teste"
+//                "sha" : "a84deace201e8f873741cf82b5f999b482b1c91c",
+//                "force" : true
+//        }
+//
+//        ';
+//
+//        dd($client->repository()->merge('jeancarlos2015', 'teste2015', 'master', 'teste'));
+//    }
 
     private static
     function merge_auxiliar($branch)

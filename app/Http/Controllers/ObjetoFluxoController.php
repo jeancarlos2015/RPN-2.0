@@ -18,7 +18,7 @@ class ObjetoFluxoController extends Controller
      */
     public function index()
     {
-        $objetos_fluxos = ObjetoFluxo::all();
+        $objetos_fluxos = ObjetoFluxoRepository::listar();
         $tipo = 'objetofluxo';
         $titulos = ObjetoFluxo::titulos_da_tabela();
         return view('controle_modelos_declarativos.controle_objetos_fluxo.index', compact('objetos_fluxos', 'tipo', 'titulos'));
@@ -26,7 +26,7 @@ class ObjetoFluxoController extends Controller
 
     public function controle_objeto_fluxo_index($codmodelodeclarativo)
     {
-        $objetos_fluxos = ModeloDeclarativoRepository::listar_objetos_fluxo($codmodelodeclarativo);
+        $objetos_fluxos = ObjetoFluxoRepository::listar_objetos_fluxo($codmodelodeclarativo);
         $tipo = 'objetofluxo';
         $titulos = ObjetoFluxo::titulos_da_tabela();
         $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
@@ -66,7 +66,7 @@ class ObjetoFluxoController extends Controller
         if (!$this->exists_errors($data)) {
             $request->request->add(['codusuario' => Auth::user()->codusuario]);
             if (!ObjetoFluxoRepository::existe($request->nome)) {
-                $objeto_fluxo = ObjetoFluxo::create($request->all());
+                $objeto_fluxo = ObjetoFluxoRepository::incluir($request);
                 $data['tipo'] = 'success';
                 $this->create_log($data);
                 return redirect()->route('controle_objeto_fluxo_index',
@@ -99,7 +99,7 @@ class ObjetoFluxoController extends Controller
      */
     public function show($id)
     {
-        dd($id);
+        echo "Página em construção";
     }
 
     /**
@@ -149,11 +149,9 @@ class ObjetoFluxoController extends Controller
             $data['validacao'] = ObjetoFluxo::validacao();
             if (!$this->exists_errors($data)) {
                 if (ObjetoFluxoRepository::existe($request->nome)) {
-                    $objeto_fluxo = ObjetoFluxo::findOrFail($id);
-                    $objeto_fluxo->update($request->all());
+                    $objeto_fluxo = ObjetoFluxoRepository::atualizar($request,$id);
                     $data['tipo'] = 'success';
                     $this->create_log($data);
-                    $objeto_fluxo = ObjetoFluxo::findOrFail($id);
                     $dados = ObjetoFluxo::dados();
                     $tipos = ObjetoFluxo::tipos();
                     $dados[0]->valor = $objeto_fluxo->nome;
@@ -185,8 +183,7 @@ class ObjetoFluxoController extends Controller
     public function destroy($codobjetofluxo)
     {
         try {
-            $objetofluxo = ObjetoFluxo::findOrFail($codobjetofluxo);
-            $objetofluxo->delete();
+            $objetofluxo = ObjetoFluxoRepository::excluir($codobjetofluxo);
             flash('Operação feita com sucesso!!');
             return redirect()->route('controle_objetos_fluxos.index');
         } catch (\Exception $ex) {

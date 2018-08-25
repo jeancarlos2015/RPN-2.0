@@ -4,12 +4,10 @@ namespace App\Http\Repositorys;
 
 
 use App\Http\Models\ModeloDeclarativo;
-use App\http\Models\ObjetoFluxo;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class ModeloDeclarativoRepository extends Repository
 {
@@ -22,37 +20,43 @@ class ModeloDeclarativoRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
-            return collect(ModeloDeclarativo::all());
-        }
-        return collect(ModeloDeclarativo::
-            where('codusuario','=',Auth::user()->codusuario)
-            ->orWhere('visibilidade', '=', 'true')
-            ->get());
-
+        return Cache::remember('listar_modelos', 2000, function () {
+            if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
+                return collect(ModeloDeclarativo::all());
+            }
+            return collect(ModeloDeclarativo::
+            where('codusuario', '=', Auth::user()->codusuario)
+                ->orWhere('visibilidade', '=', 'true')
+                ->get());
+        });
     }
 
-    public static function listar_objetos_fluxo($codmodelodeclarativo)
+
+    public static function listar_modelo_por_projeto_organizacao()
     {
-        return ObjetoFluxo::where('codmodelodeclarativo', '=', $codmodelodeclarativo)
-            ->get();
+        return Cache::remember('listar_modelos', 2000, function () {
+            return collect(ModeloDeclarativo::get());
+        });
     }
 
-    public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
+    public static function limpar_cache()
     {
-        return collect(ModeloDeclarativo::get());
+        Cache::forget('listar_modelos');
+        Cache::forget('listar_modelos_publicos');
     }
-
 
     public static function atualizar(Request $request, $codmodelo)
     {
         $value = ModeloDeclarativo::findOrFail($codmodelo)->update($request->all());
+        self::limpar_cache();
         return $value;
     }
 
     public static function incluir(Request $request)
     {
-        return ModeloDeclarativo::create($request->all());
+        $value = ModeloDeclarativo::create($request->all());
+        self::limpar_cache();
+        return $value;
     }
 
 
@@ -61,6 +65,7 @@ class ModeloDeclarativoRepository extends Repository
         $value = null;
         try {
             $value = ModeloDeclarativo::findOrFail($codmodelo)->delete();
+            self::limpar_cache();
         } catch (Exception $e) {
 
         }
@@ -73,10 +78,13 @@ class ModeloDeclarativoRepository extends Repository
         return self::listar()->where('nome', $nome_do_modelo)->count() > 0;
     }
 
-    public static function listar_modelos(){
-        return Cache::remember('listar_codigos_modelos', 2000, function (){
+    public static function listar_modelos()
+    {
+        return Cache::remember('listar_modelos', 2000, function () {
             return ModeloDeclarativo::get();
         });
     }
+
+
 
 }

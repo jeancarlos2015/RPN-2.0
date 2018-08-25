@@ -20,28 +20,34 @@ class ObjetoFluxoRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
-            return collect(ObjetoFluxo::all());
-        }
-        return collect(ObjetoFluxo::whereCodusuario(Auth::user()->codusuario)
-            ->orWhere('visibilidade', '=', 'true')
-            ->get());
+        return Cache::remember('listar_objetos', 2000, function () {
+            if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
+                return collect(ObjetoFluxo::all());
+            }
+            return collect(ObjetoFluxo::whereCodusuario(Auth::user()->codusuario)
+                ->orWhere('visibilidade', '=', 'true')
+                ->get());
+        });
     }
     public static function listar_por_modelo_declarativo($codmodelodeclarativo)
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
-            return collect(ObjetoFluxo::where('codmodelodeclarativo','=',$codmodelodeclarativo)->get());
-        }
-        return collect(ObjetoFluxo::where('codmodelodeclarativo','=',$codmodelodeclarativo)
-            ->get());
+        return Cache::remember('listar_objetos', 2000, function ($codmodelodeclarativo) {
+            if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
+                return collect(ObjetoFluxo::where('codmodelodeclarativo', '=', $codmodelodeclarativo)->get());
+            }
+            return collect(ObjetoFluxo::where('codmodelodeclarativo', '=', $codmodelodeclarativo)
+                ->get());
+        });
     }
 
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
     {
-        return collect(ObjetoFluxo::whereCodrepositorio($codrepositorio)
-            ->where('codprojeto', '=', $codprojeto)
-            ->Where('visibilidade', '=', 'true')
-            ->get());
+        return Cache::remember('listar_objetos', 2000, function ($codrepositorio, $codprojeto) {
+            return collect(ObjetoFluxo::whereCodrepositorio($codrepositorio)
+                ->where('codprojeto', '=', $codprojeto)
+                ->Where('visibilidade', '=', 'true')
+                ->get());
+        });
     }
 
 
@@ -53,23 +59,20 @@ class ObjetoFluxoRepository extends Repository
         return $value;
     }
 
-    public static function limpar_cache()
-    {
-        Cache::forget('listar_objetos');
-    }
 
     public static function incluir(Request $request)
     {
-
         $value = ObjetoFluxo::create($request->all());
         self::limpar_cache();
         return $value;
     }
+
     public static function incluir_se_existe($dado)
     {
         if (!self::existe($dado['nome'])){
-            $value = ObjetoFluxo::create($dado);
+            return ObjetoFluxo::create($dado);
         }
+        return null;
     }
 
     public static function excluir($codobjetofluxo)
@@ -84,7 +87,10 @@ class ObjetoFluxoRepository extends Repository
         }
         return $value;
     }
-
+    public static function limpar_cache()
+    {
+        Cache::forget('listar_objetos');
+    }
 
     public static function existe($nome_do_objeto)
     {
@@ -94,6 +100,13 @@ class ObjetoFluxoRepository extends Repository
 
     }
 
+    public static function listar_objetos_fluxo($codmodelodeclarativo)
+    {
+        return Cache::remember('listar_objetos', 2000, function ($codmodelodeclarativo) {
+            return ObjetoFluxo::where('codmodelodeclarativo', '=', $codmodelodeclarativo)
+                ->get();
+        });
+    }
 
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repositorys\RepositorioRepository;
+use App\Http\Repositorys\UserRepository;
 use App\Mail\EmailCadastroDeUsuario;
 use App\User;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $usuarios = User::all();
+            $usuarios = UserRepository::listar();
             $tipo = 'usuario';
             $titulos = User::titulos();
 
@@ -89,6 +90,7 @@ class UserController extends Controller
             }
             if (\Auth::user()->email === 'jeancarlospenas25@gmail.com') {
                 $user = $this->create_user($request->all());
+                UserRepository::limpar_cache();
                 \Mail::to($user->email)->send(new EmailCadastroDeUsuario($user));
             } else {
                 if ($request->tipo === 'Administrador') {
@@ -128,9 +130,9 @@ class UserController extends Controller
         }
         try {
 
-            $usuarios = User::all();
+            $usuarios = UserRepository::listar();
             $usuario = User::findOrFail($id);
-            $repositorios = RepositorioRepository::all();
+            $repositorios = RepositorioRepository::listar();
             $dados = User::dados();
             return view('controle_usuario.edit', compact('dados', 'usuario', 'usuarios', 'repositorios'));
         } catch (\Exception $ex) {
@@ -157,17 +159,13 @@ class UserController extends Controller
                     ->withErrors($erros)
                     ->withInput();
             }
-            $user = User::findOrFail($id);
-            $user->tipo = $request->tipo;
-            $user->email = $request->email;
-            $user->password = \Hash::make($request->password);
-            $user->name = $request->name;
 
-            if ($user->update()) {
+
+            if (UserRepository::atualizar($request, $id)) {
                 $data['tipo'] = 'success';
                 $this->create_log($data);
             }
-            $result = $user->update();
+            $user = User::findOrFail($id);
             if (\Auth::user()->tipo === 'administrador') {
                 return redirect()->route('controle_usuarios.index');
             } else {
@@ -187,24 +185,25 @@ class UserController extends Controller
     public function edit_vinculo($codusuario)
     {
         $usuario = User::findOrFail($codusuario);
-        $repositorios = RepositorioRepository::all();
+        $repositorios = RepositorioRepository::listar();
         return view('controle_usuario.vinculo', compact('usuario', 'repositorios'));
     }
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        if (\Auth::user()->email !== 'jeancarlospenas25@gmail.com') {
-            if ($user->tipo === 'Administrador' || $user->email === 'jeancarlospenas25@gmail.com') {
-                $data['tipo'] = 'success';
-                $data['mensagem'] = 'Você não possui permissão !!!';
-                $this->create_log($data);
-                return redirect()->route('painel');
-            }
-        }
+
 
         try {
-            $user->delete();
+            $user = User::findOrFail($id);
+            if (\Auth::user()->email !== 'jeancarlospenas25@gmail.com') {
+                if ($user->tipo === 'Administrador' || $user->email === 'jeancarlospenas25@gmail.com') {
+                    $data['tipo'] = 'success';
+                    $data['mensagem'] = 'Você não possui permissão !!!';
+                    $this->create_log($data);
+                    return redirect()->route('painel');
+                }
+            }
+            UserRepository::excluir($id);
             $data['tipo'] = 'success';
             $this->create_log($data);
             return redirect()->route('controle_usuarios.index');

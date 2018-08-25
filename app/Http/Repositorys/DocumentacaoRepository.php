@@ -18,7 +18,9 @@ class DocumentacaoRepository extends Repository
 
     public static function listar()
     {
-        return Documentacao::all();
+        return Cache::remember('listar_documentacao', 2000, function () {
+            return Documentacao::all();
+        });
     }
 
 
@@ -36,14 +38,14 @@ class DocumentacaoRepository extends Repository
 
     public static function limpar_cache()
     {
-        Cache::forget('listar_organizacoes');
+        Cache::forget('listar_documentacao');
     }
 
     public static function incluir(Request $request)
     {
 
         $documentacao = Documentacao::create($request->all());
-        
+        self::limpar_cache();
         return $documentacao;
     }
 
@@ -61,6 +63,7 @@ class DocumentacaoRepository extends Repository
         foreach ($documentacoes as $documentacao) {
             $documentacao->delete();
         }
+        self::limpar_cache();
     }
 
 }

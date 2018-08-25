@@ -19,15 +19,20 @@ class RepositorioRepository extends Repository
 
     public static function listar()
     {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
-            return collect(Repositorio::all());
-        }
-        return collect(array());
+        return Cache::remember('listar_repositorios', 2000, function () {
+            if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
+                return collect(Repositorio::all());
+            }
+            return collect(array());
+        });
     }
+
     public static function listar_repositorios_publicos()
     {
-        return collect(Repositorio::wherePublico(true)
-            ->get());
+        return Cache::remember('listar_repositorios_publicos', 2000, function () {
+            return collect(Repositorio::wherePublico(true)
+                ->get());
+        });
     }
 
     public static function count()
@@ -46,6 +51,7 @@ class RepositorioRepository extends Repository
     public static function limpar_cache()
     {
         Cache::forget('listar_repositorios');
+        Cache::forget('listar_repositorios_publicos');
     }
 
     public static function incluir(Request $request)
@@ -55,10 +61,6 @@ class RepositorioRepository extends Repository
         return $value;
     }
 
-    public static function findOrFail($codrepositorio)
-    {
-
-    }
 
     public static function excluir($codrepositorio)
     {
@@ -74,6 +76,7 @@ class RepositorioRepository extends Repository
         foreach ($repositorios as $repositorio) {
             $repositorio->delete();
         }
+        self::limpar_cache();
     }
 
     public static function repositorio_existe($nome_do_repositorio)
