@@ -22,22 +22,22 @@
                                          src="{{ Gravatar::src($modelo1->usuario->email) }}"
                                          alt="" width="60">
                                     <div class="media-body">
-                                        <strong>Modelo - {!!  $modelo1->nome !!}</strong>
+                                        <strong>Modelo - {!!  strtoupper($modelo1->nome) !!}</strong>
                                         @if(!empty($modelo1->usuario->name))
                                             <div class="text-muted smaller">
-                                                Responsável: {!! $modelo1->usuario->name !!}</div>
+                                                Responsável: {!! strtoupper($modelo1->usuario->name) !!}</div>
                                         @endif
                                         <div class="text-muted smaller">Descrição do
-                                            Modelo: {!! $modelo1->descricao !!}</div>
-                                        <div class="text-muted smaller">Tipo: {!! $modelo1->tipo !!}</div>
+                                            Modelo: {!! strtoupper($modelo1->descricao) !!}</div>
+                                        <div class="text-muted smaller">Tipo: {!! strtoupper($modelo1->tipo) !!}</div>
                                         @if(!empty($modelo1->projeto->nome ))
                                             <div class="text-muted smaller">
-                                                Projeto: {!! $modelo1->projeto->nome !!}</div>
+                                                Projeto: {!! strtoupper($modelo1->projeto->nome) !!}</div>
                                         @endif
                                         @if(!empty($modelo1->repositorio->nome ))
                                             <div class="text-muted smaller">
 
-                                                Repositório: {!! $modelo1->repositorio->nome !!}
+                                                Repositório: {!! strtoupper($modelo1->repositorio->nome) !!}
                                             </div>
                                         @endif
                                         <div class="text-muted smaller">
