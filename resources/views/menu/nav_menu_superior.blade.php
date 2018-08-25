@@ -1,14 +1,6 @@
 <ul class="navbar-nav ml-auto">
 
 
-    <li class="nav-item">
-        <a
-                href="{{ URL::previous() }}"
-                class="btn btn-secondary btn-circle"><i class="fa fa-mail-reply"></i></a><a
-                href="{{ URL::previous() }}">
-            <small class="m-l-5">Voltar</small>
-        </a>
-    </li>
     @if(!empty(Auth::user()->repositorio) || Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
 
         @includeIf('layouts.admin.layouts.sub_componentes.li_nav',
