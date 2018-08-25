@@ -16,7 +16,7 @@ class UserRepository extends Repository
         $this->setModel(User::class);
     }
 
-    public function listar_usuarios()
+    public static function listar_usuarios()
     {
         return Cache::remember('listar_usuarios', 2000, function () {
             return User::get();
