@@ -1,10 +1,19 @@
 <?php
 
-Route::get('publico/modelos', 'ModeloDiagramaticoController@modelos_publicos')
-    ->name('modelos_publicos');
 
-Route::get('publico/modelos/{codmodelo}', 'ModeloDiagramaticoController@visualizar_modelo_publico')
-    ->name('visualizar_modelo_publico');
+Route::get('publico/modelos', function () {
+    $titulos = \App\Http\Models\ModeloDiagramatico::titulos();
+    $modelos = \App\Http\Repositorys\ModeloDiagramaticoRepository::listar_modelos_publicos();
+    $tipo = 'publico';
+    $contador = 0;
+    return view('modelos_publicos.index', compact('modelos', 'titulos', 'tipo', 'contador'));
+})->name('modelos_publicos');
+
+
+Route::get('publico/modelos/{codmodelo}',function ($codmodelo){
+    $modelo = \App\Http\Repositorys\ModeloDiagramaticoRepository::visualizar_modelos_publicos($codmodelo);
+    return view('modelos_publicos.visualizar_modelo',compact('modelo'));
+})->name('visualizar_modelo_publico');
 
 Route::get('/', function () {
     return view('inicio');

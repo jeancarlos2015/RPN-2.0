@@ -116,4 +116,16 @@ class ModeloDiagramaticoRepository extends Repository
         return $request;
     }
 
+    public static function visualizar_modelos_publicos($codmodelo){
+        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+        $path_modelo = public_path('novo_bpmn/');
+        if (!file_exists($path_modelo)) {
+            mkdir($path_modelo, 777);
+        }
+        $file = $path_modelo . 'novo.bpmn';
+        file_put_contents($file, $modelo->xml_modelo);
+        sleep(2);
+        return $modelo;
+    }
+
 }
