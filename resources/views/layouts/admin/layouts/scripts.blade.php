@@ -6,10 +6,10 @@
 <script src="{!! asset('vendor/datatables/dataTables.bootstrap4.js') !!}"></script>
 <script src="{!! asset('js/sb-admin.min.js') !!}"></script>
 <script src="{!! asset('js/sb-admin-datatables.min.js') !!}"></script>
-s
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+
 
 <script>
     $(document).ready(function () {

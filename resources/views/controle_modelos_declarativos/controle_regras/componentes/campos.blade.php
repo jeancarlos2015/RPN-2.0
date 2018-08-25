@@ -1,9 +1,9 @@
-<script src="{!! asset('jquery_select/jquery-1.11.1.min.js') !!}"></script>
+{{--<script src="{!! asset('jquery_select/jquery-1.11.1.min.js') !!}"></script>--}}
 
 
 @if(!empty($multi))
 
-  
+
     <label>Nome da regra</label>
     <input type="text" class="form-control" name="nome" required>
 
@@ -12,8 +12,6 @@
         @includeIf('controle_modelos_declarativos.controle_regras.componentes.select_objetos_fluxo',[
             'multi' => 'true'
         ])
-
-
     </div>
     <div class="row">
         @includeIf('controle_modelos_declarativos.controle_regras.componentes.botoes_select')

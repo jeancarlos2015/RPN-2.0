@@ -10,6 +10,7 @@
                                     '/Novo Objeto de Fluxo',
                     'rota' => 'controle_objetos_fluxos.index'
     ])
+
     @includeIf('controle_modelos_declarativos.controle_regras.componentes.form_create')
 @endsection
 
@@ -20,3 +21,14 @@
     ])
 @endsection
 
+{{--@section('codigo_css')--}}
+    {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">--}}
+{{--@endsection--}}
+
+{{--@section('codigo_js')--}}
+    {{--<!-- Latest compiled and minified JavaScript -->--}}
+    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>--}}
+    {{--<!-- (Optional) Latest compiled and minified JavaScript translation files -->--}}
+    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js"></script>--}}
+
+{{--@endsection--}}

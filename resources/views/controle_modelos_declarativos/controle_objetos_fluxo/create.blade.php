@@ -2,10 +2,10 @@
 @section('content')
     @includeIf('layouts.admin.componentes.breadcrumb',[
                       'titulo' => 'Painel',
-                    'sub_titulo' => 'Repositório / '.$modelo_declarativo->repositorio->nome.
-                                    '/ Projeto / '.$modelo_declarativo->projeto->nome.
-                                    '/ Mode Declarativo / '.$modelo_declarativo->nome.
-                                    '/ Novo Objeto de Fluxo / ',
+                    'sub_titulo' => '/Repositório/ '.$modelo_declarativo->repositorio->nome.
+                                    '/Projeto/ '.$modelo_declarativo->projeto->nome.
+                                    '/Mode Declarativo/'.$modelo_declarativo->nome.
+                                    '/Novo Objeto de Fluxo',
                     'rota' => 'controle_objetos_fluxos.index'
     ])
     @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.componentes.form_create')
