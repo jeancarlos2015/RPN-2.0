@@ -70,6 +70,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('controle_padrao_create_conjunto')
             ->middleware('can:acesso');
 
+
+
         Route::post('controle_padrao_salvar', 'PadraoRecomendacaoController@salvar')
             ->name('controle_padrao_salvar')
             ->middleware('can:acesso');
@@ -78,6 +80,8 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('gravar')
             ->middleware('can:acesso');
 
+        Route::resource('controle_projetos', 'ProjetoController')
+            ->middleware('can:acesso');
 
         Route::get('controle_objeto_fluxo_index/modelo_declarativo/{codmodelodeclarativo}', 'ObjetoFluxoController@controle_objeto_fluxo_index')
             ->name('controle_objeto_fluxo_index')
@@ -95,8 +99,9 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_repositorios', 'RepositorioController')
             ->middleware('can:acesso');
 
-        Route::resource('controle_projetos', 'ProjetoController')
-            ->middleware('can:acesso');
+
+
+
 
         Route::resource('controle_modelos_diagramaticos', 'ModeloDiagramaticoController')
             ->middleware('can:acesso');

@@ -111,13 +111,10 @@ class ProjetoController extends Controller
                     ]
                 );
             } else {
-                $data['tipo'] = 'existe';
-                $this->create_log($data);
-                return redirect()->route('controle_projetos_create',
-                    [
-                        'codrepositorio' => $codrepositorio
-                    ]
-                );
+                $projeto = ProjetoRepository::listar()->where('nome', $request->nome)->first();
+                $dados = Projeto::dados();
+                $repositorio = Repositorio::findOrFail($codrepositorio);
+                return view('controle_projetos.create', compact('dados', 'repositorio','projeto'));
             }
 
         } catch (\Exception $ex) {

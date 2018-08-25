@@ -134,12 +134,11 @@ class ModeloDiagramaticoController extends Controller
                         ['codmodelodiagramatico' => $modelo->codmodelodiagramatico]);
 
                 } else {
-                    $data['tipo'] = 'existe';
-                    $this->create_log($data);
-                    return redirect()->route('controle_modelos_diagramaticos_create', [
-                        'codrepositorio' => $codrepositorio,
-                        'codprojeto' => $codprojeto
-                    ]);
+                    $dados = ModeloDiagramatico::dados();
+                    $modelo = ModeloDiagramaticoRepository::listar()->where('nome', $request->nome)->first();
+                    $repositorio = $modelo->repositorio;
+                    $projeto = $modelo->projeto;
+                    return view('controle_modelos_diagramaticos.create', compact('dados', 'repositorio', 'projeto','modelo'));
                 }
 
             }

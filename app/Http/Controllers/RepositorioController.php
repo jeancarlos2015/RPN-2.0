@@ -204,9 +204,10 @@ class RepositorioController extends Controller
                     ]
                 );
             } else {
-                $data['tipo'] = 'existe';
-                $this->create_log($data);
-                return redirect()->route('controle_repositorios.create');
+
+                $dados = Repositorio::dados();
+                $repositorio = RepositorioRepository::listar()->where('nome', $request->nome)->first();
+                return view('controle_repositorios.create', compact('dados','repositorio'));
             }
 
         } catch (\Exception $ex) {

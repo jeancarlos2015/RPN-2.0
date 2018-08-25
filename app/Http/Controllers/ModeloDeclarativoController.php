@@ -98,18 +98,22 @@ class ModeloDeclarativoController extends Controller
             $request->request->add(['codusuario' => Auth::user()->codusuario]);
             if (!ModeloDeclarativoRepository::existe($request->nome)) {
                 $modelo = ModeloDeclarativo::create($request->all());
-
                 return redirect()->route('controle_objeto_fluxo_index',
                     [
                         'codmodelodeclarativo' => $modelo->codmodelodeclarativo
                     ]);
+            }else{
+                $titulos = ModeloDeclarativo::titulos();
+                $dados = ModeloDeclarativo::dados();
+                $tipo = 'modelo_declarativo';
+                $modelo = ModeloDeclarativoRepository::listar()->where('nome', $request->nome)->first();
+                $repositorio = $modelo->repositorio;
+                $projeto = $modelo->projeto;
+                return view('controle_modelos_declarativos.modelos_declarativos.create',
+                    compact('titulos', 'dados', 'tipo', 'repositorio', 'projeto','modelo'));
             }
-            $data['tipo'] = 'existe';
-            $this->create_log($data);
-            return redirect()->route('controle_modelos_declarativos_create', [
-                'codrepositorio' => $request->codrepositorio,
-                'codprojeto' => $request->codprojeto
-            ]);
+
+
         }
 
         $erros = $this->get_errors($data);
