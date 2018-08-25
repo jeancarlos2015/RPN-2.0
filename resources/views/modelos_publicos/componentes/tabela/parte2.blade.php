@@ -23,16 +23,22 @@
                                      alt="" width="60">
                                 <div class="media-body">
                                     <strong>Modelo - {!!  $modelo1->nome !!}</strong>
-                                    <div class="text-muted smaller">
-                                        Responsável: {!! $modelo1->usuario->name !!}</div>
+                                    @if(!empty($modelo1->usuario->name))
+                                        <div class="text-muted smaller">
+                                            Responsável: {!! $modelo1->usuario->name !!}</div>
+                                    @endif
                                     <div class="text-muted smaller">Descrição do
                                         Modelo: {!! $modelo1->descricao !!}</div>
                                     <div class="text-muted smaller">Tipo: {!! $modelo1->tipo !!}</div>
-                                    <div class="text-muted smaller">
-                                        Projeto: {!! $modelo1->projeto->nome !!}</div>
-                                    <div class="text-muted smaller">
-                                        @if(!empty($modelo1->repositorio->nome ))
-                                            Repositório: {!! $modelo1->repositorio->nome !!}</div>
+                                    @if(!empty($modelo1->projeto->nome ))
+                                        <div class="text-muted smaller">
+                                            Projeto: {!! $modelo1->projeto->nome !!}</div>
+                                    @endif
+                                    @if(!empty($modelo1->repositorio->nome ))
+                                        <div class="text-muted smaller">
+
+                                            Repositório: {!! $modelo1->repositorio->nome !!}
+                                        </div>
                                     @endif
                                     <div class="text-muted smaller">
                                         Data da Criação: {!! $modelo1->created_at !!}</div>
