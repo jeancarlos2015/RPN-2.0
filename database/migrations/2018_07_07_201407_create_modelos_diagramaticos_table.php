@@ -19,8 +19,8 @@ class CreateModelosDiagramaticosTable extends Migration
             $table->string('descricao');
             $table->string('tipo')->default('bpmn');
             $table->longText('xml_modelo');
-            $table->boolean('visibilidade');
-            $table->boolean('publico');
+            $table->boolean('visibilidade')->default(true);
+            $table->boolean('publico')->default(true);
             $table->bigInteger('codprojeto');
             $table->bigInteger('codrepositorio');
             $table->bigInteger('codusuario');

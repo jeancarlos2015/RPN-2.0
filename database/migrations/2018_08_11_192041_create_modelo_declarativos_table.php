@@ -15,14 +15,16 @@ class CreateModeloDeclarativosTable extends Migration
     {
         Schema::connection('banco')->create('modelo_declarativos', function (Blueprint $table) {
             $table->increments('codmodelodeclarativo');
+
             $table->bigInteger('codrepositorio');
             $table->bigInteger('codprojeto');
             $table->bigInteger('codusuario');
+
             $table->string('nome');
             $table->string('tipo')->default('declarativo');
             $table->string('descricao');
-            $table->boolean('visibilidade');
-            $table->boolean('publico');
+            $table->boolean('visibilidade')->default(true);
+            $table->boolean('publico')->default(true);
 
 
             $table->foreign('codprojeto')->references('codprojeto')->on('projetos');

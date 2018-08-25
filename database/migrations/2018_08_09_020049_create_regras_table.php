@@ -28,9 +28,9 @@ class CreateRegrasTable extends Migration
             $table->string('tipo')->default('regra');
             $table->integer('relacionamento')->default(0);
 
-            $table->boolean('visivel_projeto')->default('false');
-            $table->boolean('visivel_repositorio')->default('false');
-            $table->boolean('visivel_modelo_declarativo')->default('false');
+            $table->boolean('visivel_projeto')->default(true);
+            $table->boolean('visivel_repositorio')->default(true);
+            $table->boolean('visivel_modelo_declarativo')->default(true);
 
             $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
             $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
