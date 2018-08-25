@@ -4,7 +4,7 @@
     @yield('boltao_voltar')
 
 
-
+@Auth
     @if(!empty(Auth::user()->repositorio) || Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
 
         @includeIf('layouts.admin.layouts.sub_componentes.li_nav',
@@ -40,4 +40,6 @@
     @endif
 
     @includeIf('layouts.admin.layouts.sub_componentes.dropdown_usuario')
+
+    @endauth
 </ul>

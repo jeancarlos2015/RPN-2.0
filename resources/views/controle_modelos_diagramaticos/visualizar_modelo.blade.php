@@ -11,3 +11,16 @@
             'nome_titulo_menu' => 'Modo De Visualização Do Modelo'
         ])
 @endsection
+
+@section('boltao_voltar')
+
+    <li class="nav-item">
+
+        <a class="nav-link"
+           href="{{ URL::previous() }}">
+            <p class="fa fa-mail-reply"> Retornar</p>
+            <span class="sr-only"></span>
+        </a>
+    </li>
+
+@endsection
