@@ -12,6 +12,7 @@ use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\ProjetoRepository;
 use App\Http\Repositorys\RegraRepository;
 use App\Http\Repositorys\RepositorioRepository;
+use App\Http\Repositorys\UserRepository;
 use App\Mail\EmailVinculacaoUsuario;
 use App\User;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class RepositorioController extends Controller
             $campos = Repositorio::campos();
             $tipo = 'repositorio';
             $log = LogRepository::log();
+
             return view('controle_repositorios.index', compact('repositorios', 'titulos', 'campos', 'tipo', 'log'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -122,7 +124,6 @@ class RepositorioController extends Controller
 
 
         try {
-
             GitSistemaRepository::atualizar_todas_branchs();
             $log = LogRepository::log();
             $tipo = 'painel';

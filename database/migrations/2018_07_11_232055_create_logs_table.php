@@ -17,7 +17,7 @@ class CreateLogsTable extends Migration
             $table->increments('codlog');
             $table->string('nome');
             $table->text('descricao');
-            $table->bigInteger('codusuario');
+            $table->bigInteger('codusuario')->unsigned();
             $table->string('acao');
             $table->string('pagina');
 

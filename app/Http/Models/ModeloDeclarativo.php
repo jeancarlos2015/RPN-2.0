@@ -14,7 +14,7 @@ class ModeloDeclarativo extends Model
 {
     protected $connection = 'banco';
     protected $primaryKey = 'codmodelodeclarativo';
-    protected $table = 'modelo_declarativos';
+    protected $table = 'modelos_declarativos';
     protected $fillable = [
         'nome',
         'descricao',

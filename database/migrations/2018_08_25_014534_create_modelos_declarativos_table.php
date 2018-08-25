@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateModeloDeclarativosTable extends Migration
+class CreateModelosDeclarativosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateModeloDeclarativosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('banco')->create('modelo_declarativos', function (Blueprint $table) {
+        Schema::connection('banco')->create('modelos_declarativos', function (Blueprint $table) {
             $table->increments('codmodelodeclarativo');
 
-            $table->bigInteger('codrepositorio');
-            $table->bigInteger('codprojeto');
-            $table->bigInteger('codusuario');
+            $table->bigInteger('codrepositorio')->unsigned();
+            $table->bigInteger('codprojeto')->unsigned();
+            $table->bigInteger('codusuario')->unsigned();
 
             $table->string('nome');
             $table->string('tipo')->default('declarativo');

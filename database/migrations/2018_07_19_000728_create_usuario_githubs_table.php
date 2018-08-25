@@ -20,7 +20,7 @@ class CreateUsuarioGithubsTable extends Migration
             $table->string('repositorio_atual')->nullable();
             $table->string('branch_atual')->nullable();
             $table->string('senha_github',4000);
-            $table->bigInteger('codusuario');
+            $table->bigInteger('codusuario')->unsigned();
 
             $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();

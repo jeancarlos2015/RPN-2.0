@@ -17,7 +17,7 @@ class CreateBranchsTable extends Migration
             $table->increments('codbranch');
             $table->string('branch');
             $table->string('descricao')->nullable();
-            $table->bigInteger('codusuario');
+            $table->bigInteger('codusuario')->unsigned();
 
 
             $table->foreign('codusuario')->references('codusuario')->on('users');

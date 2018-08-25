@@ -21,9 +21,9 @@ class CreateModelosDiagramaticosTable extends Migration
             $table->longText('xml_modelo');
             $table->boolean('visibilidade')->default(true);
             $table->boolean('publico')->default(true);
-            $table->bigInteger('codprojeto');
-            $table->bigInteger('codrepositorio');
-            $table->bigInteger('codusuario');
+            $table->bigInteger('codprojeto')->unsigned();
+            $table->bigInteger('codrepositorio')->unsigned();
+            $table->bigInteger('codusuario')->unsigned();
 
             $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
             $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');

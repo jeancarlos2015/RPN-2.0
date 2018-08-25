@@ -17,11 +17,11 @@ class CreateObjetoFluxosTable extends Migration
 
             $table->increments('codobjetofluxo');
 
-            $table->bigInteger('codrepositorio');
+            $table->bigInteger('codrepositorio')->unsigned();
             $table->bigInteger('codregra')->nullable();
-            $table->bigInteger('codusuario');
-            $table->bigInteger('codprojeto');
-            $table->bigInteger('codmodelodeclarativo');
+            $table->bigInteger('codusuario')->unsigned();
+            $table->bigInteger('codprojeto')->unsigned();
+            $table->bigInteger('codmodelodeclarativo')->unsigned();
 
             $table->string('nome');
             $table->string('descricao');

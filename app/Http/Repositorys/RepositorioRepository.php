@@ -7,6 +7,7 @@ use App\Http\Models\Repositorio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class RepositorioRepository extends Repository
 {
@@ -79,5 +80,13 @@ class RepositorioRepository extends Repository
     {
         $repositorios = self::listar();
         return $repositorios->where('nome', $nome_do_repositorio)->count() > 0;
+    }
+
+    public static function get_codigos(){
+        return Cache::remember('listar_codigos_repositorios', 2000, function (){
+            return DB::table('repositorios')
+                ->select('codrepositorio')
+                ->get();
+        });
     }
 }

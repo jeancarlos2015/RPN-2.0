@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ProjetoRepository extends Repository
 {
@@ -85,5 +86,13 @@ class ProjetoRepository extends Repository
     {
         $projetos = self::listar();
         return $projetos->where('nome', $nome_do_projeto)->count() > 0;
+    }
+
+    public static function get_codigos(){
+        return Cache::remember('listar_codigos_projetos', 2000, function (){
+            return DB::connection('banco')->table('projetos')
+                ->select('codprojeto')
+                ->get();
+        });
     }
 }

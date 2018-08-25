@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ModeloDeclarativoRepository extends Repository
 {
@@ -70,6 +71,14 @@ class ModeloDeclarativoRepository extends Repository
     public static function existe($nome_do_modelo)
     {
         return self::listar()->where('nome', $nome_do_modelo)->count() > 0;
+    }
+
+    public static function get_codigos(){
+        return Cache::remember('listar_codigos_modelos', 2000, function (){
+            return DB::connection('banco')->table('modelos_declarativos')
+                ->select('codmodelodeclarativo')
+                ->get();
+        });
     }
 
 }

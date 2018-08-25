@@ -16,10 +16,10 @@ class CreateRegrasTable extends Migration
         Schema::connection('banco')->create('regras', function (Blueprint $table) {
             $table->increments('codregra');
 
-            $table->bigInteger('codrepositorio');
-            $table->bigInteger('codusuario');
-            $table->bigInteger('codprojeto');
-            $table->bigInteger('codmodelodeclarativo');
+            $table->bigInteger('codrepositorio')->unsigned();
+            $table->bigInteger('codusuario')->unsigned();
+            $table->bigInteger('codprojeto')->unsigned();
+            $table->bigInteger('codmodelodeclarativo')->unsigned();
 
             $table->bigInteger('codoutraregra')->nullable();
 

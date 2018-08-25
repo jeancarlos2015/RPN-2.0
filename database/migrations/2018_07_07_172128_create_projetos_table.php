@@ -19,8 +19,8 @@ class CreateProjetosTable extends Migration
             $table->string('descricao');
             $table->boolean('visibilidade')->default(true);
             $table->boolean('publico')->default(true);
-            $table->bigInteger('codrepositorio');
-            $table->bigInteger('codusuario');
+            $table->bigInteger('codrepositorio')->unsigned();
+            $table->bigInteger('codusuario')->unsigned();
 
             $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
             $table->foreign('codusuario')->references('codusuario')->on('users');
