@@ -36,7 +36,6 @@ class RepositorioController extends Controller
             $campos = Repositorio::campos();
             $tipo = 'repositorio';
             $log = LogRepository::log();
-
             return view('controle_repositorios.index', compact('repositorios', 'titulos', 'campos', 'tipo', 'log'));
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();

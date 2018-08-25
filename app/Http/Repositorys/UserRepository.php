@@ -20,7 +20,7 @@ class UserRepository extends Repository
 
     public static function listar(){
         return  Cache::remember('listar_codigos_users' , 2000, function (){
-            return User::all();
+            return User::get();
         });
 
     }

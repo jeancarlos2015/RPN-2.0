@@ -20,17 +20,10 @@ class ModeloDiagramaticoController extends Controller
 
         try {
             $projeto = Projeto::findOrFail($codprojeto);
-            $repositorio = Repositorio::findOrFail($codrepositorio);
+            $repositorio = $projeto->repositorio;
             $titulos = ModeloDiagramatico::titulos();
-            $modelos_declarativos = collect(ModeloDeclarativo::all()
-                ->where('codrepositorio', '=', $codrepositorio)
-                ->where('codprojeto', '=', $codprojeto)
-                ->where('visibilidade', '=', 'true'));
-            $modelos_diagramaticos = collect(ModeloDiagramatico::all()
-                ->where('codrepositorio', '=', $codrepositorio)
-                ->where('codprojeto', '=', $codprojeto)
-                ->where('visibilidade', '=', 'true'));
-
+            $modelos_declarativos = $projeto->modelos_declarativos;
+            $modelos_diagramaticos = $projeto->modelos_diagramaticos;
             $modelos = $modelos_declarativos->merge($modelos_diagramaticos);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();

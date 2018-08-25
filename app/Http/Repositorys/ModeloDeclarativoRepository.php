@@ -34,8 +34,8 @@ class ModeloDeclarativoRepository extends Repository
 
     public static function listar_objetos_fluxo($codmodelodeclarativo)
     {
-        return ObjetoFluxo::all()
-            ->where('codmodelodeclarativo', '=', $codmodelodeclarativo);
+        return ObjetoFluxo::where('codmodelodeclarativo', '=', $codmodelodeclarativo)
+            ->get();
     }
 
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)

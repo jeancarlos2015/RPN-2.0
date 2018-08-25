@@ -21,11 +21,12 @@ $factory->define(\App\Http\Models\ModeloDiagramatico::class, function (Faker $fa
         'nome' => $faker->name,
         'descricao' => 'Nenhum',
         'xml_modelo' => \App\Http\Models\ModeloDiagramatico::get_modelo_default($faker->name),
-        'codprojeto' => $projeto->codprojeto ,
-        'codrepositorio' => $projeto->codrepositorio ,
-        'codusuario' => $projeto->codusuario ,
+        'codprojeto' => $projeto->codprojeto,
+        'codrepositorio' => $projeto->codrepositorio,
+        'codusuario' => $projeto->codusuario,
         'visibilidade' => 'true',
         'publico' => 'true',
         'tipo' => 'bpmn'
     ];
+
 });

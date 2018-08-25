@@ -26,9 +26,15 @@ class ObjetoFluxoRepository extends Repository
         return collect(ObjetoFluxo::whereCodusuario(Auth::user()->codusuario)
             ->orWhere('visibilidade', '=', 'true')
             ->get());
-
     }
-
+    public static function listar_por_modelo_declarativo($codmodelodeclarativo)
+    {
+        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
+            return collect(ObjetoFluxo::where('codmodelodeclarativo','=',$codmodelodeclarativo)->get());
+        }
+        return collect(ObjetoFluxo::where('codmodelodeclarativo','=',$codmodelodeclarativo)
+            ->get());
+    }
 
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
     {

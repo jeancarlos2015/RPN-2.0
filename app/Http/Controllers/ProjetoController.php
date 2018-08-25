@@ -17,7 +17,8 @@ class ProjetoController extends Controller
     {
         try {
             $repositorio = Repositorio::findOrFail($codrepositorio);
-            $projetos = ProjetoRepository::listar_por_repositorio($codrepositorio);
+//            $projetos = ProjetoRepository::listar_por_repositorio($codrepositorio);
+            $projetos = $repositorio->projetos;
             $titulos = Projeto::titulos_da_tabela();
             $tipo = 'projeto';
             $log = LogRepository::log();
@@ -139,6 +140,7 @@ class ProjetoController extends Controller
     {
         try {
             $projeto = Projeto::findOrFail($codprojeto);
+
             return redirect()->route('controle_modelos_diagramaticos_index',
                 [
                     'codrepositorio' => $projeto->codrepositorio,

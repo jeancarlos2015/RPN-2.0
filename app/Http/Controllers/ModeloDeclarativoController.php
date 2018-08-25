@@ -55,9 +55,9 @@ class ModeloDeclarativoController extends Controller
         return [];
     }
 
-    private function quantidades()
+    private function quantidades($codmodelodeclarativo)
     {
-        $qt_objetos_fluxos = ObjetoFluxoRepository::count();
+        $qt_objetos_fluxos = ObjetoFluxoRepository::listar_por_modelo_declarativo($codmodelodeclarativo)->count();
         $qt_regras = RegraRepository::listar()->count();
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
 
@@ -127,7 +127,7 @@ class ModeloDeclarativoController extends Controller
         $tipo = 'modelos';
         $titulos = $this->titulos();
         $rotas = $this->rotas();
-        $quantidades = $this->quantidades();
+        $quantidades = $this->quantidades($codmodelodeclarativo);
         $modelodeclarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
         if (count($rotas) == 0) {
             $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma repositório!!";
