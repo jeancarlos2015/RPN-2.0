@@ -24,3 +24,20 @@
     ])
 @endsection
 
+@section('codigo_js')
+    <script>
+        $(form).on('submit', function () {
+            var $this = $(this);    // reference to the current scope
+            dialog.confirm({
+                message: 'Deseja Desvincular Este Usuário?',
+                confirm: function () {
+                    $this.off('submit').submit();
+                },
+                cancel: function () {
+                }
+            });
+
+            return false;
+        });
+    </script>
+@endsection
