@@ -31,9 +31,10 @@ class ModeloDiagramaticoRepository extends Repository
     }
     public static function listar_modelos_publicos()
     {
-        $result =  collect(ModeloDiagramatico::where('publico','=','true')
-            ->get());
-        return $result;
+        return Cache::remember('listar_codigos_modelos_publicos', 2000, function () {
+            return collect(ModeloDiagramatico::where('publico', '=', 'true')
+                ->get());
+        });
     }
 
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
