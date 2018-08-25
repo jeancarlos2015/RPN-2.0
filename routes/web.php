@@ -1,26 +1,10 @@
 <?php
 
+Route::get('publico/modelos', 'ModeloDiagramaticoController@modelos_publicos')
+    ->name('modelos_publicos');
 
-Route::get('publico/modelos', function () {
-    $titulos = \App\Http\Models\ModeloDiagramatico::titulos();
-    $modelos = \App\Http\Repositorys\ModeloDiagramaticoRepository::listar_modelos_publicos();
-    $tipo = 'publico';
-    $contador=0;
-    return view('modelos_publicos.index', compact('modelos', 'titulos', 'tipo','contador'));
-})->name('modelos_publicos');
-
-Route::get('publico/modelos/{codmodelo}',function ($codmodelo){
-    $modelo = \App\Http\Models\ModeloDiagramatico::findOrFail($codmodelo);
-    $path_modelo = public_path('novo_bpmn/');
-    if (!file_exists($path_modelo)) {
-        mkdir($path_modelo, 777);
-    }
-    $file = $path_modelo . 'novo.bpmn';
-    file_put_contents($file, $modelo->xml_modelo);
-    sleep(2);
-    return view('modelos_publicos.visualizar_modelo',compact('modelo'));
-})->name('visualizar_modelo_publico');
-
+Route::get('publico/modelos/{codmodelo}', 'ModeloDiagramaticoController@visualizar_modelo_publico')
+    ->name('visualizar_modelo_publico');
 
 Route::get('/', function () {
     return view('inicio');
@@ -49,9 +33,6 @@ Route::get('email/index3', function () {
 });
 
 
-
-
-
 Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(
@@ -69,7 +50,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::get('controle_padrao_create_conjunto/modelo_delcarativo/{codmodelodeclarativo}', 'PadraoRecomendacaoController@create_recomendacao_conjunto')
             ->name('controle_padrao_create_conjunto')
             ->middleware('can:acesso');
-
 
 
         Route::post('controle_padrao_salvar', 'PadraoRecomendacaoController@salvar')
@@ -98,9 +78,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         Route::resource('controle_repositorios', 'RepositorioController')
             ->middleware('can:acesso');
-
-
-
 
 
         Route::resource('controle_modelos_diagramaticos', 'ModeloDiagramaticoController')

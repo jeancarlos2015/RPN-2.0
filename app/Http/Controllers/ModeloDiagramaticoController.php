@@ -310,4 +310,24 @@ class ModeloDiagramaticoController extends Controller
         $result = ModeloDiagramaticoRepository::gravar($request);
         return \Response::json($result);
     }
+
+    public function visualizar_modelo_publico($codmodelo){
+        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+        $path_modelo = public_path('novo_bpmn/');
+        if (!file_exists($path_modelo)) {
+            mkdir($path_modelo, 777);
+        }
+        $file = $path_modelo . 'novo.bpmn';
+        file_put_contents($file, $modelo->xml_modelo);
+        sleep(2);
+        return view('modelos_publicos.visualizar_modelo',compact('modelo'));
+    }
+
+    public function modelos_publicos(){
+        $titulos = ModeloDiagramatico::titulos();
+        $modelos = ModeloDiagramaticoRepository::listar_modelos_publicos();
+        $tipo = 'publico';
+        $contador=0;
+        return view('modelos_publicos.index', compact('modelos', 'titulos', 'tipo','contador'));
+    }
 }
