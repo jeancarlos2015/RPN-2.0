@@ -3,6 +3,18 @@
 @section('canvas_visualizacao')
 
     <div id="canvas"></div>
+    <a id="js-download-diagram" href title="download BPMN diagram">
+        BPMN diagram
+    </a>
+
+@endsection
+
+@section('modo')
+
+    @includeIf('componentes.descricao',[
+            'descricao_titulo_menu' => 'Você está no modo de Visualização de modelo. As alterações que você fizer aqui deverão ser salvas.',
+            'nome_titulo_menu' => 'Modo de Visualização do Modelo'
+        ])
 @endsection
 
 @section('boltao_voltar')

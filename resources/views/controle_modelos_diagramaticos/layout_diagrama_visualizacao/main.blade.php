@@ -6,7 +6,7 @@
     html, body, #canvas {
         padding: 0;
         margin: 0;
-        height: 100%
+        height: 100%;
     }
 
     h1 {
@@ -30,6 +30,15 @@
         min-height: 16px;
         width: 50px;
         text-align: center;
+    }
+
+    @media screen and (max-width: 720px){
+        html, body, #canvas {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            top: 100px;
+        }
     }
 </style>
 <body>
