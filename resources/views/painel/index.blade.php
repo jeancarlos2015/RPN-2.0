@@ -5,6 +5,7 @@
     'sub_titulo' => ''
 
     ])
+
     @includeIf('layouts.admin.componentes.cards')
 @endsection
 @section('modo')
@@ -12,4 +13,14 @@
     'titulo' => 'Painel Principal',
     'descricao' => 'Painel Principal'
     ])
+@endsection
+
+
+@section('codigo_css')
+    <style>
+        .desce-painel{
+            margin-top: 2%;
+        }
+    </style>
+
 @endsection

@@ -20,7 +20,7 @@ class CreateBranchsTable extends Migration
             $table->bigInteger('codusuario')->unsigned();
 
 
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+//            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });
     }

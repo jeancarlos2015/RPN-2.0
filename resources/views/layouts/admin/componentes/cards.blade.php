@@ -1,5 +1,5 @@
 <!-- Icon Cards-->
-<div class="row">
+<div class="row desce-painel">
     @if(!empty($funcionalidades))
         @for($indice=0;$indice<count($funcionalidades);$indice++)
             @includeIf('layouts.admin.componentes.card',

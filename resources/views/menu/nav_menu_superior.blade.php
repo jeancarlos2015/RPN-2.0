@@ -2,6 +2,7 @@
 
     @yield('boltao_voltar')
 
+    @yield('modo')
 
     @Auth
 
@@ -27,7 +28,7 @@
             @endif
         @endif
 
-        @yield('modo')
+
 
         @if(Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
             @includeIf('layouts.admin.layouts.sub_componentes.li_nav',

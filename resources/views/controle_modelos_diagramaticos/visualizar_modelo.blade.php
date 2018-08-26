@@ -1,17 +1,16 @@
-@extends('controle_modelos_diagramaticos.layout_diagrama.main')
+@extends('controle_modelos_diagramaticos.layout_diagrama_visualizacao.main')
 
-@section('content')
+@section('canvas_visualizacao')
 
-<div id="canvas"></div>
+    <div id="canvas"></div>
 @endsection
-
 @section('modo')
+
     @includeIf('componentes.descricao',[
-            'descricao_titulo_menu' => 'Você está no modo de visualização de modelo. As alterações que você fizer aqui não poderão ser salvas.',
-            'nome_titulo_menu' => 'Modo De Visualização Do Modelo'
+            'descricao_titulo_menu' => 'Você está no modo de Visualização de modelo. As alterações que você fizer aqui deverão ser salvas.',
+            'nome_titulo_menu' => 'Modo de Visualização do Modelo'
         ])
 @endsection
-
 @section('boltao_voltar')
 
     <li class="nav-item">
@@ -22,5 +21,4 @@
             <span class="sr-only"></span>
         </a>
     </li>
-
 @endsection

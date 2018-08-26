@@ -26,7 +26,7 @@
 
 @section('codigo_js')
     <script>
-        $(form).on('submit', function () {
+        $('#desvincular').on('submit', function () {
             var $this = $(this);    // reference to the current scope
             dialog.confirm({
                 message: 'Deseja Desvincular Este Usuário?',

@@ -23,8 +23,8 @@ class CreateProjetosTable extends Migration
             $table->bigInteger('codrepositorio')->unsigned();
             $table->bigInteger('codusuario')->unsigned();
 
-            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+//            $table->foreign('codusuario')->references('codusuario')->on('users');
 
 
             $table->timestamps();
