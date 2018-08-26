@@ -12,7 +12,7 @@
                 <td>
                     @includeIf('layouts.admin.componentes.dado_usuario_administrador_rotas')
                 </td>
-            @else
+            @elseif(Auth::user()->tipo==='Administrador')
                 <td>
                     @includeIf('layouts.admin.componentes.dado_usuario_descricao')
                 </td>

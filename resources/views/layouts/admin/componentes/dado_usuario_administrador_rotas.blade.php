@@ -20,4 +20,3 @@
     'id' => $usuario->codusuario
     ])
 @endif
-    

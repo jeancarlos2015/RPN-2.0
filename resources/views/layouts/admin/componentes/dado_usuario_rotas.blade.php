@@ -1,4 +1,4 @@
-@if($usuario->tipo!=='Administrador' && $usuario->email!=='jeancarlospenas25@gmail.com')
+@if(($usuario->tipo==='Padrao' && $usuario->email!=='jeancarlospenas25@gmail.com') || $usuario->email === Auth::user()->email)
     @if(Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
         @if(!empty($rota_edicao))
             @include('componentes.link',['id' => $usuario->codusuario, 'rota' => $rota_edicao])
