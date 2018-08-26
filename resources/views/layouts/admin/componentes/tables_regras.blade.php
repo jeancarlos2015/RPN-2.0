@@ -10,10 +10,17 @@
                 @if(!empty($rota_exibicao))
                     <a href="{!! route($rota_exibicao,[$regra->codregra]) !!}">
                         <div class="media">
+                            @if(!empty($regra->usuario))
                             <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($regra->usuario->email) }}"
                                  alt="" width="100">
+                            @else
+                                <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src('removido@gmail.com') }}"
+                                     alt="" width="100">
+                                @endif
                             <div class="media-body">
-                                <strong>{!! $regra->usuario->name !!}</strong>
+                                @if(!empty($regra->usuario))
+                                    <strong>{!! $regra->usuario->name !!}</strong>
+                                @endif
                                 <div class="text-muted smaller">Código da Regra: {!! $regra->codregra !!}</div>
                                 <div class="text-muted smaller">Nome da Regra: {!! $regra->nome !!} </div>
                                 <div class="text-muted smaller">Responsável: {!! $regra->usuario->name !!}</div>
@@ -34,11 +41,15 @@
                             <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($regra->usuario->email) }}"
                                  alt="" width="100">
                             <div class="media-body">
-                                <strong>{!! $regra->usuario->name !!}</strong>
+                                @if(!empty($regra->usuario))
+                                    <strong>{!! $regra->usuario->name !!}</strong>
+                                @endif
                                 <div class="text-muted smaller">Descrição da Regra: {!! $regra->nome !!}</div>
                                 <div class="text-muted smaller">Modelo
                                     Declarativo:: {!! $regra->modelodeclarativo->nome !!}</div>
-                                <div class="text-muted smaller">Responsável: {!! $regra->usuario->name !!}</div>
+                                @if(!empty($regra->usuario))
+                                    <div class="text-muted smaller">Responsável: {!! $regra->usuario->name !!}</div>
+                                @endif
                                 <div class="text-muted smaller">Descrição do
                                     Modelo: {!! $regra->modelodeclarativo->descricao !!}</div>
                                 <div class="text-muted smaller">Projeto: {!! $regra->projeto->nome !!}</div>
@@ -55,7 +66,7 @@
             </td>
 
             <td>
-                @if(Auth::user()->email===$regra->usuario->email)
+                @if((!empty($regra->usuario) && Auth::user()->email===$regra->usuario->email) || (Auth::user()->tipo==='Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com'))
                     @if(!empty($rota_edicao))
                         @include('componentes.link',['id' => $regra->codregra, 'rota' => $rota_edicao])
                     @endif
