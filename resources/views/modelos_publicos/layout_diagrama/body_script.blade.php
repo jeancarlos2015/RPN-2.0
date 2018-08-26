@@ -1,1 +1,1 @@
-<script src="{{asset('bpmn/bpmn.js')}}"></script>
+<script src="{{asset('bpmn_modelador.jsdelador.js')}}"></script>

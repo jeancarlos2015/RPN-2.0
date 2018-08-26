@@ -14,3 +14,5 @@
         $('div.alert').delay(30000).slideUp(59);
     });
 </script>
+
+@yield('codigo_canvas_js')

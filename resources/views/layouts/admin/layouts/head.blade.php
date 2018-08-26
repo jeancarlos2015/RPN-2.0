@@ -18,4 +18,6 @@
 
     @yield('codigo_css')
 
+
+
 </head>
