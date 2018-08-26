@@ -7,6 +7,7 @@ use App\User;
 use App\Http\Models\Projeto;
 use App\Http\Models\ModeloDiagramatico;
 use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\AtribuicaoProjetoUsuario;
 use Illuminate\Database\Eloquent\Model;
 
 class Repositorio extends Model
@@ -105,6 +106,11 @@ class Repositorio extends Model
     public function projetos()
     {
         return $this->hasMany(Projeto::class, 'codrepositorio', 'codrepositorio');
+    }
+
+    public function atribuicao_projeto_usuarios()
+    {
+        return $this->hasMany(AtribuicaoProjetoUsuario::class, 'codrepositorio', 'codrepositorio');
     }
 
     public function modelos_diagramaticos()

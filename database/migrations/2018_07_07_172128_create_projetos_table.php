@@ -14,11 +14,12 @@ class CreateProjetosTable extends Migration
     public function up()
     {
         Schema::connection('banco')->create('projetos', function (Blueprint $table) {
-            $table->increments('codprojeto');
+            $table->bigincrements('codprojeto');
             $table->string('nome');
             $table->string('descricao');
             $table->boolean('visibilidade')->default(true);
             $table->boolean('publico')->default(true);
+
             $table->bigInteger('codrepositorio')->unsigned();
             $table->bigInteger('codusuario')->unsigned();
 

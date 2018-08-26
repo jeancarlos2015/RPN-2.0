@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProjetoUsuario extends Model
+class AtribuicaoRepositorioUsuario extends Model
 {
     //
 }

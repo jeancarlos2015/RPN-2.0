@@ -24,4 +24,6 @@
     'objeto' => $projeto
     ])
 @endif
+
+
 <button type="submit" class="btn btn-dark form-control">{!! $acao !!}</button>

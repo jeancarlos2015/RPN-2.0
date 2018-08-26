@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProjetoUsuariosTable extends Migration
+class CreateAtribuicaoRepositorioUsuariosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProjetoUsuariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('projeto_usuarios', function (Blueprint $table) {
+        Schema::create('atribuicao_repositorio_usuarios', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateProjetoUsuariosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projeto_usuarios');
+        Schema::dropIfExists('atribuicao_repositorio_usuarios');
     }
 }
