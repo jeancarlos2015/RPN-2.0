@@ -1,5 +1,5 @@
 // we use stringify to inline an example XML document.
-import qrDiagram from '../resources/qr-code.bpmn';
+import qrDiagram from '../../novo_bpmn/novo.bpmn';
 
 import BpmnViewer from 'bpmn-js/lib/NavigatedViewer';
 

@@ -1,9 +1,9 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
 
-var _qrCode = require('../resources/qr-code.bpmn');
+var _novo = require('../../novo_bpmn/novo.bpmn');
 
-var _qrCode2 = _interopRequireDefault(_qrCode);
+var _novo2 = _interopRequireDefault(_novo);
 
 var _NavigatedViewer = require('bpmn-js/lib/NavigatedViewer');
 
@@ -26,7 +26,7 @@ var bpmnViewer = new _NavigatedViewer2.default({
 
 // import qr diagram
 
-bpmnViewer.importXML(_qrCode2.default, function (err) {
+bpmnViewer.importXML(_novo2.default, function (err) {
 
   if (err) {
     return console.error('could not import BPMN 2.0 diagram', err);
@@ -80,7 +80,7 @@ bpmnViewer.importXML(_qrCode2.default, function (err) {
   });
 });
 
-},{"../resources/qr-code.bpmn":99,"bpmn-js/lib/NavigatedViewer":2}],2:[function(require,module,exports){
+},{"../../novo_bpmn/novo.bpmn":99,"bpmn-js/lib/NavigatedViewer":2}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

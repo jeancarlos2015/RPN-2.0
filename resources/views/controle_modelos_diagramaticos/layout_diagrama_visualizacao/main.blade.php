@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 @includeIf('layouts.admin.layouts.head')
-@includeIf('controle_modelos_diagramaticos.layout_diagrama_visualizacao.head')
-<body>
 @includeIf('controle_modelos_diagramaticos.layout_diagrama.nav')
-@yield('canvas')
-@includeIf('controle_modelos_diagramaticos.layout_diagrama_visualizacao.scripts')
+<style type="text/css">
+    html, body, #canvas {
+        padding: 0;
+        margin: 0;
+        height: 100%
+    }
+
+    h1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px 20px;
+        margin: 0;
+        z-index: 1;
+        background: rgba(255, 255, 255, .8);
+        border: solid 1px #CCC;
+    }
+
+    .diagram-note {
+        background-color: rgba(66, 180, 21, 0.7);
+        color: White;
+        border-radius: 5px;
+        font-family: Arial;
+        font-size: 12px;
+        padding: 5px;
+        min-height: 16px;
+        width: 50px;
+        text-align: center;
+    }
+</style>
+<body>
+@yield('canvas_visualizacao')
+<script src="{!! asset('bpmn-app/dist/app.js') !!}"></script>
+@includeIf('layouts.admin.layouts.scripts')
 </body>
 </html>
