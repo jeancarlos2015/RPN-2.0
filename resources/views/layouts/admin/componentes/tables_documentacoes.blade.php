@@ -23,7 +23,7 @@
             </td>
 
             <td>
-                @if(Auth::user()->email===$documentacao->usuario->email)
+                @if((!empty($documentacao->usuario) && Auth::user()->email===$documentacao->usuario->email) || (Auth::user()->tipo==='Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com'))
                     @if(!empty($rota_edicao))
                         @include('componentes.link',['id' => $documentacao->coddocumentacao, 'rota' => $rota_edicao])
                     @endif

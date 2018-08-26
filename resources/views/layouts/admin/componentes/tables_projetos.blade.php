@@ -36,7 +36,7 @@
                 </td>
 
                 <td>
-                    @if(Auth::user()->email===$projeto1->usuario->email)
+                    @if((!empty($projeto1->usuario) && Auth::user()->email===$projeto1->usuario->email) || (Auth::user()->tipo==='Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com'))
                         @if(!empty($rota_edicao))
                             @include('componentes.link',['id' => $projeto1->codprojeto, 'rota' => $rota_edicao])
                         @endif

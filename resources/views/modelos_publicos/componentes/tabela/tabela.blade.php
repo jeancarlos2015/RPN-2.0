@@ -19,7 +19,7 @@
                 </thead>
                 <tfoot>
                 <tr>
-                    <th>Modelos/th>
+                    <th>Modelos</th>
                 </tr>
                 </tfoot>
                 <tbody>

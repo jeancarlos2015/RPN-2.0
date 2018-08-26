@@ -10,11 +10,20 @@
                 @if($modelo1->tipo==='bpmn')
                     <a href="{!! route($rota_exibicao,[$modelo1->codmodelodiagramatico]) !!}">
                         <div class="media">
-                            <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($modelo1->usuario->email) }}"
-                                 alt="" width="100">
+                            @if(!empty($modelo1->usuario->email))
+                                <img class="d-flex mr-3 rounded-circle"
+                                     src="{{ Gravatar::src($modelo1->usuario->email) }}"
+                                     alt="" width="100">
+                            @else
+                                <img class="d-flex mr-3 rounded-circle"
+                                     src="{{ Gravatar::src('removido@gmail.com') }}"
+                                     alt="" width="100">
+                            @endif
                             <div class="media-body">
                                 <strong>Modelo - {!!  $modelo1->nome !!}</strong>
-                                <div class="text-muted smaller">Responsável: {!! $modelo1->usuario->name !!}</div>
+                                @if(!empty($modelo1->usuario))
+                                    <div class="text-muted smaller">Responsável: {!! $modelo1->usuario->name !!}</div>
+                                @endif
                                 <div class="text-muted smaller">Descrição do Modelo: {!! $modelo1->descricao !!}</div>
                                 <div class="text-muted smaller">Tipo: {!! $modelo1->tipo !!}</div>
                                 <div class="text-muted smaller">Projeto: {!! $modelo1->projeto->nome !!}</div>
@@ -28,11 +37,20 @@
                 @else
                     <a href="{!! route('controle_modelos_declarativos.show',[$modelo1->codmodelodeclarativo]) !!}">
                         <div class="media">
-                            <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($modelo1->usuario->email) }}"
-                                 alt="" width="100">
+                            @if(!empty($modelo1->usuario))
+                                <img class="d-flex mr-3 rounded-circle"
+                                     src="{{ Gravatar::src($modelo1->usuario->email) }}"
+                                     alt="" width="100">
+                            @else
+                                <img class="d-flex mr-3 rounded-circle"
+                                     src="{{ Gravatar::src('removido@gmail.com') }}"
+                                     alt="" width="100">
+                            @endif
                             <div class="media-body">
                                 <strong>Modelo - {!!  $modelo1->nome !!}</strong>
-                                <div class="text-muted smaller">Responsável: {!! $modelo1->usuario->name !!}</div>
+                                @if(!empty($modelo1->usuario))
+                                    <div class="text-muted smaller">Responsável: {!! $modelo1->usuario->name !!}</div>
+                                @endif
                                 <div class="text-muted smaller">Descrição do Modelo: {!! $modelo1->descricao !!}</div>
                                 <div class="text-muted smaller">Tipo: {!! $modelo1->tipo !!}</div>
                                 <div class="text-muted smaller">Projeto: {!! $modelo1->projeto->nome !!}</div>
@@ -49,7 +67,8 @@
             </td>
             @if($modelo1->tipo==='bpmn')
                 <td>
-                    @if(Auth::user()->email===$modelo1->usuario->email)
+
+                    @if(!empty($modelo1->usuario) && Auth::user()->email===$modelo1->usuario->email || Auth::user()->tipo==='Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com')
                         @if(!empty($rota_edicao))
                             @include('componentes.link',['id' => $modelo1->codmodelodiagramatico, 'rota' => $rota_edicao])
                         @endif
@@ -67,7 +86,7 @@
                 </td>
             @else
                 <td>
-                    @if(Auth::user()->email===$modelo1->usuario->email)
+                    @if(!empty($modelo1->usuario) && Auth::user()->email===$modelo1->usuario->email || Auth::user()->tipo==='Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com')
                         @if(!empty($rota_edicao))
                             @include('componentes.link',['id' => $modelo1->codmodelodeclarativo, 'rota' => 'controle_modelos_declarativos.edit'])
                         @endif
