@@ -6,4 +6,4 @@
 
 <!-- needed for this example only -->
 <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
-<link  href="{{asset('css/bpmn/bpmn.css')}}" rel="stylesheet">
+

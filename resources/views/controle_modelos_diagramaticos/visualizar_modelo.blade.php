@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div id="canvas"></div>
+    <div id="canvas"></div>
 @endsection
 
 @section('modo')
@@ -23,4 +23,10 @@
         </a>
     </li>
 
+@endsection
+
+
+@section('codigo_js_bpmn')
+    {{--<script src="{{asset('bpmn/bpmn.js')}}"></script>--}}
+    <script src="{{asset('bpmn-app/dist/app.js')}}"></script>
 @endsection

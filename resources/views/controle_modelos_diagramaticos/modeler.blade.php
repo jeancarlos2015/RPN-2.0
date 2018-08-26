@@ -26,3 +26,8 @@
 
 @endsection
 
+
+@section('codigo_js_bpmn')
+    <script src="{{asset('bpmn/bpmn.js')}}"></script>
+    {{--<script src="{{asset('bpmn-app/dist/app.js')}}"></script>--}}
+@endsection
