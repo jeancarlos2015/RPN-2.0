@@ -14,8 +14,22 @@ class CreateAtribuicaoRepositorioUsuariosTable extends Migration
     public function up()
     {
         Schema::create('atribuicao_repositorio_usuarios', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigincrements('codatribuicaorepositoriousuarios');
+
+            $table->bigInteger('codrepositorio')->unsigned();
+            $table->bigInteger('codusuario')->unsigned();
+
+            $table->string('nome')->default('grupo');
+
             $table->timestamps();
+        });
+
+        Schema::table('atribuicao_repositorio_usuarios', function($table) {
+            $table->foreign('codusuario')->references('codusuario')->on('users');
+        });
+
+        Schema::table('atribuicao_repositorio_usuarios', function($table) {
+            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
         });
     }
 

@@ -15,19 +15,29 @@ class CreateProjetosTable extends Migration
     {
         Schema::connection('banco')->create('projetos', function (Blueprint $table) {
             $table->bigincrements('codprojeto');
+
+            $table->bigInteger('codrepositorio')->unsigned();
+            $table->bigInteger('codusuario')->unsigned();
+
+
             $table->string('nome');
             $table->string('descricao');
             $table->boolean('visibilidade')->default(true);
             $table->boolean('publico')->default(true);
 
-            $table->bigInteger('codrepositorio')->unsigned();
-            $table->bigInteger('codusuario')->unsigned();
-
-//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
 
 
             $table->timestamps();
+        });
+
+
+        Schema::connection('banco')->table('projetos', function($table) {
+            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+        });
+
+
+        Schema::connection('banco')->table('projetos', function($table) {
+            $table->foreign('codusuario')->references('codusuario')->on('users');
         });
     }
 

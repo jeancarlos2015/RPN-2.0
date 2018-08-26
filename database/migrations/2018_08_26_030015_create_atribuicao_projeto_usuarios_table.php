@@ -16,17 +16,33 @@ class CreateAtribuicaoProjetoUsuariosTable extends Migration
         Schema::create('atribuicao_projeto_usuarios', function (Blueprint $table) {
             $table->bigincrements('codatribuicaoprojetousuario');
 
-            $table->bigInteger('codprojeto');
-            $table->bigInteger('codusuario');
-            $table->bigInteger('codrepositorio')->nullable();
+            $table->bigInteger('codprojeto')
+                ->unsigned();
+
+            $table->bigInteger('codusuario')
+                ->unsigned();
+
+            $table->bigInteger('codrepositorio')
+                ->nullable()
+                ->unsigned();
 
             $table->string('nome')->default('grupo');
 
-//            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
-//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
             $table->timestamps();
         });
+
+        Schema::connection('banco')->table('atribuicao_projeto_usuarios', function($table) {
+            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+        });
+
+        Schema::table('atribuicao_projeto_usuarios', function($table) {
+            $table->foreign('codusuario')->references('codusuario')->on('users');
+        });
+
+        Schema::table('atribuicao_projeto_usuarios', function($table) {
+            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+        });
+
     }
 
     /**

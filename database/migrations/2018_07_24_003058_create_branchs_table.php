@@ -19,9 +19,11 @@ class CreateBranchsTable extends Migration
             $table->string('descricao')->nullable();
             $table->bigInteger('codusuario')->unsigned();
 
-
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
+        });
+
+        Schema::table('branchs', function($table) {
+            $table->foreign('codusuario')->references('codusuario')->on('users');
         });
     }
 

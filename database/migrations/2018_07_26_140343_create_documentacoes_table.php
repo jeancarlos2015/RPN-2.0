@@ -20,9 +20,11 @@ class CreateDocumentacoesTable extends Migration
             $table->string('nome');
             $table->string('descricao');
             $table->string('link');
-
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
+        });
+
+        Schema::table('documentacoes', function($table) {
+            $table->foreign('codusuario')->references('codusuario')->on('users');
         });
     }
 
