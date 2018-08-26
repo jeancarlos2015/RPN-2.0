@@ -6,6 +6,8 @@
 
     @Auth
 
+        @yield('grupo_usuarios_projeto')
+
         <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="{{ route('modelos_publicos') }}">Modelos Públicos</a>
         </li>

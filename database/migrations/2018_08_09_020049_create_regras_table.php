@@ -32,13 +32,25 @@ class CreateRegrasTable extends Migration
             $table->boolean('visivel_repositorio')->default(true);
             $table->boolean('visivel_modelo_declarativo')->default(true);
 
-//            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
-//            $table->foreign('codmodelodeclarativo')->references('codmodelodeclarativo')->on('modelo_declarativos');
-
             $table->timestamps();
         });
+
+        Schema::connection('banco')->table('regras', function($table) {
+            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+        });
+
+        Schema::connection('banco')->table('regras', function($table) {
+            $table->foreign('codusuario')->references('codusuario')->on('users');
+        });
+
+        Schema::connection('banco')->table('regras', function($table) {
+            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+        });
+
+        Schema::connection('banco')->table('regras', function($table) {
+            $table->foreign('codmodelodeclarativo')->references('codmodelodeclarativo')->on('modelos_declarativos');
+        });
+
     }
 
     /**

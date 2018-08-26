@@ -26,12 +26,19 @@ class CreateModelosDeclarativosTable extends Migration
             $table->boolean('visibilidade')->default(true);
             $table->boolean('publico')->default(true);
 
-
-//            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
-
             $table->timestamps();
+        });
+
+        Schema::connection('banco')->table('modelos_declarativos', function($table) {
+            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+        });
+
+        Schema::connection('banco')->table('modelos_declarativos', function($table) {
+            $table->foreign('codusuario')->references('codusuario')->on('users');
+        });
+
+        Schema::connection('banco')->table('modelos_declarativos', function($table) {
+            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
         });
     }
 

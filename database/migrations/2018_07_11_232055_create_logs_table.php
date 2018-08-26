@@ -21,11 +21,12 @@ class CreateLogsTable extends Migration
             $table->string('acao');
             $table->string('pagina');
 
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });
 
-
+        Schema::table('logs', function($table) {
+            $table->foreign('codusuario')->references('codusuario')->on('users');
+        });
     }
 
     /**

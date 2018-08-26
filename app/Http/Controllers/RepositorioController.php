@@ -46,103 +46,6 @@ class RepositorioController extends Controller
         }
     }
 
-    private function rotas()
-    {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
-            return [
-                'todos_modelos',
-                'todos_projetos',
-                'controle_repositorios.index',
-                'controle_objetos_fluxos.index',
-                'todas_regras'
-            ];
-        } else if (!empty(Auth::user()->repositorio) && Auth::user()->tipo==='Padrao') {
-            return [
-                'todos_modelos',
-                'todos_projetos',
-                'controle_objetos_fluxos.index',
-                'todas_regras'
-            ];
-        }
-        return [];
-
-    }
-
-    private function titulos()
-    {
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
-            return [
-                'Todos os Modelos',
-                'Todos os Projetos',
-                'Todos os Repositórios',
-                'Todos os Objetos de Fluxos',
-                'Todas as Regras'
-            ];
-        } else if (!empty(Auth::user()->repositorio) && Auth::user()->tipo==='Padrao') {
-            return [
-                'Todos os Modelos',
-                'Todos os Projetos',
-                'Todos os Objetos de Fluxos',
-                'Todas as Regras'
-            ];
-        }
-        return [];
-    }
-
-    private function quantidades()
-    {
-        $qt_organizacoes = RepositorioRepository::count();
-        $qt_projetos = ProjetoRepository::count();
-        $qt_modelos_diagramaticos = ModeloDiagramaticoRepository::listar()->count();
-        $qt_modelos_declarativos =  ModeloDeclarativoRepository::listar()->count();
-        $qt_modelos = $qt_modelos_declarativos + $qt_modelos_diagramaticos;
-        $qt_objetos_fluxos = ObjetoFluxoRepository::count();
-        $qt_regras = Regra::all()->count();
-        if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador') {
-
-            return [
-                $qt_modelos,
-                $qt_projetos,
-                $qt_organizacoes,
-                $qt_objetos_fluxos,
-                $qt_regras,
-            ];
-        } else if (!empty(Auth::user()->repositorio) && Auth::user()->tipo==='Padrao') {
-            return [
-                $qt_modelos,
-                $qt_projetos,
-                $qt_objetos_fluxos,
-                $qt_regras,
-            ];
-        }
-        return 0;
-    }
-
-    public function painel()
-    {
-
-        try {
-            GitSistemaRepository::atualizar_todas_branchs();
-            $log = LogRepository::log();
-            $tipo = 'painel';
-            $titulos = $this->titulos();
-            $rotas = $this->rotas();
-            $quantidades = $this->quantidades();
-            if (empty(Auth::user()->repositorio) && Auth::user()->email!=='jeancarlospenas25@gmail.com' && Auth::user()->tipo!=='Administrador') {
-                $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma repositório!!";
-                $data['tipo'] = 'success';
-                $this->create_log($data);
-            }
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'painel';
-            $this->create_log($data);
-        }
-        return view('painel.index', compact('titulos', 'quantidades', 'rotas', 'tipo', 'log'));
-    }
-
 
     public function create()
     {
@@ -150,32 +53,6 @@ class RepositorioController extends Controller
         return view('controle_repositorios.create', compact('dados'));
     }
 
-    public function desvincular_usuario_repositorio(Request $request)
-    {
-
-            try {
-                if ($request->desvincular === 'true') {
-                    $user = User::findOrFail($request->codusuario);
-                    $repositorio = $user->repositorio;
-                    $user->codrepositorio = null;
-                    $user->update();
-                    \Mail::to($user->email)->send(new EmailVinculacaoUsuario($repositorio));
-                }
-                $data['tipo'] = 'success';
-                $this->create_log($data);
-                return redirect()->route('vinculo_usuario_repositorio');
-            } catch (\Exception $ex) {
-                $data['mensagem'] = $ex->getMessage();
-                $data['tipo'] = 'error';
-                $data['pagina'] = 'Painel';
-                $data['acao'] = 'desvincular_usuario_repositorio';
-                $this->create_log($data);
-                return redirect()->route('controle_usuarios.edit', ['id' => $request->codusuario]);
-            }
-
-
-
-    }
 
 
     public function store(Request $request)
@@ -286,36 +163,6 @@ class RepositorioController extends Controller
         }
     }
 
-    public function vinculo_usuario_repositorio()
-    {
-        $repositorios = RepositorioRepository::listar();
-        $usuarios = User::all();
-        $titulos = User::titulos();
-        $tipo = 'usuario';
-        return view('vinculo_usuario_repositorio.vinculo_usuario_repositorio', compact('repositorios', 'usuarios', 'titulos', 'tipo'));
-    }
 
-    public function vincular_usuario_repositorio(Request $request)
-    {
-        $codusuario = $request->codusuario;
-        $codrepositorio = $request->codrepositorio;
-        try {
-            $repositorio = Repositorio::findOrFail($codrepositorio);
-            $usuario = UserRepository::vincular($codusuario, $codrepositorio);
-            $data['tipo'] = 'success';
-            $this->create_log($data);
-            \Mail::to($usuario->email)->send(new EmailVinculacaoUsuario($repositorio));
-        } catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'vincular_usuario_repositorio';
-            $this->create_log($data);
-        }
-        if (!empty($request->vinculo)){
-            return redirect()->route('vinculo_usuario_repositorio');
-        }
-        return redirect()->route('controle_usuarios.edit',['id' => $codusuario]);
-    }
 
 }

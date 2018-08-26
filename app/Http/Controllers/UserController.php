@@ -182,12 +182,6 @@ class UserController extends Controller
         return redirect()->route('painel');
     }
 
-    public function edit_vinculo($codusuario)
-    {
-        $usuario = User::findOrFail($codusuario);
-        $repositorios = RepositorioRepository::listar();
-        return view('controle_usuario.vinculo', compact('usuario', 'repositorios'));
-    }
 
     public function destroy($id)
     {

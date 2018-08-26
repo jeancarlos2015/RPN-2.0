@@ -29,14 +29,28 @@ class CreateObjetoFluxosTable extends Migration
             $table->boolean('visivel_projeto')->default('false');
             $table->boolean('visivel_repositorio')->default('false');
             $table->boolean('visivel_modelo_declarativo')->default('false');
-
-
-//            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
-//            $table->foreign('codusuario')->references('codusuario')->on('users');
-//            $table->foreign('codmodelodeclarativo')->references('codmodelodeclarativo')->on('modelo_declarativos');
-
+            
             $table->timestamps();
+        });
+
+        Schema::connection('banco')->table('objetos_fluxos', function($table) {
+            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+        });
+
+        Schema::connection('banco')->table('objetos_fluxos', function($table) {
+            $table->foreign('codusuario')->references('codusuario')->on('users');
+        });
+
+        Schema::connection('banco')->table('objetos_fluxos', function($table) {
+            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+        });
+
+        Schema::connection('banco')->table('objetos_fluxos', function($table) {
+            $table->foreign('codmodelodeclarativo')->references('codmodelodeclarativo')->on('modelos_declarativos');
+        });
+
+        Schema::connection('banco')->table('objetos_fluxos', function($table) {
+            $table->foreign('codregra')->references('codregra')->on('regras');
         });
     }
 

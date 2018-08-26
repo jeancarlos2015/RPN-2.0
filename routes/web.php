@@ -10,9 +10,9 @@ Route::get('publico/modelos', function () {
 })->name('modelos_publicos');
 
 
-Route::get('publico/modelos/{codmodelo}',function ($codmodelo){
+Route::get('publico/modelos/{codmodelo}', function ($codmodelo) {
     $modelo = \App\Http\Repositorys\ModeloDiagramaticoRepository::visualizar_modelos_publicos($codmodelo);
-    return view('modelos_publicos.visualizar_modelo',compact('modelo'));
+    return view('modelos_publicos.visualizar_modelo', compact('modelo'));
 })->name('visualizar_modelo_publico');
 
 Route::get('/', function () {
@@ -46,6 +46,13 @@ Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
+
+        Route::get('todos_grupos', 'AtribuicaoProjetoUsuarioController@all')->name('todos_grupos')
+            ->middleware('can:admin');
+
+        Route::resource('controle_projeto_usuarios', 'AtribuicaoProjetoUsuarioController')
+            ->middleware('can:admin');
+
         Route::get('todas_regras', 'RegraController@all')->name('todas_regras')
             ->middleware('can:acesso');
 
@@ -101,6 +108,10 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
         Route::resource('controle_modelos_declarativos', 'ModeloDeclarativoController')
+            ->middleware('can:acesso');
+
+        Route::get('painel_modelo_declarativo/modelodeclarativo/{codmodelodeclarativo}','PainelModeloDeclarativoController@painel_modelo_declarativo')
+            ->name('painel_modelo_declarativo')
             ->middleware('can:acesso');
 
         Route::get('edicao_modelo_declarativo/{codmodelo}', 'ModeloDeclarativoController@edit')
@@ -271,6 +282,6 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('pagina_inicializacao_repositorio')
             ->middleware('can:acesso');
 
-        Route::get('painel', 'RepositorioController@painel')
+        Route::get('painel', 'PainelController@painel')
             ->name('painel');
     });
