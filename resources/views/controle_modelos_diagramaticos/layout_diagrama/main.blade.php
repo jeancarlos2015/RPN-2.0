@@ -4,9 +4,10 @@
 <body>
 @includeIf('controle_modelos_diagramaticos.layout_diagrama.nav')
 @includeIf('controle_modelos_diagramaticos.layout_diagrama.head_body')
+<link  href="{{asset('css/bpmn/bpmn.css')}}" rel="stylesheet">
 
 @yield('content')
-
-@includeIf('controle_modelos_diagramaticos.layout_diagrama.script')
+@yield('codigo_js_bpmn')
+@includeIf('layouts.admin.layouts.scripts')
 </body>
 </html>
