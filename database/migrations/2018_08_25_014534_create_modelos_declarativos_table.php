@@ -27,9 +27,9 @@ class CreateModelosDeclarativosTable extends Migration
             $table->boolean('publico')->default(true);
 
 
-            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+//            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+//            $table->foreign('codusuario')->references('codusuario')->on('users');
 
             $table->timestamps();
         });

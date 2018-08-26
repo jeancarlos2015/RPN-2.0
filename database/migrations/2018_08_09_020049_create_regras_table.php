@@ -32,10 +32,10 @@ class CreateRegrasTable extends Migration
             $table->boolean('visivel_repositorio')->default(true);
             $table->boolean('visivel_modelo_declarativo')->default(true);
 
-            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
-            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
-            $table->foreign('codusuario')->references('codusuario')->on('users');
-            $table->foreign('codmodelodeclarativo')->references('codmodelodeclarativo')->on('modelo_declarativos');
+//            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+//            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+//            $table->foreign('codusuario')->references('codusuario')->on('users');
+//            $table->foreign('codmodelodeclarativo')->references('codmodelodeclarativo')->on('modelo_declarativos');
 
             $table->timestamps();
         });

@@ -21,7 +21,7 @@ class CreateDocumentacoesTable extends Migration
             $table->string('descricao');
             $table->string('link');
 
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+//            $table->foreign('codusuario')->references('codusuario')->on('users');
             $table->timestamps();
         });
     }
