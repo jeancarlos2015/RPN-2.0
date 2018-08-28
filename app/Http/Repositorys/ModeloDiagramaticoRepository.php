@@ -23,11 +23,13 @@ class ModeloDiagramaticoRepository extends Repository
         return Cache::remember('listar_modelos', 2000, function () {
             if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
                 return collect(ModeloDiagramatico::all());
+            }else{
+                return collect(ModeloDiagramatico::
+                where('codusuario', '=', Auth::user()->codusuario)
+                    ->orWhere('visibilidade', '=', true)
+                    ->get());
             }
-            return collect(ModeloDiagramatico::
-            where('codusuario', '=', Auth::user()->codusuario)
-                ->orWhere('visibilidade', '=', true)
-                ->get());
+
         });
 
     }
@@ -66,6 +68,7 @@ class ModeloDiagramaticoRepository extends Repository
     {
         Cache::forget('listar_modelos');
         Cache::forget('listar_modelos_publicos');
+        Cache::forget('listar_codigos_modelos');
     }
 
     public static function incluir(Request $request)

@@ -46,6 +46,12 @@ Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(
     function () {
+        Route::get('/clear-cache', function () {
+            Artisan::call('cache:clear');
+            Artisan::call('config:clear');
+            return redirect()->route('painel');
+        })->name('limpar_cache');
+
 
         Route::get('todos_grupos', 'AtribuicaoProjetoUsuarioController@all')->name('todos_grupos')
             ->middleware('can:admin');
@@ -110,7 +116,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_modelos_declarativos', 'ModeloDeclarativoController')
             ->middleware('can:acesso');
 
-        Route::get('painel_modelo_declarativo/modelodeclarativo/{codmodelodeclarativo}','PainelModeloDeclarativoController@painel_modelo_declarativo')
+        Route::get('painel_modelo_declarativo/modelodeclarativo/{codmodelodeclarativo}', 'PainelModeloDeclarativoController@painel_modelo_declarativo')
             ->name('painel_modelo_declarativo')
             ->middleware('can:acesso');
 

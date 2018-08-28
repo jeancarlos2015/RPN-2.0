@@ -1,4 +1,7 @@
 <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="{{ route('limpar_cache') }}">Limpar Cache</a>
+    </li>
 
     @yield('boltao_voltar')
 
@@ -11,6 +14,7 @@
         <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="{{ route('modelos_publicos') }}">Modelos Públicos</a>
         </li>
+
         @if(!empty(Auth::user()->repositorio) || Auth::user()->email==='jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
 
             @includeIf('layouts.admin.layouts.sub_componentes.li_nav',
