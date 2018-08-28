@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.6.33 on 2018-08-20 04:59:17.
+ * Generated for Laravel 5.6.35 on 2018-08-28 02:56:18.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -4279,6 +4279,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param int|null $toLevel
          * @return void 
+         * @throws \Exception
          * @static 
          */ 
         public static function rollBack($toLevel = null)
