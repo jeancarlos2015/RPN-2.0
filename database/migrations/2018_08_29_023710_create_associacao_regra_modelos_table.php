@@ -14,8 +14,23 @@ class CreateAssociacaoRegraModelosTable extends Migration
     public function up()
     {
         Schema::create('associacao_regra_modelos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigincrements('cod_associacao_regra_modelo')->unsigned();
+
+            $table->bigInteger('cod_modelo')->unsigned();
+            $table->bigInteger('cod_regra')->unsigned();
+
+            $table->string('nome');
+            $table->string('tipo')->default('grupo');
+
             $table->timestamps();
+        });
+
+        Schema::connection('banco')->table('associacao_regra_modelos', function($table) {
+            $table->foreign('cod_regra')->references('cod_regra')->on('regras');
+        });
+
+        Schema::connection('banco')->table('associacao_regra_modelos', function($table) {
+            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
         });
     }
 

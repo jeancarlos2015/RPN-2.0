@@ -14,7 +14,7 @@ class CreateProjetosTable extends Migration
     public function up()
     {
         Schema::connection('banco')->create('projetos', function (Blueprint $table) {
-            $table->bigincrements('cod_projeto');
+            $table->bigincrements('cod_projeto')->unsigned();
 
             $table->bigInteger('cod_repositorio')->unsigned();
             $table->bigInteger('cod_usuario')->unsigned();

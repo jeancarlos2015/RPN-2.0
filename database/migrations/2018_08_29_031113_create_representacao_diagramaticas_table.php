@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModelosDiagramaticosTable extends Migration
+class CreateRepresentacaoDiagramaticasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateModelosDiagramaticosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('banco')->create('modelos_diagramaticos', function (Blueprint $table) {
-            $table->bigIncrements('cod_modelo_diagramatico')->unsigned();
+        Schema::create('representacao_diagramaticas', function (Blueprint $table) {
+
+
+            $table->bigincrements('cod_representacao_diagramatica')->unsigned();
 
             $table->bigInteger('cod_projeto')->unsigned();
             $table->bigInteger('cod_repositorio')->unsigned();
             $table->bigInteger('cod_usuario')->unsigned();
+            $table->bigInteger('cod_modelo')->unsigned();
 
             $table->string('nome');
             $table->string('descricao');
@@ -30,20 +33,23 @@ class CreateModelosDiagramaticosTable extends Migration
             $table->timestamps();
         });
 
-        Schema::connection('banco')->table('modelos_diagramaticos', function($table) {
+        Schema::connection('banco')->table('representacao_diagramaticas', function($table) {
             $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
         });
 
 
-        Schema::connection('banco')->table('modelos_diagramaticos', function($table) {
+        Schema::connection('banco')->table('representacao_diagramaticas', function($table) {
             $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
         });
 
 
-        Schema::connection('banco')->table('modelos_diagramaticos', function($table) {
+        Schema::connection('banco')->table('representacao_diagramaticas', function($table) {
             $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
 
+        Schema::connection('banco')->table('representacao_diagramaticas', function($table) {
+            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
+        });
 
     }
 
@@ -54,6 +60,6 @@ class CreateModelosDiagramaticosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modelos');
+        Schema::dropIfExists('representacao_diagramaticas');
     }
 }

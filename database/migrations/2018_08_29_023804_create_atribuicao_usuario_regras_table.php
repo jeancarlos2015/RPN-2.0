@@ -14,8 +14,23 @@ class CreateAtribuicaoUsuarioRegrasTable extends Migration
     public function up()
     {
         Schema::create('atribuicao_usuario_regras', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigincrements('cod_atribuicao_usuario_regra')->unsigned();
+
+            $table->bigInteger('cod_usuario')->unsigned();
+            $table->bigInteger('cod_regra')->unsigned();
+
+            $table->string('nome');
+            $table->string('tipo')->default('grupo');
+
             $table->timestamps();
+        });
+
+        Schema::connection('banco')->table('atribuicao_usuario_regras', function($table) {
+            $table->foreign('cod_regra')->references('cod_regra')->on('regras');
+        });
+
+        Schema::table('atribuicao_usuario_regras', function($table) {
+            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
     }
 

@@ -3,7 +3,7 @@
 
     @foreach($regras as $regra)
         <tr>
-            {{--<td>{!! $regra->coddocumentacao !!}</td>--}}
+            {{--<td>{!! $regra->cod_documentacao !!}</td>--}}
             {{--<td>{!! $regra->nome !!}</td>--}}
             {{--<td>{!! $regra->descricao !!}</td>--}}
             <td>

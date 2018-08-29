@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModelosDeclarativosTable extends Migration
+class CreateModelosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,31 +13,28 @@ class CreateModelosDeclarativosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('banco')->create('modelos_declarativos', function (Blueprint $table) {
-            $table->increments('cod_modelo_declarativo');
+        Schema::create('modelos', function (Blueprint $table) {
+            $table->bigincrements('cod_modelo')->unsigned();
 
-            $table->bigInteger('cod_repositorio')->unsigned();
             $table->bigInteger('cod_projeto')->unsigned();
+            $table->bigInteger('cod_repositorio')->unsigned();
             $table->bigInteger('cod_usuario')->unsigned();
 
             $table->string('nome');
-            $table->string('tipo')->default('declarativo');
             $table->string('descricao');
-            $table->boolean('visibilidade')->default(true);
-            $table->boolean('publico')->default(true);
-
+            $table->string('tipo')->default('bpmn');
             $table->timestamps();
         });
 
-        Schema::connection('banco')->table('modelos_declarativos', function($table) {
+        Schema::connection('banco')->table('modelos', function($table) {
             $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
         });
 
-        Schema::connection('banco')->table('modelos_declarativos', function($table) {
+        Schema::connection('banco')->table('modelos', function($table) {
             $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
 
-        Schema::connection('banco')->table('modelos_declarativos', function($table) {
+        Schema::connection('banco')->table('modelos', function($table) {
             $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
         });
     }
@@ -49,6 +46,6 @@ class CreateModelosDeclarativosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modelo_declarativos');
+        Schema::dropIfExists('modelos');
     }
 }

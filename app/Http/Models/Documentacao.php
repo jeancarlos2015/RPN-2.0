@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Documentacao extends Model
 {
     protected $connection = 'pgsql';
-    protected $primaryKey = 'coddocumentacao';
+    protected $primaryKey = 'cod_documentacao';
     protected $table = 'documentacoes';
     protected $fillable = [
         'nome',

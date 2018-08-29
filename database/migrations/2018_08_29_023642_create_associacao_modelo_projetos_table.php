@@ -14,8 +14,23 @@ class CreateAssociacaoModeloProjetosTable extends Migration
     public function up()
     {
         Schema::create('associacao_modelo_projetos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigincrements('cod_associacao_modelo_projeto')->unsigned();
+
+            $table->bigInteger('cod_modelo')->unsigned();
+            $table->bigInteger('cod_projeto')->unsigned();
+
+            $table->string('nome');
+            $table->string('tipo')->default('grupo');
+
             $table->timestamps();
+        });
+
+        Schema::connection('banco')->table('associacao_modelo_projetos', function($table) {
+            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
+        });
+
+        Schema::connection('banco')->table('associacao_modelo_projetos', function($table) {
+            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
         });
     }
 

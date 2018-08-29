@@ -3,7 +3,7 @@
 
     @foreach($documentacoes as $documentacao)
         <tr>
-            {{--<td>{!! $documentacao->coddocumentacao !!}</td>--}}
+            {{--<td>{!! $documentacao->cod_documentacao !!}</td>--}}
             {{--<td>{!! $documentacao->nome !!}</td>--}}
             {{--<td>{!! $documentacao->descricao !!}</td>--}}
             <td>
@@ -13,7 +13,7 @@
                              alt="" width="100">
                         <div class="media-body">
                             <strong>{!! $documentacao->usuario->name !!}</strong>
-                            <div class="text-muted smaller">Código da Documentação: {!! $documentacao->coddocumentacao !!}</div>
+                            <div class="text-muted smaller">Código da Documentação: {!! $documentacao->cod_documentacao !!}</div>
                             <div class="text-muted smaller">Nome da Documentação: {!! $documentacao->nome !!} </div>
                             <div class="text-muted smaller">Descrição da Documentação: {!! $documentacao->descricao !!}</div>
                         </div>
@@ -25,10 +25,10 @@
             <td>
                 @if((!empty($documentacao->usuario) && Auth::user()->email===$documentacao->usuario->email) || (Auth::user()->tipo==='Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com'))
                     @if(!empty($rota_edicao))
-                        @include('componentes.link',['id' => $documentacao->coddocumentacao, 'rota' => $rota_edicao])
+                        @include('componentes.link',['id' => $documentacao->cod_documentacao, 'rota' => $rota_edicao])
                     @endif
                     @if(!empty($rota_exclusao))
-                        @include('componentes.form_delete',['id' => $documentacao->coddocumentacao, 'rota' => $rota_exclusao])
+                        @include('componentes.form_delete',['id' => $documentacao->cod_documentacao, 'rota' => $rota_exclusao])
                     @endif
                     <div class="form-group">
                         <a href="{!! $documentacao->link !!}"><img src="{!! asset('img/olho.png') !!} "

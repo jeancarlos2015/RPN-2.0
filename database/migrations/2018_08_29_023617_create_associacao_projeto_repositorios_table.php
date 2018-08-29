@@ -14,8 +14,23 @@ class CreateAssociacaoProjetoRepositoriosTable extends Migration
     public function up()
     {
         Schema::create('associacao_projeto_repositorios', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigincrements('cod_associacao_projeto_repositorio')->unsigned();
+
+            $table->bigInteger('cod_repositorio')->unsigned();
+            $table->bigInteger('cod_projeto')->unsigned();
+
+            $table->string('nome');
+            $table->string('tipo')->default('grupo');
+
             $table->timestamps();
+        });
+
+        Schema::connection('banco')->table('associacao_projeto_repositorios', function($table) {
+            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
+        });
+
+        Schema::table('associacao_projeto_repositorios', function($table) {
+            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
         });
     }
 
