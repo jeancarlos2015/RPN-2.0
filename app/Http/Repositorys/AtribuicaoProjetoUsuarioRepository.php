@@ -27,7 +27,7 @@ class AtribuicaoProjetoUsuarioRepository extends Repository
                 return collect($result);
             } else if (!empty(Auth::user()->repositorio)) {
                 $repositorio = Auth::user()->repositorio;
-                return collect(AtribuicaoProjetoUsuario::where('codrepositorio', $repositorio->codrepositorio)
+                return collect(AtribuicaoProjetoUsuario::where('cod_repositorio', $repositorio->cod_repositorio)
                     ->get());
             }
             return collect(array());
@@ -38,10 +38,10 @@ class AtribuicaoProjetoUsuarioRepository extends Repository
     {
         return Cache::remember('listar_atribuicao_projeto_usuarios', 2000, function ($codrepositorio) {
             if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
-                return collect(AtribuicaoProjetoUsuario::where('codrepositorio', $codrepositorio)
+                return collect(AtribuicaoProjetoUsuario::where('cod_repositorio', $codrepositorio)
                     ->get());
             }
-            return collect(AtribuicaoProjetoUsuario::where('codrepositorio', $codrepositorio)
+            return collect(AtribuicaoProjetoUsuario::where('cod_repositorio', $codrepositorio)
                 ->get());
         });
     }

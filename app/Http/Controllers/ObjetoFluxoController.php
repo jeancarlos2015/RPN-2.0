@@ -59,33 +59,33 @@ class ObjetoFluxoController extends Controller
     public function store(Request $request)
     {
 
-        $codprojeto = $request->codprojeto;
-        $codrepositorio = $request->codrepositorio;
+        $codprojeto = $request->cod_projeto;
+        $codrepositorio = $request->cod_repositorio;
         $data['all'] = $request->all();
         $data['validacao'] = ObjetoFluxo::validacao();
         if (!$this->exists_errors($data)) {
-            $request->request->add(['codusuario' => Auth::user()->codusuario]);
+            $request->request->add(['cod_usuario' => Auth::user()->cod_usuario]);
             if (!ObjetoFluxoRepository::existe($request->nome)) {
                 $objeto_fluxo = ObjetoFluxoRepository::incluir($request);
                 $data['tipo'] = 'success';
                 $this->create_log($data);
                 return redirect()->route('controle_objeto_fluxo_index',
                     [
-                        'codmodelodeclarativo' => $objeto_fluxo->codmodelodeclarativo
+                        'cod_modelo_declarativo' => $objeto_fluxo->cod_modelo_declarativo
                     ]);
             }
             $data['tipo'] = 'existe';
             $this->create_log($data);
             return redirect()->route('controle_objetos_fluxos_create',
                 [
-                    'codmodelodeclarativo' => $request->codmodelodeclarativo
+                    'cod_modelo_declarativo' => $request->cod_modelo_declarativo
                 ]);
         }
 
         $erros = $this->get_errors($data);
         return redirect()->route('controle_modelos_declarativos_create', [
-            'codrepositorio' => $codrepositorio,
-            'codprojeto' => $codprojeto
+            'cod_repositorio' => $codrepositorio,
+            'cod_projeto' => $codprojeto
         ])
             ->withErrors($erros)
             ->withInput();

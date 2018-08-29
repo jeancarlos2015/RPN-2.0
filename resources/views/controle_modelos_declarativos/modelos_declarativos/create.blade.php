@@ -12,7 +12,7 @@
    @includeIf('controle_modelos_declarativos.modelos_declarativos.componentes.form_create')
     @if(!empty($modelo))
         <div class="alert alert-warning">
-            <strong>Warning!</strong> O modelo já existe, para acessá-lo clique neste <a href="{!! route('controle_modelos_declarativos.show',[$modelo->codmodelodeclarativo]) !!}" class="link">Link</a>.
+            <strong>Warning!</strong> O modelo já existe, para acessá-lo clique neste <a href="{!! route('controle_modelos_declarativos.show',[$modelo->cod_modelo_declarativo]) !!}" class="link">Link</a>.
         </div>
     @endif
 @endsection

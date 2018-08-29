@@ -39,13 +39,13 @@ class UsuarioGithubController extends Controller
         try{
             $erros = \Validator::make($request->all(), UsuarioGithub::validacao());
             if ($erros->fails()) {
-                return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario])
+                return redirect()->route('create_github', ['cod_usuario' => Auth::user()->cod_usuario])
                     ->withErrors($erros)
                     ->withInput();
             } else
                 if (BranchsRepository::existe_usuario()) {
                     $usuario = Auth::user()->github;
-                    $usuario_github = UsuarioGithub::findOrFail($usuario->codusuariogithub);
+                    $usuario_github = UsuarioGithub::findOrFail($usuario->cod_usuario_github);
                     $usuario_github->usuario_github = Crypt::encrypt($request->usuario_github);
                     $usuario_github->email_github = $request->email_github;
                     $usuario_github->senha_github = Crypt::encrypt($request->senha_github);
@@ -55,7 +55,7 @@ class UsuarioGithubController extends Controller
                 } else {
                     $data = [
                         'usuario_github' => Crypt::encrypt($request->usuario_github),
-                        'codusuario' => Auth::user()->codusuario,
+                        'cod_usuario' => Auth::user()->cod_usuario,
                         'email_github' => $request->email_github,
                         'branch_atual' => 'nenhum',
                         'repositorio_atual' => 'nenhum',
@@ -73,14 +73,14 @@ class UsuarioGithubController extends Controller
             $data['acao'] = 'store';
             $this->create_log($data);
         }
-        return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
+        return redirect()->route('create_github', ['cod_usuario' => Auth::user()->cod_usuario]);
 
 
 //        try {
 //            $erros = \Validator::make($request->all(), UsuarioGithub::validacao());
 //            $usuario_github = null;
 //            if ($erros->fails()) {
-//                return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario])
+//                return redirect()->route('create_github', ['cod_usuario' => Auth::user()->cod_usuario])
 //                    ->withErrors($erros)
 //                    ->withInput();
 //            }
@@ -88,7 +88,7 @@ class UsuarioGithubController extends Controller
 //
 //                $data = [
 //                    'usuario_github' => Crypt::encrypt($request->usuario_github),
-//                    'codusuario' => $request->codusuario,
+//                    'cod_usuario' => $request->cod_usuario,
 //                    'email_github' => $request->email_github,
 //                    'branch_atual' => 'Nenhuma Branch',
 //                    'repositorio_atual' => 'Nenhum Repositório',
@@ -106,7 +106,7 @@ class UsuarioGithubController extends Controller
 //                $data['acao'] = 'merge_checkout';
 //                $this->create_log($data);
 //            }
-//            return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
+//            return redirect()->route('create_github', ['cod_usuario' => Auth::user()->cod_usuario]);
 //        } catch (\Exception $ex) {
 //            $data['mensagem'] = $ex->getMessage();
 //            $data['tipo'] = 'error';
@@ -178,6 +178,6 @@ class UsuarioGithubController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-        return redirect()->route('create_github', ['codusuario' => Auth::user()->codusuario]);
+        return redirect()->route('create_github', ['cod_usuario' => Auth::user()->cod_usuario]);
     }
 }

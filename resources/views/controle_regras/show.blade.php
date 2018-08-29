@@ -7,7 +7,7 @@
                     '/Projetos/'.
                     $regra->projeto->nome.
                      '/Modelo/'.$regra->modelodeclarativo->nome.
-                     '/Regra/'.$regra->codregra,
+                     '/Regra/'.$regra->cod_regra,
                     'rota' => 'todos_projetos'
     ])
     @includeIf('controle_regras.componentes.campos_disable')

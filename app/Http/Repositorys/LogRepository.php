@@ -22,13 +22,13 @@ class LogRepository extends Repository
         $log = Log::create([
             'nome' => $nome,
             'descricao' => $mensagem,
-            'codusuario' => Auth::user()->codusuario,
+            'cod_usuario' => Auth::user()->cod_usuario,
             'pagina' => $pagina,
             'acao' => $acao,
             'created_at' => $date
         ]);
         self::limpar_cache();
-        return $log->codlog;
+        return $log->cod_log;
     }
 
     public static function limpar_cache()
@@ -45,7 +45,7 @@ class LogRepository extends Repository
 
     public static function listar_tres_ultimos_logs($qt_logs)
     {
-        $logs_buffer = self::listar()->sortByDesc('codlog');
+        $logs_buffer = self::listar()->sortByDesc('cod_log');
         $logs = [];
         for ($indice = 0; $indice < $qt_logs; $indice++) {
             array_push($logs, $logs_buffer[$indice]);
@@ -55,6 +55,6 @@ class LogRepository extends Repository
 
     public static function log()
     {
-        return self::listar()->sortByDesc('codlog')->first();
+        return self::listar()->sortByDesc('cod_log')->first();
     }
 }

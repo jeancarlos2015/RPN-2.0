@@ -1,4 +1,4 @@
-<form action="{!! route('controle_objetos_fluxos.update',[$objeto_fluxo->codobjetofluxo]) !!}" method="post">
+<form action="{!! route('controle_objetos_fluxos.update',[$objeto_fluxo->cod_objeto_fluxo]) !!}" method="post">
     @method('PUT')
     @csrf
     @includeIf('controle_modelos_declarativos.controle_objetos_fluxo.form',

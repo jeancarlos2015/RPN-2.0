@@ -45,7 +45,7 @@ class DocumentacaoController extends Controller
             $data['validacao'] = Documentacao::validacao();
             $data['rota'] = 'controle_documentacoes.create';
             $this->validar($data);
-            $request->request->add(['codusuario' => \Auth::user()->codusuario]);
+            $request->request->add(['cod_usuario' => \Auth::user()->cod_usuario]);
             $documentacao = DocumentacaoRepository::incluir($request);
             if (isset($documentacao)) {
                 flash('Documentação criada com sucesso!!');

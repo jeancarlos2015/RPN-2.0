@@ -14,8 +14,8 @@ class AtribuicaoProjetoUsuario extends Model
     protected $table = 'atribuicao_projeto_usuarios';
     protected $fillable = [
         'codusuario',
-        'codprojeto',
-        'codrepositorio',
+        'cod_projeto',
+        'cod_repositorio',
         'nome'
     ];
 
@@ -84,12 +84,12 @@ class AtribuicaoProjetoUsuario extends Model
 //Relacionamentos
     public function projeto()
     {
-        return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
+        return $this->hasOne(Projeto::class, 'cod_projeto', 'cod_projeto');
     }
 
     public function repositorio()
     {
-        return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasOne(Repositorio::class, 'cod_repositorio', 'cod_repositorio');
     }
     public function usuario()
     {

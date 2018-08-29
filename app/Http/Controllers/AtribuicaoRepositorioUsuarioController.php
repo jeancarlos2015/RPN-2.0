@@ -102,7 +102,7 @@ class AtribuicaoRepositorioUsuarioController extends Controller
             if ($request->desvincular === 'true') {
                 $user = User::findOrFail($request->codusuario);
                 $repositorio = $user->repositorio;
-                $user->codrepositorio = null;
+                $user->cod_repositorio = null;
                 $user->update();
                 \Mail::to($user->email)->send(new EmailVinculacaoUsuario($repositorio));
             }
@@ -134,7 +134,7 @@ class AtribuicaoRepositorioUsuarioController extends Controller
     public function vincular_usuario_repositorio(Request $request)
     {
         $codusuario = $request->codusuario;
-        $codrepositorio = $request->codrepositorio;
+        $codrepositorio = $request->cod_repositorio;
         try {
             $repositorio = Repositorio::findOrFail($codrepositorio);
             $usuario = UserRepository::vincular($codusuario, $codrepositorio);

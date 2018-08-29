@@ -65,11 +65,11 @@ class ModeloDiagramaticoController extends Controller
         $dado['tipo'] = $request->tipo;
         $dado['nome'] = $request->nome;
         $dado['descricao'] = $request->descricao;
-        $dado['codprojeto'] = $request->codprojeto;
-        $dado['codrepositorio'] = $request->codrepositorio;
+        $dado['cod_projeto'] = $request->cod_projeto;
+        $dado['cod_repositorio'] = $request->cod_repositorio;
         try {
-            $projeto = Projeto::findOrFail($request->codprojeto);
-            $repositorio = Repositorio::findOrFail($request->codrepositorio);
+            $projeto = Projeto::findOrFail($request->cod_projeto);
+            $repositorio = Repositorio::findOrFail($request->cod_repositorio);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -114,23 +114,23 @@ class ModeloDiagramaticoController extends Controller
     function store(Request $request)
     {
         try {
-            $codprojeto = $request->codprojeto;
-            $codrepositorio = $request->codrepositorio;
+            $codprojeto = $request->cod_projeto;
+            $codrepositorio = $request->cod_repositorio;
             $data['all'] = $request->all();
             $data['validacao'] = ModeloDiagramatico::validacao();
             if (!$this->exists_errors($data)) {
                 if (!ModeloDiagramaticoRepository::existe($request->nome)) {
                     $request->request->add([
                         'xml_modelo' => ModeloDiagramatico::get_modelo_default($request->nome),
-                        'codprojeto' => $codprojeto,
-                        'codrepositorio' => $codrepositorio,
-                        'codusuario' => Auth::user()->codusuario
+                        'cod_projeto' => $codprojeto,
+                        'cod_repositorio' => $codrepositorio,
+                        'cod_usuario' => Auth::user()->cod_usuario
                     ]);
                     $modelo = ModeloDiagramaticoRepository::incluir($request);
                     $data['tipo'] = 'success';
                     $this->create_log($data);
                     return redirect()->route('edicao_modelo_diagramatico',
-                        ['codmodelodiagramatico' => $modelo->codmodelodiagramatico]);
+                        ['cod_modelo_diagramatico' => $modelo->cod_modelo_diagramatico]);
 
                 } else {
                     $dados = ModeloDiagramatico::dados();
@@ -143,8 +143,8 @@ class ModeloDiagramaticoController extends Controller
             }
             $erros = $this->get_errors($data);
             return redirect()->route('controle_modelos_diagramaticos_create', [
-                'codrepositorio' => $codrepositorio,
-                'codprojeto' => $codprojeto
+                'cod_repositorio' => $codrepositorio,
+                'cod_projeto' => $codprojeto
             ])
                 ->withErrors($erros)
                 ->withInput();
@@ -238,7 +238,7 @@ class ModeloDiagramaticoController extends Controller
            $modelo = ModeloDiagramaticoRepository::atualizar($request, $id);
             if ($modelo->tipo === 'diagramatico') {
                 return redirect()->route('edicao_modelo_diagramatico', [
-                    'codmodelodiagramatico' => $modelo->codmodelodiagramatico
+                    'cod_modelo_diagramatico' => $modelo->cod_modelo_diagramatico
                 ]);
             }
 
@@ -281,16 +281,16 @@ class ModeloDiagramaticoController extends Controller
 
             $modelo = ModeloDiagramaticoRepository::excluir($codmodelo);
             flash('Operação feita com sucesso!!');
-            if (empty($modelo->codprojeto) || empty($modelo->codrepositorio)) {
+            if (empty($modelo->cod_projeto) || empty($modelo->cod_repositorio)) {
 
                 return redirect()->route('todos_modelos');
             } else {
                 return redirect()->route('controle_modelos_diagramaticos_index',
                     [
 
-                        'codrepositorio' => $modelo->codrepositorio,
-                        'codprojeto' => $modelo->codprojeto,
-                        'codusuario' => Auth::user()->codusuario
+                        'cod_repositorio' => $modelo->cod_repositorio,
+                        'cod_projeto' => $modelo->cod_projeto,
+                        'cod_usuario' => Auth::user()->cod_usuario
                     ]
                 );
             }

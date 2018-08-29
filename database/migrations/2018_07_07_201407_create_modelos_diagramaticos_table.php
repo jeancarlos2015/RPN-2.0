@@ -14,11 +14,11 @@ class CreateModelosDiagramaticosTable extends Migration
     public function up()
     {
         Schema::connection('banco')->create('modelos_diagramaticos', function (Blueprint $table) {
-            $table->bigIncrements('codmodelodiagramatico')->unsigned();
+            $table->bigIncrements('cod_modelo_diagramatico')->unsigned();
 
-            $table->bigInteger('codprojeto')->unsigned();
-            $table->bigInteger('codrepositorio')->unsigned();
-            $table->bigInteger('codusuario')->unsigned();
+            $table->bigInteger('cod_projeto')->unsigned();
+            $table->bigInteger('cod_repositorio')->unsigned();
+            $table->bigInteger('cod_usuario')->unsigned();
 
             $table->string('nome');
             $table->string('descricao');
@@ -31,17 +31,17 @@ class CreateModelosDiagramaticosTable extends Migration
         });
 
         Schema::connection('banco')->table('modelos_diagramaticos', function($table) {
-            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
         });
 
 
         Schema::connection('banco')->table('modelos_diagramaticos', function($table) {
-            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
         });
 
 
         Schema::connection('banco')->table('modelos_diagramaticos', function($table) {
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
 
 

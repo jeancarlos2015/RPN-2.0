@@ -16,7 +16,7 @@
                                 @if(Auth::user()->email==='jeancarlospenas25@gmail.com')
                                     <div class="form-check btn-dark">
                                         <input type="radio" class="form-check-input"
-                                               id="materialUnchecked{{$branch->codbranch}}" name="branch"
+                                               id="materialUnchecked{{$branch->cod_branch}}" name="branch"
                                                value="{{$branch->branch}}">
                                         <label class="form-check-label"
                                                for="materialUnchecked">{{$branch->branch}}</label>
@@ -25,7 +25,7 @@
                                     @if($branch->branch!=='master')
                                         <div class="form-check btn-dark">
                                             <input type="radio" class="form-check-input"
-                                                   id="materialUnchecked{{$branch->codbranch}}"
+                                                   id="materialUnchecked{{$branch->cod_branch}}"
                                                    name="branch"
                                                    value="{{$branch->branch}}">
                                             <label class="form-check-label"

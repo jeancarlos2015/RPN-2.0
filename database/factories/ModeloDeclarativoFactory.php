@@ -6,8 +6,8 @@ use Faker\Generator as Faker;
 //'descricao',
 //'tipo',
 //
-//'codprojeto',
-//'codrepositorio',
+//'cod_projeto',
+//'cod_repositorio',
 //'codusuario',
 //
 //'visibilidade',
@@ -19,8 +19,8 @@ $factory->define(\App\Http\Models\ModeloDeclarativo::class, function (Faker $fak
     return [
         'nome' => $faker->sentence,
         'descricao'=> 'Nenhum',
-        'codprojeto' => $projeto->codprojeto ,
-        'codrepositorio' => $projeto->codrepositorio ,
+        'cod_projeto' => $projeto->cod_projeto ,
+        'cod_repositorio' => $projeto->cod_repositorio ,
         'codusuario' => $projeto->codusuario ,
         'visibilidade' => 'true',
         'publico' => 'true'

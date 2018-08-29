@@ -14,19 +14,19 @@ class CreateUsuarioGithubsTable extends Migration
     public function up()
     {
         Schema::create('usuarios_github', function (Blueprint $table) {
-            $table->bigIncrements('codusuariogithub');
+            $table->bigIncrements('cod_usuario_github');
             $table->string('usuario_github',4000);
             $table->string('email_github');
             $table->string('repositorio_atual')->nullable();
             $table->string('branch_atual')->nullable();
             $table->string('senha_github',4000);
-            $table->bigInteger('codusuario')->unsigned();
+            $table->bigInteger('cod_usuario')->unsigned();
 
             $table->timestamps();
         });
 
         Schema::table('usuarios_github', function($table) {
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
     }
 

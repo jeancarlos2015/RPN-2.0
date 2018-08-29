@@ -1,6 +1,6 @@
 @includeIf('controle_projetos.componentes.campos')
 @if(!empty($codrepositorio))
-    <input type="hidden" name="codrepositorio" class="form-control"
+    <input type="hidden" name="cod_repositorio" class="form-control"
            value="{!! $codrepositorio !!}">
 @endif
 
@@ -21,9 +21,9 @@
     <div class="form-group">
         <label>Projeto</label>
 
-        <select class="selectpicker form-control" name="codprojeto">
+        <select class="selectpicker form-control" name="cod_projeto">
             @foreach($projetos as $projeto)
-                <option value="{!! $projeto->codprojeto !!}">{!! $projeto->nome !!}</option>
+                <option value="{!! $projeto->cod_projeto !!}">{!! $projeto->nome !!}</option>
             @endforeach
         </select>
 

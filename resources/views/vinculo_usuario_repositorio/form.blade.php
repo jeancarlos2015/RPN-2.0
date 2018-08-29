@@ -1,8 +1,8 @@
 <div class="form-group">
     <label>Repositórios</label>
-    <select class="selectpicker form-control" name="codrepositorio">
+    <select class="selectpicker form-control" name="cod_repositorio">
         @foreach($repositorios as $repositorio)
-            <option value="{!! $repositorio->codrepositorio !!}">{!! $repositorio->nome !!}</option>
+            <option value="{!! $repositorio->cod_repositorio !!}">{!! $repositorio->nome !!}</option>
         @endforeach
     </select>
 </div>

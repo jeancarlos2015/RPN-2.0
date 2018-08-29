@@ -6,7 +6,7 @@
     'acao' => 'Salvar',
     'dados' => $dados,
     'MAX' => 1,
-    'codrepositorio' => $repositorio->codrepositorio
+    'cod_repositorio' => $repositorio->cod_repositorio
     ]
     )
 

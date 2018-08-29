@@ -12,7 +12,7 @@ class LogController extends Controller
 {
 //'nome',
 //'descricao',
-//'codusuario'
+//'cod_usuario'
     /**
      * Display a listing of the resource.
      *

@@ -2,11 +2,11 @@
 
 use Faker\Generator as Faker;
 
-//'codrepositorio',
+//'cod_repositorio',
 //'codusuario',
-//'codprojeto',
-//'codmodelodeclarativo',
-//'codregra',
+//'cod_projeto',
+//'cod_modelo_declarativo',
+//'cod_regra',
 //'nome',
 //'descricao',
 //'tipo',
@@ -19,11 +19,11 @@ $factory->define(\App\http\Models\ObjetoFluxo::class, function (Faker $faker) {
     $modelos = \App\Http\Repositorys\ModeloDeclarativoRepository::listar_modelos();
     $modelo = $modelos[rand(0,count($modelos)-1)];
     return [
-        'codprojeto' => $modelo->codprojeto ,
-        'codrepositorio' => $modelo->codrepositorio ,
+        'cod_projeto' => $modelo->cod_projeto ,
+        'cod_repositorio' => $modelo->cod_repositorio ,
         'codusuario' => $modelo->codusuario ,
-        'codmodelodeclarativo' => $modelo->codmodelodeclarativo ,
-        'codregra' => null,
+        'cod_modelo_declarativo' => $modelo->cod_modelo_declarativo ,
+        'cod_regra' => null,
         'nome' => $faker->word,
         'descricao' => $faker->sentence,
         'tipo' => \App\http\Models\ObjetoFluxo::tipos()[rand(0,5)],

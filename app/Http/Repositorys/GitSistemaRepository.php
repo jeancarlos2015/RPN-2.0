@@ -398,7 +398,7 @@ class GitSistemaRepository
     public
     static function listar_githubs()
     {
-        return UsuarioGithub::all()->where('codusuario', \Auth::user()->codusuario);
+        return UsuarioGithub::all()->where('cod_usuario', \Auth::user()->cod_usuario);
     }
 
     public
@@ -430,14 +430,14 @@ class GitSistemaRepository
 //$formato = $dado['formato'];
 //$branch = $dado['branch'];
 
-//$table->bigIncrements('codusuariogithub');
+//$table->bigIncrements('cod_usuario_github');
 //$table->string('usuario_github')->unique();
 //$table->string('email_github');
 //$table->string('token_github');
 //$table->string('repositorio_atual')->nullable();
 //$table->string('branch_atual')->nullable();
 //$table->string('senha_github');
-//$table->bigInteger('codusuario');
+//$table->bigInteger('cod_usuario');
 
     private
     static function extrai_dados_github_do_banco(Dado $dado, $indice)
@@ -558,9 +558,9 @@ class GitSistemaRepository
     public static function atualizar_usuario_github($repositorio)
     {
         $github_data = Auth::user()->github;
-        $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
+        $user_github = UsuarioGithub::findOrFail($github_data->cod_usuario_github);
         $data = [
-            'codusuario' => $user_github->codusuario,
+            'cod_usuario' => $user_github->cod_usuario,
             'email_github' => $github_data->email_github,
             'senha_github' => $github_data->senha_github,
             'branch_atual' => $repositorio['default_branch'],
@@ -575,7 +575,7 @@ class GitSistemaRepository
         if (self::delete_branch_remote($branch) === 204) {
             $branchs = Branch::all()->where('branch', '=', $branch);
             foreach ($branchs as $b) {
-                $codbranch = $b->codbranch;
+                $codbranch = $b->cod_branch;
                 BranchsRepository::excluir($codbranch);
             }
         }

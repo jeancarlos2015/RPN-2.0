@@ -57,7 +57,7 @@ class AtribuicaoProjetoUsuarioController extends Controller
      */
     private function exists($codrepositorio)
     {
-        $repositorio = (new Repositorio)->where('codrepositorio', '=', $codrepositorio)->first();
+        $repositorio = (new Repositorio)->where('cod_repositorio', '=', $codrepositorio)->first();
         return $repositorio === null;
 
     }
@@ -90,10 +90,10 @@ class AtribuicaoProjetoUsuarioController extends Controller
     {
         try {
             $erros = \Validator::make($request->all(), AtribuicaoProjetoUsuario::validacao());
-            $codrepositorio = $request->codrepositorio;
+            $codrepositorio = $request->cod_repositorio;
             if ($erros->fails()) {
                 return redirect()->route('controle_atribuicao_projeto_usuarios_create', [
-                    'codrepositorio' => $codrepositorio,
+                    'cod_repositorio' => $codrepositorio,
                 ])
                     ->withErrors($erros)
                     ->withInput();
@@ -102,7 +102,7 @@ class AtribuicaoProjetoUsuarioController extends Controller
                 $atribuicao_projeto_usuario = AtribuicaoProjetoUsuarioRepository::incluir($request);
                 flash('Atribuição criada com sucesso!!');
                 return redirect()->route('controle_atribuicao_projeto_usuarios_create', [
-                    'codrepositorio' => $codrepositorio,
+                    'cod_repositorio' => $codrepositorio,
                 ]);
             } else {
                 $atribuicao_projeto_usuario = AtribuicaoProjetoUsuarioRepository::listar()->where('nome', $request->nome)->first();
@@ -197,7 +197,7 @@ class AtribuicaoProjetoUsuarioController extends Controller
             ProjetoRepository::excluir($codprojeto);
             flash('Operação feita com sucesso!!');
             return redirect()->route('controle_projetos_index', [
-                'codrepositorio' => $projeto->codrepositorio,
+                'cod_repositorio' => $projeto->cod_repositorio,
                 'codusuario' => $projeto->codusuario
             ]);
         } catch (\Exception $ex) {

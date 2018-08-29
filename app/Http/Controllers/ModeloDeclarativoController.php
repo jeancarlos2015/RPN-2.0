@@ -58,7 +58,7 @@ class ModeloDeclarativoController extends Controller
 
             $modelo = ModeloDeclarativoRepository::atualizar($request, $codmodelodeclarativo);
             return redirect()->route('edicao_modelo_declarativo', [
-                'codmodelodeclarativo' => $modelo->codmodelodeclarativo
+                'cod_modelo_declarativo' => $modelo->cod_modelo_declarativo
             ]);
 
         } catch (\Exception $ex) {

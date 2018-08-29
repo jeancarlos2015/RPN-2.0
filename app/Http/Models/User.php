@@ -36,10 +36,10 @@ class User extends Authenticatable
 {
     use Notifiable;
     protected $connection = 'pgsql';
-    protected $primaryKey = 'codusuario';
+    protected $primaryKey = 'cod_usuario';
     protected $table = 'users';
     protected $fillable = [
-        'name', 'email', 'password', 'tipo', 'codrepositorio'
+        'name', 'email', 'password', 'tipo', 'cod_repositorio'
     ];
 
     protected $hidden = [
@@ -58,18 +58,18 @@ class User extends Authenticatable
 
     public function repositorios()
     {
-        return $this->belongsTo(Repositorio::class, 'codusuario', 'codusuario');
+        return $this->belongsTo(Repositorio::class, 'cod_usuario', 'cod_usuario');
     }
 
 
     public function repositorio()
     {
-        return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasOne(Repositorio::class, 'cod_repositorio', 'cod_repositorio');
     }
 
     public function github()
     {
-        return $this->hasOne(UsuarioGithub::class, 'codusuario', 'codusuario');
+        return $this->hasOne(UsuarioGithub::class, 'cod_usuario', 'cod_usuario');
     }
 
     public function usuario_github()
@@ -84,12 +84,12 @@ class User extends Authenticatable
 
     public function branchs()
     {
-        return $this->hasMany(Branch::class, 'codusuario', 'codusuario');
+        return $this->hasMany(Branch::class, 'cod_usuario', 'cod_usuario');
     }
 
     public function logs()
     {
-        return $this->belongsTo(Log::class, 'codusuario', 'codusuario');
+        return $this->belongsTo(Log::class, 'cod_usuario', 'cod_usuario');
     }
 
     public static function titulos()

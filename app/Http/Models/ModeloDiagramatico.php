@@ -40,16 +40,16 @@ use Illuminate\Database\Eloquent\Model;
 class ModeloDiagramatico extends Model
 {
     protected $connection = 'banco';
-    protected $primaryKey = 'codmodelodiagramatico';
+    protected $primaryKey = 'cod_modelo_diagramatico';
     protected $table = 'modelos_diagramaticos';
     protected $fillable = [
         'nome',
         'descricao',
         'xml_modelo',
 
-        'codprojeto',
-        'codrepositorio',
-        'codusuario',
+        'cod_projeto',
+        'cod_repositorio',
+        'cod_usuario',
 
         'visibilidade',
         'publico',
@@ -86,8 +86,8 @@ class ModeloDiagramatico extends Model
         return [
             'nome',
             'descricao',
-            'codprojeto',
-            'codrepositorio',
+            'cod_projeto',
+            'cod_repositorio',
             'xml_modelo'
 
         ];
@@ -130,12 +130,12 @@ class ModeloDiagramatico extends Model
 //Relacionamentos
     public function projeto()
     {
-        return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
+        return $this->hasOne(Projeto::class, 'cod_projeto', 'cod_projeto');
     }
 
     public function repositorio()
     {
-        return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasOne(Repositorio::class, 'cod_repositorio', 'cod_repositorio');
     }
 
     public static function validacao()
@@ -204,6 +204,6 @@ class ModeloDiagramatico extends Model
 
     public function usuario()
     {
-        return $this->hasOne(User::class, 'codusuario', 'codusuario');
+        return $this->hasOne(User::class, 'cod_usuario', 'cod_usuario');
     }
 }

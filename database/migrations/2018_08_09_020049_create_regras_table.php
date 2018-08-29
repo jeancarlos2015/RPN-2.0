@@ -14,12 +14,12 @@ class CreateRegrasTable extends Migration
     public function up()
     {
         Schema::connection('banco')->create('regras', function (Blueprint $table) {
-            $table->increments('codregra');
+            $table->increments('cod_regra');
 
-            $table->bigInteger('codrepositorio')->unsigned();
-            $table->bigInteger('codusuario')->unsigned();
-            $table->bigInteger('codprojeto')->unsigned();
-            $table->bigInteger('codmodelodeclarativo')->unsigned();
+            $table->bigInteger('cod_repositorio')->unsigned();
+            $table->bigInteger('cod_usuario')->unsigned();
+            $table->bigInteger('cod_projeto')->unsigned();
+            $table->bigInteger('cod_modelo_declarativo')->unsigned();
 
             $table->bigInteger('codoutraregra')->nullable();
 
@@ -36,19 +36,19 @@ class CreateRegrasTable extends Migration
         });
 
         Schema::connection('banco')->table('regras', function($table) {
-            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
         });
 
         Schema::connection('banco')->table('regras', function($table) {
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
 
         Schema::connection('banco')->table('regras', function($table) {
-            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
         });
 
         Schema::connection('banco')->table('regras', function($table) {
-            $table->foreign('codmodelodeclarativo')->references('codmodelodeclarativo')->on('modelos_declarativos');
+            $table->foreign('cod_modelo_declarativo')->references('cod_modelo_declarativo')->on('modelos_declarativos');
         });
 
     }

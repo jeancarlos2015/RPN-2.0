@@ -83,8 +83,8 @@ class PainelModeloDeclarativoController extends Controller
     public
     function store(Request $request)
     {
-        $codprojeto = $request->codprojeto;
-        $codrepositorio = $request->codrepositorio;
+        $codprojeto = $request->cod_projeto;
+        $codrepositorio = $request->cod_repositorio;
         $data['all'] = $request->all();
         $data['validacao'] = ModeloDeclarativo::validacao();
         if (!$this->exists_errors($data)) {
@@ -93,7 +93,7 @@ class PainelModeloDeclarativoController extends Controller
                 $modelo = ModeloDeclarativoRepository::incluir($request);
                 return redirect()->route('controle_objeto_fluxo_index',
                     [
-                        'codmodelodeclarativo' => $modelo->codmodelodeclarativo
+                        'cod_modelo_declarativo' => $modelo->cod_modelo_declarativo
                     ]);
             }else{
                 $titulos = ModeloDeclarativo::titulos();
@@ -111,8 +111,8 @@ class PainelModeloDeclarativoController extends Controller
 
         $erros = $this->get_errors($data);
         return redirect()->route('controle_modelos_declarativos_create', [
-            'codrepositorio' => $codrepositorio,
-            'codprojeto' => $codprojeto
+            'cod_repositorio' => $codrepositorio,
+            'cod_projeto' => $codprojeto
         ])
             ->withErrors($erros)
             ->withInput();

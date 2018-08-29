@@ -13,7 +13,7 @@
    @includeIf('controle_modelos_diagramaticos.componentes.form_diagramatico_create')
     @if(!empty($modelo))
         <div class="alert alert-warning">
-            <strong>Warning!</strong> O modelo já existe, para acessá-lo clique neste <a href="{!! route('controle_modelos_diagramaticos.edit',[$modelo->codmodelodiagramatico]) !!}" class="link">Link</a>.
+            <strong>Warning!</strong> O modelo já existe, para acessá-lo clique neste <a href="{!! route('controle_modelos_diagramaticos.edit',[$modelo->cod_modelo_diagramatico]) !!}" class="link">Link</a>.
         </div>
     @endif
 @endsection

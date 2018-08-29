@@ -16,7 +16,7 @@ class Documentacao extends Model
         'descricao',
         'link',
         'visibilidade',
-        'codusuario'
+        'cod_usuario'
     ];
 
     public static function validacao()
@@ -90,6 +90,6 @@ class Documentacao extends Model
 
     public function usuario()
     {
-        return $this->hasOne(User::class, 'codusuario', 'codusuario');
+        return $this->hasOne(User::class, 'cod_usuario', 'cod_usuario');
     }
 }

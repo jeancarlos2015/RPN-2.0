@@ -15,15 +15,15 @@ class ObjetoFluxo extends Model
 {
 
     protected $connection = "banco";
-    protected $primaryKey = 'codobjetofluxo';
+    protected $primaryKey = 'cod_objeto_fluxo';
     protected $table = 'objetos_fluxos';
     protected $fillable = [
 
-        'codrepositorio',
-        'codusuario',
-        'codprojeto',
-        'codmodelodeclarativo',
-        'codregra',
+        'cod_repositorio',
+        'cod_usuario',
+        'cod_projeto',
+        'cod_modelo_declarativo',
+        'cod_regra',
         'nome',
         'descricao',
         'tipo',
@@ -122,27 +122,27 @@ class ObjetoFluxo extends Model
 
     public function usuario()
     {
-        return $this->hasOne(User::class, 'codusuario', 'codusuario');
+        return $this->hasOne(User::class, 'cod_usuario', 'cod_usuario');
     }
 
     public function repositorio()
     {
-        return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasOne(Repositorio::class, 'cod_repositorio', 'cod_repositorio');
     }
 
     public function projeto()
     {
-        return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
+        return $this->hasOne(Projeto::class, 'cod_projeto', 'cod_projeto');
     }
 
     public function modelo()
     {
-        return $this->hasOne(ModeloDeclarativo::class, 'codmodelodeclarativo', 'codmodelodeclarativo');
+        return $this->hasOne(ModeloDeclarativo::class, 'cod_modelo_declarativo', 'cod_modelo_declarativo');
     }
 
     public function regra()
     {
-        return $this->hasOne(Regra::class, 'codregra', 'codregra');
+        return $this->hasOne(Regra::class, 'cod_regra', 'cod_regra');
     }
 
     protected static function boot()

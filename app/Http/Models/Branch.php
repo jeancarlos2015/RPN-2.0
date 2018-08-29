@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 class Branch extends Model
 {
     protected $connection = 'pgsql';
-    protected $primaryKey = 'codbranch';
+    protected $primaryKey = 'cod_branch';
     protected $table = 'branchs';
     protected $fillable = [
         'branch',
         'descricao',
-        'codusuario'
+        'cod_usuario'
     ];
 
     public function usuario()
     {
-        return $this->hasOne(User::class, 'codusuario', 'codusuario');
+        return $this->hasOne(User::class, 'cod_usuario', 'cod_usuario');
     }
 
     public static function boot(){

@@ -225,7 +225,7 @@ class GitController extends Controller
 //            GitSistemaRepository::create_branch($request->branch);
             $request->request->add([
                 'descricao' => 'nenhum',
-                'codusuario' => Auth::user()->codusuario
+                'cod_usuario' => Auth::user()->cod_usuario
             ]);
             BranchsRepository::incluir($request->all());
             $data['tipo'] = 'success';

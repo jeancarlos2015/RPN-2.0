@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Repositorio extends Model
 {
     protected $connection = 'pgsql';
-    protected $primaryKey = 'codrepositorio';
+    protected $primaryKey = 'cod_repositorio';
     protected $table = 'repositorios';
     protected $fillable = [
         'nome',
@@ -100,27 +100,27 @@ class Repositorio extends Model
 
     public function usuarios()
     {
-        return $this->hasMany(User::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasMany(User::class, 'cod_repositorio', 'cod_repositorio');
     }
 
     public function projetos()
     {
-        return $this->hasMany(Projeto::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasMany(Projeto::class, 'cod_repositorio', 'cod_repositorio');
     }
 
     public function atribuicao_projeto_usuarios()
     {
-        return $this->hasMany(AtribuicaoProjetoUsuario::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasMany(AtribuicaoProjetoUsuario::class, 'cod_repositorio', 'cod_repositorio');
     }
 
     public function modelos_diagramaticos()
     {
-        return $this->hasMany(ModeloDiagramatico::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasMany(ModeloDiagramatico::class, 'cod_repositorio', 'cod_repositorio');
     }
 
     public function modelos_declarativos()
     {
-        return $this->hasMany(ModeloDeclarativo::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasMany(ModeloDeclarativo::class, 'cod_repositorio', 'cod_repositorio');
     }
     protected static function boot()
     {

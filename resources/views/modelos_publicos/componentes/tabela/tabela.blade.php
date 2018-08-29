@@ -28,7 +28,7 @@
                         <tr>
                             <td>
                                 <div class="card card-body text-left">
-                                    <a href="{!! route('visualizar_modelo_publico',[$modelo1->codmodelodiagramatico]) !!}">
+                                    <a href="{!! route('visualizar_modelo_publico',[$modelo1->cod_modelo_diagramatico]) !!}">
                                         <div class="media">
                                             <img class="d-flex mr-3 rounded-circle"
                                                  src="{{ Gravatar::src($modelo1->usuario->email) }}"

@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-//'codrepositorio',
+//'cod_repositorio',
 //'codusuario',
 //'nome',
 //'descricao',
@@ -10,9 +10,9 @@ use Faker\Generator as Faker;
 $factory->define(\App\Http\Models\Projeto::class, function (Faker $faker) {
     $usuarios = \App\Http\Repositorys\UserRepository::listar();
     $usuario = $usuarios[rand(0,count($usuarios)-1)];
-    $codrepositorio = $usuario->repositorio->codrepositorio;
+    $codrepositorio = $usuario->repositorio->cod_repositorio;
     return [
-        'codrepositorio' => $codrepositorio ,
+        'cod_repositorio' => $codrepositorio ,
         'codusuario' => $usuario->codusuario ,
         'nome' => $faker->company,
         'descricao' => $faker->sentence,

@@ -10,7 +10,7 @@ var bpmnModeler = new BpmnJS({
     }
 });
 
-function exportDiagram(codmodelodiagramatico) {
+function exportDiagram(cod_modelo_diagramatico) {
 
     bpmnModeler.saveXML({ format: true }, function(err, xml) {
         $.ajax({
@@ -26,7 +26,7 @@ function exportDiagram(codmodelodiagramatico) {
             data: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') ,
                 strXml: xml,
-                codmodelodiagramatico: codmodelodiagramatico
+                cod_modelo_diagramatico: cod_modelo_diagramatico
             },
             
             success: function () {

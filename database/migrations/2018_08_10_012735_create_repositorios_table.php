@@ -14,7 +14,7 @@ class CreateRepositoriosTable extends Migration
     public function up()
     {
         Schema::create('repositorios', function (Blueprint $table) {
-            $table->bigIncrements('codrepositorio');
+            $table->bigIncrements('cod_repositorio');
             $table->string('nome');
             $table->string('descricao');
             $table->boolean('visibilidade')->default(true);

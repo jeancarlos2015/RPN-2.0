@@ -25,7 +25,7 @@ class ModeloDiagramaticoRepository extends Repository
                 return collect(ModeloDiagramatico::all());
             }else{
                 return collect(ModeloDiagramatico::
-                where('codusuario', '=', Auth::user()->codusuario)
+                where('cod_usuario', '=', Auth::user()->cod_usuario)
                     ->orWhere('visibilidade', '=', true)
                     ->get());
             }
@@ -45,8 +45,8 @@ class ModeloDiagramaticoRepository extends Repository
     {
         return Cache::remember('listar_modelos', 2000, function ($codrepositorio, $codprojeto) {
             return collect(ModeloDiagramatico::
-            where('codrepositorio', '=', $codrepositorio)
-                ->where('codprojeto', '=', $codprojeto)
+            where('cod_repositorio', '=', $codrepositorio)
+                ->where('cod_projeto', '=', $codprojeto)
                 ->Where('visibilidade', '=', 'true')
                 ->get());
         });
@@ -104,13 +104,13 @@ class ModeloDiagramaticoRepository extends Repository
     public static function get_codigos(){
         return Cache::remember('listar_codigos_modelos', 2000, function (){
             return DB::connection('banco')->table('modelos_diagramaticos')
-                ->select('codmodelodiagramatico')
+                ->select('cod_modelo_diagramatico')
                 ->get();
         });
     }
 
     public static function gravar(Request $request){
-        $codmodelo = $request->codmodelodiagramatico;
+        $codmodelo = $request->cod_modelo_diagramatico;
         $xml = $request->strXml;
         $modelo = ModeloDiagramatico::findOrFail($codmodelo);
         $modelo->xml_modelo = $xml . "\n";

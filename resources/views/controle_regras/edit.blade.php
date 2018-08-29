@@ -10,10 +10,10 @@
                     '/Modelo/'.
                     $regra->modelodeclarativo->nome.
                     '/Regra/'.
-                    $regra->codregra,
+                    $regra->cod_regra,
                     'rota' => 'painel'
     ])
-    <form action="{!! route('controle_regras.update',[$regra->codregra]) !!}" method="post">
+    <form action="{!! route('controle_regras.update',[$regra->cod_regra]) !!}" method="post">
         @method('PUT')
         @csrf
         @includeIf('controle_regras.form',[

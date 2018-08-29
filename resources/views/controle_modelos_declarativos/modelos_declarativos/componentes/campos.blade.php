@@ -21,11 +21,11 @@
 <input type="hidden" value="declarativo" name="tipo">
 
 @if(!empty($codrepositorio))
-    <input type="hidden" name="codrepositorio" class="form-control"
+    <input type="hidden" name="cod_repositorio" class="form-control"
            value="{!! $codrepositorio !!}">
 @endif
 
 @if(!empty($codprojeto))
-    <input type="hidden" name="codprojeto" class="form-control"
+    <input type="hidden" name="cod_projeto" class="form-control"
            value="{!! $codprojeto !!}">
 @endif

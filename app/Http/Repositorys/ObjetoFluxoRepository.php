@@ -24,7 +24,7 @@ class ObjetoFluxoRepository extends Repository
             if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
                 return collect(ObjetoFluxo::all());
             }
-            return collect(ObjetoFluxo::whereCodusuario(Auth::user()->codusuario)
+            return collect(ObjetoFluxo::whereCodusuario(Auth::user()->cod_usuario)
                 ->orWhere('visibilidade', '=', 'true')
                 ->get());
         });
@@ -33,9 +33,9 @@ class ObjetoFluxoRepository extends Repository
     {
         return Cache::remember('listar_objetos', 2000, function ($codmodelodeclarativo) {
             if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
-                return collect(ObjetoFluxo::where('codmodelodeclarativo', '=', $codmodelodeclarativo)->get());
+                return collect(ObjetoFluxo::where('cod_modelo_declarativo', '=', $codmodelodeclarativo)->get());
             }
-            return collect(ObjetoFluxo::where('codmodelodeclarativo', '=', $codmodelodeclarativo)
+            return collect(ObjetoFluxo::where('cod_modelo_declarativo', '=', $codmodelodeclarativo)
                 ->get());
         });
     }
@@ -44,7 +44,7 @@ class ObjetoFluxoRepository extends Repository
     {
         return Cache::remember('listar_objetos', 2000, function ($codrepositorio, $codprojeto) {
             return collect(ObjetoFluxo::whereCodrepositorio($codrepositorio)
-                ->where('codprojeto', '=', $codprojeto)
+                ->where('cod_projeto', '=', $codprojeto)
                 ->Where('visibilidade', '=', 'true')
                 ->get());
         });
@@ -103,7 +103,7 @@ class ObjetoFluxoRepository extends Repository
     public static function listar_objetos_fluxo($codmodelodeclarativo)
     {
         return Cache::remember('listar_objetos', 2000, function ($codmodelodeclarativo) {
-            return ObjetoFluxo::where('codmodelodeclarativo', '=', $codmodelodeclarativo)
+            return ObjetoFluxo::where('cod_modelo_declarativo', '=', $codmodelodeclarativo)
                 ->get();
         });
     }

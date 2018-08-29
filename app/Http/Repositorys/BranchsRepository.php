@@ -19,7 +19,7 @@ class BranchsRepository extends Repository
     {
 
         return Branch::all()
-            ->where('codusuario', '=', Auth::user()->codusuario);
+            ->where('cod_usuario', '=', Auth::user()->cod_usuario);
 
     }
 
@@ -51,7 +51,7 @@ class BranchsRepository extends Repository
 
     public static function excluir_todas_branchs()
     {
-        foreach (Branch::all()->where('codusuario', '=', Auth::user()->codusuario) as $branch) {
+        foreach (Branch::all()->where('cod_usuario', '=', Auth::user()->cod_usuario) as $branch) {
             $branch->delete();
         }
     }
@@ -62,7 +62,7 @@ class BranchsRepository extends Repository
         foreach ($branchs as $b) {
             if ($b->branch === $branch) {
 
-                self::excluir($b->codbranch);
+                self::excluir($b->cod_branch);
             }
 
         }
@@ -75,7 +75,7 @@ class BranchsRepository extends Repository
             $data = [
                 'branch' => $branch['name'],
                 'descricao' => 'Nenhum',
-                'codusuario' => Auth::user()->codusuario
+                'cod_usuario' => Auth::user()->cod_usuario
             ];
             if (!self::exists($branch['name'])) {
                 Branch::create($data);
@@ -90,7 +90,7 @@ class BranchsRepository extends Repository
                 $result = $branchs_repositorio_github->where('name', $branch_banco->branch);
                 //se ela não existir no repositório do github será deletada do banco do sistema
                 if ($result->count() == 0) {
-                    $codbranch = $branch_banco->codbranch;
+                    $codbranch = $branch_banco->cod_branch;
                     $instancia_branch = Branch::findOrFail($codbranch);
                     $instancia_branch->delete();
                 }
@@ -104,11 +104,11 @@ class BranchsRepository extends Repository
     {
 
         $github_data = Auth::user()->github;
-        $user_github = UsuarioGithub::findOrFail($github_data->codusuariogithub);
+        $user_github = UsuarioGithub::findOrFail($github_data->cod_usuario_github);
 
         $data = [
             'usuario_github' => $user_github->usuario_github,
-            'codusuario' => $user_github->codusuario,
+            'cod_usuario' => $user_github->cod_usuario,
             'email_github' => $github_data->email_github,
             'senha_github' => $github_data->senha_github,
             'branch_atual' => $branch_atual,
@@ -132,7 +132,7 @@ class BranchsRepository extends Repository
 
     public static function existe_usuario()
     {
-        $usuarios_github = UsuarioGithub::all()->where('codusuario',Auth::user()->codusuario);
+        $usuarios_github = UsuarioGithub::all()->where('cod_usuario',Auth::user()->cod_usuario);
         return $usuarios_github->count() > 0;
     }
 }

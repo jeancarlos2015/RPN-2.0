@@ -66,7 +66,7 @@ class UserRepository extends Repository
     public static function vincular($codusuario, $codrepositorio){
         $usuario = User::findOrFail($codusuario);
         $repositorio = Repositorio::findOrFail($codrepositorio);
-        $usuario->codrepositorio = $repositorio->codrepositorio;
+        $usuario->cod_repositorio = $repositorio->cod_repositorio;
         $usuario->update();
         self::limpar_cache();
         return $usuario;

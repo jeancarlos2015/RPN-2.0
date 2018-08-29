@@ -77,7 +77,7 @@ class RepositorioController extends Controller
 
                 return redirect()->route('controle_projetos_index',
                     [
-                        'codrepositorio' => $repositorio->codrepositorio
+                        'cod_repositorio' => $repositorio->cod_repositorio
                     ]
                 );
             } else {
@@ -102,7 +102,7 @@ class RepositorioController extends Controller
     {
         return redirect()->route('controle_projetos_index',
             [
-                'codrepositorio' => $codrepositorio
+                'cod_repositorio' => $codrepositorio
             ]
         );
     }

@@ -2,10 +2,10 @@
 
 use Faker\Generator as Faker;
 
-//'codrepositorio',
+//'cod_repositorio',
 //'codusuario',
-//'codprojeto',
-//'codmodelodeclarativo',
+//'cod_projeto',
+//'cod_modelo_declarativo',
 //'codoutraregra',
 //'nome',
 //'tipo',
@@ -17,10 +17,10 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\http\Models\Regra::class, function (Faker $faker) {
     return [
-        'codrepositorio' => rand(1,49),
+        'cod_repositorio' => rand(1,49),
         'codusuario' => rand(1,49),
-        'codprojeto' => rand(1,49),
-        'codmodelodeclarativo' => rand(1,49),
+        'cod_projeto' => rand(1,49),
+        'cod_modelo_declarativo' => rand(1,49),
         'codoutraregra' => null,
         'nome' => $faker->word,
         'tipo' => 'regra',

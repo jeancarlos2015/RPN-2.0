@@ -14,8 +14,8 @@ class CreateDocumentacoesTable extends Migration
     public function up()
     {
         Schema::create('documentacoes', function (Blueprint $table) {
-            $table->increments('coddocumentacao');
-            $table->bigInteger('codusuario')->unsigned();
+            $table->increments('cod_documentacao');
+            $table->bigInteger('cod_usuario')->unsigned();
             $table->boolean('visibilidade');
             $table->string('nome');
             $table->string('descricao');
@@ -24,7 +24,7 @@ class CreateDocumentacoesTable extends Migration
         });
 
         Schema::table('documentacoes', function($table) {
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
     }
 

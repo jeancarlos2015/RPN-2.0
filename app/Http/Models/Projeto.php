@@ -33,11 +33,11 @@ use Illuminate\Database\Eloquent\Model;
 class Projeto extends Model
 {
     protected $connection = "banco";
-    protected $primaryKey = 'codprojeto';
+    protected $primaryKey = 'cod_projeto';
     protected $table = 'projetos';
     protected $fillable = [
-        'codrepositorio',
-        'codusuario',
+        'cod_repositorio',
+        'cod_usuario',
         'nome',
         'descricao',
         'visibilidade',
@@ -120,22 +120,22 @@ class Projeto extends Model
 
     public function usuario()
     {
-        return $this->hasOne(User::class, 'codusuario', 'codusuario');
+        return $this->hasOne(User::class, 'cod_usuario', 'cod_usuario');
     }
 
     public function repositorio()
     {
-        return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasOne(Repositorio::class, 'cod_repositorio', 'cod_repositorio');
     }
 
     public function modelos_diagramaticos()
     {
-        return $this->hasMany(ModeloDiagramatico::class, 'codprojeto', 'codprojeto');
+        return $this->hasMany(ModeloDiagramatico::class, 'cod_projeto', 'cod_projeto');
     }
 
     public function modelos_declarativos()
     {
-        return $this->hasMany(ModeloDeclarativo::class, 'codprojeto', 'codprojeto');
+        return $this->hasMany(ModeloDeclarativo::class, 'cod_projeto', 'cod_projeto');
     }
 
     protected static function boot()

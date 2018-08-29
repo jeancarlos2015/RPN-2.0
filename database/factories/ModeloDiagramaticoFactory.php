@@ -6,8 +6,8 @@ use Faker\Generator as Faker;
 //'descricao',
 //'xml_modelo',
 //
-//'codprojeto',
-//'codrepositorio',
+//'cod_projeto',
+//'cod_repositorio',
 //'codusuario',
 //
 //'visibilidade',
@@ -21,8 +21,8 @@ $factory->define(\App\Http\Models\ModeloDiagramatico::class, function (Faker $fa
         'nome' => $faker->name,
         'descricao' => 'Nenhum',
         'xml_modelo' => \App\Http\Models\ModeloDiagramatico::get_modelo_default($faker->name),
-        'codprojeto' => $projeto->codprojeto,
-        'codrepositorio' => $projeto->codrepositorio,
+        'cod_projeto' => $projeto->cod_projeto,
+        'cod_repositorio' => $projeto->cod_repositorio,
         'codusuario' => $projeto->codusuario,
         'visibilidade' => 'true',
         'publico' => 'true',

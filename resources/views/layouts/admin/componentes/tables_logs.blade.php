@@ -3,7 +3,7 @@
 
     @foreach($logs as $log)
         <tr>
-            {{--<td>{!! $log->codlog !!}</td>--}}
+            {{--<td>{!! $log->cod_log !!}</td>--}}
             {{--<td>{!! $log->nome !!}</td>--}}
             {{--<td>{!! $log->descricao !!}</td>--}}
             {{--<td>{!! $log->usuario->name !!}</td>--}}
@@ -11,7 +11,7 @@
             {{--<td>{!! $log->pagina !!}</td>--}}
             {{--<td>{!! $log->acao !!}</td>--}}
             <td>
-                {{--<a href="{!! route($rota_exibicao,[$repositorio1->codrepositorio]) !!}">--}}
+                {{--<a href="{!! route($rota_exibicao,[$repositorio1->cod_repositorio]) !!}">--}}
                 <div class="media">
                     <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src('public/img/processo.png') }}"
                          alt="" width="100">
@@ -32,13 +32,13 @@
             <td>
                 @if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo==='Administrador')
                     @if(!empty($rota_edicao))
-                        @include('componentes.link',['id' => $log->codlog, 'rota' => $rota_edicao])
+                        @include('componentes.link',['id' => $log->cod_log, 'rota' => $rota_edicao])
                     @endif
                     @if(!empty($rota_exclusao))
-                        @include('componentes.form_delete',['id' => $log->codlog, 'rota' => $rota_exclusao])
+                        @include('componentes.form_delete',['id' => $log->cod_log, 'rota' => $rota_exclusao])
                     @endif
                     @if(!empty($rota_exibicao))
-                        @include('componentes.link',['id' => $log->codlog, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                        @include('componentes.link',['id' => $log->cod_log, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
                     @endif
                 @else
                     Não Permitido

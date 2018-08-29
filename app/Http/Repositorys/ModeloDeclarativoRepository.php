@@ -25,7 +25,7 @@ class ModeloDeclarativoRepository extends Repository
                 return collect(ModeloDeclarativo::all());
             }
             return collect(ModeloDeclarativo::
-            where('codusuario', '=', Auth::user()->codusuario)
+            where('cod_usuario', '=', Auth::user()->cod_usuario)
                 ->orWhere('visibilidade', '=', 'true')
                 ->get());
         });

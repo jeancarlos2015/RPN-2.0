@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class UsuarioGithub extends Model
 {
     protected $connection = 'pgsql';
-    protected $primaryKey = 'codusuariogithub';
+    protected $primaryKey = 'cod_usuario_github';
     protected $table = 'usuarios_github';
     protected $fillable = [
         'usuario_github',
-        'codusuario',
+        'cod_usuario',
         'email_github',
         'branch_atual',
         'repositorio_atual',

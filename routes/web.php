@@ -10,7 +10,7 @@ Route::get('publico/modelos', function () {
 })->name('modelos_publicos');
 
 
-Route::get('publico/modelos/{codmodelo}', function ($codmodelo) {
+Route::get('publico/modelos/{cod_modelo}', function ($codmodelo) {
     $modelo = \App\Http\Repositorys\ModeloDiagramaticoRepository::visualizar_modelos_publicos($codmodelo);
     return view('modelos_publicos.visualizar_modelo', compact('modelo'));
 })->name('visualizar_modelo_publico');
@@ -65,11 +65,11 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_padroes_recomendacao', 'PadraoRecomendacaoController')
             ->middleware('can:acesso');
 
-        Route::get('controle_padrao_create_binario/modelo_delcarativo/{codmodelodeclarativo}', 'PadraoRecomendacaoController@create_recomendacao_binario')
+        Route::get('controle_padrao_create_binario/modelo_delcarativo/{cod_modelo_declarativo}', 'PadraoRecomendacaoController@create_recomendacao_binario')
             ->name('controle_padrao_create_binario')
             ->middleware('can:acesso');
 
-        Route::get('controle_padrao_create_conjunto/modelo_delcarativo/{codmodelodeclarativo}', 'PadraoRecomendacaoController@create_recomendacao_conjunto')
+        Route::get('controle_padrao_create_conjunto/modelo_delcarativo/{cod_modelo_declarativo}', 'PadraoRecomendacaoController@create_recomendacao_conjunto')
             ->name('controle_padrao_create_conjunto')
             ->middleware('can:acesso');
 
@@ -85,12 +85,12 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_projetos', 'ProjetoController')
             ->middleware('can:acesso');
 
-        Route::get('controle_objeto_fluxo_index/modelo_declarativo/{codmodelodeclarativo}', 'ObjetoFluxoController@controle_objeto_fluxo_index')
+        Route::get('controle_objeto_fluxo_index/modelo_declarativo/{cod_modelo_declarativo}', 'ObjetoFluxoController@controle_objeto_fluxo_index')
             ->name('controle_objeto_fluxo_index')
             ->middleware('can:acesso');
 
 
-        Route::get('edicao_modelo_diagramatico/{codmodelo}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')
+        Route::get('edicao_modelo_diagramatico/{cod_modelo}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')
             ->name('edicao_modelo_diagramatico')
             ->middleware('can:acesso');
 
@@ -105,22 +105,22 @@ Route::prefix('admin')->middleware(['auth'])->group(
         Route::resource('controle_modelos_diagramaticos', 'ModeloDiagramaticoController')
             ->middleware('can:acesso');
 
-        Route::get('controle_modelos_declarativos_create/repositorio/{codrepositorio}/projeto/{codprojeto}', 'ModeloDeclarativoController@create')
+        Route::get('controle_modelos_declarativos_create/repositorio/{cod_repositorio}/projeto/{cod_projeto}', 'ModeloDeclarativoController@create')
             ->name('controle_modelos_declarativos')
             ->middleware('can:acesso');
 
-        Route::get('controle_objetos_fluxos_create/modelo/{codmodelodeclarativo}', 'ObjetoFluxoController@create')
+        Route::get('controle_objetos_fluxos_create/modelo/{cod_modelo_declarativo}', 'ObjetoFluxoController@create')
             ->name('controle_objetos_fluxos_create')
             ->middleware('can:acesso');
 
         Route::resource('controle_modelos_declarativos', 'ModeloDeclarativoController')
             ->middleware('can:acesso');
 
-        Route::get('painel_modelo_declarativo/modelodeclarativo/{codmodelodeclarativo}', 'PainelModeloDeclarativoController@painel_modelo_declarativo')
+        Route::get('painel_modelo_declarativo/modelodeclarativo/{cod_modelo_declarativo}', 'PainelModeloDeclarativoController@painel_modelo_declarativo')
             ->name('painel_modelo_declarativo')
             ->middleware('can:acesso');
 
-        Route::get('edicao_modelo_declarativo/{codmodelo}', 'ModeloDeclarativoController@edit')
+        Route::get('edicao_modelo_declarativo/{cod_modelo}', 'ModeloDeclarativoController@edit')
             ->name('edicao_modelo_declarativo')
             ->middleware('can:acesso');
 
@@ -164,7 +164,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
 
-        Route::get('controle_projetos_index/repositorio/{codrepositorio}', 'ProjetoController@index')
+        Route::get('controle_projetos_index/repositorio/{cod_repositorio}', 'ProjetoController@index')
             ->name('controle_projetos_index')
             ->middleware('can:acesso');
 
@@ -178,25 +178,25 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
 
-        Route::get('controle_projetos_create/{codrepositorio}', 'ProjetoController@create')
+        Route::get('controle_projetos_create/{cod_repositorio}', 'ProjetoController@create')
             ->name('controle_projetos_create')
             ->middleware('can:acesso');
 
-        Route::get('controle_modelos_diagramaticos_create/repositorio/{codrepositorio}/projeto/{codprojeto}', 'ModeloDiagramaticoController@create')
+        Route::get('controle_modelos_diagramaticos_create/repositorio/{cod_repositorio}/projeto/{cod_projeto}', 'ModeloDiagramaticoController@create')
             ->name('controle_modelos_diagramaticos_create')
             ->middleware('can:acesso');
 
-        Route::get('controle_modelos_declarativos_create/repositorio/{codrepositorio}/projeto/{codprojeto}', 'ModeloDeclarativoController@create')
+        Route::get('controle_modelos_declarativos_create/repositorio/{cod_repositorio}/projeto/{cod_projeto}', 'ModeloDeclarativoController@create')
             ->name('controle_modelos_declarativos_create')
             ->middleware('can:acesso');
 
 
-        Route::get('controle_modelos_diagramaticos_index/repositorio/{codrepositorio}/projeto/{codprojeto}/usuario/{codusuario}', 'ModeloDiagramaticoController@index')
+        Route::get('controle_modelos_diagramaticos_index/repositorio/{cod_repositorio}/projeto/{cod_projeto}/usuario/{codusuario}', 'ModeloDiagramaticoController@index')
             ->name('controle_modelos_diagramaticos_index')
             ->middleware('can:acesso');;
 
 
-        Route::get('controle_modelos_declarativos_index/repositorio/{codrepositorio}/projeto/{codprojeto}/usuario/{codusuario}', 'ModeloDeclarativoController@index')
+        Route::get('controle_modelos_declarativos_index/repositorio/{cod_repositorio}/projeto/{cod_projeto}/usuario/{codusuario}', 'ModeloDeclarativoController@index')
             ->name('controle_modelos_declarativos_index')
             ->middleware('can:acesso');;
 
@@ -264,7 +264,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
 
         Route::resource('controle_regras', 'RegraController')
             ->middleware('can:acesso');
-        Route::get('controle_regras_index/modelodeclarativo/{codmodelodeclarativo}', 'RegraController@index')
+        Route::get('controle_regras_index/modelodeclarativo/{cod_modelo_declarativo}', 'RegraController@index')
             ->name('controle_regras_index')
             ->middleware('can:acesso');
         Route::get('index_create_delete', 'GitController@index_create_delete')

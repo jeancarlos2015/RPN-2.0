@@ -14,10 +14,10 @@ class CreateLogsTable extends Migration
     public function up()
     {
         Schema::create('logs', function (Blueprint $table) {
-            $table->increments('codlog');
+            $table->increments('cod_log');
             $table->string('nome');
             $table->text('descricao');
-            $table->bigInteger('codusuario')->unsigned();
+            $table->bigInteger('cod_usuario')->unsigned();
             $table->string('acao');
             $table->string('pagina');
 
@@ -25,7 +25,7 @@ class CreateLogsTable extends Migration
         });
 
         Schema::table('logs', function($table) {
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
     }
 

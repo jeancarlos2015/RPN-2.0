@@ -25,12 +25,12 @@ use Illuminate\Database\Eloquent\Model;
 class Log extends Model
 {
     protected $connection = 'pgsql';
-    protected $primaryKey = 'codlog';
+    protected $primaryKey = 'cod_log';
     protected $table = 'logs';
     protected $fillable = [
         'nome',
         'descricao',
-        'codusuario',
+        'cod_usuario',
         'created_at',
         'acao',
         'pagina'
@@ -39,7 +39,7 @@ class Log extends Model
 
     public function usuario()
     {
-        return $this->hasOne(User::class, 'codusuario', 'codusuario');
+        return $this->hasOne(User::class, 'cod_usuario', 'cod_usuario');
     }
 
 //    public function getOcorrenciaAttribute($value)

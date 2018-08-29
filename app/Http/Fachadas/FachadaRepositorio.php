@@ -22,12 +22,12 @@ class FachadaRepositorio
             $branch_rascunho = [
                 'branch' => 'rascunho',
                 'descricao' => 'rascunho',
-                'codusuario' => Auth::user()->codusuario
+                'cod_usuario' => Auth::user()->cod_usuario
             ];
             $branch_original = [
                 'branch' => 'original',
                 'descricao' => 'original',
-                'codusuario' => Auth::user()->codusuario
+                'cod_usuario' => Auth::user()->cod_usuario
             ];
             BranchsRepository::incluir($branch_original);
             sleep(2);

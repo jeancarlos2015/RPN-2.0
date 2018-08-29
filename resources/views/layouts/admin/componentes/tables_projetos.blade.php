@@ -3,7 +3,7 @@
 
     @foreach($projetos as $projeto1)
         <tr>
-            {{--<td>{!! $projeto1->codprojeto !!}</td>--}}
+            {{--<td>{!! $projeto1->cod_projeto !!}</td>--}}
 
             {{--<td>{!! $projeto1->nome !!}</td>--}}
             {{--<td>{!! $projeto1->descricao !!}</td>--}}
@@ -14,7 +14,7 @@
             {{--@endif--}}
             @if(!empty($projeto1->usuario))
                 <td>
-                    <a href="{!! route($rota_exibicao,[$projeto1->codprojeto]) !!}">
+                    <a href="{!! route($rota_exibicao,[$projeto1->cod_projeto]) !!}">
                         <div class="media">
 
                             <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($projeto1->usuario->email) }}"
@@ -38,17 +38,17 @@
                 <td>
                     @if((!empty($projeto1->usuario) && Auth::user()->email===$projeto1->usuario->email) || (Auth::user()->tipo==='Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com'))
                         @if(!empty($rota_edicao))
-                            @include('componentes.link',['id' => $projeto1->codprojeto, 'rota' => $rota_edicao])
+                            @include('componentes.link',['id' => $projeto1->cod_projeto, 'rota' => $rota_edicao])
                         @endif
                         @if(!empty($rota_exclusao))
-                            @include('componentes.form_delete',['id' => $projeto1->codprojeto, 'rota' => $rota_exclusao])
+                            @include('componentes.form_delete',['id' => $projeto1->cod_projeto, 'rota' => $rota_exclusao])
                         @endif
                         @if(!empty($rota_exibicao))
-                            @include('componentes.link',['id' => $projeto1->codprojeto, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                            @include('componentes.link',['id' => $projeto1->cod_projeto, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
                         @endif
                     @else
                         @if(!empty($rota_exibicao))
-                            @include('componentes.link',['id' => $projeto1->codprojeto, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
+                            @include('componentes.link',['id' => $projeto1->cod_projeto, 'rota' => $rota_exibicao,'nomebotao' => 'Visualizar'])
                         @endif
                     @endif
 

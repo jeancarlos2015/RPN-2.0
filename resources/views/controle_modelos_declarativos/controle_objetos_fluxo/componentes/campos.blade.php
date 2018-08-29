@@ -29,12 +29,12 @@
 </div>
 
 
-{{--'codrepositorio',--}}
+{{--'cod_repositorio',--}}
 {{--'codusuario',--}}
-{{--'codprojeto',--}}
-{{--'codmodelodeclarativo',--}}
+{{--'cod_projeto',--}}
+{{--'cod_modelo_declarativo',--}}
 
-<input type="hidden" value="{!! $modelo_declarativo->codrepositorio !!}" name="codrepositorio">
+<input type="hidden" value="{!! $modelo_declarativo->cod_repositorio !!}" name="cod_repositorio">
 <input type="hidden" value="{!! $modelo_declarativo->codusuario !!}" name="codusuario">
-<input type="hidden" value="{!! $modelo_declarativo->codprojeto !!}" name="codprojeto">
-<input type="hidden" value="{!! $modelo_declarativo->codmodelodeclarativo !!}" name="codmodelodeclarativo">
+<input type="hidden" value="{!! $modelo_declarativo->cod_projeto !!}" name="cod_projeto">
+<input type="hidden" value="{!! $modelo_declarativo->cod_modelo_declarativo !!}" name="cod_modelo_declarativo">

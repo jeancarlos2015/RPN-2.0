@@ -26,7 +26,7 @@ class ProjetoRepository extends Repository
                 return collect($result);
             } else if (!empty(Auth::user()->repositorio)) {
                 $repositorio = Auth::user()->repositorio;
-                return collect(Projeto::where('codrepositorio', $repositorio->codrepositorio)
+                return collect(Projeto::where('cod_repositorio', $repositorio->cod_repositorio)
                     ->where('visibilidade', 'true')
                     ->get());
             }
@@ -38,10 +38,10 @@ class ProjetoRepository extends Repository
     {
         return Cache::remember('listar_projetos', 2000, function ($codrepositorio) {
             if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
-                return collect(Projeto::where('codrepositorio', $codrepositorio)
+                return collect(Projeto::where('cod_repositorio', $codrepositorio)
                     ->get());
             }
-            return collect(Projeto::where('codrepositorio', $codrepositorio)
+            return collect(Projeto::where('cod_repositorio', $codrepositorio)
                 ->orwhere('visibilidade', 'true')
                 ->get());
         });

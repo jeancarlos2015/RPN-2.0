@@ -1,6 +1,6 @@
 @includeIf('controle_projetos.componentes.campos')
 @if(!empty($codrepositorio))
-    <input type="hidden" name="codrepositorio" class="form-control"
+    <input type="hidden" name="cod_repositorio" class="form-control"
            value="{!! $codrepositorio !!}">
 @endif
 @if(empty($projeto))

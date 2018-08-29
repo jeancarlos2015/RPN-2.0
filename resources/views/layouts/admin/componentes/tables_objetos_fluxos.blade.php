@@ -4,7 +4,7 @@
         <tr>
             <td>
                 @if(!empty($objeto->usuario) && Auth::user()->email===$objeto->usuario->email || Auth::user()->tipo==='Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com')
-                    <a href="{!! route($rota_edicao,[$objeto->codobjetofluxo]) !!}">
+                    <a href="{!! route($rota_edicao,[$objeto->cod_objeto_fluxo]) !!}">
                         <div class="media">
                             <img class="d-flex mr-3 rounded-circle" src="{{ Gravatar::src($objeto->usuario->email) }}"
                                  alt="" width="50">
@@ -69,10 +69,10 @@
             <td>
                 @if((!empty($objeto->usuario) && Auth::user()->email===$objeto->usuario->email) || (Auth::user()->tipo==='Administrador' || Auth::user()->email==='jeancarlospenas25@gmail.com'))
                     @if(!empty($rota_edicao))
-                        @include('componentes.link',['id' => $objeto->codobjetofluxo, 'rota' => $rota_edicao])
+                        @include('componentes.link',['id' => $objeto->cod_objeto_fluxo, 'rota' => $rota_edicao])
                     @endif
                     @if(!empty($rota_exclusao))
-                        @include('componentes.form_delete',['id' => $objeto->codobjetofluxo, 'rota' => $rota_exclusao])
+                        @include('componentes.form_delete',['id' => $objeto->cod_objeto_fluxo, 'rota' => $rota_exclusao])
                     @endif
                 @else
                     Nenhuma Ação

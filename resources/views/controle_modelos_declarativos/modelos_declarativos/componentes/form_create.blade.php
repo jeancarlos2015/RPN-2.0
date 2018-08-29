@@ -6,7 +6,7 @@
     'acao' => 'Salvar e Proseguir',
     'dados' => $dados,
     'MAX' => 2,
-    'codrepositorio' => $repositorio->codrepositorio,
-    'codprojeto' => $projeto->codprojeto
+    'cod_repositorio' => $repositorio->cod_repositorio,
+    'cod_projeto' => $projeto->cod_projeto
     ])
 </form>

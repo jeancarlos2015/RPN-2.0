@@ -169,7 +169,7 @@ class UserController extends Controller
             if (\Auth::user()->tipo === 'administrador') {
                 return redirect()->route('controle_usuarios.index');
             } else {
-                return redirect()->route('controle_usuarios.edit', ['id' => $user->codusuario]);
+                return redirect()->route('controle_usuarios.edit', ['id' => $user->cod_usuario]);
             }
 
         } catch (\Exception $ex) {

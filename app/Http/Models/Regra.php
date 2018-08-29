@@ -20,13 +20,13 @@ class Regra extends Model
         'UNIAO'
     ];
     protected $connection = 'banco';
-    protected $primaryKey = 'codregra';
+    protected $primaryKey = 'cod_regra';
     protected $table = 'regras';
     protected $fillable = [
-        'codrepositorio',
-        'codusuario',
-        'codprojeto',
-        'codmodelodeclarativo',
+        'cod_repositorio',
+        'cod_usuario',
+        'cod_projeto',
+        'cod_modelo_declarativo',
         'codoutraregra',
         'nome',
         'tipo',
@@ -102,22 +102,22 @@ class Regra extends Model
 //Relacionamentos
     public function projeto()
     {
-        return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
+        return $this->hasOne(Projeto::class, 'cod_projeto', 'cod_projeto');
     }
 
     public function repositorio()
     {
-        return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasOne(Repositorio::class, 'cod_repositorio', 'cod_repositorio');
     }
 
 
     public function objetos_fluxos()
     {
-        return $this->hasMany(ObjetoFluxo::class, 'codregra', 'codregra');
+        return $this->hasMany(ObjetoFluxo::class, 'cod_regra', 'cod_regra');
     }
 
     public function modelodeclarativo(){
-        return $this->hasOne(ModeloDeclarativo::class, 'codmodelodeclarativo', 'codmodelodeclarativo');
+        return $this->hasOne(ModeloDeclarativo::class, 'cod_modelo_declarativo', 'cod_modelo_declarativo');
     }
 
     public static function validacao()
@@ -139,6 +139,6 @@ class Regra extends Model
 
     public function usuario()
     {
-        return $this->hasOne(User::class, 'codusuario', 'codusuario');
+        return $this->hasOne(User::class, 'cod_usuario', 'cod_usuario');
     }
 }

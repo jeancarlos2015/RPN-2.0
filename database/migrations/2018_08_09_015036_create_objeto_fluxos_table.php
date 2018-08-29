@@ -15,13 +15,13 @@ class CreateObjetoFluxosTable extends Migration
     {
         Schema::connection('banco')->create('objetos_fluxos', function (Blueprint $table) {
 
-            $table->increments('codobjetofluxo');
+            $table->increments('cod_objeto_fluxo');
 
-            $table->bigInteger('codrepositorio')->unsigned();
-            $table->bigInteger('codregra')->nullable();
-            $table->bigInteger('codusuario')->unsigned();
-            $table->bigInteger('codprojeto')->unsigned();
-            $table->bigInteger('codmodelodeclarativo')->unsigned();
+            $table->bigInteger('cod_repositorio')->unsigned();
+            $table->bigInteger('cod_regra')->nullable();
+            $table->bigInteger('cod_usuario')->unsigned();
+            $table->bigInteger('cod_projeto')->unsigned();
+            $table->bigInteger('cod_modelo_declarativo')->unsigned();
 
             $table->string('nome');
             $table->string('descricao');
@@ -34,23 +34,23 @@ class CreateObjetoFluxosTable extends Migration
         });
 
         Schema::connection('banco')->table('objetos_fluxos', function($table) {
-            $table->foreign('codprojeto')->references('codprojeto')->on('projetos');
+            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
         });
 
         Schema::connection('banco')->table('objetos_fluxos', function($table) {
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
 
         Schema::connection('banco')->table('objetos_fluxos', function($table) {
-            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
         });
 
         Schema::connection('banco')->table('objetos_fluxos', function($table) {
-            $table->foreign('codmodelodeclarativo')->references('codmodelodeclarativo')->on('modelos_declarativos');
+            $table->foreign('cod_modelo_declarativo')->references('cod_modelo_declarativo')->on('modelos_declarativos');
         });
 
         Schema::connection('banco')->table('objetos_fluxos', function($table) {
-            $table->foreign('codregra')->references('codregra')->on('regras');
+            $table->foreign('cod_regra')->references('cod_regra')->on('regras');
         });
     }
 

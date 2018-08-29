@@ -10,7 +10,7 @@
 
     @if(!empty($repositorio))
         <div class="alert alert-warning">
-            <strong>Warning!</strong> O repositório já existe, para acessá-lo clique neste <a href="{!! route('controle_repositorios.show',[$repositorio->codrepositorio]) !!}" class="link">Link</a>.
+            <strong>Warning!</strong> O repositório já existe, para acessá-lo clique neste <a href="{!! route('controle_repositorios.show',[$repositorio->cod_repositorio]) !!}" class="link">Link</a>.
         </div>
     @endif
 @endsection

@@ -14,16 +14,16 @@ class CreateBranchsTable extends Migration
     public function up()
     {
         Schema::create('branchs', function (Blueprint $table) {
-            $table->increments('codbranch');
+            $table->increments('cod_branch');
             $table->string('branch');
             $table->string('descricao')->nullable();
-            $table->bigInteger('codusuario')->unsigned();
+            $table->bigInteger('cod_usuario')->unsigned();
 
             $table->timestamps();
         });
 
         Schema::table('branchs', function($table) {
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
     }
 

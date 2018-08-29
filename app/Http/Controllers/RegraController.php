@@ -110,7 +110,7 @@ class RegraController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-        return redirect()->route('controle_regras_index',[$regra->codmodelodeclarativo]);
+        return redirect()->route('controle_regras_index',[$regra->cod_modelo_declarativo]);
     }
 
     /**
@@ -132,7 +132,7 @@ class RegraController extends Controller
             $data['acao'] = 'merge_checkout';
             $this->create_log($data);
         }
-        return redirect()->route('controle_regras_index',[$regra->codmodelodeclarativo]);
+        return redirect()->route('controle_regras_index',[$regra->cod_modelo_declarativo]);
 
     }
 }

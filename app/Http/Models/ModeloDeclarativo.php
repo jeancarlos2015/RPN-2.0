@@ -13,16 +13,16 @@ use Illuminate\Database\Eloquent\Model;
 class ModeloDeclarativo extends Model
 {
     protected $connection = 'banco';
-    protected $primaryKey = 'codmodelodeclarativo';
+    protected $primaryKey = 'cod_modelo_declarativo';
     protected $table = 'modelos_declarativos';
     protected $fillable = [
         'nome',
         'descricao',
         'tipo',
 
-        'codprojeto',
-        'codrepositorio',
-        'codusuario',
+        'cod_projeto',
+        'cod_repositorio',
+        'cod_usuario',
 
         'visibilidade',
         'publico',
@@ -59,8 +59,8 @@ class ModeloDeclarativo extends Model
         return [
             'nome',
             'descricao',
-            'codprojeto',
-            'codrepositorio',
+            'cod_projeto',
+            'cod_repositorio',
             'xml_modelo'
 
         ];
@@ -103,16 +103,16 @@ class ModeloDeclarativo extends Model
 //Relacionamentos
     public function projeto()
     {
-        return $this->hasOne(Projeto::class, 'codprojeto', 'codprojeto');
+        return $this->hasOne(Projeto::class, 'cod_projeto', 'cod_projeto');
     }
 
     public function repositorio()
     {
-        return $this->hasOne(Repositorio::class, 'codrepositorio', 'codrepositorio');
+        return $this->hasOne(Repositorio::class, 'cod_repositorio', 'cod_repositorio');
     }
     public function objetos_fluxos()
     {
-        return $this->hasMany(ObjetoFluxo::class, 'codmodelodeclarativo', 'codmodelodeclarativo');
+        return $this->hasMany(ObjetoFluxo::class, 'cod_modelo_declarativo', 'cod_modelo_declarativo');
     }
     public static function validacao()
     {
@@ -133,6 +133,6 @@ class ModeloDeclarativo extends Model
 
     public function usuario()
     {
-        return $this->hasOne(User::class, 'codusuario', 'codusuario');
+        return $this->hasOne(User::class, 'cod_usuario', 'cod_usuario');
     }
 }

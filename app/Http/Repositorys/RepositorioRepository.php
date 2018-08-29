@@ -88,7 +88,7 @@ class RepositorioRepository extends Repository
     public static function get_codigos(){
         return Cache::remember('listar_codigos_repositorios', 2000, function (){
             return DB::table('repositorios')
-                ->select('codrepositorio')
+                ->select('cod_repositorio')
                 ->get();
         });
     }

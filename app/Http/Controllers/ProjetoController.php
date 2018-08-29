@@ -59,7 +59,7 @@ class ProjetoController extends Controller
      */
     private function exists($codrepositorio)
     {
-        $repositorio = (new Repositorio)->where('codrepositorio', '=', $codrepositorio)->first();
+        $repositorio = (new Repositorio)->where('cod_repositorio', '=', $codrepositorio)->first();
         return $repositorio === null;
 
     }
@@ -92,23 +92,23 @@ class ProjetoController extends Controller
     {
         try {
             $erros = \Validator::make($request->all(), Projeto::validacao());
-            $codrepositorio = $request->codrepositorio;
+            $codrepositorio = $request->cod_repositorio;
             if ($erros->fails()) {
                 return redirect()->route('controle_projeto_create', [
-                    'codrepositorio' => $codrepositorio,
+                    'cod_repositorio' => $codrepositorio,
                 ])
                     ->withErrors($erros)
                     ->withInput();
             }
             if (!ProjetoRepository::projeto_existe($request->nome)) {
-                $request->request->add(['codusuario' => Auth::user()->codusuario]);
+                $request->request->add(['cod_usuario' => Auth::user()->cod_usuario]);
                 $projeto = ProjetoRepository::incluir($request);
                 flash('Projeto criado com sucesso!!');
                 return redirect()->route('controle_modelos_diagramaticos_index',
                     [
-                        'codrepositorio' => $codrepositorio,
-                        'codprojeto' => $projeto->codprojeto,
-                        'codusuario' => $projeto->codusuario
+                        'cod_repositorio' => $codrepositorio,
+                        'cod_projeto' => $projeto->cod_projeto,
+                        'cod_usuario' => $projeto->cod_usuario
                     ]
                 );
             } else {
@@ -141,9 +141,9 @@ class ProjetoController extends Controller
 
             return redirect()->route('controle_modelos_diagramaticos_index',
                 [
-                    'codrepositorio' => $projeto->codrepositorio,
-                    'codprojeto' => $codprojeto,
-                    'codusuario' => $projeto->codusuario
+                    'cod_repositorio' => $projeto->cod_repositorio,
+                    'cod_projeto' => $codprojeto,
+                    'cod_usuario' => $projeto->cod_usuario
                 ]);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -193,9 +193,9 @@ class ProjetoController extends Controller
             $projeto = ProjetoRepository::atualizar($request, $codprojeto);
             return redirect()->route('controle_modelos_diagramaticos_index',
                 [
-                    'codrepositorio' => $projeto->codrepositorio,
-                    'codprojeto' => $codprojeto,
-                    'codusuario' => $projeto->codusuario
+                    'cod_repositorio' => $projeto->cod_repositorio,
+                    'cod_projeto' => $codprojeto,
+                    'cod_usuario' => $projeto->cod_usuario
                 ]);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
@@ -216,8 +216,8 @@ class ProjetoController extends Controller
             ProjetoRepository::excluir($codprojeto);
             flash('Operação feita com sucesso!!');
             return redirect()->route('controle_projetos_index', [
-                'codrepositorio' => $projeto->codrepositorio,
-                'codusuario' => $projeto->codusuario
+                'cod_repositorio' => $projeto->cod_repositorio,
+                'cod_usuario' => $projeto->cod_usuario
             ]);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();

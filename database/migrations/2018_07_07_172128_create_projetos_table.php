@@ -14,10 +14,10 @@ class CreateProjetosTable extends Migration
     public function up()
     {
         Schema::connection('banco')->create('projetos', function (Blueprint $table) {
-            $table->bigincrements('codprojeto');
+            $table->bigincrements('cod_projeto');
 
-            $table->bigInteger('codrepositorio')->unsigned();
-            $table->bigInteger('codusuario')->unsigned();
+            $table->bigInteger('cod_repositorio')->unsigned();
+            $table->bigInteger('cod_usuario')->unsigned();
 
 
             $table->string('nome');
@@ -32,12 +32,12 @@ class CreateProjetosTable extends Migration
 
 
         Schema::connection('banco')->table('projetos', function($table) {
-            $table->foreign('codrepositorio')->references('codrepositorio')->on('repositorios');
+            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
         });
 
 
         Schema::connection('banco')->table('projetos', function($table) {
-            $table->foreign('codusuario')->references('codusuario')->on('users');
+            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
         });
     }
 

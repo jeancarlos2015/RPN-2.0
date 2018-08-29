@@ -14,14 +14,14 @@
 
             </div>
             @if(!empty($funcionalidades))
-                <a class="card-footer text-white clearfix small z-1" href="{!! route($funcionalidades[$indice]->rota,[$modelodeclarativo->codmodelodeclarativo]) !!}">
+                <a class="card-footer text-white clearfix small z-1" href="{!! route($funcionalidades[$indice]->rota,[$modelodeclarativo->cod_modelo_declarativo]) !!}">
                     <span class="float-left">Visualizar</span>
                     <span class="float-right">
                 <i class="fa fa-angle-right"></i>
               </span>
                 </a>
             @else
-                <a class="card-footer text-white clearfix small z-1" href="{!! route($rotas[$index],[$modelodeclarativo->codmodelodeclarativo]) !!}">
+                <a class="card-footer text-white clearfix small z-1" href="{!! route($rotas[$index],[$modelodeclarativo->cod_modelo_declarativo]) !!}">
                     <span class="float-left">Visualizar</span>
                     <span class="float-right">
                 <i class="fa fa-angle-right"></i>
