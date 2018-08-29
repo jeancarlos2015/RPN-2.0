@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\http\Models\RepresentacaoDeclarativa;
 use App\Http\Repositorys\RepresentacaoDeclarativaRepository;
-use App\RepresentacaoDeclarativa;
 use Illuminate\Http\Request;
 
 class RepresentacaoDeclarativaController extends Controller
