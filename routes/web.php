@@ -78,7 +78,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('controle_padrao_salvar')
             ->middleware('can:acesso');
 
-        Route::post('edicao_modelo_diagramatico/gravar', 'ModeloDiagramaticoController@gravar')
+        Route::post('edicao_modelo_diagramatico/gravar', 'RepresentacaoDiamagraticaController@gravar')
             ->name('gravar')
             ->middleware('can:acesso');
 
@@ -90,7 +90,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
 
-        Route::get('edicao_modelo_diagramatico/{cod_modelo}', 'ModeloDiagramaticoController@edicao_modelo_diagramatico')
+        Route::get('edicao_modelo_diagramatico/{cod_modelo}', 'RepresentacaoDiamagraticaController@edicao_modelo_diagramatico')
             ->name('edicao_modelo_diagramatico')
             ->middleware('can:acesso');
 
@@ -102,10 +102,10 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
 
-        Route::resource('controle_modelos_diagramaticos', 'ModeloDiagramaticoController')
+        Route::resource('controle_modelos_diagramaticos', 'RepresentacaoDiamagraticaController')
             ->middleware('can:acesso');
 
-        Route::get('controle_modelos_declarativos_create/repositorio/{cod_repositorio}/projeto/{cod_projeto}', 'ModeloDeclarativoController@create')
+        Route::get('controle_modelos_declarativos_create/repositorio/{cod_repositorio}/projeto/{cod_projeto}', 'RepresentacaoDeclarativaController@create')
             ->name('controle_modelos_declarativos')
             ->middleware('can:acesso');
 
@@ -113,14 +113,14 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('controle_objetos_fluxos_create')
             ->middleware('can:acesso');
 
-        Route::resource('controle_modelos_declarativos', 'ModeloDeclarativoController')
+        Route::resource('controle_modelos_declarativos', 'RepresentacaoDeclarativaController')
             ->middleware('can:acesso');
 
         Route::get('painel_modelo_declarativo/modelodeclarativo/{cod_modelo_declarativo}', 'PainelModeloDeclarativoController@painel_modelo_declarativo')
             ->name('painel_modelo_declarativo')
             ->middleware('can:acesso');
 
-        Route::get('edicao_modelo_declarativo/{cod_modelo}', 'ModeloDeclarativoController@edit')
+        Route::get('edicao_modelo_declarativo/{cod_modelo}', 'RepresentacaoDeclarativaController@edit')
             ->name('edicao_modelo_declarativo')
             ->middleware('can:acesso');
 
@@ -169,7 +169,7 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->middleware('can:acesso');
 
 
-        Route::get('todos_modelos', 'ModeloDiagramaticoController@todos_modelos')
+        Route::get('todos_modelos', 'RepresentacaoDiamagraticaController@todos_modelos')
             ->name('todos_modelos')
             ->middleware('can:acesso');
 
@@ -182,26 +182,26 @@ Route::prefix('admin')->middleware(['auth'])->group(
             ->name('controle_projetos_create')
             ->middleware('can:acesso');
 
-        Route::get('controle_modelos_diagramaticos_create/repositorio/{cod_repositorio}/projeto/{cod_projeto}', 'ModeloDiagramaticoController@create')
+        Route::get('controle_modelos_diagramaticos_create/repositorio/{cod_repositorio}/projeto/{cod_projeto}', 'RepresentacaoDiamagraticaController@create')
             ->name('controle_modelos_diagramaticos_create')
             ->middleware('can:acesso');
 
-        Route::get('controle_modelos_declarativos_create/repositorio/{cod_repositorio}/projeto/{cod_projeto}', 'ModeloDeclarativoController@create')
+        Route::get('controle_modelos_declarativos_create/repositorio/{cod_repositorio}/projeto/{cod_projeto}', 'RepresentacaoDeclarativaController@create')
             ->name('controle_modelos_declarativos_create')
             ->middleware('can:acesso');
 
 
-        Route::get('controle_modelos_diagramaticos_index/repositorio/{cod_repositorio}/projeto/{cod_projeto}/usuario/{codusuario}', 'ModeloDiagramaticoController@index')
+        Route::get('controle_modelos_diagramaticos_index/repositorio/{cod_repositorio}/projeto/{cod_projeto}/usuario/{codusuario}', 'RepresentacaoDiamagraticaController@index')
             ->name('controle_modelos_diagramaticos_index')
             ->middleware('can:acesso');;
 
 
-        Route::get('controle_modelos_declarativos_index/repositorio/{cod_repositorio}/projeto/{cod_projeto}/usuario/{codusuario}', 'ModeloDeclarativoController@index')
+        Route::get('controle_modelos_declarativos_index/repositorio/{cod_repositorio}/projeto/{cod_projeto}/usuario/{codusuario}', 'RepresentacaoDeclarativaController@index')
             ->name('controle_modelos_declarativos_index')
             ->middleware('can:acesso');;
 
 
-        Route::post('escolhe_modelo', 'ModeloDiagramaticoController@escolhe_modelo')
+        Route::post('escolhe_modelo', 'RepresentacaoDiamagraticaController@escolhe_modelo')
             ->name('escolhe_modelo')
             ->middleware('can:acesso');
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\RepresentacaoDeclarativa;
 use App\http\Models\ObjetoFluxo;
-use App\Http\Repositorys\RepresentacaoDeclarativoRepository;
+use App\Http\Repositorys\RepresentacaoDeclarativaRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

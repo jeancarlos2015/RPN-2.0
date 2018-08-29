@@ -5,6 +5,7 @@ namespace App\http\Models;
 use App\Http\Models\Projeto;
 use App\http\Models\Repositorio;
 use App\Http\Util\Dado;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class RepresentacaoDiagramatica extends Model

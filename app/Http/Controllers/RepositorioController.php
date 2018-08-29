@@ -6,7 +6,7 @@ use App\http\Models\Regra;
 use App\http\Models\Repositorio;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
-use App\Http\Repositorys\RepresentacaoDeclarativoRepository;
+use App\Http\Repositorys\RepresentacaoDeclarativaRepository;
 use App\Http\Repositorys\ModeloDiagramaticoRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\ProjetoRepository;

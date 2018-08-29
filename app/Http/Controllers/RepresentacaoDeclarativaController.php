@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositorys\RepresentacaoDeclarativaRepository;
 use App\RepresentacaoDeclarativa;
 use Illuminate\Http\Request;
 
@@ -48,7 +49,7 @@ class RepresentacaoDeclarativaController extends Controller
 
         try {
 
-            $modelo = ModeloDeclarativoRepository::atualizar($request, $codmodelodeclarativo);
+            $modelo = RepresentacaoDeclarativaRepository::atualizar($request, $codmodelodeclarativo);
             return redirect()->route('edicao_modelo_declarativo', [
                 'cod_modelo_declarativo' => $modelo->cod_modelo_declarativo
             ]);
@@ -67,7 +68,7 @@ class RepresentacaoDeclarativaController extends Controller
     public function destroy($id)
     {
         try {
-            ModeloDeclarativoRepository::excluir($id);
+            RepresentacaoDeclarativaRepository::excluir($id);
             $data['tipo'] = 'success';
             $this->create_log($data);
             return redirect()->route('todos_modelos');

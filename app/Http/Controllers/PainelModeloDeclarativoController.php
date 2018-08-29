@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Models\RepresentacaoDeclarativa;
 use App\Http\Models\Projeto;
 use App\http\Models\Repositorio;
-use App\Http\Repositorys\RepresentacaoDeclarativoRepository;
+use App\Http\Repositorys\RepresentacaoDeclarativaRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
@@ -89,8 +89,8 @@ class PainelModeloDeclarativoController extends Controller
         $data['validacao'] = RepresentacaoDeclarativa::validacao();
         if (!$this->exists_errors($data)) {
             $request->request->add(['codusuario' => Auth::user()->codusuario]);
-            if (!RepresentacaoDeclarativoRepository::existe($request->nome)) {
-                $modelo = RepresentacaoDeclarativoRepository::incluir($request);
+            if (!RepresentacaoDeclarativaRepository::existe($request->nome)) {
+                $modelo = RepresentacaoDeclarativaRepository::incluir($request);
                 return redirect()->route('controle_objeto_fluxo_index',
                     [
                         'cod_modelo_declarativo' => $modelo->cod_modelo_declarativo
@@ -99,7 +99,7 @@ class PainelModeloDeclarativoController extends Controller
                 $titulos = RepresentacaoDeclarativa::titulos();
                 $dados = RepresentacaoDeclarativa::dados();
                 $tipo = 'modelo_declarativo';
-                $modelo = RepresentacaoDeclarativoRepository::listar()->where('nome', $request->nome)->first();
+                $modelo = RepresentacaoDeclarativaRepository::listar()->where('nome', $request->nome)->first();
                 $repositorio = $modelo->repositorio;
                 $projeto = $modelo->projeto;
                 return view('controle_modelos_declarativos.modelos_declarativos.create',

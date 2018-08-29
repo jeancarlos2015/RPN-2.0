@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Models\RepresentacaoDeclarativa;
 use App\http\Models\ObjetoFluxo;
 use App\http\Models\Regra;
-use App\Http\Repositorys\RepresentacaoDeclarativoRepository;
+use App\Http\Repositorys\RepresentacaoDeclarativaRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
@@ -131,7 +131,7 @@ class PadraoRecomendacaoController extends Controller
         $codmodelodeclarativo = $request->cod_modelo_declarativo;
         $id_relacionamento = $request->relacionamento;
         $this->valida_request($request);
-        $modelo = RepresentacaoDeclarativoRepository::findOrFail($codmodelodeclarativo);
+        $modelo = RepresentacaoDeclarativaRepository::findOrFail($codmodelodeclarativo);
         $dado['cod_modelo_declarativo'] = $request->cod_modelo_declarativo;
         $dado['id_relacionamento'] = $request->relacionamento;
         $dado['cod_objeto_fluxo'] = $modelo->cod_objeto_fluxo;

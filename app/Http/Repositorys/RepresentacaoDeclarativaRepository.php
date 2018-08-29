@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
-class RepresentacaoDeclarativoRepository extends Repository
+class RepresentacaoDeclarativaRepository extends Repository
 {
 
     public function __construct()
