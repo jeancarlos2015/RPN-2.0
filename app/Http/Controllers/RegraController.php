@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\RepresentacaoDeclarativa;
 use App\http\Models\Regra;
 use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class RegraController extends Controller
         $regras = RegraRepository::listar();
         $tipo = 'regra';
         $titulos = Regra::titulos();
-        $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        $modelo_declarativo = RepresentacaoDeclarativa::findOrFail($codmodelodeclarativo);
         $repositorio = $modelo_declarativo->repositorio;
         $projeto = $modelo_declarativo->projeto;
         return view('controle_regras.index', compact('regras', 'tipo', 'titulos','modelo_declarativo','repositorio','projeto'));

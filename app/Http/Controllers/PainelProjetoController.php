@@ -64,8 +64,8 @@ class PainelProjetoController extends Controller
 
     public function create($codrepositorio, $codprojeto)
     {
-        $titulos = ModeloDeclarativo::titulos();
-        $dados = ModeloDeclarativo::dados();
+        $titulos = RepresentacaoDeclarativa::titulos();
+        $dados = RepresentacaoDeclarativa::dados();
         $tipo = 'modelo_declarativo';
         $repositorio = Repositorio::findOrFail($codrepositorio);
         $projeto = Projeto::findOrFail($codprojeto);
@@ -80,7 +80,7 @@ class PainelProjetoController extends Controller
         $codprojeto = $request->cod_projeto;
         $codrepositorio = $request->cod_repositorio;
         $data['all'] = $request->all();
-        $data['validacao'] = ModeloDeclarativo::validacao();
+        $data['validacao'] = RepresentacaoDeclarativa::validacao();
         if (!$this->exists_errors($data)) {
             $request->request->add(['codusuario' => Auth::user()->codusuario]);
             if (!ModeloDeclarativoRepository::existe($request->nome)) {
@@ -90,8 +90,8 @@ class PainelProjetoController extends Controller
                         'cod_modelo_declarativo' => $modelo->cod_modelo_declarativo
                     ]);
             }else{
-                $titulos = ModeloDeclarativo::titulos();
-                $dados = ModeloDeclarativo::dados();
+                $titulos = RepresentacaoDeclarativa::titulos();
+                $dados = RepresentacaoDeclarativa::dados();
                 $tipo = 'modelo_declarativo';
                 $modelo = ModeloDeclarativoRepository::listar()->where('nome', $request->nome)->first();
                 $repositorio = $modelo->repositorio;
@@ -117,7 +117,7 @@ class PainelProjetoController extends Controller
         $titulos = $this->titulos();
         $rotas = $this->rotas();
         $quantidades = $this->quantidades($codmodelodeclarativo);
-        $modelodeclarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        $modelodeclarativo = RepresentacaoDeclarativa::findOrFail($codmodelodeclarativo);
         if (count($rotas) == 0) {
             $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma repositório!!";
             $data['tipo'] = 'success';

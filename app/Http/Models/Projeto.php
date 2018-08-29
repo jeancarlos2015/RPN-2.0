@@ -3,8 +3,8 @@
 namespace App\Http\Models;
 
 use App\Http\Util\Dado;
-use App\Http\Models\ModeloDiagramatico;
-use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\RepresentacaoDiagramatico;
+use App\Http\Models\RepresentacaoDeclarativa;
 use App\Http\Models\Repositorio;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $codusuario
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property-read \App\Http\Models\ModeloDiagramatico $modelos
+ * @property-read \App\Http\Models\RepresentacaoDiagramatico $modelos
  * @property-read \App\Http\Models\Repositorio $repositorio
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCodorganizacao($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Http\Models\Projeto whereCodprojeto($value)
@@ -130,12 +130,12 @@ class Projeto extends Model
 
     public function modelos_diagramaticos()
     {
-        return $this->hasMany(ModeloDiagramatico::class, 'cod_projeto', 'cod_projeto');
+        return $this->hasMany(RepresentacaoDiagramatico::class, 'cod_projeto', 'cod_projeto');
     }
 
     public function modelos_declarativos()
     {
-        return $this->hasMany(ModeloDeclarativo::class, 'cod_projeto', 'cod_projeto');
+        return $this->hasMany(RepresentacaoDeclarativa::class, 'cod_projeto', 'cod_projeto');
     }
 
     protected static function boot()

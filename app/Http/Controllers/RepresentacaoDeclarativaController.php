@@ -7,79 +7,77 @@ use Illuminate\Http\Request;
 
 class RepresentacaoDeclarativaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function show($codmodelodeclarativo)
     {
-        //
+        return redirect()->route('painel_modelo_declarativo',[$codmodelodeclarativo]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function edit($id)
     {
-        //
+        try {
+            $modelo = RepresentacaoDeclarativa::findOrFail($id);
+
+            $dados = RepresentacaoDeclarativa::dados();
+            $projeto = $modelo->projeto;
+            $repositorio = $modelo->repositorio;
+
+            $dados[0]->valor = $modelo->nome;
+            $dados[1]->valor = $modelo->descricao;
+            $dados[2]->valor = $modelo->tipo;
+
+            return view('controle_modelos_declarativos.modelos_declarativos.edit', compact('dados', 'modelo', 'projeto', 'repositorio'));
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        }
+        return redirect()->route('painel');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\RepresentacaoDeclarativa  $representacaoDeclarativa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(RepresentacaoDeclarativa $representacaoDeclarativa)
+
+    public function update(Request $request, $codmodelodeclarativo)
     {
-        //
+
+        try {
+
+            $modelo = ModeloDeclarativoRepository::atualizar($request, $codmodelodeclarativo);
+            return redirect()->route('edicao_modelo_declarativo', [
+                'cod_modelo_declarativo' => $modelo->cod_modelo_declarativo
+            ]);
+
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+        }
+        return redirect()->route('painel');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\RepresentacaoDeclarativa  $representacaoDeclarativa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RepresentacaoDeclarativa $representacaoDeclarativa)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RepresentacaoDeclarativa  $representacaoDeclarativa
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, RepresentacaoDeclarativa $representacaoDeclarativa)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\RepresentacaoDeclarativa  $representacaoDeclarativa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(RepresentacaoDeclarativa $representacaoDeclarativa)
-    {
-        //
+        try {
+            ModeloDeclarativoRepository::excluir($id);
+            $data['tipo'] = 'success';
+            $this->create_log($data);
+            return redirect()->route('todos_modelos');
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'merge_checkout';
+            $this->create_log($data);
+            return redirect()->route('painel');
+        }
     }
 }

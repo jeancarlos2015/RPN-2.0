@@ -5,8 +5,8 @@ namespace App\http\Models;
 use App\Http\Util\Dado;
 use App\User;
 use App\Http\Models\Projeto;
-use App\Http\Models\ModeloDiagramatico;
-use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\RepresentacaoDiagramatico;
+use App\Http\Models\RepresentacaoDeclarativa;
 use App\Http\Models\AtribuicaoProjetoUsuario;
 use Illuminate\Database\Eloquent\Model;
 
@@ -115,12 +115,12 @@ class Repositorio extends Model
 
     public function modelos_diagramaticos()
     {
-        return $this->hasMany(ModeloDiagramatico::class, 'cod_repositorio', 'cod_repositorio');
+        return $this->hasMany(RepresentacaoDiagramatico::class, 'cod_repositorio', 'cod_repositorio');
     }
 
     public function modelos_declarativos()
     {
-        return $this->hasMany(ModeloDeclarativo::class, 'cod_repositorio', 'cod_repositorio');
+        return $this->hasMany(RepresentacaoDeclarativa::class, 'cod_repositorio', 'cod_repositorio');
     }
     protected static function boot()
     {

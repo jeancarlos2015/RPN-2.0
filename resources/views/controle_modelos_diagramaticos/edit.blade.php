@@ -6,8 +6,8 @@
                    'sub_titulo' =>
                    'Repositório/'.$repositorio->nome.
                    'Projeto/'.$projeto->nome.
-                   'ModeloDiagramatico'.$modelo->nome.
-                   'ModeloDiagramatico',
+                   'RepresentacaoDiagramatico'.$modelo->nome.
+                   'RepresentacaoDiagramatico',
                    'rota' => 'controle_repositorios.index'
     ])
     @includeIf('controle_modelos_diagramaticos.componentes.form_diagramatico_update')

@@ -3,18 +3,18 @@
 namespace App\Http\Repositorys;
 
 
-use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\RepresentacaoDeclarativa;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
-class ModeloDeclarativoRepository extends Repository
+class RepresentacaoDeclarativoRepository extends Repository
 {
 
     public function __construct()
     {
-        $this->setModel(ModeloDeclarativo::class);
+        $this->setModel(RepresentacaoDeclarativa::class);
     }
 
 
@@ -22,9 +22,9 @@ class ModeloDeclarativoRepository extends Repository
     {
         return Cache::remember('listar_modelos', 2000, function () {
             if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
-                return collect(ModeloDeclarativo::all());
+                return collect(RepresentacaoDeclarativa::all());
             }
-            return collect(ModeloDeclarativo::
+            return collect(RepresentacaoDeclarativa::
             where('cod_usuario', '=', Auth::user()->cod_usuario)
                 ->orWhere('visibilidade', '=', 'true')
                 ->get());
@@ -35,7 +35,7 @@ class ModeloDeclarativoRepository extends Repository
     public static function listar_modelo_por_projeto_organizacao()
     {
         return Cache::remember('listar_modelos', 2000, function () {
-            return collect(ModeloDeclarativo::get());
+            return collect(RepresentacaoDeclarativa::get());
         });
     }
 
@@ -47,14 +47,14 @@ class ModeloDeclarativoRepository extends Repository
 
     public static function atualizar(Request $request, $codmodelo)
     {
-        $value = ModeloDeclarativo::findOrFail($codmodelo)->update($request->all());
+        $value = RepresentacaoDeclarativa::findOrFail($codmodelo)->update($request->all());
         self::limpar_cache();
         return $value;
     }
 
     public static function incluir(Request $request)
     {
-        $value = ModeloDeclarativo::create($request->all());
+        $value = RepresentacaoDeclarativa::create($request->all());
         self::limpar_cache();
         return $value;
     }
@@ -64,7 +64,7 @@ class ModeloDeclarativoRepository extends Repository
     {
         $value = null;
         try {
-            $value = ModeloDeclarativo::findOrFail($codmodelo)->delete();
+            $value = RepresentacaoDeclarativa::findOrFail($codmodelo)->delete();
             self::limpar_cache();
         } catch (Exception $e) {
 
@@ -81,7 +81,7 @@ class ModeloDeclarativoRepository extends Repository
     public static function listar_modelos()
     {
         return Cache::remember('listar_modelos', 2000, function () {
-            return ModeloDeclarativo::get();
+            return RepresentacaoDeclarativa::get();
         });
     }
 

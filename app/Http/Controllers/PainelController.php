@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Repositorys\LogRepository;
-use App\Http\Repositorys\ModeloDeclarativoRepository;
+use App\Http\Repositorys\RepresentacaoDeclarativoRepository;
 use App\Http\Repositorys\ModeloDiagramaticoRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\ProjetoRepository;
@@ -42,7 +42,7 @@ class PainelController extends Controller
         $qt_organizacoes = RepositorioRepository::listar()->count();
         $qt_projetos = ProjetoRepository::listar()->count();
         $qt_modelos_diagramaticos = ModeloDiagramaticoRepository::listar()->count();
-        $qt_modelos_declarativos = ModeloDeclarativoRepository::listar()->count();
+        $qt_modelos_declarativos = RepresentacaoDeclarativoRepository::listar()->count();
         $qt_modelos = $qt_modelos_declarativos + $qt_modelos_diagramaticos;
         $qt_objetos_fluxos = ObjetoFluxoRepository::listar()->count();
         $qt_regras = RegraRepository::listar()->count();

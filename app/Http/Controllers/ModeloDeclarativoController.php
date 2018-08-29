@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\RepresentacaoDeclarativa;
 use App\Http\Models\Projeto;
 use App\http\Models\Repositorio;
-use App\Http\Repositorys\ModeloDeclarativoRepository;
+use App\Http\Repositorys\RepresentacaoDeclarativoRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
@@ -29,9 +29,9 @@ class ModeloDeclarativoController extends Controller
     public function edit($id)
     {
         try {
-            $modelo = ModeloDeclarativo::findOrFail($id);
+            $modelo = RepresentacaoDeclarativa::findOrFail($id);
 
-            $dados = ModeloDeclarativo::dados();
+            $dados = RepresentacaoDeclarativa::dados();
             $projeto = $modelo->projeto;
             $repositorio = $modelo->repositorio;
 
@@ -56,7 +56,7 @@ class ModeloDeclarativoController extends Controller
 
         try {
 
-            $modelo = ModeloDeclarativoRepository::atualizar($request, $codmodelodeclarativo);
+            $modelo = RepresentacaoDeclarativoRepository::atualizar($request, $codmodelodeclarativo);
             return redirect()->route('edicao_modelo_declarativo', [
                 'cod_modelo_declarativo' => $modelo->cod_modelo_declarativo
             ]);
@@ -75,7 +75,7 @@ class ModeloDeclarativoController extends Controller
     public function destroy($id)
     {
         try {
-            ModeloDeclarativoRepository::excluir($id);
+            RepresentacaoDeclarativoRepository::excluir($id);
             $data['tipo'] = 'success';
             $this->create_log($data);
             return redirect()->route('todos_modelos');

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Http\Models\Projeto;
 use App\Http\Models\Repositorio;
 use App\Http\Models\ObjetoFluxo;
-use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\RepresentacaoDeclarativa;
 
 class Regra extends Model
 {
@@ -117,7 +117,7 @@ class Regra extends Model
     }
 
     public function modelodeclarativo(){
-        return $this->hasOne(ModeloDeclarativo::class, 'cod_modelo_declarativo', 'cod_modelo_declarativo');
+        return $this->hasOne(RepresentacaoDeclarativa::class, 'cod_modelo_declarativo', 'cod_modelo_declarativo');
     }
 
     public static function validacao()

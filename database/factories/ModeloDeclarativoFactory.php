@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 //'visibilidade',
 //'publico',
 
-$factory->define(\App\Http\Models\ModeloDeclarativo::class, function (Faker $faker) {
+$factory->define(\App\Http\Models\RepresentacaoDeclarativa::class, function (Faker $faker) {
     $projetos = \App\Http\Repositorys\ProjetoRepository::listar_projetos();
     $projeto = $projetos[rand(0,count($projetos)-1)];
     return [

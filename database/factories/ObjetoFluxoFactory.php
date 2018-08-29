@@ -16,7 +16,7 @@ use Faker\Generator as Faker;
 
 
 $factory->define(\App\http\Models\ObjetoFluxo::class, function (Faker $faker) {
-    $modelos = \App\Http\Repositorys\ModeloDeclarativoRepository::listar_modelos();
+    $modelos = \App\Http\Repositorys\RepresentacaoDeclarativoRepository::listar_modelos();
     $modelo = $modelos[rand(0,count($modelos)-1)];
     return [
         'cod_projeto' => $modelo->cod_projeto ,

@@ -2,7 +2,7 @@
 
 
 Route::get('publico/modelos', function () {
-    $titulos = \App\Http\Models\ModeloDiagramatico::titulos();
+    $titulos = \App\Http\Models\RepresentacaoDiagramatico::titulos();
     $modelos = \App\Http\Repositorys\ModeloDiagramaticoRepository::listar_modelos_publicos();
     $tipo = 'publico';
     $contador = 0;

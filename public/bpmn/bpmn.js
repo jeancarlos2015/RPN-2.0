@@ -30,7 +30,7 @@ function exportDiagram(cod_modelo_diagramatico) {
             },
             
             success: function () {
-                alert('ModeloDiagramatico Salvo Com suceso!!');
+                alert('RepresentacaoDiagramatico Salvo Com suceso!!');
             },
             error: function () {
                 alert('Erro ao salvar modelo');

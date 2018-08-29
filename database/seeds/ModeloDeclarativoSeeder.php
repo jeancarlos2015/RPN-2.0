@@ -13,7 +13,7 @@ class ModeloDeclarativoSeeder extends Seeder
     {
 
 
-        factory(\App\Http\Models\ModeloDeclarativo::class, 50)->create();
+        factory(\App\Http\Models\RepresentacaoDeclarativa::class, 50)->create();
 
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\RepresentacaoDeclarativa;
 use App\Http\Models\Projeto;
 use App\http\Models\Repositorio;
-use App\Http\Repositorys\ModeloDeclarativoRepository;
+use App\Http\Repositorys\RepresentacaoDeclarativoRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
@@ -70,8 +70,8 @@ class PainelModeloDeclarativoController extends Controller
 
     public function create($codrepositorio, $codprojeto)
     {
-        $titulos = ModeloDeclarativo::titulos();
-        $dados = ModeloDeclarativo::dados();
+        $titulos = RepresentacaoDeclarativa::titulos();
+        $dados = RepresentacaoDeclarativa::dados();
         $tipo = 'modelo_declarativo';
         $repositorio = Repositorio::findOrFail($codrepositorio);
         $projeto = Projeto::findOrFail($codprojeto);
@@ -86,20 +86,20 @@ class PainelModeloDeclarativoController extends Controller
         $codprojeto = $request->cod_projeto;
         $codrepositorio = $request->cod_repositorio;
         $data['all'] = $request->all();
-        $data['validacao'] = ModeloDeclarativo::validacao();
+        $data['validacao'] = RepresentacaoDeclarativa::validacao();
         if (!$this->exists_errors($data)) {
             $request->request->add(['codusuario' => Auth::user()->codusuario]);
-            if (!ModeloDeclarativoRepository::existe($request->nome)) {
-                $modelo = ModeloDeclarativoRepository::incluir($request);
+            if (!RepresentacaoDeclarativoRepository::existe($request->nome)) {
+                $modelo = RepresentacaoDeclarativoRepository::incluir($request);
                 return redirect()->route('controle_objeto_fluxo_index',
                     [
                         'cod_modelo_declarativo' => $modelo->cod_modelo_declarativo
                     ]);
             }else{
-                $titulos = ModeloDeclarativo::titulos();
-                $dados = ModeloDeclarativo::dados();
+                $titulos = RepresentacaoDeclarativa::titulos();
+                $dados = RepresentacaoDeclarativa::dados();
                 $tipo = 'modelo_declarativo';
-                $modelo = ModeloDeclarativoRepository::listar()->where('nome', $request->nome)->first();
+                $modelo = RepresentacaoDeclarativoRepository::listar()->where('nome', $request->nome)->first();
                 $repositorio = $modelo->repositorio;
                 $projeto = $modelo->projeto;
                 return view('controle_modelos_declarativos.modelos_declarativos.create',
@@ -123,7 +123,7 @@ class PainelModeloDeclarativoController extends Controller
         $titulos = $this->titulos();
         $rotas = $this->rotas();
         $quantidades = $this->quantidades($codmodelodeclarativo);
-        $modelodeclarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        $modelodeclarativo = RepresentacaoDeclarativa::findOrFail($codmodelodeclarativo);
         if (count($rotas) == 0) {
             $data['mensagem'] = "Favor solicitar ao administrador que vincule sua conta a uma repositório!!";
             $data['tipo'] = 'success';

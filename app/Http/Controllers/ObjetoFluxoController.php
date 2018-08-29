@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\RepresentacaoDeclarativa;
 use App\http\Models\ObjetoFluxo;
-use App\Http\Repositorys\ModeloDeclarativoRepository;
+use App\Http\Repositorys\RepresentacaoDeclarativoRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +29,7 @@ class ObjetoFluxoController extends Controller
         $objetos_fluxos = ObjetoFluxoRepository::listar_objetos_fluxo($codmodelodeclarativo);
         $tipo = 'objetofluxo';
         $titulos = ObjetoFluxo::titulos_da_tabela();
-        $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        $modelo_declarativo = RepresentacaoDeclarativa::findOrFail($codmodelodeclarativo);
         return view('controle_modelos_declarativos.controle_objetos_fluxo.index', compact('objetos_fluxos', 'tipo', 'titulos','modelo_declarativo'));
     }
 
@@ -42,7 +42,7 @@ class ObjetoFluxoController extends Controller
     public function create($codmodelodeclarativo)
     {
 
-        $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        $modelo_declarativo = RepresentacaoDeclarativa::findOrFail($codmodelodeclarativo);
         $tipo = 'objetofluxo';
         $titulos = ObjetoFluxo::titulos_da_tabela();
         $dados = ObjetoFluxo::dados();

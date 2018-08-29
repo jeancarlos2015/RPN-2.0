@@ -3,28 +3,28 @@
 namespace App\Http\Repositorys;
 
 
-use App\Http\Models\ModeloDiagramatico;
+use App\http\Models\RepresentacaoDiagramatica;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
-class ModeloDiagramaticoRepository extends Repository
+class RepresentacaoDiagramaticaRepository extends Repository
 {
 
     public function __construct()
     {
-        $this->setModel(ModeloDiagramatico::class);
+        $this->setModel(RepresentacaoDiagramatica::class);
     }
 
     public static function listar()
     {
         return Cache::remember('listar_modelos', 2000, function () {
             if (Auth::user()->email === 'jeancarlospenas25@gmail.com' || Auth::user()->tipo === 'Administrador') {
-                return collect(ModeloDiagramatico::all());
+                return collect(RepresentacaoDiagramatica::all());
             }else{
-                return collect(ModeloDiagramatico::
+                return collect(RepresentacaoDiagramatica::
                 where('cod_usuario', '=', Auth::user()->cod_usuario)
                     ->orWhere('visibilidade', '=', true)
                     ->get());
@@ -36,7 +36,7 @@ class ModeloDiagramaticoRepository extends Repository
     public static function listar_modelos_publicos()
     {
         return Cache::remember('listar_modelos_publicos', 2000, function () {
-            return collect(ModeloDiagramatico::where('publico', '=', 'true')
+            return collect(RepresentacaoDiagramatica::where('publico', '=', 'true')
                 ->get());
         });
     }
@@ -44,7 +44,7 @@ class ModeloDiagramaticoRepository extends Repository
     public static function listar_modelo_por_projeto_organizacao($codrepositorio, $codprojeto, $codusuario)
     {
         return Cache::remember('listar_modelos', 2000, function ($codrepositorio, $codprojeto) {
-            return collect(ModeloDiagramatico::
+            return collect(RepresentacaoDiagramatica::
             where('cod_repositorio', '=', $codrepositorio)
                 ->where('cod_projeto', '=', $codprojeto)
                 ->Where('visibilidade', '=', 'true')
@@ -55,7 +55,7 @@ class ModeloDiagramaticoRepository extends Repository
 
     public static function atualizar(Request $request, $codmodelo)
     {
-        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+        $modelo = RepresentacaoDiagramatica::findOrFail($codmodelo);
         $xml_modelo = str_replace($modelo->nome, $request->nome, $modelo->xml_modelo);
         $modelo->xml_modelo = $xml_modelo;
         $modelo->update($request->all());
@@ -73,7 +73,7 @@ class ModeloDiagramaticoRepository extends Repository
 
     public static function incluir(Request $request)
     {
-        $value = ModeloDiagramatico::create($request->all());
+        $value = RepresentacaoDiagramatica::create($request->all());
         self::limpar_cache();
         return $value;
     }
@@ -83,7 +83,7 @@ class ModeloDiagramaticoRepository extends Repository
     {
         $value = null;
         try {
-            $doc = ModeloDiagramatico::findOrFail($codmodelo);
+            $doc = RepresentacaoDiagramatica::findOrFail($codmodelo);
             $value = $doc->delete();
             self::limpar_cache();
         } catch (Exception $e) {
@@ -112,7 +112,7 @@ class ModeloDiagramaticoRepository extends Repository
     public static function gravar(Request $request){
         $codmodelo = $request->cod_modelo_diagramatico;
         $xml = $request->strXml;
-        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+        $modelo = RepresentacaoDiagramatica::findOrFail($codmodelo);
         $modelo->xml_modelo = $xml . "\n";
         $result = $modelo->update();
         self::limpar_cache();
@@ -120,7 +120,7 @@ class ModeloDiagramaticoRepository extends Repository
     }
 
     public static function visualizar_modelos_publicos($codmodelo){
-        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+        $modelo = RepresentacaoDiagramatica::findOrFail($codmodelo);
         $path_modelo = public_path('novo_bpmn/');
         if (!file_exists($path_modelo)) {
             mkdir($path_modelo, 777);

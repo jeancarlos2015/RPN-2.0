@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\ModeloDeclarativo;
-use App\Http\Models\ModeloDiagramatico;
+use App\Http\Models\RepresentacaoDeclarativa;
+use App\Http\Models\RepresentacaoDiagramatico;
 use App\Http\Models\Projeto;
 use App\Http\Models\Repositorio;
 use App\Http\Repositorys\LogRepository;
-use App\Http\Repositorys\ModeloDeclarativoRepository;
+use App\Http\Repositorys\RepresentacaoDeclarativoRepository;
 use App\Http\Repositorys\ModeloDiagramaticoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +21,7 @@ class ModeloDiagramaticoController extends Controller
         try {
             $projeto = Projeto::findOrFail($codprojeto);
             $repositorio = $projeto->repositorio;
-            $titulos = ModeloDiagramatico::titulos();
+            $titulos = RepresentacaoDiagramatico::titulos();
             $modelos_declarativos = $projeto->modelos_declarativos;
             $modelos_diagramaticos = $projeto->modelos_diagramaticos;
             $modelos = $modelos_declarativos->merge($modelos_diagramaticos);
@@ -40,8 +40,8 @@ class ModeloDiagramaticoController extends Controller
     {
         try {
             $modelos_diagramaticos = ModeloDiagramaticoRepository::listar();
-            $modelos = $modelos_diagramaticos->merge(ModeloDeclarativoRepository::listar());
-            $titulos = ModeloDiagramatico::titulos();
+            $modelos = $modelos_diagramaticos->merge(RepresentacaoDeclarativoRepository::listar());
+            $titulos = RepresentacaoDiagramatico::titulos();
             $tipo = 'modelo_diagramatico';
             $log = LogRepository::log();
         } catch (\Exception $ex) {
@@ -85,7 +85,7 @@ class ModeloDiagramaticoController extends Controller
         try {
             $projeto = Projeto::findOrFail($codprojeto);
             $repositorio = Repositorio::findOrFail($codrepositorio);
-            $dados = ModeloDiagramatico::dados();
+            $dados = RepresentacaoDiagramatico::dados();
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
@@ -98,7 +98,7 @@ class ModeloDiagramaticoController extends Controller
 
     public function edicao_modelo_diagramatico($codmodelo)
     {
-        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+        $modelo = RepresentacaoDiagramatico::findOrFail($codmodelo);
         $path_modelo = public_path('novo_bpmn/');
         if (!file_exists($path_modelo)) {
             mkdir($path_modelo, 777);
@@ -117,11 +117,11 @@ class ModeloDiagramaticoController extends Controller
             $codprojeto = $request->cod_projeto;
             $codrepositorio = $request->cod_repositorio;
             $data['all'] = $request->all();
-            $data['validacao'] = ModeloDiagramatico::validacao();
+            $data['validacao'] = RepresentacaoDiagramatico::validacao();
             if (!$this->exists_errors($data)) {
                 if (!ModeloDiagramaticoRepository::existe($request->nome)) {
                     $request->request->add([
-                        'xml_modelo' => ModeloDiagramatico::get_modelo_default($request->nome),
+                        'xml_modelo' => RepresentacaoDiagramatico::get_modelo_default($request->nome),
                         'cod_projeto' => $codprojeto,
                         'cod_repositorio' => $codrepositorio,
                         'cod_usuario' => Auth::user()->cod_usuario
@@ -133,7 +133,7 @@ class ModeloDiagramaticoController extends Controller
                         ['cod_modelo_diagramatico' => $modelo->cod_modelo_diagramatico]);
 
                 } else {
-                    $dados = ModeloDiagramatico::dados();
+                    $dados = RepresentacaoDiagramatico::dados();
                     $modelo = ModeloDiagramaticoRepository::listar()->where('nome', $request->nome)->first();
                     $repositorio = $modelo->repositorio;
                     $projeto = $modelo->projeto;
@@ -169,7 +169,7 @@ class ModeloDiagramaticoController extends Controller
     function show($codmodelo)
     {
         try {
-            $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+            $modelo = RepresentacaoDiagramatico::findOrFail($codmodelo);
             $path_modelo = public_path('novo_bpmn/');
             if (!file_exists($path_modelo)) {
                 mkdir($path_modelo, 777);
@@ -202,9 +202,9 @@ class ModeloDiagramaticoController extends Controller
     function edit($codmodelo)
     {
         try {
-            $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+            $modelo = RepresentacaoDiagramatico::findOrFail($codmodelo);
 
-            $dados = ModeloDiagramatico::dados();
+            $dados = RepresentacaoDiagramatico::dados();
             $projeto = $modelo->projeto;
             $repositorio = $modelo->repositorio;
 
@@ -312,7 +312,7 @@ class ModeloDiagramaticoController extends Controller
     }
 
     public function visualizar_modelo_publico($codmodelo){
-        $modelo = ModeloDiagramatico::findOrFail($codmodelo);
+        $modelo = RepresentacaoDiagramatico::findOrFail($codmodelo);
         $path_modelo = public_path('novo_bpmn/');
         if (!file_exists($path_modelo)) {
             mkdir($path_modelo, 777);
@@ -324,7 +324,7 @@ class ModeloDiagramaticoController extends Controller
     }
 
     public function modelos_publicos(){
-        $titulos = ModeloDiagramatico::titulos();
+        $titulos = RepresentacaoDiagramatico::titulos();
         $modelos = ModeloDiagramaticoRepository::listar_modelos_publicos();
         $tipo = 'publico';
         $contador=0;

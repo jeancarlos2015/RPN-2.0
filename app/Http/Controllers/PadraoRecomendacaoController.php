@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\ModeloDeclarativo;
+use App\Http\Models\RepresentacaoDeclarativa;
 use App\http\Models\ObjetoFluxo;
 use App\http\Models\Regra;
-use App\Http\Repositorys\ModeloDeclarativoRepository;
+use App\Http\Repositorys\RepresentacaoDeclarativoRepository;
 use App\Http\Repositorys\ObjetoFluxoRepository;
 use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class PadraoRecomendacaoController extends Controller
 
     public function create_recomendacao_conjunto($codmodelodeclarativo)
     {
-        $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        $modelo_declarativo = RepresentacaoDeclarativa::findOrFail($codmodelodeclarativo);
         $objetos_fluxos = ObjetoFluxoRepository::listar();
         $tipo_operacao = 'conjunto';
         return view('controle_modelos_declarativos.controle_regras.create', compact('modelo_declarativo', 'objetos_fluxos', 'tipo_operacao'));
@@ -42,7 +42,7 @@ class PadraoRecomendacaoController extends Controller
 
     public function create_recomendacao_binario($codmodelodeclarativo)
     {
-        $modelo_declarativo = ModeloDeclarativo::findOrFail($codmodelodeclarativo);
+        $modelo_declarativo = RepresentacaoDeclarativa::findOrFail($codmodelodeclarativo);
         $objetos_fluxos = ObjetoFluxoRepository::listar();
         $tipo_operacao = 'binario';
         return view('controle_modelos_declarativos.controle_regras.create', compact('modelo_declarativo', 'objetos_fluxos', 'tipo_operacao'));
@@ -131,7 +131,7 @@ class PadraoRecomendacaoController extends Controller
         $codmodelodeclarativo = $request->cod_modelo_declarativo;
         $id_relacionamento = $request->relacionamento;
         $this->valida_request($request);
-        $modelo = ModeloDeclarativoRepository::findOrFail($codmodelodeclarativo);
+        $modelo = RepresentacaoDeclarativoRepository::findOrFail($codmodelodeclarativo);
         $dado['cod_modelo_declarativo'] = $request->cod_modelo_declarativo;
         $dado['id_relacionamento'] = $request->relacionamento;
         $dado['cod_objeto_fluxo'] = $modelo->cod_objeto_fluxo;
