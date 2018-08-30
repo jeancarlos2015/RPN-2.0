@@ -27,7 +27,7 @@ class Regra extends Model
         'cod_usuario',
         'cod_projeto',
         'cod_modelo_declarativo',
-        'codoutraregra',
+        'cod_outra_regra',
         'nome',
         'tipo',
         'visivel_projeto',

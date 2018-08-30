@@ -74,7 +74,7 @@ class PadraoRecomendacaoController extends Controller
                 'cod_usuario' => $codusaurio,
                 'cod_projeto' => $codprojeto,
                 'cod_modelo_declarativo' => $codmodelodeclarativo,
-                'codoutraregra' => 0,
+                'cod_outra_regra' => 0,
                 'nome' => $nome,
                 'tipo' => Regra::PADROES[$id_relacionamento],
                 'visivel_projeto' => $visivel_projeto,

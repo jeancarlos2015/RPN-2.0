@@ -21,7 +21,7 @@ class CreateRegrasTable extends Migration
             $table->bigInteger('cod_projeto')->unsigned();
             $table->bigInteger('cod_modelo_declarativo')->unsigned();
 
-            $table->bigInteger('codoutraregra')->nullable();
+            $table->bigInteger('cod_outra_regra')->nullable();
 
 
             $table->string('nome');

@@ -20,11 +20,7 @@ class CreateRepresentacaoDeclarativasTable extends Migration
             $table->bigInteger('cod_projeto')->unsigned();
             $table->bigInteger('cod_usuario')->unsigned();
             $table->bigInteger('cod_modelo')->unsigned();
-
-            $table->string('nome');
             $table->string('tipo')->default('declarativo');
-            $table->string('descricao');
-            $table->boolean('visibilidade')->default(true);
             $table->boolean('publico')->default(true);
 
             $table->timestamps();

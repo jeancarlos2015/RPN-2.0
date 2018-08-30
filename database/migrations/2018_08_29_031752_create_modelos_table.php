@@ -22,7 +22,6 @@ class CreateModelosTable extends Migration
 
             $table->string('nome');
             $table->string('descricao');
-            $table->string('tipo')->default('bpmn');
             $table->timestamps();
         });
 

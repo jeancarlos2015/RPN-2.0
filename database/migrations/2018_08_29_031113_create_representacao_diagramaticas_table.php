@@ -23,11 +23,9 @@ class CreateRepresentacaoDiagramaticasTable extends Migration
             $table->bigInteger('cod_usuario')->unsigned();
             $table->bigInteger('cod_modelo')->unsigned();
 
-            $table->string('nome');
-            $table->string('descricao');
             $table->string('tipo')->default('bpmn');
             $table->longText('xml_modelo');
-            $table->boolean('visibilidade')->default(true);
+
             $table->boolean('publico')->default(true);
 
             $table->timestamps();
