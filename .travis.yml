@@ -28,4 +28,4 @@ deploy:
  provider: heroku
  api-key:
   secure: $API_KEY
- app: repositorioprocessos
+ app: projetolaravel
