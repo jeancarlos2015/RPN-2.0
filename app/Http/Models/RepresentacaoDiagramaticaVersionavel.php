@@ -1,18 +1,14 @@
 <?php
 
-namespace App\http\Models;
+namespace App;
 
-use App\Http\Models\Projeto;
-use App\http\Models\Repositorio;
-use App\Http\Util\Dado;
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class RepresentacaoDiagramatica extends Model
+class RepresentacaoDiagramaticaVersionavel extends Model
 {
-//    protected $connection = 'pgsql';
-    protected $primaryKey = 'cod_modelo_diagramatico';
-    protected $table = 'modelos_diagramaticos';
+    protected $connection = 'banco';
+    protected $primaryKey = 'cod_representacao_diagramatica';
+    protected $table = 'representacao_diagramatica_versionaveis';
     protected $fillable = [
         'nome',
         'descricao',

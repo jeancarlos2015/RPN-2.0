@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Repositorio extends Model
 {
-    protected $connection = 'pgsql';
+//    protected $connection = 'pgsql';
     protected $primaryKey = 'cod_repositorio';
     protected $table = 'repositorios';
     protected $fillable = [

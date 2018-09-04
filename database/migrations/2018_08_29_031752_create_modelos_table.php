@@ -22,20 +22,21 @@ class CreateModelosTable extends Migration
 
             $table->string('nome');
             $table->string('descricao');
+            $table->boolean('publico')->default(false);
             $table->timestamps();
         });
 
-        Schema::connection('banco')->table('modelos', function($table) {
-            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
-        });
-
-        Schema::connection('banco')->table('modelos', function($table) {
-            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
-        });
-
-        Schema::connection('banco')->table('modelos', function($table) {
-            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
-        });
+//        Schema::table('modelos', function($table) {
+//            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
+//        });
+//
+//        Schema::table('modelos', function($table) {
+//            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
+//        });
+//
+//        Schema::table('modelos', function($table) {
+//            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
+//        });
     }
 
     /**

@@ -18,15 +18,16 @@ class CreateLogsTable extends Migration
             $table->string('nome');
             $table->text('descricao');
             $table->bigInteger('cod_usuario')->unsigned();
-            $table->string('acao');
+            $table->string('rota');
+            $table->string('controlador');
             $table->string('pagina');
 
             $table->timestamps();
         });
 
-        Schema::table('logs', function($table) {
-            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
-        });
+//        Schema::table('logs', function($table) {
+//            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
+//        });
     }
 
     /**

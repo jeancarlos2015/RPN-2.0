@@ -27,13 +27,13 @@ class CreateAtribuicaoUsuarioRepositoriosTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('atribuicao_usuario_repositorios', function($table) {
-            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
-        });
-
-        Schema::table('atribuicao_usuario_repositorios', function($table) {
-            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
-        });
+//        Schema::table('atribuicao_usuario_repositorios', function($table) {
+//            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
+//        });
+//
+//        Schema::table('atribuicao_usuario_repositorios', function($table) {
+//            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
+//        });
     }
 
     /**

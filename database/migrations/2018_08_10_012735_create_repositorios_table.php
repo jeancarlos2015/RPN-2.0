@@ -17,7 +17,6 @@ class CreateRepositoriosTable extends Migration
             $table->bigIncrements('cod_repositorio');
             $table->string('nome');
             $table->string('descricao');
-            $table->boolean('visibilidade')->default(true);
             $table->boolean('publico')->default(true);
             $table->timestamps();
         });

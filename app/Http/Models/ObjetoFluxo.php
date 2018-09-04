@@ -14,7 +14,7 @@ use App\Http\Models\Regra;
 class ObjetoFluxo extends Model
 {
 
-    protected $connection = "banco";
+    protected $connection = "pgsql";
     protected $primaryKey = 'cod_objeto_fluxo';
     protected $table = 'objetos_fluxos';
     protected $fillable = [

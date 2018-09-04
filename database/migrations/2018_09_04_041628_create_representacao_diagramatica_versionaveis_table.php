@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRepresentacaoDiagramaticasTable extends Migration
+class CreateRepresentacaoDiagramaticaVersionaveisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,7 @@ class CreateRepresentacaoDiagramaticasTable extends Migration
      */
     public function up()
     {
-        Schema::create('representacao_diagramaticas', function (Blueprint $table) {
-
-
+        Schema::connection('banco')->create('representacao_diagramatica_versionaveis', function (Blueprint $table) {
             $table->bigincrements('cod_representacao_diagramatica')->unsigned();
 
             $table->bigInteger('cod_projeto')->unsigned();
@@ -29,21 +27,21 @@ class CreateRepresentacaoDiagramaticasTable extends Migration
             $table->timestamps();
         });
 
-//        Schema::table('representacao_diagramaticas', function($table) {
+//        Schema::connection('banco')->table('representacao_diagramatica_versionaveis', function($table) {
 //            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
 //        });
 //
 //
-//        Schema::table('representacao_diagramaticas', function($table) {
+//        Schema::connection('banco')->table('representacao_diagramatica_versionaveis', function($table) {
 //            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
 //        });
 //
 //
-//        Schema::table('representacao_diagramaticas', function($table) {
+//        Schema::connection('banco')->table('representacao_diagramatica_versionaveis', function($table) {
 //            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
 //        });
 //
-//        Schema::table('representacao_diagramaticas', function($table) {
+//        Schema::connection('banco')->table('representacao_diagramatica_versionaveis', function($table) {
 //            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
 //        });
 
@@ -56,6 +54,6 @@ class CreateRepresentacaoDiagramaticasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('representacao_diagramaticas');
+        Schema::dropIfExists('representacao_diagramatica_versionavels');
     }
 }

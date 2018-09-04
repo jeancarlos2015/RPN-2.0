@@ -24,14 +24,14 @@ class CreateAssociacaoUsuarioObjetoFluxosTable extends Migration
 
             $table->timestamps();
         });
-
-        Schema::connection('banco')->table('associacao_usuario_objeto_fluxos', function($table) {
-            $table->foreign('cod_objeto_fluxo')->references('cod_objeto_fluxo')->on('objetos_fluxos');
-        });
-
-        Schema::table('associacao_usuario_objeto_fluxos', function($table) {
-            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
-        });
+//
+//        Schema::table('associacao_usuario_objeto_fluxos', function($table) {
+//            $table->foreign('cod_objeto_fluxo')->references('cod_objeto_fluxo')->on('objetos_fluxos');
+//        });
+//
+//        Schema::table('associacao_usuario_objeto_fluxos', function($table) {
+//            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
+//        });
     }
 
     /**

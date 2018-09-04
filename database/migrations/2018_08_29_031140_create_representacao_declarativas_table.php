@@ -21,26 +21,24 @@ class CreateRepresentacaoDeclarativasTable extends Migration
             $table->bigInteger('cod_usuario')->unsigned();
             $table->bigInteger('cod_modelo')->unsigned();
             $table->string('tipo')->default('declarativo');
-            $table->boolean('publico')->default(true);
-
             $table->timestamps();
         });
 
-        Schema::connection('banco')->table('representacao_declarativas', function($table) {
-            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
-        });
-
-        Schema::connection('banco')->table('representacao_declarativas', function($table) {
-            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
-        });
-
-        Schema::connection('banco')->table('representacao_declarativas', function($table) {
-            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
-        });
-
-        Schema::connection('banco')->table('representacao_declarativas', function($table) {
-            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
-        });
+//        Schema::table('representacao_declarativas', function($table) {
+//            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
+//        });
+//
+//        Schema::table('representacao_declarativas', function($table) {
+//            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
+//        });
+//
+//        Schema::table('representacao_declarativas', function($table) {
+//            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
+//        });
+//
+//        Schema::table('representacao_declarativas', function($table) {
+//            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
+//        });
     }
 
     /**

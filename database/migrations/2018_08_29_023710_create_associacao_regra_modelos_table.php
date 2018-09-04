@@ -25,13 +25,13 @@ class CreateAssociacaoRegraModelosTable extends Migration
             $table->timestamps();
         });
 
-        Schema::connection('banco')->table('associacao_regra_modelos', function($table) {
-            $table->foreign('cod_regra')->references('cod_regra')->on('regras');
-        });
-
-        Schema::connection('banco')->table('associacao_regra_modelos', function($table) {
-            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
-        });
+//        Schema::table('associacao_regra_modelos', function($table) {
+//            $table->foreign('cod_regra')->references('cod_regra')->on('regras');
+//        });
+//
+//        Schema::table('associacao_regra_modelos', function($table) {
+//            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
+//        });
     }
 
     /**

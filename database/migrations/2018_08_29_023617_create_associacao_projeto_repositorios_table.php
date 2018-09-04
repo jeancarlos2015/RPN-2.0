@@ -25,13 +25,13 @@ class CreateAssociacaoProjetoRepositoriosTable extends Migration
             $table->timestamps();
         });
 
-        Schema::connection('banco')->table('associacao_projeto_repositorios', function($table) {
-            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
-        });
-
-        Schema::table('associacao_projeto_repositorios', function($table) {
-            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
-        });
+//        Schema::table('associacao_projeto_repositorios', function($table) {
+//            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
+//        });
+//
+//        Schema::table('associacao_projeto_repositorios', function($table) {
+//            $table->foreign('cod_repositorio')->references('cod_repositorio')->on('repositorios');
+//        });
     }
 
     /**

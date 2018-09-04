@@ -22,9 +22,9 @@ class CreateBranchsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('branchs', function($table) {
-            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
-        });
+//        Schema::table('branchs', function($table) {
+//            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
+//        });
     }
 
     /**

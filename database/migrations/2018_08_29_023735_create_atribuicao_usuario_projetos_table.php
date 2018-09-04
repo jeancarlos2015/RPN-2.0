@@ -24,14 +24,14 @@ class CreateAtribuicaoUsuarioProjetosTable extends Migration
 
             $table->timestamps();
         });
-
-        Schema::connection('banco')->table('atribuicao_usuario_projetos', function($table) {
-            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
-        });
-
-        Schema::table('atribuicao_usuario_projetos', function($table) {
-            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
-        });
+//
+//        Schema::table('atribuicao_usuario_projetos', function($table) {
+//            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
+//        });
+//
+//        Schema::table('atribuicao_usuario_projetos', function($table) {
+//            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
+//        });
     }
 
     /**

@@ -25,9 +25,9 @@ class CreateUsuarioGithubsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('usuarios_github', function($table) {
-            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
-        });
+//        Schema::table('usuarios_github', function($table) {
+//            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
+//        });
     }
 
     /**

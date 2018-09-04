@@ -25,13 +25,13 @@ class CreateAssociacaoModeloProjetosTable extends Migration
             $table->timestamps();
         });
 
-        Schema::connection('banco')->table('associacao_modelo_projetos', function($table) {
-            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
-        });
-
-        Schema::connection('banco')->table('associacao_modelo_projetos', function($table) {
-            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
-        });
+//        Schema::table('associacao_modelo_projetos', function($table) {
+//            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
+//        });
+//
+//        Schema::table('associacao_modelo_projetos', function($table) {
+//            $table->foreign('cod_projeto')->references('cod_projeto')->on('projetos');
+//        });
     }
 
     /**

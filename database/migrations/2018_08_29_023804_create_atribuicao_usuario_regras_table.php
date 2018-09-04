@@ -25,13 +25,13 @@ class CreateAtribuicaoUsuarioRegrasTable extends Migration
             $table->timestamps();
         });
 
-        Schema::connection('banco')->table('atribuicao_usuario_regras', function($table) {
-            $table->foreign('cod_regra')->references('cod_regra')->on('regras');
-        });
-
-        Schema::table('atribuicao_usuario_regras', function($table) {
-            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
-        });
+//        Schema::table('atribuicao_usuario_regras', function($table) {
+//            $table->foreign('cod_regra')->references('cod_regra')->on('regras');
+//        });
+//
+//        Schema::table('atribuicao_usuario_regras', function($table) {
+//            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
+//        });
     }
 
     /**

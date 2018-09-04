@@ -25,13 +25,13 @@ class CreateAssociacaoUsuarioModelosTable extends Migration
             $table->timestamps();
         });
 
-        Schema::connection('banco')->table('associacao_usuario_modelos', function($table) {
-            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
-        });
-
-        Schema::table('associacao_usuario_modelos', function($table) {
-            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
-        });
+//        Schema::table('associacao_usuario_modelos', function($table) {
+//            $table->foreign('cod_modelo')->references('cod_modelo')->on('modelos');
+//        });
+//
+//        Schema::table('associacao_usuario_modelos', function($table) {
+//            $table->foreign('cod_usuario')->references('cod_usuario')->on('users');
+//        });
     }
 
     /**
