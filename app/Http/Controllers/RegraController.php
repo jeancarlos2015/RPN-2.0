@@ -8,7 +8,7 @@ use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RegraController extends Controller
+class RegraController extends ControllerAbstrata
 {
     /**
      * Display a listing of the resource.

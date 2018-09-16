@@ -8,109 +8,12 @@ use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Catch_;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class LogController extends Controller
+class LogController extends ControllerAbstrata
 {
-//'nome',
-//'descricao',
-//'cod_usuario'
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    function __construct()
     {
-        $titulos = [
-//            'código',
-//            'Nome',
-//            'descricao',
-//            'Usuário',
-//            'Ocorrência',
-//            'Página',
-            'Descrição',
-//            'Método',
-            'Ações'
-        ];
-        $tipo = 'log';
-        $logs = LogRepository::listar();
-        return view('controle_logs.logs',compact('titulos','logs','tipo'));
+        parent::__construct('log');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $log = Log::findOrFail($id);
-        try {
-            $log->delete();
-            flash('Log removido com sucesso!!!');
-        }
-        catch (\Exception $ex) {
-            $data['mensagem'] = $ex->getMessage();
-            $data['tipo'] = 'error';
-            $data['pagina'] = 'Painel';
-            $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
-        }
-        return redirect()->route('controle_logs.index');
-    }
 }

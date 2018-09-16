@@ -9,7 +9,7 @@ use App\Http\Repositorys\ProjetoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ProjetoController extends Controller
+class ProjetoController extends ControllerAbstrata
 {
 
 

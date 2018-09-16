@@ -35,7 +35,6 @@ use Illuminate\Support\Facades\Crypt;
 class User extends Authenticatable
 {
     use Notifiable;
-//    protected $connection = 'pgsql';
     protected $primaryKey = 'cod_usuario';
     protected $table = 'users';
     protected $fillable = [

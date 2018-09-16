@@ -32,7 +32,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Projeto extends Model
 {
-//    protected $connection = "pgsql";
     protected $primaryKey = 'cod_projeto';
     protected $table = 'projetos';
     protected $fillable = [

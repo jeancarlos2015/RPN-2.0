@@ -9,8 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 
-class UsuarioGithubController extends Controller
+class UsuarioGithubController extends ControllerAbstrata
 {
+    function __construct()
+    {
+        parent::__construct('usuario_github');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -74,47 +78,6 @@ class UsuarioGithubController extends Controller
             $this->create_log($data);
         }
         return redirect()->route('create_github', ['cod_usuario' => Auth::user()->cod_usuario]);
-
-
-//        try {
-//            $erros = \Validator::make($request->all(), UsuarioGithub::validacao());
-//            $usuario_github = null;
-//            if ($erros->fails()) {
-//                return redirect()->route('create_github', ['cod_usuario' => Auth::user()->cod_usuario])
-//                    ->withErrors($erros)
-//                    ->withInput();
-//            }
-//            try {
-//
-//                $data = [
-//                    'usuario_github' => Crypt::encrypt($request->usuario_github),
-//                    'cod_usuario' => $request->cod_usuario,
-//                    'email_github' => $request->email_github,
-//                    'branch_atual' => 'Nenhuma Branch',
-//                    'repositorio_atual' => 'Nenhum Repositório',
-//                    'senha_github' => Crypt::encrypt($request->senha_github)
-//                ];
-//
-//                BranchsRepository::excluir_todas_branchs();
-//                UsuarioGithub::create($data);
-//                $dados['tipo']  = 'success';
-//                $this->create_log($dados);
-//            } catch (\Exception $ex) {
-//                $data['mensagem'] = $ex->getMessage();
-//                $data['tipo'] = 'error';
-//                $data['pagina'] = 'Painel';
-//                $data['acao'] = 'merge_checkout';
-//                $this->create_log($data);
-//            }
-//            return redirect()->route('create_github', ['cod_usuario' => Auth::user()->cod_usuario]);
-//        } catch (\Exception $ex) {
-//            $data['mensagem'] = $ex->getMessage();
-//            $data['tipo'] = 'error';
-//            $data['pagina'] = 'Painel';
-//            $data['acao'] = 'merge_checkout';
-//            $this->create_log($data);
-//        }
-//        return redirect()->route('painel');
 
     }
 

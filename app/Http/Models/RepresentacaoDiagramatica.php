@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class RepresentacaoDiagramatica extends Model
 {
-//    protected $connection = 'pgsql';
     protected $primaryKey = 'cod_modelo_diagramatico';
     protected $table = 'modelos_diagramaticos';
     protected $fillable = [

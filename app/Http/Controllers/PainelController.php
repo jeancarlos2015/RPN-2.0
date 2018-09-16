@@ -12,7 +12,7 @@ use App\Http\Repositorys\RegraRepository;
 use App\Http\Repositorys\RepositorioRepository;
 use Illuminate\Support\Facades\Auth;
 
-class PainelController extends Controller
+class PainelController extends ControllerAbstrata
 {
     private function rotas()
     {

@@ -17,14 +17,14 @@ use App\Mail\EmailVinculacaoUsuario;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Parent_;
 
-class RepositorioController extends Controller
+class RepositorioController extends ControllerAbstrata
 {
 
-
-    public function area()
+    function __construct()
     {
-        return view('controle_modelador.area');
+        parent::__construct('documentacao');
     }
 
 

@@ -11,7 +11,7 @@ use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PainelModeloDeclarativoController extends Controller
+class PainelModeloDeclarativoController extends ControllerAbstrata
 {
     private function rotas()
     {

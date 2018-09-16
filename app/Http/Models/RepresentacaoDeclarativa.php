@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class RepresentacaoDeclarativa extends Model
 {
-//    protected $connection = 'pgsql';
     protected $primaryKey = 'cod_modelo_declarativo';
     protected $table = 'modelos_declarativos';
     protected $fillable = [

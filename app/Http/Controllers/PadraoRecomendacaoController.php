@@ -11,7 +11,7 @@ use App\Http\Repositorys\RegraRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PadraoRecomendacaoController extends Controller
+class PadraoRecomendacaoController extends ControllerAbstrata
 {
     /**
      * Display a listing of the resource.

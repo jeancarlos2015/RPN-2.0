@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PainelProjetoController extends Controller
+class PainelProjetoController extends ControllerAbstrata
 {
     private function rotas()
     {

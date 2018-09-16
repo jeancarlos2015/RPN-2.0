@@ -19,7 +19,6 @@ class Regra extends Model
         'NAO COEXISTENCIA',
         'UNIAO'
     ];
-//    protected $connection = 'pgsql';
     protected $primaryKey = 'cod_regra';
     protected $table = 'regras';
     protected $fillable = [

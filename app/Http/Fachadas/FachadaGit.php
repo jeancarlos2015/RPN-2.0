@@ -1,21 +1,46 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: jean
+ * Date: 16/09/2018
+ * Time: 18:06
+ */
 
-namespace App\Http\Controllers;
+namespace App\Http\Fachadas;
 
-use App\Http\Fachadas\FachadaRepositorio;
+
 use App\Http\Repositorys\BranchsRepository;
 use App\Http\Repositorys\GitSistemaRepository;
 use App\Http\Util\Dado;
+use App\Http\Util\ValidacaoLogErros;
 use Github\Exception\ApiLimitExceedException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Self_;
 
-class GitController extends ControllerAbstrata
+class FachadaGit extends FachadaConcreta
 {
 
-    function __construct()
+    private function funcionalidades()
     {
-        parent::__construct('git');
+        return [
+            'Merge & checkout',
+            'Create & Delete',
+            'Commit Branch',
+            'Pull & Push Repository',
+            'Initialization Repository'
+        ];
+    }
+
+    private function rotas()
+    {
+        return [
+            'index_merge_checkout',
+            'index_create_delete',
+            'index_commit_branch',
+            'index_pull_push',
+            'index_init'
+        ];
     }
 
     public function index_merge_checkout()
@@ -60,19 +85,19 @@ class GitController extends ControllerAbstrata
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.init';
             $data['acao'] = 'index';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.init';
             $data['acao'] = 'index';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         }
         return view('controle_versao.selecao_criacao_de_bases', compact('tipo', 'branch_atual', 'titulos', 'repositorios'));
     }
 
 
-    public function index()
+    public function index($codigo1 = null, $codigo2 = null)
     {
         $funcionalidades = [];
         $rotas = self::rotas();
@@ -98,13 +123,13 @@ class GitController extends ControllerAbstrata
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.init';
             $data['acao'] = 'init';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.init';
             $data['acao'] = 'init';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         }
 
         return redirect()->route('controle_versao.show', ['nome_repositorio' => $repositorio_atual]);
@@ -121,18 +146,38 @@ class GitController extends ControllerAbstrata
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.init';
             $data['acao'] = 'init';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'controle_versao.init';
             $data['acao'] = 'init';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         }
         return redirect()->route('index_init');
 
     }
 
+    public function show($nome_repositorio = null)
+    {
+        try {
+            $repositorio = GitSistemaRepository::get_repositorio($nome_repositorio);
+        } catch (ApiLimitExceedException $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'controle_versao.show';
+            $data['acao'] = 'show';
+            ValidacaoLogErros::create_log($data);
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'controle_versao.show';
+            $data['acao'] = 'show';
+            ValidacaoLogErros::create_log($data);
+        }
+        return view('controle_versao.visualicao_da_base', compact('tipo', 'branch_atual', 'repositorio'));
+
+    }
 
     public function delete_repository($repositorio_atual)
     {
@@ -143,20 +188,21 @@ class GitController extends ControllerAbstrata
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'delete_repository';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'delete_repository';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         }
         return redirect()->route('index_init');
     }
 
     public function edit_repository(Request $request)
     {
-        dd($request);
+        echo 'pagina em construção';
+        return null;
     }
 
     public function delete(Request $request)
@@ -165,42 +211,76 @@ class GitController extends ControllerAbstrata
 
             BranchsRepository::excluir_branch($request->branch);
             $data['tipo'] = 'success';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'delete';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'delete';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         }
         return redirect()->route('painel');
     }
 
+    public function create(Request $request = null, $codigo = null)
+    {
+        try {
+            $request->request->add([
+                'descricao' => 'nenhum',
+                'cod_usuario' => Auth::user()->cod_usuario
+            ]);
+            BranchsRepository::incluir($request->all());
+            $data['tipo'] = 'success';
+            ValidacaoLogErros::create_log($data);
+        } catch (ApiLimitExceedException $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'create';
+            ValidacaoLogErros::create_log($data);
+        } catch (\Exception $ex) {
+            $data['mensagem'] = $ex->getMessage();
+            $data['tipo'] = 'error';
+            $data['pagina'] = 'Painel';
+            $data['acao'] = 'create';
+            ValidacaoLogErros::create_log($data);
+        }
+        return redirect()->route('painel');
+    }
 
+    /* Atualizar_todas_branchs: -deleta as branchs que existem no banco de acordo com o repositório fornecido.
+                                -busca todas as branchs que existem no repositório fornecido.
+                                -Inclui as branchs no banco.
+
+       Pull:                    -Verifica se existem arquivos locais, baixa os arquivos que existem no repositório
+                                -Atualiza os arquivos locais de acordo com o repositório e a branch fornecida
+     *
+     *
+     */
     public function pull()
     {
         try {
             GitSistemaRepository::pull(Auth::user()->github->branch_atual);
             $data['tipo'] = 'success';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'pull';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'pull';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         }
 
         return redirect()->route('painel');
@@ -221,7 +301,7 @@ class GitController extends ControllerAbstrata
             } else {
                 GitSistemaRepository::merge_checkout($request->tipo, $request->branch);
                 $data['tipo'] = 'success';
-                $this->create_log($data);
+                ValidacaoLogErros::create_log($data);
 
             }
 
@@ -230,13 +310,13 @@ class GitController extends ControllerAbstrata
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         }
         return redirect()->route('painel');
     }
@@ -260,11 +340,11 @@ class GitController extends ControllerAbstrata
                     GitSistemaRepository::merge_checkout($request->tipo, $request->branch);
 
                     $data['tipo'] = 'success';
-                    $this->create_log($data);
+                    ValidacaoLogErros::create_log($data);
                 } else {
                     $data['mensagem'] = 'Este usuário não pode mecher na versão oficial do projeto';
                     $data['tipo'] = 'success';
-                    $this->create_log($data);
+                    ValidacaoLogErros::create_log($data);
                 }
 
 
@@ -275,13 +355,13 @@ class GitController extends ControllerAbstrata
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (\Exception $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'merge_checkout';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
             return redirect()->route('painel');
         }
         return redirect()->route('painel');
@@ -290,11 +370,11 @@ class GitController extends ControllerAbstrata
     public function merge_checkout(Request $request)
     {
         if (Auth::user()->email === 'jeancarlospenas25@gmail.com') {
-            $this->merge_checkout_administrador($request);
+            self::merge_checkout_administrador($request);
         } else {
-            $this->merge_checkout_usuario($request);
+            self::merge_checkout_usuario($request);
         }
-
+        return null;
     }
 
 
@@ -304,19 +384,18 @@ class GitController extends ControllerAbstrata
 
             GitSistemaRepository::commit($request->commit);
             $data['tipo'] = 'success';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (ApiLimitExceedException $ex) {
             $data['mensagem'] = $ex->getMessage();
             $data['tipo'] = 'error';
             $data['pagina'] = 'Painel';
             $data['acao'] = 'commit';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         } catch (\Exception $ex) {
             $data['tipo'] = 'success';
-            $this->create_log($data);
+            ValidacaoLogErros::create_log($data);
         }
         return redirect()->route('painel');
     }
-
 
 }
